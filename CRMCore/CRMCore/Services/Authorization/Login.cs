@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Authorization
 {
-    public class Login
+    public class Login // TODO: переименовать в LoginService, остальные сервисы также
     {
         public string status;
 
         public bool Log(string user_name, string user_password)
         {
-            if (!Models.User.isAutorized)
+            if (!Models.User.isAutorized) //TODO:  проверка на уровне контроллера
             {
                 if (user_name != null)
                     using (CRMCoreContext db = new CRMCoreContext())
@@ -29,7 +29,7 @@ namespace CRMCore.Services.Authorization
                             Models.User.Surname = user.Surname;
                             Models.User.RegistrationDate = user.RegistrationDate;
                             Models.User.isAutorized = true;
-                            return Models.User.isAutorized;
+                            return Models.User.isAutorized; // TODO: переделать на FormsAuthentication
                         }
                         else
                         {

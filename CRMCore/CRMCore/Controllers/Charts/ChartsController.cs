@@ -23,7 +23,7 @@ namespace CRMCore.Controllers.Charts
         {
             if (Models.User.isAutorized)
             {
-                AsksOnBids asksOnBids = new AsksOnBids(coin, startDate, endDate);
+                AsksOnBids asksOnBids = new AsksOnBids(coin, startDate, endDate); // смотреть ниже
 
                 ViewBag.datesAsks = asksOnBids.datesAsks;
                 ViewBag.datesBids = asksOnBids.datesBids;
@@ -43,8 +43,8 @@ namespace CRMCore.Controllers.Charts
             if (Models.User.isAutorized)
             {
                 DeltaOnTradeHistory deltaOnTradeHistory = new DeltaOnTradeHistory(coin, startDate, endDate);
-                
-                ViewBag.datesDelta = deltaOnTradeHistory.datesDelta;
+                // tradeHistoryServeice.Load(coin, startDate, endDate); прочитать про Dependency Injection (Inversion of Control)
+                ViewBag.datesDelta = deltaOnTradeHistory.datesDelta; // TODO: свойства с большой буквы, поля с маленькой, поля не должны быть публичными
                 ViewBag.deltaValues = deltaOnTradeHistory.deltaValues;
 
                 ViewBag.datesTHBuy = deltaOnTradeHistory.datesTHBuy;

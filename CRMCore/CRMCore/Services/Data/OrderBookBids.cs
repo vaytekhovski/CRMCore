@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Data
 {
-    public class OrderBookBids
+    public class OrderBookBids //TODO: объединить с аскс, объединить в одну таблицу
     {
         public double summVolume;
 

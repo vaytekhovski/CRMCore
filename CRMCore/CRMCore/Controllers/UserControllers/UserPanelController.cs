@@ -12,7 +12,7 @@ namespace CRMCore.Controllers.User
         [HttpPost]
         public ActionResult UserPanel()
         {
-            return Models.User.isAutorized ? View() : View("~/Views/Authorization/Login.cshtml");
+            return Models.User.isAutorized ? View() : View("~/Views/Authorization/Login.cshtml"); // TODO: после реализации авторизации заменить такие проверк на  атрибут Authorize
         }
 
 
@@ -57,7 +57,7 @@ namespace CRMCore.Controllers.User
         }
 
         [HttpGet]
-        public ActionResult ChangeName(string name)
+        public ActionResult ChangeName(string name) //TODO создать модель пользователя и обновлять все поля вместе
         {
             if (Models.User.isAutorized)
             {

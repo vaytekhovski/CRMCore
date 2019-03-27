@@ -66,4 +66,8 @@
     <None Include="wwwroot\css\stylesheet.css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
 </Project>

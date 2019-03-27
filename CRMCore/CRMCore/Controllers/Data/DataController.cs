@@ -25,7 +25,7 @@ namespace CRMCore.Controllers.Data
             {
                 OrderBookAsks orderBookAsks = new OrderBookAsks(coin, situation, startDate, endDate);
 
-                ViewBag.show = orderBookAsks.Show;
+                ViewBag.show = orderBookAsks.Show; // TODO: использовать модели, без необходимости ViewBag и ViewData не использовать
                 ViewBag.summVolume = orderBookAsks.summVolume;
 
                 return View();
