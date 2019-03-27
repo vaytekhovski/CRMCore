@@ -1,0 +1,93 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UserPanel</title>
+
+
+    <link href="~/css/stylesheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        @Html.Partial("Navbar")
+    </div>
+    <form action="/UserPanel/UserPanel" method="post">
+
+        <div class="user_panel">
+            <div class="parent">
+
+                <div>
+                    <div style="text-align:center">
+                        <h1>USER PANEL</h1>
+                    </div>
+
+                    <label>Имя:</label><br />
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="name" placeholder="@CRMCore.Models.User.Name">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangeName" formmethod="get">Изменить</button>
+                        </div>
+                    </div>
+                    <label>Фамилия:</label><br />
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="surname" placeholder="@CRMCore.Models.User.Surname">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangeSurname" formmethod="get">Изменить</button>
+                        </div>
+                    </div>
+                    <label>Логин:</label><br />
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="login" placeholder="@CRMCore.Models.User.Login">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangeLogin" formmethod="get">Изменить</button>
+                        </div>
+                    </div>
+
+                    <label>Пароль:</label><br />
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="password" placeholder="@CRMCore.Models.User.Password">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
+                        </div>
+                    </div>
+                    <label>Обновление данных ежедневно в: </label><br />
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="updateData" placeholder="@CRMCore.Services.DailyTrigger.TriggerHour">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
+                        </div>
+                    </div>
+                    <label>Ручная загрузка данных: </label><br />
+                    <div class="input-group mb-3">
+                        <input type="date" class="form-control" name="startDate" value="" />
+                        <input type="date" class="form-control" name="endDate" value="" />
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                        </div>
+                    </div>
+                    <div style="text-align:center">
+                        @ViewBag.status
+                    </div>
+
+                    <div>
+                        <label>Дата регистрации: @CRMCore.Models.User.RegistrationDate</label>
+                    </div>
+                    <div style="text-align:center">
+                        <button class="btn btn-danger" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

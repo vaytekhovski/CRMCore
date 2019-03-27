@@ -1,0 +1,66 @@
+﻿
+
+@{
+     Layout = "~/Views/Shared/OrderBookLayout.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowOrderBookAsks</title>
+
+    <script src="~/js/sorttable.js"></script>
+
+    <style type="text/css">
+        table.sortable thead {
+            background-color: #eee;
+            color: #666666;
+            font-weight: bold;
+            cursor: default;
+        }
+        .date {
+            display: none
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+
+        <div style="text-align:center">
+            <span>
+                Суммарный объем: @ViewBag.summVolume
+            </span>
+        </div>
+
+        <table class="sortable table table-bordered table-striped" style=" margin: auto; width:60%"  >
+            <thead>
+                <tr>
+                    <td>Валюта:</td>
+                    <td>Дата:</td>
+                    <td>Цена:</td>
+                    <td>Объем:</td>
+                    <td>Ситуация:</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var value in ViewBag.show)
+                 {
+
+                    <tr>
+                        <td>@value.CurrencyName</td>
+                        <td>@value.Date.ToString("dd MMMM yyyy hh:mm:ss")</td>
+                        <td>@value.Price</td>
+                        <td>@value.Volume</td>
+                        <td>@value.MarketSituation</td>
+                    </tr>
+                 }
+            </tbody>
+        </table>
+        
+    </div>
+</body>
+</html>

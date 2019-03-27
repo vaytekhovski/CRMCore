@@ -1,0 +1,101 @@
+﻿@{
+    Layout = "~/Views/Shared/ChartsLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AsksOnBids</title>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <div>
+            <div id="Chart">
+
+            </div>
+
+        </div>
+        <script type="text/javascript">
+
+        CHART = document.getElementById('Chart');
+
+        var datesAsks = [];
+        var datesBids = [];
+
+        var asksValues = [];
+        var bidsValues = [];
+
+
+        @foreach (var item in ViewBag.datesAsks)
+        {
+            <text>
+            datesAsks.push(new Date(@item));
+            </text>
+
+        }
+
+        @foreach (var item in ViewBag.asksValues)
+        {
+            <text>
+            asksValues.push(parseFloat(@item));
+            </text>
+
+        }
+
+        @foreach (var item in ViewBag.datesBids)
+        {
+            <text>
+            datesBids.push(new Date(@item));
+            </text>
+
+        }
+
+        @foreach (var item in ViewBag.bidsValues)
+        {
+            <text>
+            bidsValues.push(parseFloat(@item));
+            </text>
+
+        }
+            
+
+        var asks = {
+            x: datesAsks,
+            y: asksValues,
+            mode: 'lines',
+            line: {
+                color: 'rgb(128, 0, 128)',
+                width: 2
+            },
+            name: 'OrderBookAsks'
+        };
+
+        var bids = {
+            x: datesBids,
+            y: bidsValues,
+            mode: 'lines',
+            line: {
+                color: 'rgb(241, 79, 42)',
+                width: 2
+            },
+            name: 'OrderBookBids'
+            };
+            
+
+        var data = [asks,bids];
+
+        Plotly.plot(CHART, data);
+
+        </script>
+    </div>
+</body>
+</html>

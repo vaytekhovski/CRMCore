@@ -1,0 +1,70 @@
+﻿
+
+
+@{
+    Layout = "~/Views/Shared/OrderBookLayout.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowOrderBookBids</title>
+
+    <script type="text/javascript" src="~/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="~/jquery.tablesorter.js"></script>
+
+</head>
+<body>
+    <div>
+
+        <div style="text-align:center">
+            <span>
+                Суммарный объем: @ViewBag.summVolume
+            </span>
+        </div>
+
+        <table class="table table-bordered table-striped" style=" margin: auto; width:60%" id="myTable">
+            <thead>
+                <tr>
+                    <td><p>Валюта:</p></td>
+                    <td><p>Дата:</p></td>
+                    <td><p>Цена:</p></td>
+                    <td><p>Объем:</p></td>
+                    <td><p>Ситуация:</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var value in ViewBag.show)
+                {
+                    <tr>
+                        <td>@value.CurrencyName</td>
+                        <td>@value.Date.ToString("dd MMMM yyyy hh:mm:ss")</td>
+                        <td>@value.Price</td>
+                        <td>@value.Volume</td>
+                        <td>@value.MarketSituation</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <script type="text/javascript">
+
+            $('#myTable').tablesorter(
+                {
+                    dateFormat: 'mmddYYYY',
+                    headers: {
+                        0: { sorter: true },
+                        1: { sorter: "shortDate", dateFormat: "ddmmyyyy" },
+                        2: { sorter: true },
+                        3: { sorter: true },
+                        4: { sorter: true },
+                        5: { sorter: true }
+                    }
+                });
+
+        </script>
+    </div>
+</body>
+</html>

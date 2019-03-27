@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "TradeHistoryLayout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+
+
+    <link href="~/css/stylesheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="~/js/datestocoockie.js"></script>
+</head>
+
+
+
+<body>
+    <div>
+        @Html.Partial("Navbar")
+    </div>
+    <div>
+        <div class="layout_block">
+            <form method="post">
+                <div>
+
+
+                    <div class="input-group mt-3 mb-3">
+
+                        <select class="form-control form-control-sm" name="exchange" id="excange_selector">
+                            <option value="binance">Binance</option>
+                        </select>
+
+                        <select class="form-control form-control-sm " name="coin" id="coin_selector">
+                            @foreach (var item in CRMCore.Models.DropDownFields.Coins)
+                            {
+                                <option value="@item.Value">@item.Name</option>
+                            }
+                        </select>
+
+                        <select name="situation" class="form-control form-control-sm" id="situation_selector">
+                            @foreach (var item in CRMCore.Models.DropDownFields.Situation)
+                            {
+                                <option value="@item.Value">@item.Name</option>
+                            }
+                        </select>
+
+                        <select name="orderType" class="form-control form-control-sm">
+                            @foreach (var item in CRMCore.Models.DropDownFields.OrderType)
+                            {
+                                <option value="@item.Value">@item.Name</option>
+                            }
+                        </select>
+
+
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input type="date" class="form-control" id="startDate" name="startDate" />
+                        <input type="date" class="form-control" id="endDate" name="endDate" />
+                    </div>
+
+
+                    <div class="btn-group btn-block">
+                        <button type="submit" id="OrderBookAsks" class="btn btn-info" formaction="../Data/ShowOrderBookAsks" formmethod="post">OrderBookAsks</button>
+                        <button type="submit" id="OrderBookBids" class="btn btn-info" formaction="../Data/ShowOrderBookBids" formmethod="post">OrderBookBids</button>
+                        <button type="submit" id="TradeHistory" class="btn btn-info" formaction="../Data/ShowTradeHistory" formmethod="post">TradeHistory</button>
+                        <button type="submit" id="TradeDelta" class="btn btn-info" formaction="../Data/ShowTradeDelta" formmethod="post">TradeDelta</button>
+                    </div>
+
+                    <script type="text/javascript">
+                        $("#OrderBookAsks").click(function () {
+                            setDataToCoockie()
+                        });
+
+                        $("#OrderBookBids").click(function () {
+                            setDataToCoockie()
+                        });
+
+                        $("#TradeHistory").click(function () {
+                            setDataToCoockie()
+                        });
+
+                        $("#TradeDelta").click(function () {
+                            setDataToCoockie()
+                        });
+                    </script>
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    @RenderBody()
+</body>
+</html>

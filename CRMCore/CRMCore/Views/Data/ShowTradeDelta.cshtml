@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/Views/Shared/TradeDeltaLayout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowTradeDelta</title>
+
+    <script type="text/javascript" src="~/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="~/jquery.tablesorter.js"></script>
+</head>
+<body>
+    <div>
+        <div style="text-align:center">
+            <span>
+                Суммарная дельта: @ViewBag.summDelta
+            </span>
+        </div>
+        <table class="table table-bordered table-striped" style=" margin: auto; width:60%" id="myTable">
+            <thead>
+                <tr>
+                    <td><p>Валюта:</p></td>
+                    <td><p>Время от:</p></td>
+                    <td><p>Время до:</p></td>
+                    <td><p>Дельта:</p></td>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var value in ViewBag.show)
+                {
+                    <tr>
+                        <td><p>@value.CurrencyName</p></td>
+                        <td><p>@value.TimeFrom.DateTime</p></td>
+                        <td><p>@value.TimeTo.DateTime</p></td>
+                        <td><p>@value.Delta</p></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <script type="text/javascript">
+
+            $('#myTable').tablesorter(
+                {
+                    dateFormat: 'mmddYYYY',
+                    headers: {
+                        0: { sorter: false },
+                        1: { sorter: "shortDate", dateFormat: "ddmmyyyy" },
+                        2: { sorter: "shortDate", dateFormat: "ddmmyyyy" },
+                        3: { sorter: true }
+                    }
+                });
+
+        </script>
+    </div>
+</body>
+</html>
