@@ -51,16 +51,16 @@
             <tbody>
                 @foreach (var item in ViewBag.AllOrders)
                 {
-                    string side = item.IsBuyer == true ? "BUY" : "SELL";
-                    string dollarQuantity = (item.Price * item.Quantity).ToString("#.##");
+                    //string side = item.IsBuyer == true ? "BUY" : "SELL";
+                    //string dollarQuantity = "$" + (item.Price * item.Quantity).ToString("#.##");
                 <tr>
                     <td>@item.Time</td>
-                    <td>@side</td>
+                    <td>@item.Side</td>
                     <td>@item.Price.ToString("#.##")</td>
                     <td>@item.Quantity</td>
-                    <td>$@dollarQuantity</td>
+                    <td>$@item.DollarQuantity.ToString("#.##")</td>
                     <td>@item.CommissionAsset @item.Commission</td>
-                    <td></td>
+                    <td>@item.BalanceUSDT</td>
                 </tr>
                 }
             </tbody>

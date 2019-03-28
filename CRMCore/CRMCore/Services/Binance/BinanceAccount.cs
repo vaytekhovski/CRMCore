@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Binance;
 using System.Threading;
+using CRMCore.Models.Binance;
 
 namespace CRMCore.Services.Binance
 {
@@ -19,9 +20,11 @@ namespace CRMCore.Services.Binance
 
         private IEnumerable<AccountTrade> trades = null;
         AccountInfo account;
+        private List<AccountTradeHistory> accountTradeHistories = new List<AccountTradeHistory>();
 
-        public IEnumerable<AccountTrade> Trades { get => trades;  }
-        public AccountInfo Account { get => account; }
+        public List<AccountTradeHistory> AccountTradeHistories { get => accountTradeHistories;}
+
+        public bool isDone = false;
 
         public async Task LoadAsync(string acc, string coin)
         {
@@ -75,8 +78,30 @@ namespace CRMCore.Services.Binance
                 trades = await api.GetAccountTradesAsync(user, symbol);
                 account = await api.GetAccountInfoAsync(user);
             }
+
+            var currentBalace = account.Balances.FirstOrDefault(x => x.Asset == "USDT").Free;
             
-            
+            foreach (var item in trades.OrderByDescending(x => x.Time))
+            {
+                accountTradeHistories.Add(new AccountTradeHistory
+                {
+                    Time = item.Time,
+                    Side = item.IsBuyer == true ? "SELL" : "BUY",
+                    Price = item.Price,
+                    Quantity = item.Quantity,
+                    DollarQuantity = item.Price * item.Quantity,
+                    CommissionAsset = item.CommissionAsset,
+                    Commission = item.Commission,
+                    BalanceUSDT = currentBalace
+                });
+
+                if (item.IsBuyer)
+                    currentBalace -= item.Price * item.Quantity;
+                else
+                    currentBalace += item.Price * item.Quantity;
+            }
+
+            isDone = true;
         }
 
 

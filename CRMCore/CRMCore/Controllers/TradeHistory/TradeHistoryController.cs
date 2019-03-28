@@ -24,13 +24,14 @@ namespace CRMCore.Controllers.TradeHistory
             binanceAccount.LoadAsync(accounts, coin);
 #pragma warning restore CS4014 // Так как этот вызов не ожидается, выполнение существующего метода продолжается до завершения вызова
 
-            while (binanceAccount.Trades == null)
-                Debug.WriteLine("wait");
+            while (!binanceAccount.isDone)
+                continue;
 
-            ViewBag.AllOrders = binanceAccount.Trades
+            ViewBag.AllOrders = binanceAccount.AccountTradeHistories
                 .Where(x => x.Time >= DateTime.Parse(startDate) && 
                 x.Time <= DateTime.Parse(endDate))
                 .OrderByDescending(x => x.Time);
+            
 
             DropDownFields.Swap(coin);
 
