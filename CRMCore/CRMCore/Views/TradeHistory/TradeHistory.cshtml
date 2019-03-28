@@ -65,6 +65,20 @@
                 }
             </tbody>
         </table>
+
+        <script type="text/javascript">
+            $(function () {
+                var searchBUY = 'BUY';
+                $("table tr td").filter(function () {
+                    return $(this).text() == searchBUY;
+                }).parent('tr').css('color', 'green');
+
+                var searchSELL = 'SELL';
+                $("table tr td").filter(function () {
+                    return $(this).text() == searchSELL;
+                }).parent('tr').css('color', 'red');
+            });
+        </script>
     </div>
 </body>
 </html>
