@@ -86,7 +86,7 @@ namespace CRMCore.Services.Binance
                 accountTradeHistories.Add(new AccountTradeHistory
                 {
                     Time = item.Time,
-                    Side = item.IsBuyer == true ? "SELL" : "BUY",
+                    Side = item.IsBuyer == true ? "BUY" : "SELL",
                     Price = item.Price,
                     Quantity = item.Quantity,
                     DollarQuantity = item.Price * item.Quantity,
