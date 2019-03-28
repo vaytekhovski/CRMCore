@@ -7,17 +7,22 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Data
 {
-    public class OrderBookBids //TODO: объединить с аскс, объединить в одну таблицу
+    public class OrderBookBidsService //TODO: объединить с аскс, объединить в одну таблицу
     {
-        public double summVolume;
+        private double summVolume;
 
-        public List<OrderBookBidsModel> Show;
+        private List<OrderBookBidsModel> show;
 
-        public OrderBookBids(string coin, string situation, string startDate = "", string endDate = "")
+        public double SummVolume { get => summVolume;  }
+        public List<OrderBookBidsModel> Show { get => show;  }
+
+        public OrderBookBidsService() { }
+
+        public void Load(string coin, string situation, string startDate = "", string endDate = "")
         {
             using (CRMCoreContext context = new CRMCoreContext())
             {
-                Show = context.OrderBookBidsModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
+                show = context.OrderBookBidsModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
 
                 if (startDate != "" && endDate != "")
                 {
@@ -27,11 +32,11 @@ namespace CRMCore.Services.Data
                     //Session["SD"] = HomeController.DatesToSession(SD);
                     //Session["ED"] = HomeController.DatesToSession(ED);
 
-                    Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
+                    show = show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
                 }
 
                 if (situation != "all")
-                    Show = Show.Where(x => x.MarketSituation == situation).ToList();
+                    show = show.Where(x => x.MarketSituation == situation).ToList();
 
                 foreach (var item in Show)
                 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CRMCore.Models;
-using CRMCoreCore.Models;
+using CRMCore.Models;
 
 namespace CRMCore.Controllers
 {

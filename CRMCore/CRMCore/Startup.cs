@@ -13,8 +13,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore; // пространство имен EntityFramework
+using CRMCore.Services.Binance;
 
-namespace CRMCoreCore
+namespace CRMCore
 {
     public class Startup
     {
@@ -72,12 +73,13 @@ namespace CRMCoreCore
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            DailyTrigger.StartDeilyTrigger();
+            DailyTriggerService.StartDeilyTrigger();
 
-            DailyTrigger.OnTimeTriggered += () =>
+            DailyTriggerService.OnTimeTriggered += () =>
             {
-                LoadData loadData = new LoadData();
+                LoadDataService loadData = new LoadDataService();
             };
+            
         }
     }
 }

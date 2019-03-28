@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CRMCore.Services.Database
 {
-    public static class ChangeUserData
+    public static class ChangeUserDataService
     {
         public static void ChangeUserLogin(int UserId, string newUserLogin)
         {

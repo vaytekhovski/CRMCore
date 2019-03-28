@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CRMCore.Models;
 using CRMCore.Services;
 
-namespace CRMCoreCore
+namespace CRMCore
 {
     public class Program
     {

@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = "~/Views/Shared/TradeHistory/TradeHistoryLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TradeHistory</title>
+
+    <link href="~/css/stylesheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="~/js/datestocoockie.js"></script>
+
+    <script src="~/js/sorttable.js"></script>
+
+    <style type="text/css">
+        table.sortable thead {
+            background-color: #eee;
+            color: #666666;
+            font-weight: bold;
+            cursor: default;
+        }
+
+        .date {
+            display: none
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <table class="sortable table table-bordered table-striped" style=" margin: auto; width:60%">
+            <thead>
+                <tr>
+
+                    <td>Время</td>
+                    <td>Тип</td>
+                    <td>Цена</td>
+                    <td>Количество</td>
+                    <td>Количество</td>
+                    <td>Комиссия</td>
+                    <td>Баланс</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.AllOrders)
+                {
+                    string side = item.IsBuyer == true ? "BUY" : "SELL";
+                    string dollarQuantity = (item.Price * item.Quantity).ToString("#.##");
+                <tr>
+                    <td>@item.Time</td>
+                    <td>@side</td>
+                    <td>@item.Price.ToString("#.##")</td>
+                    <td>@item.Quantity</td>
+                    <td>$@dollarQuantity</td>
+                    <td>@item.CommissionAsset @item.Commission</td>
+                    <td></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

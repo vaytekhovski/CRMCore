@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Authorization
 {
-    public class Registration
+    public class RegistrationService
     {
         public string status;
         public bool Reg(string user_name, string user_password, string user_confirm_password)

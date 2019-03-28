@@ -24,8 +24,8 @@ namespace CRMCore.Models
 
         private static void InitiateCoins()
         {
-            Coins.Add(new Field { Value = "BNB", Name = "USDT-BNB" });
             Coins.Add(new Field { Value = "BTC", Name = "USDT-BTC" });
+            Coins.Add(new Field { Value = "BNB", Name = "USDT-BNB" });
             Coins.Add(new Field { Value = "EOS", Name = "USDT-EOS" });
             Coins.Add(new Field { Value = "ETH", Name = "USDT-ETH" });
             Coins.Add(new Field { Value = "XRP", Name = "USDT-XRP" });

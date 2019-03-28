@@ -23,13 +23,14 @@ namespace CRMCore.Controllers.Charts
         {
             if (Models.User.isAutorized)
             {
-                AsksOnBids asksOnBids = new AsksOnBids(coin, startDate, endDate); // смотреть ниже
+                AsksOnBidsService asksOnBids = new AsksOnBidsService();
+                asksOnBids.Load(coin, startDate, endDate);
 
-                ViewBag.datesAsks = asksOnBids.datesAsks;
-                ViewBag.datesBids = asksOnBids.datesBids;
+                ViewBag.datesAsks = asksOnBids.DatesAsks;
+                ViewBag.datesBids = asksOnBids.DatesBids;
 
-                ViewBag.asksValues = asksOnBids.asksValues;
-                ViewBag.bidsValues = asksOnBids.bidsValues;
+                ViewBag.asksValues = asksOnBids.AsksValues;
+                ViewBag.bidsValues = asksOnBids.BidsValues;
                 
                 return View();
             }
@@ -42,15 +43,15 @@ namespace CRMCore.Controllers.Charts
         {
             if (Models.User.isAutorized)
             {
-                DeltaOnTradeHistory deltaOnTradeHistory = new DeltaOnTradeHistory(coin, startDate, endDate);
-                // tradeHistoryServeice.Load(coin, startDate, endDate); прочитать про Dependency Injection (Inversion of Control)
-                ViewBag.datesDelta = deltaOnTradeHistory.datesDelta; // TODO: свойства с большой буквы, поля с маленькой, поля не должны быть публичными
-                ViewBag.deltaValues = deltaOnTradeHistory.deltaValues;
+                DeltaOnTradeHistoryService deltaOnTradeHistory = new DeltaOnTradeHistoryService();
+                deltaOnTradeHistory.Load(coin, startDate, endDate);
+                ViewBag.datesDelta = deltaOnTradeHistory.DatesDelta; // TODO: [COMPLETE] свойства с большой буквы, поля с маленькой, поля не должны быть публичными
+                ViewBag.deltaValues = deltaOnTradeHistory.DeltaValues;
 
-                ViewBag.datesTHBuy = deltaOnTradeHistory.datesTHBuy;
+                ViewBag.datesTHBuy = deltaOnTradeHistory.DatesTHBuy;
                 ViewBag.THBuyValues = deltaOnTradeHistory.THBuyValues;
 
-                ViewBag.datesTHSell = deltaOnTradeHistory.datesTHSell;
+                ViewBag.datesTHSell = deltaOnTradeHistory.DatesTHSell;
                 ViewBag.THSellValues = deltaOnTradeHistory.THSellValues;
 
 

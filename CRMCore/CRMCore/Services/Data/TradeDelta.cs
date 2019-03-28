@@ -7,18 +7,23 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Data
 {
-    public class TradeDelta
+    public class TradeDeltaService
     {
-        public double summDelta;
-        public List<TradeDeltaModel> Show;
+        private double summDelta;
+        private List<TradeDeltaModel> show;
 
-        public TradeDelta(string coin, string startDate = "", string endDate = "", string nulldelta = "all")
+        public double SummDelta { get => summDelta;}
+        public List<TradeDeltaModel> Show { get => show;  }
+
+        public TradeDeltaService() { }
+
+        public void Load(string coin, string startDate = "", string endDate = "", string nulldelta = "all")
         {
             using (CRMCoreContext context = new CRMCoreContext())
             {
-                Show = context.TradeDeltaModels.ToList();
+                show = context.TradeDeltaModels.ToList();
 
-                Show = context.TradeDeltaModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.TimeFrom).ToList();
+                show = context.TradeDeltaModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.TimeFrom).ToList();
 
                 if (startDate != "" && endDate != "")
                 {
@@ -28,11 +33,11 @@ namespace CRMCore.Services.Data
                     //Session["SD"] = HomeController.DatesToSession(SD);
                     //Session["ED"] = HomeController.DatesToSession(ED);
 
-                    Show = Show.Where(x => x.TimeFrom >= SD && x.TimeTo <= ED).ToList();
+                    show = show.Where(x => x.TimeFrom >= SD && x.TimeTo <= ED).ToList();
                 }
 
                 if (nulldelta == "notnull")
-                    Show = Show.Where(x => x.Delta > 0 || x.Delta < 0).ToList();
+                    show = show.Where(x => x.Delta > 0 || x.Delta < 0).ToList();
 
                 foreach (var item in Show)
                 {

@@ -1,7 +1,7 @@
-﻿using CRMCore.Models;
+﻿using CRMCore.DTO;
+using CRMCore.Models;
 using CRMCore.Models.Database;
-using CRMCoreCore.Models;
-using QuickType;
+using CRMCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using System.Text;
 
 namespace CRMCore.Services
 {
-    public class LoadData
+    public class LoadDataService
     {
         private List<OrderBookAsksModel> orderBookAsks = new List<OrderBookAsksModel>();
         private List<OrderBookBidsModel> orderBookBids = new List<OrderBookBidsModel>();
@@ -22,7 +22,7 @@ namespace CRMCore.Services
 
         int index = 1;
 
-        public LoadData()
+        public LoadDataService()
         {
             foreach (var coin in DropDownFields.Coins)
             {
@@ -30,7 +30,7 @@ namespace CRMCore.Services
             }
         }
 
-        public LoadData(DateTime startDate, DateTime dateTime)
+        public LoadDataService(DateTime startDate, DateTime dateTime)
         {
             StartLoading(startDate, dateTime);
         }

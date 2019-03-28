@@ -6,14 +6,22 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Charts
 {
-    public class AsksOnBids
+    public class AsksOnBidsService
     {
-        public List<long> datesAsks = new List<long>();
-        public List<long> datesBids = new List<long>();
-        public List<string> asksValues = new List<string>();
-        public List<string> bidsValues = new List<string>();
-        
-        public AsksOnBids(string coin, string startDate = "", string endDate = "")
+        private List<long> datesAsks = new List<long>();
+        private List<long> datesBids = new List<long>();
+        private List<string> asksValues = new List<string>();
+        private List<string> bidsValues = new List<string>();
+
+        public List<long> DatesAsks { get => datesAsks; }
+        public List<long> DatesBids { get => datesBids;  }
+        public List<string> AsksValues { get => asksValues; }
+        public List<string> BidsValues { get => bidsValues;  }
+
+
+        public AsksOnBidsService() { }
+
+        public void Load(string coin, string startDate = "", string endDate = "")
         {
             if (startDate != "" && endDate != "")
             {
@@ -57,5 +65,6 @@ namespace CRMCore.Services.Charts
 
             DropDownFields.Swap(coin);
         }
+
     }
 }

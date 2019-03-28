@@ -6,18 +6,29 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Charts
 {
-    public class DeltaOnTradeHistory
+    public class DeltaOnTradeHistoryService
     {
-        public List<long> datesDelta = new List<long>();
-        public List<string> deltaValues = new List<string>();
+        private List<long> datesDelta = new List<long>();
+        private List<string> deltaValues = new List<string>();
 
-        public List<long> datesTHBuy = new List<long>();
-        public List<string> THBuyValues = new List<string>();
+        private List<long> datesTHBuy = new List<long>();
+        private List<string> tHBuyValues = new List<string>();
 
-        public List<long> datesTHSell = new List<long>();
-        public List<string> THSellValues = new List<string>();
+        private List<long> datesTHSell = new List<long>();
+        private List<string> tHSellValues = new List<string>();
 
-        public DeltaOnTradeHistory(string coin, string startDate, string endDate)
+        public List<long> DatesDelta { get => datesDelta; }
+        public List<string> DeltaValues { get => deltaValues; }
+
+        public List<long> DatesTHBuy { get => datesTHBuy; }
+        public List<string> THBuyValues { get => tHBuyValues; }
+
+        public List<long> DatesTHSell { get => datesTHSell; }
+        public List<string> THSellValues { get => tHSellValues; }
+
+        public DeltaOnTradeHistoryService() { }
+
+        public void Load(string coin, string startDate, string endDate)
         {
             if (startDate != "" && endDate != "")
             {

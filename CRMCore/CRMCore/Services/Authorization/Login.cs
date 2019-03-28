@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Authorization
 {
-    public class Login // TODO: переименовать в LoginService, остальные сервисы также
+    public class LoginService // TODO: [COMPLETE] переименовать в LoginService, остальные сервисы также
     {
         public string status;
 

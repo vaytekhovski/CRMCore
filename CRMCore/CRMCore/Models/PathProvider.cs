@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CRMCoreCore.Models
+namespace CRMCore.Models
 {
     public interface IPathProvider
     {

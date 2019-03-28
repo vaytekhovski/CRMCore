@@ -7,16 +7,21 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Data
 {
-    public class TradeHistory
+    public class TradeHistoryService
     {
-        public double summVolume;
-        public List<TradeHistoryModel> Show;
+        private double summVolume;
+        private List<TradeHistoryModel> show;
 
-        public TradeHistory(string coin, string situation, string orderType, string startDate = "", string endDate = "")
+        public double SummVolume { get => summVolume;  }
+        public List<TradeHistoryModel> Show { get => show; }
+
+        public TradeHistoryService() { }
+
+        public void Load(string coin, string situation, string orderType, string startDate = "", string endDate = "")
         {
             using (CRMCoreContext context = new CRMCoreContext())
             {
-                Show = context.TradeHistoryModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
+                show = context.TradeHistoryModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
 
                 if (startDate != "" && endDate != "")
                 {
@@ -26,14 +31,14 @@ namespace CRMCore.Services.Data
                     //Session["SD"] = HomeController.DatesToSession(SD);
                     //Session["ED"] = HomeController.DatesToSession(ED);
 
-                    Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
+                    show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
                 }
 
                 if (situation != "all")
-                    Show = Show.Where(x => x.MarketSituation == situation).ToList();
+                    show = show.Where(x => x.MarketSituation == situation).ToList();
 
                 if (orderType != "all")
-                    Show = Show.Where(x => x.Side == orderType).ToList();
+                    show = show.Where(x => x.Side == orderType).ToList();
 
                 foreach (var item in Show)
                 {

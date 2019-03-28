@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace CRMCore.Services
 {
-    public class DailyTrigger
+    public class DailyTriggerService
     {
         private static TimeSpan triggerHour;
 
         public static TimeSpan TriggerHour => triggerHour;
 
-        public DailyTrigger()
+        public DailyTriggerService()
         {
             StartDeilyTrigger();
         }

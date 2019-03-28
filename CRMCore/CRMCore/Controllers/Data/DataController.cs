@@ -23,10 +23,11 @@ namespace CRMCore.Controllers.Data
         {
             if (Models.User.isAutorized)
             {
-                OrderBookAsks orderBookAsks = new OrderBookAsks(coin, situation, startDate, endDate);
+                OrderBookAsksService orderBookAsks = new OrderBookAsksService();
+                orderBookAsks.Load(coin, situation, startDate, endDate);
 
                 ViewBag.show = orderBookAsks.Show; // TODO: использовать модели, без необходимости ViewBag и ViewData не использовать
-                ViewBag.summVolume = orderBookAsks.summVolume;
+                ViewBag.summVolume = orderBookAsks.SummVolume;
 
                 return View();
             }
@@ -40,10 +41,11 @@ namespace CRMCore.Controllers.Data
         {
             if (Models.User.isAutorized)
             {
-                OrderBookBids orderBookBids = new OrderBookBids(coin, situation, startDate, endDate);
+                OrderBookBidsService orderBookBids = new OrderBookBidsService();
+                orderBookBids.Load(coin, situation, startDate, endDate);
                 
                 ViewBag.show = orderBookBids.Show;
-                ViewBag.summVolume = orderBookBids.summVolume;
+                ViewBag.summVolume = orderBookBids.SummVolume;
 
                 return View();
             }
@@ -56,10 +58,11 @@ namespace CRMCore.Controllers.Data
         {
             if (Models.User.isAutorized)
             {
-                TradeHistory tradeHistory = new TradeHistory(coin, situation, orderType, startDate, endDate);
+                TradeHistoryService tradeHistory = new TradeHistoryService();
+                tradeHistory.Load(coin, situation, orderType, startDate, endDate);
                 
                 ViewBag.show = tradeHistory.Show;
-                ViewBag.summVolume = tradeHistory.summVolume;
+                ViewBag.summVolume = tradeHistory.SummVolume;
 
                 return View();
             }
@@ -71,10 +74,11 @@ namespace CRMCore.Controllers.Data
         {
             if (Models.User.isAutorized)
             {
-                TradeDelta tradeDelta = new TradeDelta(coin, startDate, endDate, nulldelta);
+                TradeDeltaService tradeDelta = new TradeDeltaService();
+                tradeDelta.Load(coin, startDate, endDate, nulldelta);
 
                 ViewBag.show = tradeDelta.Show;
-                ViewBag.summDelta = tradeDelta.summDelta;
+                ViewBag.summDelta = tradeDelta.SummDelta;
                 return View();
             }
 

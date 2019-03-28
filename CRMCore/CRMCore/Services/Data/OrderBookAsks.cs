@@ -7,16 +7,21 @@ using System.Threading.Tasks;
 
 namespace CRMCore.Services.Data
 {
-    public class OrderBookAsks
+    public class OrderBookAsksService
     {
-        public double summVolume;
-        public List<OrderBookAsksModel> Show;
+        private double summVolume;
+        private List<OrderBookAsksModel> show;
 
-        public OrderBookAsks(string coin, string situation, string startDate = "", string endDate = "")
+        public double SummVolume { get => summVolume; }
+        public List<OrderBookAsksModel> Show { get => show; }
+
+        public OrderBookAsksService() { }
+
+        public void Load(string coin, string situation, string startDate = "", string endDate = "")
         {
             using (CRMCoreContext context = new CRMCoreContext())
             {
-                Show = context.OrderBookAsksModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
+                show = context.OrderBookAsksModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
 
                 if (startDate != "" && endDate != "")
                 {
@@ -26,17 +31,17 @@ namespace CRMCore.Services.Data
                     //Session["SD"] = HomeController.DatesToSession(SD);
                     //Session["ED"] = HomeController.DatesToSession(ED);
 
-                    Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
+                    show = show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
                 }
 
                 if (situation != "all")
-                    Show = Show.Where(x => x.MarketSituation == situation).ToList();
+                    show = show.Where(x => x.MarketSituation == situation).ToList();
 
                 foreach (var item in Show)
                 {
                     summVolume += item.Volume;
                 }
-                
+
             }
 
             DropDownFields.Swap(coin, situation);

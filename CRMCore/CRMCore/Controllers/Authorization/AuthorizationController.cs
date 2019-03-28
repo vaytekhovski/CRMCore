@@ -12,7 +12,7 @@ namespace CRMCore.Controllers
         
         public ActionResult Registration(string user_name, string user_password, string user_confirm_password)
         {
-            Registration registration = new Registration();
+            RegistrationService registration = new RegistrationService();
 
             if (registration.Reg(user_name, user_password, user_confirm_password))
             {
@@ -28,7 +28,7 @@ namespace CRMCore.Controllers
         {
             if (!Models.User.isAutorized)
             {
-                Login login = new Login();
+                LoginService login = new LoginService();
                 if (login.Log(user_name, user_password))
                 {
                     ViewBag.status = login.status;

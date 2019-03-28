@@ -1,6 +1,6 @@
 using System;
 
-namespace CRMCoreCore.Models
+namespace CRMCore.Models
 {
     public class ErrorViewModel
     {

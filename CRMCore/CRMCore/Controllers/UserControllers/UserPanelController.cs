@@ -21,7 +21,7 @@ namespace CRMCore.Controllers.User
         {
             if (Models.User.isAutorized)
             {
-                ChangeUserData.ChangeUserLogin(Models.User.Id, login);
+                ChangeUserDataService.ChangeUserLogin(Models.User.Id, login);
                 return View("UserPanel");
             }
 
@@ -34,7 +34,7 @@ namespace CRMCore.Controllers.User
         {
             if (Models.User.isAutorized)
             {
-                ChangeUserData.ChangeUserPassword(Models.User.Id, password);
+                ChangeUserDataService.ChangeUserPassword(Models.User.Id, password);
                 return View("UserPanel");
             }
 
@@ -48,7 +48,7 @@ namespace CRMCore.Controllers.User
         {
             if (Models.User.isAutorized)
             {
-                DailyTrigger.ChangeDailyTrigger(TimeSpan.Parse(updateData));
+                DailyTriggerService.ChangeDailyTrigger(TimeSpan.Parse(updateData));
                 return View("UserPanel");
             }
 
@@ -61,7 +61,7 @@ namespace CRMCore.Controllers.User
         {
             if (Models.User.isAutorized)
             {
-                ChangeUserData.ChangeUserName(Models.User.Id, name);
+                ChangeUserDataService.ChangeUserName(Models.User.Id, name);
                 return View("UserPanel");
             }
 
@@ -74,7 +74,7 @@ namespace CRMCore.Controllers.User
         {
             if (Models.User.isAutorized)
             {
-                ChangeUserData.ChangeUserSurname(Models.User.Id, surname);
+                ChangeUserDataService.ChangeUserSurname(Models.User.Id, surname);
                 return View("UserPanel");
             }
 
@@ -95,7 +95,7 @@ namespace CRMCore.Controllers.User
             if (Models.User.isAutorized)
             {
                 ViewBag.status = "Загрузка данных завершена";
-                LoadData loadData = new LoadData(DateTime.Parse(startDate), DateTime.Parse(endDate));
+                LoadDataService loadData = new LoadDataService(DateTime.Parse(startDate), DateTime.Parse(endDate));
                 return View("UserPanel");
             }
             return View("~/Views/Authorization/Login.cshtml");
