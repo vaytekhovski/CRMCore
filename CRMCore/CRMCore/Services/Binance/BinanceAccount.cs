@@ -96,9 +96,9 @@ namespace CRMCore.Services.Binance
                 });
 
                 if (item.IsBuyer)
-                    currentBalace -= item.Price * item.Quantity;
-                else
                     currentBalace += item.Price * item.Quantity;
+                else
+                    currentBalace -= item.Price * item.Quantity;
             }
 
             isDone = true;
