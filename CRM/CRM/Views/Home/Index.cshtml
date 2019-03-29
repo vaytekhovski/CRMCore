@@ -1,0 +1,101 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link href="~/css/stylesheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div>
+        @Html.Partial("Navbar")
+    </div>
+    <form action="/" method="post">
+        <div class="cards">
+            <div class="row">
+
+                <div class="col">
+                    <div class="card" style="width:400px; height:600px">
+                        <img class="card-img-top" src="~/images/img_trading_history.jpg" alt="Card image" style="height: 400px">
+                        <div class="card-body">
+                            <h4 class="card-title">История торгов</h4>
+                            <p class="card-text">Просмотр последних торговых операций робота на биржах</p>
+                            <button class="btn btn-primary" type="submit" formaction="../TradeHistory/Index" formmethod="post">История</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width:400px; height:600px">
+                        <img class="card-img-top" src="~/images/img_table1.png" alt="Card image" style="height: 400px">
+                        <div class="card-body">
+                            <h4 class="card-title">Таблицы</h4>
+                            <p class="card-text">Просмотр статистических данных, сформированных по разного рода критериям</p>
+                            <button class="btn btn-primary" type="submit" formaction="../Data/Index" formmethod="post">Таблицы</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width:400px; height:600px">
+                        <img class="card-img-top" src="~/images/img_chart1.png" alt="Card image" style="height: 400px">
+                        <div class="card-body">
+                            <h4 class="card-title">Графики</h4>
+                            <p class="card-text">Просмотр данных в графическом виде, для их исследования</p>
+                            <button class="btn btn-primary" type="submit" formaction="../Charts/Charts" formmethod="post">Графики</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width:400px; height:600px">
+                        <img class="card-img-top" src="~/images/img_avatar1.png" alt="Card image" style="height: 400px">
+                        <div class="card-body">
+                            <h4 class="card-title">Админ</h4>
+                            <p class="card-text">Изменение данных профиля, а так же различных системных параметров</p>
+                            <button class="btn btn-primary" type="submit" formaction="../UserPanel/UserPanel" formmethod="post">Профиль</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width:400px; height:600px">
+                        <img class="card-img-top" src="~/images/img_404.png" alt="Card image" style="height: 400px">
+                        <div class="card-body">
+                            <h4 class="card-title">error</h4>
+                            <p class="card-text">Comming soon...</p>
+                            <button class="btn btn-primary" type="submit">Open</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card" style="width:400px; height:600px">
+                        <img class="card-img-top" src="~/images/img_404.png" alt="Card image" style="height: 400px">
+                        <div class="card-body">
+                            <h4 class="card-title">error</h4>
+                            <p class="card-text">Comming soon...</p>
+                            <button class="btn btn-primary" type="submit">Open</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </form>
+</body>
+</html>

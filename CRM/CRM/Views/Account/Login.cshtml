@@ -1,0 +1,43 @@
+﻿@model CRM.ViewModels.LoginModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+
+    <link href="~/css/stylesheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="authorization">
+        <div class="parent">
+            <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
+
+                <div>
+                    <img src="~/images/logo.jpg" class="mx-auto d-block" width="150" alt="DATAVISIO">
+                </div>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                <div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Логин" type="text" asp-for="Login" />
+                        <span asp-validation-for="Login" />
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Пароль"  asp-for="Password" />
+                        <span asp-validation-for="Password" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-warning" type="submit" name="submit_button">Войти</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+

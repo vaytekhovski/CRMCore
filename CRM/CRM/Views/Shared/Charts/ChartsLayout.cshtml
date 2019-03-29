@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.title = "ChartsLayout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChartsLayout</title>
+
+    <link href="~/css/stylesheet.css" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="~/js/datestocoockie.js"></script>
+</head>
+<body>
+    <div>
+        @Html.Partial("Navbar")
+    </div>
+    <div class="layout_block">
+        <form action="/" method="post">
+
+            <div>
+                <div class="input-group mt-3 mb-3">
+
+                    <select class="form-control form-control-sm" name="exchange" id="excange_selector">
+                        <option value="binance">Binance</option>
+                    </select>
+
+                    <select class="form-control form-control-sm " name="coin" id="coin_selector">
+                        @foreach (var item in CRM.Models.DropDownFields.Coins)
+                        {
+                            <option value="@item.Value">@item.Name</option>
+                        }
+                    </select>
+
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="date" class="form-control" id="startDate" name="startDate" />
+                    <input type="date" class="form-control" id="endDate" name="endDate" />
+                </div>
+
+                <div class="btn-group btn-block">
+                    <button type="submit" id="AsksOnBids" class="btn btn-info" formaction="../Charts/AsksOnBids" formmethod="post">Asks на Bids</button>
+                    <button type="submit" id="DeltaOnTradeHistory" class="btn btn-info" formaction="../Charts/DeltaOnTradeHistory" formmethod="post">Delta на Trade History</button>
+                </div>
+
+                <script type="text/javascript">
+                    $("#AsksOnBids").click(function () {
+                        setDataToCoockie()
+                    });
+
+                    $("#DeltaOnTradeHistory").click(function () {
+                        setDataToCoockie()
+                    });
+                </script>
+            </div>
+        </form>
+    </div>
+    @RenderBody()
+</body>
+</html>
