@@ -26,6 +26,8 @@ namespace CRMCore.Services.Binance
 
         public bool isDone = false;
 
+        private List<Symbol> Coins = new List<Symbol>();
+
         public async Task LoadAsync(string acc, string coin)
         {
             switch (acc)
@@ -42,7 +44,17 @@ namespace CRMCore.Services.Binance
                     break;
             }
 
-            Symbol symbol = Symbol.BNB_USDT;
+
+            Coins.Add(Symbol.BTC_USDT);
+            Coins.Add(Symbol.BNB_USDT);
+            Coins.Add(Symbol.EOS_USDT);
+            Coins.Add(Symbol.ETH_USDT);
+            Coins.Add(Symbol.XRP_USDT);
+            Coins.Add(Symbol.LTC_USDT);
+            Coins.Add(Symbol.TRX_USDT);
+
+
+            Symbol symbol = Symbol.ADA_BNB;
 
             switch (coin)
             {
@@ -71,40 +83,77 @@ namespace CRMCore.Services.Binance
                     break;
             }
 
+            
+
+
             var api = new BinanceApi();
 
             using (var user = new BinanceApiUser(APIKey, APISecret))
             {
-                trades = await api.GetAccountTradesAsync(user, symbol);
                 account = await api.GetAccountInfoAsync(user);
+
+                if (coin != "all")
+                {
+                    trades = await api.GetAccountTradesAsync(user, symbol);
+                    AddToTradeHistories();
+                }
+                else
+                {
+                    foreach (var _coin in Coins)
+                    {
+                        trades = await api.GetAccountTradesAsync(user, _coin);
+                        AddToTradeHistories();
+                    }
+                }
             }
 
-            var currentBalace = account.Balances.FirstOrDefault(x => x.Asset == "USDT").Free;
-            
+            UpdateBalance();
+
+            isDone = true;
+        }
+
+        private void AddToTradeHistories()
+        {
             foreach (var item in trades.OrderByDescending(x => x.Time))
             {
                 accountTradeHistories.Add(new AccountTradeHistory
                 {
                     Time = item.Time,
                     Side = item.IsBuyer == true ? "BUY" : "SELL",
+                    Pair = item.Symbol,
                     Price = item.Price,
                     Quantity = item.Quantity,
                     DollarQuantity = item.Price * item.Quantity,
                     CommissionAsset = item.CommissionAsset,
                     Commission = item.Commission,
-                    BalanceUSDT = currentBalace
+                    BalanceUSDT = 0
                 });
+            }
+        }
 
-                if (item.IsBuyer)
-                    currentBalace += item.Price * item.Quantity;
-                else
-                    currentBalace -= item.Price * item.Quantity;
+        private void UpdateBalance()
+        {
+            foreach (var item in account.Balances)
+            {
+                if(item.Free > 0)
+                    Debug.WriteLine(item.Asset + " " + item.Free);
             }
 
-            isDone = true;
+
+            var currentBalace = account.Balances.FirstOrDefault(x => x.Asset == "USDT").Free;
+
+            foreach (var item in accountTradeHistories)
+            {
+                item.BalanceUSDT = currentBalace;
+
+                if (item.Side == "BUY")
+                    currentBalace += item.DollarQuantity;
+                else
+                    currentBalace -= item.DollarQuantity;
+            }
+
         }
 
 
-        
     }
 }

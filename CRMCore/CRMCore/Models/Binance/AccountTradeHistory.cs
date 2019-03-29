@@ -9,6 +9,7 @@ namespace CRMCore.Models.Binance
     {
         public DateTime Time { get; set; }
         public string Side { get; set; }
+        public string Pair { get; set; }
         public decimal Price { get; set; }
         public decimal Quantity { get; set; }
         public decimal DollarQuantity { get; set; }
