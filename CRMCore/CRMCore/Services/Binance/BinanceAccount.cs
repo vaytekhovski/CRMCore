@@ -133,13 +133,6 @@ namespace CRMCore.Services.Binance
 
         private void UpdateBalance()
         {
-            foreach (var item in account.Balances)
-            {
-                if(item.Free > 0)
-                    Debug.WriteLine(item.Asset + " " + item.Free);
-            }
-
-
             var currentBalace = account.Balances.FirstOrDefault(x => x.Asset == "USDT").Free;
 
             foreach (var item in accountTradeHistories)

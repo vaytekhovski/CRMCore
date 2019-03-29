@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Linq;
 
 namespace CRMCore.Services
 {
@@ -34,9 +35,6 @@ namespace CRMCore.Services
         {
             StartLoading(startDate, dateTime);
         }
-
-
-
 
         public void StartLoading(DateTime startDate, DateTime dateTime)
         {
@@ -163,32 +161,49 @@ namespace CRMCore.Services
             using (CRMCoreContext context = new CRMCoreContext())
             {
                 foreach (var DBItem in context.OrderBookAsksModels)
-                    orderBookAsks.RemoveAll(x =>
-                        x.Date == DBItem.Date &&
-                        x.Price == DBItem.Price &&
-                        x.Volume == DBItem.Volume
-                    );
+                {
+                    var buf = orderBookAsks.FirstOrDefault(x =>
+                       x.Date == DBItem.Date &&
+                       x.Price == DBItem.Price &&
+                       x.Volume == DBItem.Volume
+                   );
+                    if (buf != null)
+                        orderBookAsks.Remove(buf);
+                }
+
                 
                 foreach (var DBItem in context.OrderBookBidsModels)
-                    orderBookBids.RemoveAll(x =>
-                        x.Date == DBItem.Date &&
-                        x.Price == DBItem.Price &&
-                        x.Volume == DBItem.Volume
-                    );
+                {
+                    var buf = orderBookBids.FirstOrDefault(x =>
+                       x.Date == DBItem.Date &&
+                       x.Price == DBItem.Price &&
+                       x.Volume == DBItem.Volume
+                   );
+                    if (buf != null)
+                        orderBookBids.Remove(buf);
+                }
 
                 foreach (var DBItem in context.TradeHistoryModels)
-                    tradeHistories.RemoveAll(x =>
-                        x.Date == DBItem.Date &&
-                        x.Price == DBItem.Price &&
-                        x.Volume == DBItem.Volume
-                    );
+                {
+                    var buf = tradeHistories.FirstOrDefault(x =>
+                       x.Date == DBItem.Date &&
+                       x.Price == DBItem.Price &&
+                       x.Volume == DBItem.Volume
+                   );
+                    if (buf != null)
+                        tradeHistories.Remove(buf);
+                }
 
                 foreach (var DBItem in context.TradeDeltaModels)
-                    tradeDeltas.RemoveAll(x =>
+                {
+                    var buf = tradeDeltas.FirstOrDefault(x =>
                         x.TimeFrom == DBItem.TimeFrom &&
                         x.TimeTo == DBItem.TimeTo &&
                         x.Delta == DBItem.Delta
                     );
+                    if (buf != null)
+                        tradeDeltas.Remove(buf);
+                }
             }
         }
 
