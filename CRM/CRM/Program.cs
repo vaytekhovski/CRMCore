@@ -14,7 +14,12 @@ namespace CRM
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var host = CreateWebHostBuilder(args)
+                .UseUrls("http://*:80")
+                .Build();
+
+
+            host.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
