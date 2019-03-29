@@ -44,7 +44,7 @@ namespace CRMCore.Models
         {
             Situation.Add(new Field { Value = "all", Name = "Все" });
             Situation.Add(new Field { Value = "Flat", Name = "Flat" });
-            Situation.Add(new Field { Value = "Trand", Name = "Trand" });
+            Situation.Add(new Field { Value = "Trend", Name = "Trend" });
         }
 
         private static void InitiateNulls()

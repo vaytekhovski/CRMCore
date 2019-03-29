@@ -79,8 +79,10 @@ namespace CRMCore.Services
 
             Debug.WriteLine($"{coin} add ticker to list");
             AddTickerToLists(orderBookAsks, orderBookBids, tradeHistories, tradeDeltas, ticker, coin);
+
             Debug.WriteLine($"{coin} checking exists values");
             CheckExistValues(orderBookAsks, orderBookBids, tradeHistories, tradeDeltas);
+
             Debug.WriteLine($"{coin} add list to database");
             AddListToDataBase(orderBookAsks, orderBookBids, tradeHistories, tradeDeltas);
 
