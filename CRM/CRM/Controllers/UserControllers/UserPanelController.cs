@@ -9,56 +9,73 @@ using CRM.Models.Database;
 using Microsoft.AspNetCore.Authentication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using CRM.ViewModels;
+using CRM.Models;
 
 namespace CRM.Controllers.User
 {
     public class UserPanelController : Controller
     {
-        [Authorize]
-        [HttpPost]
-        public ActionResult UserPanel()
+        private UserContext db;
+
+        public UserPanelController(UserContext context)
         {
-            return View(); // TODO: после реализации авторизации заменить такие проверк на  атрибут Authorize
+            db = context;
+        }
+       
+        [Authorize]
+        public ActionResult UserPanel(UserPanelModel model)
+        {
+            UserModel user = db.UserModels.FirstOrDefault(x => x.Login == User.Identity.Name);
+
+            ViewBag.Login = user.Login;
+            ViewBag.Name = user.Name;
+            ViewBag.Password = user.Password;
+            ViewBag.Surname = user.Surname;
+            ViewBag.RegistrationDate = user.RegistrationDate;
+
+            return View(model); // TODO: [COMPLETE] после реализации авторизации заменить такие проверк на  атрибут Authorize
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult ChangeLogin(string login)
+        public async Task<ActionResult> ChangeLoginAsync(UserPanelModel model)
         {
-            //ChangeUserDataService.ChangeUserLogin(UserModel.Id, login);
-            return View("UserPanel");
+            ChangeUserDataService.ChangeUserLogin(User.Identity.Name, model.Login);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult ChangePassword(string password)
+        public ActionResult ChangePassword(UserPanelModel model)
         {
-            //ChangeUserDataService.ChangeUserPassword(Models.User.Id, password);
-            return View("UserPanel");
+            ChangeUserDataService.ChangeUserPassword(User.Identity.Name, model.Password);
+            return RedirectToAction("UserPanel");
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult ChangeDailyTrigger(string updateData, CRMContext context)
+        public ActionResult ChangeDailyTrigger(string updateData)
         {
             DailyTriggerService.ChangeDailyTrigger(TimeSpan.Parse(updateData));
-            return View("UserPanel");
+            return RedirectToAction("UserPanel");
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult ChangeName(string name) //TODO создать модель пользователя и обновлять все поля вместе
+        public ActionResult ChangeName(UserPanelModel model) //TODO создать модель пользователя и обновлять все поля вместе
         {
-            //ChangeUserDataService.ChangeUserName(Models.User.Id, name);
-            return View("UserPanel");
+            ChangeUserDataService.ChangeUserName(User.Identity.Name, model.Name);
+            return RedirectToAction("UserPanel");
         }
 
         [Authorize]
         [HttpGet]
-        public ActionResult ChangeSurname(string surname)
+        public ActionResult ChangeSurname(UserPanelModel model)
         {
-            //ChangeUserDataService.ChangeUserSurname(Models.User.Id, surname);
-            return View("UserPanel");
+            ChangeUserDataService.ChangeUserSurname(User.Identity.Name, model.Surname);
+            return RedirectToAction("UserPanel");
         }
 
         [Authorize]
@@ -75,7 +92,7 @@ namespace CRM.Controllers.User
         {
             ViewBag.status = "Загрузка данных завершена";
             LoadDataService loadData = new LoadDataService(DateTime.Parse(startDate), DateTime.Parse(endDate));
-            return View("UserPanel");
+            return RedirectToAction("UserPanel");
         }
         
 

@@ -11,5 +11,9 @@ namespace CRM.Models
         {
             Database.EnsureCreated();
         }
+
+        public UserContext()
+        {
+        }
     }
 }

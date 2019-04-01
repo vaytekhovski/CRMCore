@@ -190,9 +190,4 @@
     </Content>
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Controllers\Authorization\" />
-  </ItemGroup>
-
 </Project>

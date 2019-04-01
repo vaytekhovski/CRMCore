@@ -13601,11 +13601,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\arsen\\source\\repos\\CRM\\CRM\\CRM.csproj",
+      "projectUniqueName": "D:\\REPOSITORY\\CRMCore\\CRM\\CRM\\CRM.csproj",
       "projectName": "CRM",
-      "projectPath": "C:\\Users\\arsen\\source\\repos\\CRM\\CRM\\CRM.csproj",
+      "projectPath": "D:\\REPOSITORY\\CRMCore\\CRM\\CRM\\CRM.csproj",
       "packagesPath": "C:\\Users\\arsen\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\arsen\\source\\repos\\CRM\\CRM\\obj\\",
+      "outputPath": "D:\\REPOSITORY\\CRMCore\\CRM\\CRM\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

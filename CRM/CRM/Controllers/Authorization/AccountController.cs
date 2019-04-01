@@ -68,7 +68,7 @@ namespace AuthApp.Controllers
             return View(model);
         }
 
-        private async Task Authenticate(string userName)
+        public async Task Authenticate(string userName)
         {
             // создаем один claim
             var claims = new List<Claim>
