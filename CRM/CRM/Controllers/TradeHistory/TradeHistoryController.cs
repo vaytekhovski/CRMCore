@@ -31,7 +31,7 @@ namespace CRM.Controllers.TradeHistory
                 continue;
 
             ViewBag.AllOrders = binanceAccount.AccountTradeHistories
-                .OrderByDescending(x => x.Time);
+                .OrderBy(x => x.Time);
             
 
             DropDownFields.Swap(coin);
