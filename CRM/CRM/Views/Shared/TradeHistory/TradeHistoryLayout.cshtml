@@ -37,12 +37,13 @@
                             {
                                 <option value="@item.Value">@item.Name</option>
                             }
-                            <option value="all">Все</option>
                         </select>
 
                         <select class="form-control form-control-sm" name="accounts" id="excange_selector">
-                            <option value="a1">1-й аккаунт</option>
-                            <option value="a2">2-й аккаунт</option>
+                            @foreach (var item in CRM.Models.DropDownFields.Accounts)
+                            {
+                                <option value="@item.Value">@item.Name</option>
+                            }
                         </select>
 
 

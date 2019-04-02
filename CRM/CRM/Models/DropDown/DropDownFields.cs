@@ -1,4 +1,5 @@
 ﻿using CRM.Models.DropDown;
+using System;
 using System.Collections.Generic;
 
 namespace CRM.Models
@@ -9,6 +10,7 @@ namespace CRM.Models
         public static List<Field> OrderType = new List<Field>();
         public static List<Field> Situation = new List<Field>();
         public static List<Field> Nulls = new List<Field>();
+        public static List<Field> Accounts = new List<Field>();
 
         public static void InitiateFields()
         {
@@ -16,6 +18,13 @@ namespace CRM.Models
             InitiateOrderType();
             InitiateSituations();
             InitiateNulls();
+            InitateAccounts();
+        }
+
+        private static void InitateAccounts()
+        {
+            Accounts.Add(new Field { Value = "a1", Name = "1-й аккаунт" });
+            Accounts.Add(new Field { Value = "a2", Name = "2-й аккаунт" });
         }
 
         private static void InitiateCoins()
@@ -32,6 +41,7 @@ namespace CRM.Models
             Coins.Add(new Field { Value = "XLM", Name = "USDT-XLM" });
             Coins.Add(new Field { Value = "ADA", Name = "USDT-ADA" });
             Coins.Add(new Field { Value = "BCHABC", Name = "USDT-BCHABC" });
+            Coins.Add(new Field { Value = "all", Name = "Все" });
         }
 
         private static void InitiateOrderType()
@@ -57,6 +67,7 @@ namespace CRM.Models
         public static void Swap(string coin, string situation = "default", string orderType = "default", bool nulls = false)
         {
             SwapCoins(coin);
+            SwapAccounts();
             if (orderType != "default")
                 SwapOrderTypes(orderType);
             if (situation != "default")
@@ -64,6 +75,7 @@ namespace CRM.Models
             if(nulls)
                 SwapNulls();
         }
+
 
         private static void SwapCoins(string Value)
         {
@@ -136,7 +148,6 @@ namespace CRM.Models
 
         private static void SwapNulls()
         {
-
             string bufValue = Nulls[0].Value;
             string bufName = Nulls[0].Name;
 
@@ -145,7 +156,19 @@ namespace CRM.Models
 
             Nulls[1].Value = bufValue;
             Nulls[1].Name = bufName;
+        }
 
+
+        private static void SwapAccounts()
+        {
+            string bufValue = Accounts[0].Value;
+            string bufName = Accounts[0].Name;
+
+            Accounts[0].Value = Accounts[1].Value;
+            Accounts[0].Name = Accounts[1].Name;
+
+            Accounts[1].Value = bufValue;
+            Accounts[1].Name = bufName;
         }
     }
 }
