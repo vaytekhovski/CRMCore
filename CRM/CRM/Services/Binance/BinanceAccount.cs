@@ -195,7 +195,7 @@ namespace CRM.Services.Binance
                     else
                         profit += double.Parse(TH[i].DollarQuantity.ToString("#.##"));
 
-                    if (i == count - 1 || (TH[i].Side == "SELL" && TH[i + 1].Side == "BUY"))
+                    if ((TH[i].Side == "SELL" && i == count-1 ) || (TH[i].Side == "SELL" && TH[i + 1].Side == "BUY"))
                         TH[i].Profit = profit.ToString("#.##");
                 }
 
