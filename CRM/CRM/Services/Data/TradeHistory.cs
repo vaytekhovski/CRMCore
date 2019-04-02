@@ -46,7 +46,15 @@ namespace CRM.Services.Data
                 }
 
             }
-            DropDownFields.Swap(coin, situation, orderType);
+            
+            if(coin != DropDownFields.Coins.ToArray()[0].Value)
+                DropDownFields.SwapCoins(coin);
+
+            if(situation != DropDownFields.Situation.ToArray()[0].Value)
+                DropDownFields.SwapSituations(situation);
+
+            if(orderType != DropDownFields.OrderType.ToArray()[0].Value)
+                DropDownFields.SwapOrderTypes(orderType);
         }
     }
 }

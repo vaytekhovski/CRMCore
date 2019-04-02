@@ -64,20 +64,21 @@ namespace CRM.Models
             Nulls.Add(new Field { Value = "notnull", Name = "Не показывать нулевые значения" });
         }
 
-        public static void Swap(string coin, string situation = "default", string orderType = "default", bool nulls = false)
+        public static void Swa(string coin, string account = "default", string situation = "default", string orderType = "default", string nulls = "default")
         {
             SwapCoins(coin);
-            SwapAccounts();
+            if(account != "default")
+                SwapAccounts();
             if (orderType != "default")
                 SwapOrderTypes(orderType);
             if (situation != "default")
                 SwapSituations(situation);
-            if(nulls)
+            if(nulls != "default")
                 SwapNulls();
         }
 
 
-        private static void SwapCoins(string Value)
+        public static void SwapCoins(string Value)
         {
             foreach (var item in Coins)
             {
@@ -100,7 +101,7 @@ namespace CRM.Models
             }
         }
 
-        private static void SwapOrderTypes(string Value)
+        public static void SwapOrderTypes(string Value)
         {
             foreach (var item in OrderType)
             {
@@ -123,7 +124,7 @@ namespace CRM.Models
             }
         }
 
-        private static void SwapSituations(string Value)
+        public static void SwapSituations(string Value)
         {
             foreach (var item in Situation)
             {
@@ -146,7 +147,7 @@ namespace CRM.Models
             }
         }
 
-        private static void SwapNulls()
+        public static void SwapNulls()
         {
             string bufValue = Nulls[0].Value;
             string bufName = Nulls[0].Name;
@@ -159,7 +160,7 @@ namespace CRM.Models
         }
 
 
-        private static void SwapAccounts()
+        public static void SwapAccounts()
         {
             string bufValue = Accounts[0].Value;
             string bufName = Accounts[0].Name;

@@ -63,7 +63,8 @@ namespace CRM.Services.Charts
                 }
             }
 
-            DropDownFields.Swap(coin);
+            if (coin != DropDownFields.Coins.ToArray()[0].Value)
+                DropDownFields.SwapCoins(coin);
         }
 
     }

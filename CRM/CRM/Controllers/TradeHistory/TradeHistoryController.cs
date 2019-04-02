@@ -32,9 +32,10 @@ namespace CRM.Controllers.TradeHistory
 
             ViewBag.AllOrders = binanceAccount.AccountTradeHistories
                 .OrderBy(x => x.Time);
-            
 
-            DropDownFields.Swap(coin);
+            if (accounts != DropDownFields.Accounts.ToArray()[0].Value)
+                DropDownFields.SwapAccounts();
+            DropDownFields.SwapCoins(coin);
 
             return View();
         }

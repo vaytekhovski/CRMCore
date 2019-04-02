@@ -45,7 +45,12 @@ namespace CRM.Services.Data
                 }
 
 
-                DropDownFields.Swap(coin, "", "", true);
+                if (coin != DropDownFields.Coins.ToArray()[0].Value)
+                    DropDownFields.SwapCoins(coin);
+
+                if (nulldelta != DropDownFields.Nulls.ToArray()[0].Value)
+                    DropDownFields.SwapNulls();
+                
             }
         }
     }
