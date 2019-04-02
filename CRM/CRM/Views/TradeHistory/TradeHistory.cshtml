@@ -28,6 +28,7 @@
             cursor: default;
         }
 
+
         .date {
             display: none
         }
@@ -35,18 +36,18 @@
 </head>
 <body>
     <div>
-        <table class="sortable table table-bordered table-striped" style=" margin: auto; width:60%">
+        <table name="myTable" class="sortable table table-bordered table-striped" style=" margin: auto; width:60%">
             <thead>
                 <tr>
 
-                    <td>Время</td>
-                    <td>Тип</td>
-                    <td>Пара</td>
-                    <td>Цена</td>
-                    <td>Количество</td>
-                    <td>Количество</td>
-                    <td>Комиссия</td>
-                    <td>Баланс</td>
+                    <th id="owncodename">Время</th>
+                    <th>Тип</th>
+                    <th>Пара</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Количество</th>
+                    <th>Комиссия</th>
+                    <th>Баланс</th>
                     @*<td>Прибыль</td>*@
                 </tr>
             </thead>
@@ -82,6 +83,13 @@
                     return $(this).text() == searchSELL;
                 }).parent('tr').css('color', 'red');
             });
+
+            $(document).ready(function () {
+                sorttable.innerSortFunction.apply(document.getElementById('owncodename'), []);
+                sorttable.innerSortFunction.apply(document.getElementById('owncodename'), []);
+                console.log("ready!");
+            });
+            
         </script>
     </div>
 </body>
