@@ -121,14 +121,17 @@ namespace CRM.Services.Binance
                 }
             }
 
-            UpdateBalance();
+            UpdateBalance(acc);
+            UpdateProfit();
 
             isDone = true;
         }
 
         private void AddToTradeHistories()
         {
-            foreach (var item in trades.OrderByDescending(x => x.Time))
+            foreach (var item in trades
+                .OrderByDescending(x => x.Time)
+                .Where(x => x.Time >= new DateTime(2019, 04, 01)))
             {
                 accountTradeHistories.Add(new AccountTradeHistory
                 {
@@ -145,23 +148,56 @@ namespace CRM.Services.Binance
             }
         }
 
-        private void UpdateBalance()
+        private void UpdateBalance(string account)
         {
             // 28.02.2019
             // 1-й 5517.8
             // 2-й 518.49
-            var currentBalace = account.Balances.FirstOrDefault(x => x.Asset == "USDT").Free;
 
-            foreach (var item in accountTradeHistories)
+            double currentBalace = 5525;//account.Balances.FirstOrDefault(x => x.Asset == "USDT").Free;
+            switch (account)
             {
-                item.BalanceUSDT = currentBalace;
-
-                if (item.Side == "BUY")
-                    currentBalace += item.DollarQuantity;
-                else
-                    currentBalace -= item.DollarQuantity;
+                case "a1":
+                    currentBalace = 5525;
+                    break;
+                case "a2":
+                    currentBalace = 520;
+                    break;
+                default:
+                    break;
             }
 
+            foreach (var item in accountTradeHistories.OrderBy(x => x.Time))
+            {
+
+                if (item.Side == "BUY")
+                    currentBalace -= double.Parse(item.DollarQuantity.ToString());
+                else
+                    currentBalace += double.Parse(item.DollarQuantity.ToString());
+
+
+                item.BalanceUSDT = currentBalace;
+            }
+
+        }
+
+        private void UpdateProfit()
+        {
+            foreach (var _coin in Coins)
+            {
+                double profit = 0;
+                int count = accountTradeHistories.Where(x => x.Pair == _coin).OrderBy(x => x.Time).ToArray().Count();
+                for (int i = 0; i < count; i++)
+                {
+                    if (accountTradeHistories[i].Side == "BUY")
+                        profit -= double.Parse(accountTradeHistories[i].DollarQuantity.ToString("#.##"));
+                    else
+                        profit += double.Parse(accountTradeHistories[i].DollarQuantity.ToString("#.##"));
+
+                    if (i == count - 1 || (accountTradeHistories[i].Side == "SELL" && accountTradeHistories[i + 1].Side == "BUY"))
+                        accountTradeHistories[i].Profit = profit;
+                }
+            }
         }
 
 
