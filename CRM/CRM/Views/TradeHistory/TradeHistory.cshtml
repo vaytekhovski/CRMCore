@@ -34,11 +34,11 @@
 </head>
 <body>
     <div>
-        <table name="myTable" class="sortable table table-bordered table-striped" style=" margin: auto; width:60%">
+        <table id="myTable" class="sortable table table-bordered table-striped" style=" margin: auto; width:60%">
             <thead>
                 <tr>
 
-                    <th id="owncodename">Время</th>
+                    <th id="time">Время</th>
                     <th>Тип</th>
                     <th>Пара</th>
                     <th>Цена</th>
@@ -46,7 +46,7 @@
                     <th>Количество</th>
                     <th>Комиссия</th>
                     <th>Баланс</th>
-                    <td>Прибыль</td>
+                    <th>Прибыль</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,7 +61,7 @@
                     <td>$@item.DollarQuantity.ToString("#.##")</td>
                     <td>@item.CommissionAsset @item.Commission</td>
                     <td>$@item.BalanceUSDT.ToString("#.##")</td>
-                    <td>@item.Profit</td>
+                    <td id="profit">@item.Profit</td>
                 </tr>
                 }
             </tbody>
@@ -72,18 +72,19 @@
                 var searchBUY = 'BUY';
                 $("table tr td").filter(function () {
                     return $(this).text() == searchBUY;
-                }).parent('tr').css('color', 'green');
+                }).parent('tr').css('backgroundColor', 'rgb(242, 244, 247)');
 
                 var searchSELL = 'SELL';
                 $("table tr td").filter(function () {
                     return $(this).text() == searchSELL;
-                }).parent('tr').css('color', 'red');
+                }).parent('tr').css('backgroundColor', 'rgb(255, 255, 255)');
+
             });
 
             $(document).ready(function () {
-                sorttable.innerSortFunction.apply(document.getElementById('owncodename'), []);
-                sorttable.innerSortFunction.apply(document.getElementById('owncodename'), []);
-                console.log("ready!");
+                sorttable.innerSortFunction.apply(document.getElementById('time'), []);
+                sorttable.innerSortFunction.apply(document.getElementById('time'), []);
+                document.getElementById('profit').css('color', 'green');
             });
             
         </script>
