@@ -55,7 +55,7 @@
                     //string side = item.IsBuyer == true ? "BUY" : "SELL";
                     //string dollarQuantity = "$" + (item.Price * item.Quantity).ToString("#.##");
                 <tr>
-                    <td>@item.Time</td>
+                    <td>@item.Time.ToString("dd MMMM yyyy hh:mm:ss")</td>
                     <td>@item.Side</td>
                     <td>@item.Pair</td>
                     <td>@item.Price.ToString("#.##")</td>

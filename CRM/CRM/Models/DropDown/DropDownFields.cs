@@ -27,6 +27,11 @@ namespace CRM.Models
             Coins.Add(new Field { Value = "XRP", Name = "USDT-XRP" });
             Coins.Add(new Field { Value = "LTC", Name = "USDT-LTC" });
             Coins.Add(new Field { Value = "TRX", Name = "USDT-TRX" });
+
+            Coins.Add(new Field { Value = "ONT", Name = "USDT-ONT" });
+            Coins.Add(new Field { Value = "XLM", Name = "USDT-XLM" });
+            Coins.Add(new Field { Value = "ADA", Name = "USDT-ADA" });
+            Coins.Add(new Field { Value = "BCHABC", Name = "USDT-BCHABC" });
         }
 
         private static void InitiateOrderType()

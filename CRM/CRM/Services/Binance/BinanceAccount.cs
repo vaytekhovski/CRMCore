@@ -53,6 +53,11 @@ namespace CRM.Services.Binance
             Coins.Add(Symbol.LTC_USDT);
             Coins.Add(Symbol.TRX_USDT);
 
+            Coins.Add(Symbol.ONT_USDT);
+            Coins.Add(Symbol.XLM_USDT);
+            Coins.Add(Symbol.ADA_USDT);
+            Coins.Add(Symbol.BCHABC_USDT);
+
 
             Symbol symbol = Symbol.ADA_BNB;
 
@@ -79,13 +84,22 @@ namespace CRM.Services.Binance
                 case "TRX":
                     symbol = Symbol.TRX_USDT;
                     break;
+                case "ONT":
+                    symbol = Symbol.ONT_USDT;
+                    break;
+                case "XLM":
+                    symbol = Symbol.XLM_USDT;
+                    break;
+                case "ADA":
+                    symbol = Symbol.ADA_USDT;
+                    break;
+                case "BCHABC":
+                    symbol = Symbol.BCHABC_USDT;
+                    break;
                 default:
                     break;
             }
-
             
-
-
             var api = new BinanceApi();
 
             using (var user = new BinanceApiUser(APIKey, APISecret))
@@ -133,6 +147,9 @@ namespace CRM.Services.Binance
 
         private void UpdateBalance()
         {
+            // 28.02.2019
+            // 1-й 5517.8
+            // 2-й 518.49
             var currentBalace = account.Balances.FirstOrDefault(x => x.Asset == "USDT").Free;
 
             foreach (var item in accountTradeHistories)
