@@ -27,22 +27,6 @@
                     <h1>USER PANEL</h1>
                 </div>
 
-                <label>Имя:</label><br />
-                <div class="input-group mb-3">
-                    <input class="form-control" placeholder="@ViewBag.Name" type="text" asp-for="Name" />
-                    <span asp-validation-for="Name" />
-                    <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangeName" formmethod="get">Изменить</button>
-                </div>
-
-                <label>Фамилия:</label><br />
-                <div class="input-group mb-3">
-                    <input class="form-control" placeholder="@ViewBag.Surname" type="text" asp-for="Surname" />
-                    <span asp-validation-for="Surname" />
-                    <div class="input-group-append">
-                        <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangeSurname" formmethod="get">Изменить</button>
-                    </div>
-                </div>
-
                 <label>Логин:</label><br />
                 <div class="input-group mb-3">
                     <input class="form-control" placeholder="@ViewBag.Login" type="text" asp-for="Login" />

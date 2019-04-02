@@ -29,9 +29,7 @@ namespace CRM.Controllers.User
             UserModel user = db.UserModels.FirstOrDefault(x => x.Login == User.Identity.Name);
 
             ViewBag.Login = user.Login;
-            ViewBag.Name = user.Name;
             ViewBag.Password = user.Password;
-            ViewBag.Surname = user.Surname;
             ViewBag.RegistrationDate = user.RegistrationDate;
 
             return View(model); // TODO: [COMPLETE] после реализации авторизации заменить такие проверк на  атрибут Authorize
@@ -59,22 +57,6 @@ namespace CRM.Controllers.User
         public ActionResult ChangeDailyTrigger(string updateData)
         {
             DailyTriggerService.ChangeDailyTrigger(TimeSpan.Parse(updateData));
-            return RedirectToAction("UserPanel");
-        }
-
-        [Authorize]
-        [HttpGet]
-        public ActionResult ChangeName(UserPanelModel model) //TODO создать модель пользователя и обновлять все поля вместе
-        {
-            ChangeUserDataService.ChangeUserName(User.Identity.Name, model.Name);
-            return RedirectToAction("UserPanel");
-        }
-
-        [Authorize]
-        [HttpGet]
-        public ActionResult ChangeSurname(UserPanelModel model)
-        {
-            ChangeUserDataService.ChangeUserSurname(User.Identity.Name, model.Surname);
             return RedirectToAction("UserPanel");
         }
 

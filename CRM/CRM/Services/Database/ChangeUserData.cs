@@ -25,24 +25,7 @@ namespace CRM.Services.Database
                 context.SaveChanges();
             }
         }
-
-        public static void ChangeUserName(string lastUserLogin, string newUserName)
-        {
-            using (CRMContext context = new CRMContext())
-            {
-                context.UserModels.FirstOrDefault(x => x.Login == lastUserLogin).Name = newUserName;
-                context.SaveChanges();
-            }
-        }
-
-        public static void ChangeUserSurname(string lastUserLogin, string newUserSurname)
-        {
-            using (CRMContext context = new CRMContext())
-            {
-                context.UserModels.FirstOrDefault(x => x.Login == lastUserLogin).Surname = newUserSurname;
-                context.SaveChanges();
-            }
-        }
+        
         
     }
 }

@@ -53,9 +53,7 @@ namespace CRM.Services.Authorization
                     {
                         Login = user_name,
                         Password = user_password,
-                        RegistrationDate = DateTime.Now,
-                        Name = " ",
-                        Surname = " "
+                        RegistrationDate = DateTime.Now
                     });
                     db.SaveChanges();
                 }
