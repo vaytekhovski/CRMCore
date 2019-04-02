@@ -186,16 +186,25 @@ namespace CRM.Services.Binance
             foreach (var _coin in Coins)
             {
                 double profit = 0;
-                int count = accountTradeHistories.Where(x => x.Pair == _coin).OrderBy(x => x.Time).ToArray().Count();
+                var TH = accountTradeHistories.Where(x => x.Pair == _coin).OrderBy(x => x.Time).ToArray();
+                int count = TH.Count();
                 for (int i = 0; i < count; i++)
                 {
-                    if (accountTradeHistories[i].Side == "BUY")
-                        profit -= double.Parse(accountTradeHistories[i].DollarQuantity.ToString("#.##"));
+                    if (TH[i].Side == "BUY")
+                        profit -= double.Parse(TH[i].DollarQuantity.ToString("#.##"));
                     else
-                        profit += double.Parse(accountTradeHistories[i].DollarQuantity.ToString("#.##"));
+                        profit += double.Parse(TH[i].DollarQuantity.ToString("#.##"));
 
-                    if (i == count - 1 || (accountTradeHistories[i].Side == "SELL" && accountTradeHistories[i + 1].Side == "BUY"))
-                        accountTradeHistories[i].Profit = profit;
+                    if (i == count - 1 || (TH[i].Side == "SELL" && TH[i + 1].Side == "BUY"))
+                        TH[i].Profit = profit.ToString("#.##");
+                }
+
+                int j = 0;
+                foreach (var item in accountTradeHistories.Where(x => x.Pair == _coin).OrderBy(x => x.Time))
+                {
+                    if(TH[j].Profit != null)
+                        item.Profit = "$ " + TH[j].Profit;
+                    j++;
                 }
             }
         }

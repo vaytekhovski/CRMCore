@@ -27,8 +27,6 @@
             font-weight: bold;
             cursor: default;
         }
-
-
         .date {
             display: none
         }
@@ -48,7 +46,7 @@
                     <th>Количество</th>
                     <th>Комиссия</th>
                     <th>Баланс</th>
-                    @*<td>Прибыль</td>*@
+                    <td>Прибыль</td>
                 </tr>
             </thead>
             <tbody>
@@ -65,7 +63,7 @@
                     <td>$@item.DollarQuantity.ToString("#.##")</td>
                     <td>@item.CommissionAsset @item.Commission</td>
                     <td>$@item.BalanceUSDT.ToString("#.##")</td>
-                    @*<td>@item.Profit</td>*@
+                    <td>@item.Profit</td>
                 </tr>
                 }
             </tbody>
