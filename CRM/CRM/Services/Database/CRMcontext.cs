@@ -9,8 +9,7 @@ namespace CRM.Services
     {
         internal object first;
 
-        public DbSet<OrderBookAsksModel> OrderBookAsksModels { get; set; }
-        public DbSet<OrderBookBidsModel> OrderBookBidsModels { get; set; }
+        public DbSet<OrderBookModel> OrderBookModels { get; set; }
         public DbSet<TradeDeltaModel> TradeDeltaModels { get; set; }
         public DbSet<TradeHistoryModel> TradeHistoryModels { get; set; }
         public DbSet<UserModel> UserModels { get; set; }

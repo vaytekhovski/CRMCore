@@ -33,13 +33,13 @@ namespace CRM.Services.Charts
 
                 using (CRMContext context = new CRMContext())
                 {
-                    var Asks = context.OrderBookAsksModels
-                        .Where(x => x.CurrencyName == coin)
+                    var Asks = context.OrderBookModels
+                        .Where(x => x.BookType == "ask" &&  x.CurrencyName == coin)
                         .Where(x => x.Date >= SD && x.Date <= ED)
                         .OrderBy(x => x.Date);
 
-                    var Bids = context.OrderBookBidsModels
-                        .Where(x => x.CurrencyName == coin)
+                    var Bids = context.OrderBookModels
+                        .Where(x => x.BookType == "bid" && x.CurrencyName == coin)
                         .Where(x => x.Date >= SD && x.Date <= ED)
                         .OrderBy(x => x.Date);
 

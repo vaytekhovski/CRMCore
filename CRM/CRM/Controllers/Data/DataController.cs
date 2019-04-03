@@ -21,11 +21,11 @@ namespace CRM.Controllers.Data
         [Authorize]
         public ActionResult ShowOrderBookAsks(string coin, string situation, string startDate = "", string endDate = "")
         {
-            OrderBookAsksService orderBookAsks = new OrderBookAsksService();
-            orderBookAsks.Load(coin, situation, startDate, endDate);
+            OrderBookService orderBook = new OrderBookService();
+            orderBook.Load("ask", coin, situation, startDate, endDate);
 
-            ViewBag.show = orderBookAsks.Show; // TODO: использовать модели, без необходимости ViewBag и ViewData не использовать
-            ViewBag.summVolume = orderBookAsks.SummVolume;
+            ViewBag.show = orderBook.Show; // TODO: использовать модели, без необходимости ViewBag и ViewData не использовать
+            ViewBag.summVolume = orderBook.SummVolume;
 
             return View();
         }
@@ -33,11 +33,11 @@ namespace CRM.Controllers.Data
         [Authorize]
         public ActionResult ShowOrderBookBids(string coin, string situation, string startDate = "", string endDate = "")
         {
-            OrderBookBidsService orderBookBids = new OrderBookBidsService();
-            orderBookBids.Load(coin, situation, startDate, endDate);
+            OrderBookService orderBook = new OrderBookService();
+            orderBook.Load("bid", coin, situation, startDate, endDate);
 
-            ViewBag.show = orderBookBids.Show;
-            ViewBag.summVolume = orderBookBids.SummVolume;
+            ViewBag.show = orderBook.Show;
+            ViewBag.summVolume = orderBook.SummVolume;
 
             return View();
         }

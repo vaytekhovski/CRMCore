@@ -14,8 +14,7 @@ namespace CRM.Services
 {
     public class LoadDataService
     {
-        private List<OrderBookAsksModel> orderBookAsks = new List<OrderBookAsksModel>();
-        private List<OrderBookBidsModel> orderBookBids = new List<OrderBookBidsModel>();
+        private List<OrderBookModel> orderBook = new List<OrderBookModel>();
         private List<TradeHistoryModel> tradeHistories = new List<TradeHistoryModel>();
         private List<TradeDeltaModel> tradeDeltas = new List<TradeDeltaModel>();
 
@@ -78,13 +77,13 @@ namespace CRM.Services
             var ticker = Ticker.FromJson(JsonFile(path));
 
             Debug.WriteLine($"{coin} add ticker to list");
-            AddTickerToLists(orderBookAsks, orderBookBids, tradeHistories, tradeDeltas, ticker, coin);
+            AddTickerToLists(orderBook, tradeHistories, tradeDeltas, ticker, coin);
 
             Debug.WriteLine($"{coin} checking exists values");
-            CheckExistValues(orderBookAsks, orderBookBids, tradeHistories, tradeDeltas);
+            CheckExistValues(orderBook, tradeHistories, tradeDeltas);
 
             Debug.WriteLine($"{coin} add list to database");
-            AddListToDataBase(orderBookAsks, orderBookBids, tradeHistories, tradeDeltas);
+            AddListToDataBase(orderBook, tradeHistories, tradeDeltas);
 
             Debug.WriteLine($"[{index}/{DropDownFields.Coins.Count}] Download {coin} ended");
             isLoading = false;
@@ -107,16 +106,17 @@ namespace CRM.Services
             return File.ReadAllText(path);
         }
 
-        private static void AddTickerToLists(List<OrderBookAsksModel> orderBookAsks, List<OrderBookBidsModel> orderBookBids, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas, Ticker ticker, string Pair)
+        private static void AddTickerToLists(List<OrderBookModel> orderBook, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas, Ticker ticker, string Pair)
         {
             // Проходим по каждому list'у в Ticker'e 
             // и заносим из него данные в наш лист
 
 
             foreach (var item in ticker.OrderBookAsks)
-                orderBookAsks.Add(new OrderBookAsksModel
+                orderBook.Add(new OrderBookModel
                 {
                     CurrencyName = Pair,
+                    BookType = "ask",
                     Date = item.Time.Date + item.Time.TimeOfDay,
                     Price = item.Price,
                     Volume = item.Amount,
@@ -124,9 +124,10 @@ namespace CRM.Services
                 });
             
             foreach (var item in ticker.OrderBookBids)
-                orderBookBids.Add(new OrderBookBidsModel
+                orderBook.Add(new OrderBookModel
                 {
                     CurrencyName = Pair,
+                    BookType = "bid",
                     Date = item.Time.Date + item.Time.TimeOfDay,
                     Price = item.Price,
                     Volume = item.Amount,
@@ -155,34 +156,34 @@ namespace CRM.Services
                 });
         }
 
-        private static void CheckExistValues(List<OrderBookAsksModel> orderBookAsks, List<OrderBookBidsModel> orderBookBids, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas)
+        private static void CheckExistValues(List<OrderBookModel> orderBook, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas)
         {
             // Проходим по базе данных и проверяем,
             // существуют ли в ней такие элементы,
             // если да, то удаляем их из list'a
             using (CRMContext context = new CRMContext())
             {
-                foreach (var DBItem in context.OrderBookAsksModels)
+                foreach (var DBItem in context.OrderBookModels.Where(x => x.BookType == "ask"))
                 {
-                    var buf = orderBookAsks.FirstOrDefault(x =>
+                    var buf = orderBook.FirstOrDefault(x =>
                        x.Date == DBItem.Date &&
                        x.Price == DBItem.Price &&
                        x.Volume == DBItem.Volume
                    );
                     if (buf != null)
-                        orderBookAsks.Remove(buf);
+                        orderBook.Remove(buf);
                 }
 
                 
-                foreach (var DBItem in context.OrderBookBidsModels)
+                foreach (var DBItem in context.OrderBookModels.Where(x => x.BookType == "bid"))
                 {
-                    var buf = orderBookBids.FirstOrDefault(x =>
+                    var buf = orderBook.FirstOrDefault(x =>
                        x.Date == DBItem.Date &&
                        x.Price == DBItem.Price &&
                        x.Volume == DBItem.Volume
                    );
                     if (buf != null)
-                        orderBookBids.Remove(buf);
+                        orderBook.Remove(buf);
                 }
 
                 foreach (var DBItem in context.TradeHistoryModels)
@@ -209,16 +210,13 @@ namespace CRM.Services
             }
         }
 
-        private static void AddListToDataBase(List<OrderBookAsksModel> orderBookAsks, List<OrderBookBidsModel> orderBookBids, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas)
+        private static void AddListToDataBase(List<OrderBookModel> orderBook, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas)
         {
             // Добавляем данные из list'a в БД
             using (CRMContext context = new CRMContext())
             {
-                context.OrderBookAsksModels.AddRange(orderBookAsks);
-                Debug.WriteLine("items to OrderBookAsks added");
-
-                context.OrderBookBidsModels.AddRange(orderBookBids);
-                Debug.WriteLine("items to OrderBookBids added");
+                context.OrderBookModels.AddRange(orderBook);
+                Debug.WriteLine("items to OrderBook added");
 
                 context.TradeHistoryModels.AddRange(tradeHistories);
                 Debug.WriteLine("items to TradeHistory added");
