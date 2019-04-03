@@ -129,9 +129,7 @@ namespace CRM.Services.Binance
 
         private void AddToTradeHistories()
         {
-            foreach (var item in trades
-                .OrderByDescending(x => x.Time)
-                .Where(x => x.Time >= new DateTime(2019, 04, 01)))
+            foreach (var item in trades.Where(x => x.Time >= new DateTime(2019, 04, 01)))
             {
                 accountTradeHistories.Add(new AccountTradeHistory
                 {
@@ -167,15 +165,14 @@ namespace CRM.Services.Binance
                     break;
             }
 
-            foreach (var item in accountTradeHistories.OrderBy(x => x.Time))
+            List<AccountTradeHistory> list = accountTradeHistories.OrderBy(x => x.Time).ToList();
+            foreach (var item in list)
             {
-
                 if (item.Side == "BUY")
                     currentBalace -= double.Parse(item.DollarQuantity.ToString());
                 else
                     currentBalace += double.Parse(item.DollarQuantity.ToString());
-
-
+                
                 item.BalanceUSDT = currentBalace;
             }
 

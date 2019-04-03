@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CRM.Services.Data
 {
-    public class OrderBookBidsService //TODO: объединить с аскс, объединить в одну таблицу
+    public class OrderBookBidsService //TODO: [COMPLETE] объединить с аскс, объединить в одну таблицу
     {
         private double summVolume;
 
