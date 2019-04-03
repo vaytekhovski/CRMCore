@@ -14,6 +14,7 @@ using CRM.Models;
 
 namespace CRM.Controllers.User
 {
+    [Authorize] // TODO: use for whole controllers where necessary
     public class UserPanelController : Controller
     {
         private UserContext db;
@@ -24,7 +25,7 @@ namespace CRM.Controllers.User
         }
        
         [Authorize]
-        public ActionResult UserPanel(UserPanelModel model)
+        public ActionResult UserPanel()
         {
             UserModel user = db.UserModels.FirstOrDefault(x => x.Login == User.Identity.Name);
 
@@ -32,10 +33,11 @@ namespace CRM.Controllers.User
             ViewBag.Password = user.Password;
             ViewBag.RegistrationDate = user.RegistrationDate;
 
-            return View(model); // TODO: [COMPLETE] после реализации авторизации заменить такие проверк на  атрибут Authorize
+            return View();
         }
 
         [Authorize]
+        //[AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> ChangeLoginAsync(UserPanelModel model)
         {

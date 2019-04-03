@@ -39,7 +39,7 @@ namespace CRM.Controllers.Charts
         {
             DeltaOnTradeHistoryService deltaOnTradeHistory = new DeltaOnTradeHistoryService();
             deltaOnTradeHistory.Load(coin, startDate, endDate);
-            ViewBag.datesDelta = deltaOnTradeHistory.DatesDelta; // TODO: [COMPLETE] свойства с большой буквы, поля с маленькой, поля не должны быть публичными
+            ViewBag.datesDelta = deltaOnTradeHistory.DatesDelta;
             ViewBag.deltaValues = deltaOnTradeHistory.DeltaValues;
 
             ViewBag.datesTHBuy = deltaOnTradeHistory.DatesTHBuy;

@@ -16,6 +16,6 @@ namespace CRM.Models.Binance
         public string CommissionAsset { get; set; }
         public decimal Commission { get; set; }
         public double BalanceUSDT { get; set; }
-        public string Profit { get; set; }
+        public double Profit { get; set; }
     }
 }

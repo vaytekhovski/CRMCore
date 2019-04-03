@@ -193,14 +193,14 @@ namespace CRM.Services.Binance
                         profit += double.Parse(TH[i].DollarQuantity.ToString("#.##"));
 
                     if ((TH[i].Side == "SELL" && i == count-1 ) || (TH[i].Side == "SELL" && TH[i + 1].Side == "BUY"))
-                        TH[i].Profit = profit.ToString("#.##");
+                        TH[i].Profit = profit;
                 }
 
                 int j = 0;
                 foreach (var item in accountTradeHistories.Where(x => x.Pair == _coin).OrderBy(x => x.Time))
                 {
-                    if(TH[j].Profit != null)
-                        item.Profit = "$ " + TH[j].Profit;
+                    if (TH[j].Profit != 0)
+                        item.Profit = /*"$ " +*/ TH[j].Profit;
                     j++;
                 }
             }

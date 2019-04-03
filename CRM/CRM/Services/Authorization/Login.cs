@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRM.Services.Authorization
 {
-    public class LoginService // TODO: [COMPLETE] переименовать в LoginService, остальные сервисы также
+    public class LoginService
     {
         public string status;
 

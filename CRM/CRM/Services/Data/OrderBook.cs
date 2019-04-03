@@ -41,13 +41,12 @@ namespace CRM.Services.Data
                 {
                     summVolume += item.Volume;
                 }
-
             }
 
-            if (coin != DropDownFields.Coins.ToArray()[0].Value)
+            if (coin != DropDownFields.Coins.First().Value)
                 DropDownFields.SwapCoins(coin);
 
-            if (situation != DropDownFields.Situation.ToArray()[0].Value)
+            if (situation != DropDownFields.Situation.First().Value)
                 DropDownFields.SwapSituations(situation);
         }
     }

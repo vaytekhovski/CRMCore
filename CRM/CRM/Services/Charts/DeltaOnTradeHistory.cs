@@ -17,7 +17,7 @@ namespace CRM.Services.Charts
         private List<long> datesTHSell = new List<long>();
         private List<string> tHSellValues = new List<string>();
 
-        public List<long> DatesDelta { get => datesDelta; }
+        public List<long> DatesDelta { get => datesDelta; } // TODO: without fields where possible
         public List<string> DeltaValues { get => deltaValues; }
 
         public List<long> DatesTHBuy { get => datesTHBuy; }

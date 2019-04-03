@@ -46,22 +46,31 @@
                     <th>Количество</th>
                     <th>Комиссия</th>
                     <th>Баланс</th>
-                    <th>Прибыль</th>
+                    <th class="profit">Прибыль</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in ViewBag.AllOrders)
                 {
+                    string profit = "";
+                    if (item.Profit != 0)
+                    {
+                        profit = String.Format("{0:0.##}", item.Profit);
+                    }
+                    else
+                    {
+                        profit = null;
+                    }
                 <tr>
                     <td>@item.Time.ToString("dd MMMM yyyy HH:mm:ss")</td>
                     <td>@item.Side</td>
                     <td>@item.Pair</td>
-                    <td>$@item.Price.ToString("#.##")</td>
+                    <td>$@String.Format("{0:0.##}", item.Price)</td>
                     <td>@item.Quantity</td>
-                    <td>$@item.DollarQuantity.ToString("#.##")</td>
+                    <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
                     <td>@item.CommissionAsset @item.Commission</td>
-                    <td>$@item.BalanceUSDT.ToString("#.##")</td>
-                    <td id="profit">@item.Profit</td>
+                    <td>$@String.Format("{0:0.##}", item.BalanceUSDT)</td>
+                    <td class="profit">@profit</td>
                 </tr>
                 }
             </tbody>
@@ -79,12 +88,26 @@
                     return $(this).text() == searchSELL;
                 }).parent('tr').css('backgroundColor', 'rgb(255, 255, 255)');
 
+                $('td.profit').each(function () {
+                    var fValue = parseFloat($(this).text());
+
+                    if (!isNaN(fValue) && fValue >= 0) {
+                        $(this).css('color', 'green');
+                    }
+
+                    if (!isNaN(fValue) && fValue < 0) {
+                        $(this).css('color', 'red');
+                    }
+                });
+
             });
 
             $(document).ready(function () {
                 sorttable.innerSortFunction.apply(document.getElementById('time'), []);
                 sorttable.innerSortFunction.apply(document.getElementById('time'), []);
-                document.getElementById('profit').css('color', 'green');
+                
+
+
             });
             
         </script>

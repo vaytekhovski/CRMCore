@@ -62,7 +62,7 @@ namespace AuthApp.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                else
+                else  //TODO: wrap into brackets
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
