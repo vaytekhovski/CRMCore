@@ -14,13 +14,13 @@ namespace CRM.Services
 {
     public class LoadDataService
     {
-        private List<OrderBookModel> orderBook = new List<OrderBookModel>();
-        private List<TradeHistoryModel> tradeHistories = new List<TradeHistoryModel>();
-        private List<TradeDeltaModel> tradeDeltas = new List<TradeDeltaModel>();
-
         public static bool isLoading = false;
 
         int index = 1;
+
+        public List<OrderBookModel> OrderBook { get; private set; } = new List<OrderBookModel>();
+        public List<TradeHistoryModel> TradeHistories { get; private set; } = new List<TradeHistoryModel>();
+        public List<TradeDeltaModel> TradeDeltas { get; private set; } = new List<TradeDeltaModel>();
 
         public LoadDataService()
         {
@@ -77,13 +77,13 @@ namespace CRM.Services
             var ticker = Ticker.FromJson(JsonFile(path));
 
             Debug.WriteLine($"{coin} add ticker to list");
-            AddTickerToLists(orderBook, tradeHistories, tradeDeltas, ticker, coin);
+            AddTickerToLists(OrderBook, TradeHistories, TradeDeltas, ticker, coin);
 
             Debug.WriteLine($"{coin} checking exists values");
-            CheckExistValues(orderBook, tradeHistories, tradeDeltas);
+            CheckExistValues(OrderBook, TradeHistories, TradeDeltas);
 
             Debug.WriteLine($"{coin} add list to database");
-            AddListToDataBase(orderBook, tradeHistories, tradeDeltas);
+            AddListToDataBase(OrderBook, TradeHistories, TradeDeltas);
 
             Debug.WriteLine($"[{index}/{DropDownFields.Coins.Count}] Download {coin} ended");
             isLoading = false;
@@ -171,7 +171,9 @@ namespace CRM.Services
                        x.Volume == DBItem.Volume
                    );
                     if (buf != null)
+                    {
                         orderBook.Remove(buf);
+                    }
                 }
 
                 
@@ -183,7 +185,9 @@ namespace CRM.Services
                        x.Volume == DBItem.Volume
                    );
                     if (buf != null)
+                    {
                         orderBook.Remove(buf);
+                    }
                 }
 
                 foreach (var DBItem in context.TradeHistoryModels)
@@ -194,7 +198,9 @@ namespace CRM.Services
                        x.Volume == DBItem.Volume
                    );
                     if (buf != null)
+                    {
                         tradeHistories.Remove(buf);
+                    }
                 }
 
                 foreach (var DBItem in context.TradeDeltaModels)
@@ -205,7 +211,9 @@ namespace CRM.Services
                         x.Delta == DBItem.Delta
                     );
                     if (buf != null)
+                    {
                         tradeDeltas.Remove(buf);
+                    }
                 }
             }
         }

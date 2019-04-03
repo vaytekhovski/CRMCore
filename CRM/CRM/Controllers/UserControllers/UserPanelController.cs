@@ -14,7 +14,7 @@ using CRM.Models;
 
 namespace CRM.Controllers.User
 {
-    [Authorize] // TODO: use for whole controllers where necessary
+    [Authorize] // TODO: [COMPLETE] use for whole controllers where necessary
     public class UserPanelController : Controller
     {
         private UserContext db;
@@ -24,7 +24,6 @@ namespace CRM.Controllers.User
             db = context;
         }
        
-        [Authorize]
         public ActionResult UserPanel()
         {
             UserModel user = db.UserModels.FirstOrDefault(x => x.Login == User.Identity.Name);
@@ -35,8 +34,7 @@ namespace CRM.Controllers.User
 
             return View();
         }
-
-        [Authorize]
+        
         //[AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> ChangeLoginAsync(UserPanelModel model)
@@ -45,32 +43,28 @@ namespace CRM.Controllers.User
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
-
-        [Authorize]
+        
         [HttpGet]
         public ActionResult ChangePassword(UserPanelModel model)
         {
             ChangeUserDataService.ChangeUserPassword(User.Identity.Name, model.Password);
             return RedirectToAction("UserPanel");
         }
-
-        [Authorize]
+        
         [HttpGet]
         public ActionResult ChangeDailyTrigger(string updateData)
         {
             DailyTriggerService.ChangeDailyTrigger(TimeSpan.Parse(updateData));
             return RedirectToAction("UserPanel");
         }
-
-        [Authorize]
+        
         [HttpGet]
         public async Task<IActionResult> ExitFromAccount()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
-
-        [Authorize]
+        
         [HttpGet]
         public ActionResult LoadData(string startDate, string endDate)
         {
@@ -78,7 +72,5 @@ namespace CRM.Controllers.User
             LoadDataService loadData = new LoadDataService(DateTime.Parse(startDate), DateTime.Parse(endDate));
             return RedirectToAction("UserPanel");
         }
-        
-
     }
 }

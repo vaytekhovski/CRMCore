@@ -8,23 +8,14 @@ namespace CRM.Services.Charts
 {
     public class DeltaOnTradeHistoryService
     {
-        private List<long> datesDelta = new List<long>();
-        private List<string> deltaValues = new List<string>();
+        public List<long> DatesDelta { get; private set; } = new List<long>(); // TODO: [COMPLETE] without fields where possible
+        public List<string> DeltaValues { get; private set; } = new List<string>();
 
-        private List<long> datesTHBuy = new List<long>();
-        private List<string> tHBuyValues = new List<string>();
+        public List<long> DatesTHBuy { get; private set; } = new List<long>();
+        public List<string> THBuyValues { get; private set; } = new List<string>();
 
-        private List<long> datesTHSell = new List<long>();
-        private List<string> tHSellValues = new List<string>();
-
-        public List<long> DatesDelta { get => datesDelta; } // TODO: without fields where possible
-        public List<string> DeltaValues { get => deltaValues; }
-
-        public List<long> DatesTHBuy { get => datesTHBuy; }
-        public List<string> THBuyValues { get => tHBuyValues; }
-
-        public List<long> DatesTHSell { get => datesTHSell; }
-        public List<string> THSellValues { get => tHSellValues; }
+        public List<long> DatesTHSell { get; private set; } = new List<long>();
+        public List<string> THSellValues { get; private set; } = new List<string>();
 
         public DeltaOnTradeHistoryService() { }
 
@@ -34,9 +25,6 @@ namespace CRM.Services.Charts
             {
                 var SD = DateTime.Parse(startDate);
                 var ED = DateTime.Parse(endDate);
-
-                //Session["SD"] = HomeController.DatesToSession(SD);
-                //Session["ED"] = HomeController.DatesToSession(ED);
 
                 using (CRMContext context = new CRMContext())
                 {
@@ -63,8 +51,8 @@ namespace CRM.Services.Charts
                         DateTime DatePlusTime = item.TimeTo.DateTime;
                         string value = item.Delta.ToString();
 
-                        datesDelta.Add(DatePlusTime.ToJavascriptTicks());
-                        deltaValues.Add(value.Replace(',', '.'));
+                        DatesDelta.Add(DatePlusTime.ToJavascriptTicks());
+                        DeltaValues.Add(value.Replace(',', '.'));
                     }
 
                     foreach (var item in THBuy)
@@ -72,7 +60,7 @@ namespace CRM.Services.Charts
                         DateTime DatePlusTime = item.Date.DateTime;
                         string value = item.Volume.ToString();
 
-                        datesTHBuy.Add(DatePlusTime.ToJavascriptTicks());
+                        DatesTHBuy.Add(DatePlusTime.ToJavascriptTicks());
                         THBuyValues.Add(value.Replace(',', '.'));
                     }
 
@@ -81,14 +69,16 @@ namespace CRM.Services.Charts
                         DateTime DatePlusTime = item.Date.DateTime;
                         string value = item.Volume.ToString();
 
-                        datesTHSell.Add(DatePlusTime.ToJavascriptTicks());
+                        DatesTHSell.Add(DatePlusTime.ToJavascriptTicks());
                         THSellValues.Add(value.Replace(',', '.'));
                     }
                 }
             }
 
             if (coin != DropDownFields.Coins.ToArray()[0].Value)
+            {
                 DropDownFields.SwapCoins(coin);
+            }
             
         }
     }

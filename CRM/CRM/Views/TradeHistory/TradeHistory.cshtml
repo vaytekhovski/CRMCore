@@ -89,13 +89,13 @@
                 }).parent('tr').css('backgroundColor', 'rgb(255, 255, 255)');
 
                 $('td.profit').each(function () {
-                    var fValue = parseFloat($(this).text());
+                    var fValue = parseFloat($(this).text(),10);
+                    console.log(fValue + " " + Math.sign(fValue));
 
-                    if (!isNaN(fValue) && fValue >= 0) {
+                    if (!isNaN(fValue) && Math.sign(fValue) == 1) {
                         $(this).css('color', 'green');
                     }
-
-                    if (!isNaN(fValue) && fValue < 0) {
+                    else {
                         $(this).css('color', 'red');
                     }
                 });

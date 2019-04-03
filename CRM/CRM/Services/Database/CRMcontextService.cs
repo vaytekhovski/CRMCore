@@ -7,8 +7,6 @@ namespace CRM.Services
 
     public class CRMContext : DbContext
     {
-        internal object first;
-
         public DbSet<OrderBookModel> OrderBookModels { get; set; }
         public DbSet<TradeDeltaModel> TradeDeltaModels { get; set; }
         public DbSet<TradeHistoryModel> TradeHistoryModels { get; set; }

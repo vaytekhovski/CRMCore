@@ -11,15 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.Controllers.TradeHistory
 {
+    [Authorize]
     public class TradeHistoryController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
         public ActionResult TradeHistory(string coin, string accounts, string startDate, string endDate)
         {
             BinanceAccount binanceAccount = new BinanceAccount();
@@ -30,11 +29,12 @@ namespace CRM.Controllers.TradeHistory
             while (!binanceAccount.isDone)
                 continue;
 
-            ViewBag.AllOrders = binanceAccount.AccountTradeHistories
-                .OrderBy(x => x.Time);
+            ViewBag.AllOrders = binanceAccount.AccountTradeHistories.OrderBy(x => x.Time);
 
-            if (accounts != DropDownFields.Accounts.ToArray()[0].Value)
+            if (accounts != DropDownFields.Accounts.First().Value)
+            {
                 DropDownFields.SwapAccounts();
+            }
             DropDownFields.SwapCoins(coin);
 
             return View();

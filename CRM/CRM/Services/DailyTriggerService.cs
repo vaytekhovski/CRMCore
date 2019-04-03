@@ -7,9 +7,7 @@ namespace CRM.Services
 {
     public class DailyTriggerService
     {
-        private static TimeSpan triggerHour;
-
-        public static TimeSpan TriggerHour => triggerHour;
+        public static TimeSpan TriggerHour { get; private set; }
 
         public DailyTriggerService()
         {
@@ -28,11 +26,11 @@ namespace CRM.Services
             {
                 foreach (var item in context.DailyUpdates)
                 {
-                    triggerHour = item.dailyTrigger;
+                    TriggerHour = item.dailyTrigger;
                     break;
                 }
 
-                Debug.WriteLine($"Daily update time changed to {triggerHour}");
+                Debug.WriteLine($"Daily update time changed to {TriggerHour}");
             }
         }
 
@@ -40,7 +38,7 @@ namespace CRM.Services
         {
             while (true)
             {
-                var triggerTime = DateTime.Today + triggerHour - DateTime.Now;
+                var triggerTime = DateTime.Today + TriggerHour - DateTime.Now;
                 if (triggerTime < TimeSpan.Zero)
                     triggerTime = triggerTime.Add(new TimeSpan(24, 0, 0));
                 await Task.Delay(triggerTime);

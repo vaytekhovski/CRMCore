@@ -1,9 +1,9 @@
 ﻿using CRM.Models.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace CRM.Models
+namespace CRM.Services
 {
-    public class UserContext : DbContext //TODO: move from heere to service/database
+    public class UserContext : DbContext //TODO: [COMPLETE] move from heere to service/database
     {
         public DbSet<UserModel> UserModels { get; set; }
         public UserContext(DbContextOptions<UserContext> options)

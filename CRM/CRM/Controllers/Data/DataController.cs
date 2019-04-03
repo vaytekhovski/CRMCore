@@ -10,15 +10,14 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CRM.Controllers.Data
 {
+    [Authorize]
     public class DataController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
-
-        [Authorize]
+        
         public ActionResult ShowOrderBookAsks(string coin, string situation, string startDate = "", string endDate = "")
         {
             OrderBookService orderBook = new OrderBookService();
@@ -29,8 +28,7 @@ namespace CRM.Controllers.Data
 
             return View();
         }
-
-        [Authorize]
+        
         public ActionResult ShowOrderBookBids(string coin, string situation, string startDate = "", string endDate = "")
         {
             OrderBookService orderBook = new OrderBookService();
@@ -41,8 +39,7 @@ namespace CRM.Controllers.Data
 
             return View();
         }
-
-        [Authorize]
+        
         public ActionResult ShowTradeHistory(string coin, string situation, string orderType, string startDate = "", string endDate = "")
         {
             TradeHistoryService tradeHistory = new TradeHistoryService();
@@ -53,8 +50,7 @@ namespace CRM.Controllers.Data
 
             return View();
         }
-
-        [Authorize]
+        
         public ActionResult ShowTradeDelta(string coin, string startDate = "", string endDate = "", string nulldelta = "all")
         {
             TradeDeltaService tradeDelta = new TradeDeltaService();

@@ -11,15 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.Controllers.Charts
 {
+    [Authorize]
     public class ChartsController : Controller
     {
-        [Authorize]
         public ActionResult Charts()
         {
             return View();
         }
-
-        [Authorize]
+        
         public ActionResult AsksOnBids(string coin, string startDate = "", string endDate = "")
         {
             AsksOnBidsService asksOnBids = new AsksOnBidsService();
@@ -33,8 +32,7 @@ namespace CRM.Controllers.Charts
 
             return View();
         }
-
-        [Authorize]
+        
         public ActionResult DeltaOnTradeHistory(string coin, string startDate, string endDate)
         {
             DeltaOnTradeHistoryService deltaOnTradeHistory = new DeltaOnTradeHistoryService();

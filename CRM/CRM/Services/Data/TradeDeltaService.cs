@@ -9,11 +9,8 @@ namespace CRM.Services.Data
 {
     public class TradeDeltaService
     {
-        private double summDelta;
-        private List<TradeDeltaModel> show;
-
-        public double SummDelta { get => summDelta;}
-        public List<TradeDeltaModel> Show { get => show;  }
+        public double SummDelta { get; private set; }
+        public List<TradeDeltaModel> Show { get; private set; }
 
         public TradeDeltaService() { }
 
@@ -21,9 +18,9 @@ namespace CRM.Services.Data
         {
             using (CRMContext context = new CRMContext())
             {
-                show = context.TradeDeltaModels.ToList();
+                Show = context.TradeDeltaModels.ToList();
 
-                show = context.TradeDeltaModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.TimeFrom).ToList();
+                Show = context.TradeDeltaModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.TimeFrom).ToList();
 
                 if (startDate != "" && endDate != "")
                 {
@@ -33,23 +30,29 @@ namespace CRM.Services.Data
                     //Session["SD"] = HomeController.DatesToSession(SD);
                     //Session["ED"] = HomeController.DatesToSession(ED);
 
-                    show = show.Where(x => x.TimeFrom >= SD && x.TimeTo <= ED).ToList();
+                    Show = Show.Where(x => x.TimeFrom >= SD && x.TimeTo <= ED).ToList();
                 }
 
                 if (nulldelta == "notnull")
-                    show = show.Where(x => x.Delta > 0 || x.Delta < 0).ToList();
+                {
+                    Show = Show.Where(x => x.Delta > 0 || x.Delta < 0).ToList();
+                }
 
                 foreach (var item in Show)
                 {
-                    summDelta += item.Delta;
+                    SummDelta += item.Delta;
                 }
 
 
                 if (coin != DropDownFields.Coins.ToArray()[0].Value)
+                {
                     DropDownFields.SwapCoins(coin);
+                }
 
                 if (nulldelta != DropDownFields.Nulls.ToArray()[0].Value)
+                {
                     DropDownFields.SwapNulls();
+                }
                 
             }
         }

@@ -9,11 +9,8 @@ namespace CRM.Services.Data
 {
     public class OrderBookService
     {
-        private double summVolume;
-        private List<OrderBookModel> show;
-
-        public double SummVolume { get => summVolume; }
-        public List<OrderBookModel> Show { get => show; }
+        public double SummVolume { get; private set; }
+        public List<OrderBookModel> Show { get; private set; }
 
         public OrderBookService() { }
 
@@ -21,7 +18,7 @@ namespace CRM.Services.Data
         {
             using (CRMContext context = new CRMContext())
             {
-                show = context.OrderBookModels.Where(z => z.BookType == bookType && z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
+                Show = context.OrderBookModels.Where(z => z.BookType == bookType && z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
 
                 if (startDate != "" && endDate != "")
                 {
@@ -31,23 +28,29 @@ namespace CRM.Services.Data
                     //Session["SD"] = HomeController.DatesToSession(SD);
                     //Session["ED"] = HomeController.DatesToSession(ED);
 
-                    show = show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
+                    Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
                 }
 
                 if (situation != "all")
-                    show = show.Where(x => x.MarketSituation == situation).ToList();
+                {
+                    Show = Show.Where(x => x.MarketSituation == situation).ToList();
+                }
 
                 foreach (var item in Show)
                 {
-                    summVolume += item.Volume;
+                    SummVolume += item.Volume;
                 }
             }
 
             if (coin != DropDownFields.Coins.First().Value)
+            {
                 DropDownFields.SwapCoins(coin);
+            }
 
             if (situation != DropDownFields.Situation.First().Value)
+            {
                 DropDownFields.SwapSituations(situation);
+            }
         }
     }
 }

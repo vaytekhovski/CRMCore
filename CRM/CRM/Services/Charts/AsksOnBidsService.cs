@@ -8,15 +8,10 @@ namespace CRM.Services.Charts
 {
     public class AsksOnBidsService
     {
-        private List<long> datesAsks = new List<long>();
-        private List<long> datesBids = new List<long>();
-        private List<string> asksValues = new List<string>();
-        private List<string> bidsValues = new List<string>();
-
-        public List<long> DatesAsks { get => datesAsks; }
-        public List<long> DatesBids { get => datesBids;  }
-        public List<string> AsksValues { get => asksValues; }
-        public List<string> BidsValues { get => bidsValues;  }
+        public List<long> DatesAsks { get; private set; } = new List<long>();
+        public List<long> DatesBids { get; private set; } = new List<long>();
+        public List<string> AsksValues { get; private set; } = new List<string>();
+        public List<string> BidsValues { get; private set; } = new List<string>();
 
 
         public AsksOnBidsService() { }
@@ -27,9 +22,6 @@ namespace CRM.Services.Charts
             {
                 var SD = DateTime.Parse(startDate);
                 var ED = DateTime.Parse(endDate);
-
-                //Session["SD"] = HomeController.DatesToSession(SD);
-                //Session["ED"] = HomeController.DatesToSession(ED);
 
                 using (CRMContext context = new CRMContext())
                 {
@@ -48,8 +40,8 @@ namespace CRM.Services.Charts
                         DateTime DatePlusTime = item.Date.DateTime;
                         string value = item.Volume.ToString();
 
-                        datesAsks.Add(item.Date.Date.ToJavascriptTicks());
-                        asksValues.Add(value.Replace(',', '.'));
+                        DatesAsks.Add(item.Date.Date.ToJavascriptTicks());
+                        AsksValues.Add(value.Replace(',', '.'));
                     }
 
                     foreach (var item in Bids)
@@ -57,8 +49,8 @@ namespace CRM.Services.Charts
                         DateTime DatePlusTime = item.Date.DateTime;
                         string value = item.Volume.ToString();
 
-                        datesBids.Add(DatePlusTime.ToJavascriptTicks());
-                        bidsValues.Add(value.Replace(',', '.'));
+                        DatesBids.Add(DatePlusTime.ToJavascriptTicks());
+                        BidsValues.Add(value.Replace(',', '.'));
                     }
                 }
             }
