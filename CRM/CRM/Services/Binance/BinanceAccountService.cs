@@ -188,24 +188,32 @@ namespace CRM.Services.Binance
             {
                 double profit = 0;
                 var TH = AccountTradeHistories.Where(x => x.Pair == _coin).OrderBy(x => x.Time).ToArray();
-                int count = TH.Count();
 
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < TH.Count(); i++)
                 {
                     if (TH[i].Side == "BUY")
+                    {
                         profit -= double.Parse(TH[i].DollarQuantity.ToString("#.##"));
+                    }
                     else
+                    {
                         profit += double.Parse(TH[i].DollarQuantity.ToString("#.##"));
+                    }
 
-                    if ((TH[i].Side == "SELL" && i == count-1 ) || (TH[i].Side == "SELL" && TH[i + 1].Side == "BUY"))
+                    if ((TH[i].Side == "SELL" && i == TH.Count() - 1) || (TH[i].Side == "SELL" && TH[i + 1].Side == "BUY"))
+                    {
                         TH[i].Profit = profit;
+                        profit = 0;
+                    }
                 }
 
                 int j = 0;
                 foreach (var item in AccountTradeHistories.Where(x => x.Pair == _coin).OrderBy(x => x.Time))
                 {
                     if (TH[j].Profit != 0)
+                    {
                         item.Profit = TH[j].Profit;
+                    }
                     j++;
                 }
             }
