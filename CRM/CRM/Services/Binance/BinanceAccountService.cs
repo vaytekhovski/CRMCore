@@ -13,7 +13,7 @@ using CRM.Models.Binance;
 
 namespace CRM.Services.Binance
 {
-    public class BinanceAccount
+    public class BinanceAccountService
     {
         private string APIKey;
         private string APISecret;

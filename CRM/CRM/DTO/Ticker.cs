@@ -11,7 +11,7 @@ namespace CRM.DTO
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
-    public partial class Ticker //TODO: remove partials
+    public class Ticker //TODO: [COMPLETE] remove partials
     {
         [JsonProperty("OrderBookAsks")]
         public List<OrderBook> OrderBookAsks { get; set; }
@@ -24,6 +24,8 @@ namespace CRM.DTO
 
         [JsonProperty("TradeDelta")]
         public List<TradeDelta> TradeDelta { get; set; }
+
+        public static Ticker FromJson(string json) => JsonConvert.DeserializeObject<Ticker>(json, Converter.Settings);
     }
     
     public enum Situation { Flat, Trend, Unknown };
@@ -33,10 +35,5 @@ namespace CRM.DTO
     public enum Side { Buy, Sell };
 
     public enum TradeHistoryType { Market };
-
-    public partial class Ticker
-    {
-        public static Ticker FromJson(string json) => JsonConvert.DeserializeObject<Ticker>(json, Converter.Settings);
-    }
     
 }

@@ -21,7 +21,7 @@ namespace CRM.Controllers.TradeHistory
 
         public ActionResult TradeHistory(string coin, string accounts, string startDate, string endDate)
         {
-            BinanceAccount binanceAccount = new BinanceAccount();
+            BinanceAccountService binanceAccount = new BinanceAccountService();
 #pragma warning disable CS4014 // Так как этот вызов не ожидается, выполнение существующего метода продолжается до завершения вызова
             binanceAccount.LoadAsync(accounts, coin);
 #pragma warning restore CS4014 // Так как этот вызов не ожидается, выполнение существующего метода продолжается до завершения вызова

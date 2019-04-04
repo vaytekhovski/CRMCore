@@ -89,7 +89,8 @@
                 }).parent('tr').css('backgroundColor', 'rgb(255, 255, 255)');
 
                 $('td.profit').each(function () {
-                    var fValue = parseFloat($(this).text(),10);
+                    var fValue = parseFloat($(this).text());
+
                     console.log(fValue + " " + Math.sign(fValue));
 
                     if (!isNaN(fValue) && Math.sign(fValue) == 1) {
