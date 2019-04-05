@@ -1,10 +1,4 @@
-﻿using CRM.Services;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using CRM.Models.Database;
-using System.Linq;
-using System;
-using CRM.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using CRM.Services.Data;
 using Microsoft.AspNetCore.Authorization;
 

@@ -1,7 +1,6 @@
 ﻿using CRM.DTO;
 using CRM.Models;
 using CRM.Models.Database;
-using CRM.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

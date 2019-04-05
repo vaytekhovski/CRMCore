@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authentication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CRM.ViewModels;
-using CRM.Models;
 
 namespace CRM.Controllers.User
 {

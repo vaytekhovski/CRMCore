@@ -3,8 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using CRM.ViewModels; // пространство имен моделей RegisterModel и LoginModel
-using CRM.Models; // пространство имен UserContext и класса User
+using CRM.ViewModels; 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CRM.Models.Database;

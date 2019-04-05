@@ -1,14 +1,8 @@
-﻿//using Binance.API.Csharp.Client;
-//using Binance.API.Csharp.Client.Models.Account;
-//using Binance.API.Csharp.Client.Models.Market;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Binance;
-using System.Threading;
 using CRM.Models.Binance;
 
 namespace CRM.Services.Binance
@@ -193,11 +187,11 @@ namespace CRM.Services.Binance
                 {
                     if (TH[i].Side == "BUY")
                     {
-                        profit -= double.Parse(TH[i].DollarQuantity.ToString("#.##"));
+                        profit -= (double)TH[i].DollarQuantity;
                     }
                     else
                     {
-                        profit += double.Parse(TH[i].DollarQuantity.ToString("#.##"));
+                        profit += (double)TH[i].DollarQuantity;
                     }
 
                     if ((TH[i].Side == "SELL" && i == TH.Count() - 1) || (TH[i].Side == "SELL" && TH[i + 1].Side == "BUY"))
