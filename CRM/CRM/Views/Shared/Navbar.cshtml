@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
 
+
+    <link href="~/css/stylesheet.css" rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="~/css/mobileStylesheet.css" media="screen and (max-width:480px)" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    @*<link href="~/Content/styles.css" rel="stylesheet" type="text/css" />*@
 </head>
 <body>
     <form action="/" method="post">
@@ -37,7 +38,7 @@
                             <button class="btn nav-link" type="submit" formaction="../Charts/Charts" formmethod="post">Графики</button>
                         </li>
                         <li class="nav-item">
-                            <button style="width:150px" class="btn nav-link" type="submit" formaction="../TradeHistory/Index" formmethod="post">История торгов</button>
+                            <button class="btn nav-link THButton" type="submit" formaction="../TradeHistory/Index" formmethod="post">История торгов</button>
                         </li>
 
                     </ul>

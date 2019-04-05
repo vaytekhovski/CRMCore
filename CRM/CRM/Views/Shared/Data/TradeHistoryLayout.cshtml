@@ -9,7 +9,9 @@
     <title>@ViewBag.Title</title>
 
 
-    <link href="~/css/stylesheet.css" rel="stylesheet" />
+
+    <link href="~/css/stylesheet.css" rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="~/css/mobileStylesheet.css" media="screen and (max-width:480px)" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -20,7 +22,7 @@
 
 
 
-<body>
+<body class="body_of_layout">
     <div>
         @Html.Partial("Navbar")
     </div>
@@ -67,7 +69,7 @@
 
 
                     <div class="btn-group btn-block">
-                        <button type="submit" id="OrderBookAsks" class="btn btn-info" formaction="../Data/ShowOrderBookAsks" formmethod="post">OrderBookAsks</button>
+                        <button type="submit"  id="OrderBookAsks" class="btn btn-info" formaction="../Data/ShowOrderBookAsks" formmethod="post">OrderBookAsks</button>
                         <button type="submit" id="OrderBookBids" class="btn btn-info" formaction="../Data/ShowOrderBookBids" formmethod="post">OrderBookBids</button>
                         <button type="submit" id="TradeHistory" class="btn btn-info" formaction="../Data/ShowTradeHistory" formmethod="post">TradeHistory</button>
                         <button type="submit" id="TradeDelta" class="btn btn-info" formaction="../Data/ShowTradeDelta" formmethod="post">TradeDelta</button>
