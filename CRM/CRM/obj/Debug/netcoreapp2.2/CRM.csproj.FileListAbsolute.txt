@@ -103,7 +103,6 @@ D:\REPOSITORY\CRM\CRM\CRM\bin\Debug\netcoreapp2.2\CRM.dll
 D:\REPOSITORY\CRM\CRM\CRM\bin\Debug\netcoreapp2.2\CRM.pdb
 D:\REPOSITORY\CRM\CRM\CRM\bin\Debug\netcoreapp2.2\CRM.Views.dll
 D:\REPOSITORY\CRM\CRM\CRM\bin\Debug\netcoreapp2.2\CRM.Views.pdb
-D:\REPOSITORY\CRM\CRM\CRM\obj\Debug\netcoreapp2.2\CRM.csprojAssemblyReference.cache
 D:\REPOSITORY\CRM\CRM\CRM\obj\Debug\netcoreapp2.2\CRM.csproj.CoreCompileInputs.cache
 D:\REPOSITORY\CRM\CRM\CRM\obj\Debug\netcoreapp2.2\CRM.RazorAssemblyInfo.cache
 D:\REPOSITORY\CRM\CRM\CRM\obj\Debug\netcoreapp2.2\CRM.RazorAssemblyInfo.cs
@@ -145,3 +144,4 @@ D:\REPOSITORY\CRM\CRM\CRM\obj\Debug\netcoreapp2.2\CRM.Views.pdb
 D:\REPOSITORY\CRM\CRM\CRM\obj\Debug\netcoreapp2.2\CRM.dll
 D:\REPOSITORY\CRM\CRM\CRM\obj\Debug\netcoreapp2.2\CRM.pdb
 D:\REPOSITORY\CRM\CRM\CRM\obj\Debug\netcoreapp2.2\CRM.csproj.CopyComplete
+D:\REPOSITORY\CRM\CRM\CRM\obj\Debug\netcoreapp2.2\CRM.csprojAssemblyReference.cache

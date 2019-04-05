@@ -42,7 +42,15 @@
     width: 120px;
 }
 
-.body_of_layout
-{
+.body_of_layout{
     width: 414px;
+}
+
+.card-img-top{
+    display:none;
+}
+
+.col {
+    width: 400px;
+    height: 160px;
 }

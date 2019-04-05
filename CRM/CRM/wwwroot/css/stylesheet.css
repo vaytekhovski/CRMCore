@@ -36,10 +36,19 @@
     overflow: auto;
 }
 
-.cards{
+.cards {
     padding: 5% 15% 0pt 15%
 }
 
-.col{
+.col {
     margin-bottom: 50pt;
 }
+
+/*.card-img-top{
+    height: 400px;
+}
+
+.card {
+    width: 400px;
+    height: 600px
+}*/
