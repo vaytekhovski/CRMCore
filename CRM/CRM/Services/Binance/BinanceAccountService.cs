@@ -127,7 +127,7 @@ namespace CRM.Services.Binance
             {
                 AccountTradeHistories.Add(new AccountTradeHistory
                 {
-                    Time = item.Time,
+                    Time = item.Time.AddHours(3),
                     Side = item.IsBuyer == true ? "BUY" : "SELL",
                     Pair = item.Symbol,
                     Price = item.Price,
