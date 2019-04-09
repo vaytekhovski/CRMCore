@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\TradeHistory\**" />
+    <Compile Remove="Services\Binance\**" />
+    <Content Remove="Controllers\TradeHistory\**" />
+    <Content Remove="Services\Binance\**" />
+    <EmbeddedResource Remove="Controllers\TradeHistory\**" />
+    <EmbeddedResource Remove="Services\Binance\**" />
+    <None Remove="Controllers\TradeHistory\**" />
+    <None Remove="Services\Binance\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
@@ -195,12 +206,6 @@
     <Content Update="wwwroot\lib\jquery\LICENSE.txt">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Controllers\TradeHistory\" />
-    <Folder Include="Services\Binance\" />
   </ItemGroup>
 
 </Project>

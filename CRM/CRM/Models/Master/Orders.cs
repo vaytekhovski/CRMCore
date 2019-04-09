@@ -10,7 +10,7 @@ namespace CRM.Master
         //[Column("SagaId", TypeName = "char(36)")]
         //public string SagaId { get; set; }
         //[Column("AccountId", TypeName = "char(36)")]
-        //public string AccountId { get; set; }
+        public string AccountId { get; set; }
         public string Exchange { get; set; }
         public string Base { get; set; }
         public string Quote { get; set; }

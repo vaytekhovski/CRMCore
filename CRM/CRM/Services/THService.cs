@@ -6,6 +6,7 @@ using Binance;
 using CRM.Master;
 using CRM.Models;
 using CRM.Models.Binance;
+using CRM.Models.DropDown;
 
 namespace CRM.Services
 {
@@ -14,15 +15,37 @@ namespace CRM.Services
         private IEnumerable<Orders> orders = null;
         
         public List<AccountTradeHistory> AccountTradeHistories { get; private set; } = new List<AccountTradeHistory>();
+
+        private List<Field> Accounts = new List<Field>();
+
         
 
         public void Load(string acc, string coin)
         {
+            if (acc == "all") 
+            {
+                foreach (var item in DropDownFields.Accounts)
+                {
+                    if (item.Value == "all")
+                        continue;
+
+                    Accounts.Add(item);
+                }
+                
+            }
+            else
+            {
+                Accounts.Add(new Field { Value = acc, Name = "" });
+            }
+
             using (masterContext context = new masterContext())
             {
+                foreach (var account in Accounts)
+                {
+
                 if (coin != "all")
                 {
-                    orders = context.Orders.Where(x => x.Base == coin).ToList();
+                    orders = context.Orders.Where(x => x.Base == coin && x.AccountId == account.Value).ToList();
                     AddToTradeHistories();
                 }
                 else
@@ -32,16 +55,18 @@ namespace CRM.Services
                         if (_coin.Value == "all")
                             continue;
 
-                        orders = context.Orders.Where(x => x.Base == _coin.Value).ToList();
+                        orders = context.Orders.Where(x => x.Base == _coin.Value && x.AccountId == account.Value).ToList();
                         AddToTradeHistories();
                     }
+                }
+
                 }
             }
 
             AccountTradeHistories = AccountTradeHistories.Where(x => x.Time > DateTime.Parse("2019-04-05T03:00:00")).ToList();
             //UpdateBalance(acc);
             UpdateProfit();
-           
+
             
         }
 
@@ -52,8 +77,24 @@ namespace CRM.Services
                 if (item.ClosedAmount == 0)
                     continue;
 
+                string account = "";
+
+                switch (item.AccountId)
+                {
+                    case "bccd3ca1-0b5e-41ac-8233-3a35209912c7":
+                        account = "POLONIEX 1-й аккаунт";
+                        break;
+                    case "8025d4bf-4af6-466f-b93c-5a807fd37f68":
+                        account = "BINANCE 1-й аккаунт";
+                        break;
+                    case "9560eadf-74cf-4596-a7e5-bffcd201f6ec":
+                        account = "BINANCE 2-й аккаунт";
+                        break;
+                }
+
                 AccountTradeHistories.Add(new AccountTradeHistory
                 {
+                    Account = account,
                     Time = item.TimeEnded,
                     Side = item.Side,
                     Pair = item.Base,

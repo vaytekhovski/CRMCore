@@ -40,14 +40,14 @@
         <table id="myTable" class="sortable table table-bordered table-striped" style=" margin: auto; width:60%">
             <thead>
                 <tr>
-
                     <th id="time">Время</th>
-                    <th>Тип</th>
-                    <th>Пара</th>
-                    <th>Цена</th>
-                    <th>Количество</th>
-                    <th>Количество</th>
-                    <th class="profit">Прибыль</th>
+                    <th class="sorttable_nosort">Аккаунт</th>
+                    <th class="sorttable_nosort">Тип</th>
+                    <th class="sorttable_nosort">Пара</th>
+                    <th class="sorttable_nosort">Цена</th>
+                    <th class="sorttable_nosort">Количество</th>
+                    <th class="sorttable_nosort">Количество</th>
+                    <th class="sorttable_nosort profit">Прибыль</th>
                 </tr>
             </thead>
             <tbody>
@@ -64,6 +64,7 @@
                     }
                     <tr>
                         <td>@item.Time.ToString("dd MMMM yyyy HH:mm:ss")</td>
+                        <td>@item.Account</td>
                         <td>@item.Side</td>
                         <td>@item.Pair</td>
                         <td>$@String.Format("{0:0.##}", item.Price)</td>

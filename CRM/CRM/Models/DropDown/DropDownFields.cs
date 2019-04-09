@@ -22,13 +22,14 @@ namespace CRM.Models
 
         private static void InitateAccounts()
         {
-            Accounts.Add(new Field { Value = "a1", Name = "1-й аккаунт" });
-            Accounts.Add(new Field { Value = "a2", Name = "2-й аккаунт" });
+            Accounts.Add(new Field { Value = "bccd3ca1-0b5e-41ac-8233-3a35209912c7", Name = "POLONIEX 1-й аккаунт" });
+            Accounts.Add(new Field { Value = "8025d4bf-4af6-466f-b93c-5a807fd37f68", Name = "BINANCE 1-й аккаунт" });
+            Accounts.Add(new Field { Value = "9560eadf-74cf-4596-a7e5-bffcd201f6ec", Name = "BINANCE 2-й аккаунт" });
+            Accounts.Add(new Field { Value = "all", Name = "Все аккаунты" });
         }
 
         private static void InitiateCoins()
         {
-
             Coins.Add(new Field { Value = "all", Name = "Все валюты" });
             Coins.Add(new Field { Value = "BTC", Name = "USDT-BTC" });
             Coins.Add(new Field { Value = "BNB", Name = "USDT-BNB" });
@@ -66,20 +67,7 @@ namespace CRM.Models
             Nulls.Add(new Field { Value = "all", Name = "Показывать нулевые значения" });
             Nulls.Add(new Field { Value = "notnull", Name = "Не показывать нулевые значения" });
         }
-
-        public static void Swa(string coin, string account = "default", string situation = "default", string orderType = "default", string nulls = "default")
-        {
-            SwapCoins(coin);
-            if(account != "default")
-                SwapAccounts();
-            if (orderType != "default")
-                SwapOrderTypes(orderType);
-            if (situation != "default")
-                SwapSituations(situation);
-            if(nulls != "default")
-                SwapNulls();
-        }
-
+        
 
         public static void SwapCoins(string Value)
         {
@@ -163,16 +151,25 @@ namespace CRM.Models
         }
 
 
-        public static void SwapAccounts()
+        public static void SwapAccounts(string Value)
         {
-            string bufValue = Accounts[0].Value;
-            string bufName = Accounts[0].Name;
+            foreach (var item in Accounts)
+            {
+                if (item.Value == Value)
+                {
+                    foreach (var first in Accounts)
+                    {
+                        string bufValue = first.Value;
+                        string bufName = first.Name;
 
-            Accounts[0].Value = Accounts[1].Value;
-            Accounts[0].Name = Accounts[1].Name;
+                        first.Value = item.Value;
+                        first.Name = item.Name;
 
-            Accounts[1].Value = bufValue;
-            Accounts[1].Name = bufName;
+                        item.Value = bufValue;
+                        item.Name = bufName;
+                    }
+                }
+            }
         }
     }
 }
