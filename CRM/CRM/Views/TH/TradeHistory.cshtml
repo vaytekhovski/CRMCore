@@ -22,18 +22,6 @@
 
     <script src="~/js/sorttable.js"></script>
 
-    <style type="text/css">
-        table.sortable thead {
-            background-color: #eee;
-            color: #666666;
-            font-weight: bold;
-            cursor: default;
-        }
-
-        .date {
-            display: none
-        }
-    </style>
 </head>
 <body>
     <div>
@@ -63,7 +51,7 @@
                         profit = null;
                     }
                     <tr>
-                        <td>@item.Time.ToString("dd MMMM yyyy HH:mm:ss")</td>
+                        <td>@item.Time.ToString("dd MM yyyy HH:mm:ss")</td>
                         <td>@item.Account</td>
                         <td>@item.Side</td>
                         <td>@item.Pair</td>
@@ -91,24 +79,13 @@
                 $('td.profit').each(function () {
                     var fValue = parseFloat($(this).text());
 
-                    console.log(fValue + " " + Math.sign(fValue));
-
-                    if (!isNaN(fValue) && Math.sign(fValue) == 1) {
+                    if (!isNaN(fValue) && Math.sign(fValue) != -1) {
                         $(this).css('color', 'green');
                     }
                     else {
                         $(this).css('color', 'red');
                     }
                 });
-
-            });
-
-            $(document).ready(function () {
-                //sorttable.innerSortFunction.apply(document.getElementById('time'), []);
-                //sorttable.innerSortFunction.apply(document.getElementById('time'), []);
-
-                //$('.main_block').css('width', '800px')
-                //$('.layout_block').css('padding-left', '10%');
 
             });
 

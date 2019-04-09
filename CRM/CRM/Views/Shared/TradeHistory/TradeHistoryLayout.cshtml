@@ -10,7 +10,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>TradeHistoryLayout</title>
 
-    <link href="~/css/stylesheet.css" rel="stylesheet" />
+    <link href="~/css/stylesheet.css" rel="stylesheet" media="screen" />
+    <link rel="stylesheet" href="~/css/mobileStylesheet.css" media="screen and (max-width:480px)" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -22,53 +23,49 @@
     <div>
         @Html.Partial("Navbar")
     </div>
-    <div class="main_block">
-        <div class="layout_block">
-            <form method="post">
-                <div>
-                    <div class="input-group mt-3 mb-3">
 
-                        @*<select class="form-control form-control-sm" name="exchange" id="excange_selector">
-                            <option value="binance">Binance</option>
-                        </select>*@
+    <div class="layout_block" style="width:720px; margin:auto">
+        <form method="post">
+            <div>
 
-                        <select class="form-control form-control-sm " name="coin" id="coin_selector">
-                            @foreach (var item in CRM.Models.DropDownFields.Coins)
-                            {
-                                <option value="@item.Value">@item.Name</option>
-                            }
-                        </select>
+                <div class="input-group">
 
-                        <select class="form-control form-control-sm" name="accounts" id="excange_selector">
-                            @foreach (var item in CRM.Models.DropDownFields.Accounts)
-                            {
-                                <option value="@item.Value">@item.Name</option>
-                            }
-                        </select>
+                    <select class="form-control" name="coin" id="coin_selector">
+                        @foreach (var item in CRM.Models.DropDownFields.Coins)
+                        {
+                            <option value="@item.Value">@item.Name</option>
+                        }
+                    </select>
 
+                    <select class="form-control" name="accounts" id="excange_selector">
+                        @foreach (var item in CRM.Models.DropDownFields.Accounts)
+                        {
+                            <option value="@item.Value">@item.Name</option>
+                        }
+                    </select>
 
+                    <input type="date" class="form-control" id="startDate" name="startDate" min="2019-04-04" />
+                    <input type="date" class="form-control" id="endDate" name="endDate" min="2019-04-01" />
+
+                    <div class="input-group-append">
+                        <button type="submit" id="TradeHistory" class="btn btn-info btn-block" formaction="../TH/TradeHistory" formmethod="post">История</button>
                     </div>
-
-                    <div class="input-group mb-3">
-                        <input type="date" class="form-control" id="startDate" name="startDate" min="2019-04-04" />
-                        <input type="date" class="form-control" id="endDate" name="endDate" min="2019-04-01"   />
-                    </div>
-
-                    <button type="submit" id="TradeHistory" class="btn btn-info btn-block" formaction="../TH/TradeHistory" formmethod="post">TradeHistory</button>
-
-
-                    <script type="text/javascript">
-
-                        $("#TradeHistory").click(function () {
-                            setDataToCoockie()
-                        });
-
-                    </script>
-
 
                 </div>
-            </form>
-        </div>
+
+                <div style=" padding-bottom:30px"></div>
+
+                <script type="text/javascript">
+
+                    $("#TradeHistory").click(function () {
+                        setDataToCoockie()
+                    });
+
+                </script>
+
+
+            </div>
+        </form>
     </div>
 
     @RenderBody()

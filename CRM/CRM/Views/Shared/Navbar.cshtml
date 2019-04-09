@@ -1,20 +1,4 @@
-﻿
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-
-
-    <link href="~/css/stylesheet.css" rel="stylesheet" media="screen" />
-    <link rel="stylesheet" href="~/css/mobileStylesheet.css" media="screen and (max-width:480px)" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</head>
-<body>
+﻿<header>
     <form action="/" method="post">
         <div>
             <nav class="navbar navbar-expand-sm bg-light navbar-light" style="position:fixed; width:100%; z-index:99999;">
@@ -42,17 +26,16 @@
                         </li>
 
                     </ul>
-                    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" >
+                    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <button  style="width:100%" class="btn nav-link" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
+                                <button style="width:100%" class="btn nav-link" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </div>
-        <div style=" padding-bottom:70px"></div>
+        <div style=" padding-bottom:100px"></div>
     </form>
-</body>
-</html>
+</header>
