@@ -31,7 +31,14 @@
 }
 
 .cards {
-    padding: 5% 2% 0pt 2%
+    padding: 5% 2% 0pt 2%;
+    
+}
+
+.color_card {
+    background: #fbfbfb; /* Цвет фона */
+    box-shadow: 0px -10px 10px 0px rgba(0, 0, 0, 0.5); /* Параметры тени */
+    padding: 10px;
 }
 
 .col {
