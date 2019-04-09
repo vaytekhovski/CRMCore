@@ -28,7 +28,7 @@
         <form method="post">
             <div>
 
-                <div class="input-group">
+                <div class="input-group" >
 
                     <select class="form-control" name="coin" id="coin_selector">
                         @foreach (var item in CRM.Models.DropDownFields.Coins)
@@ -48,7 +48,7 @@
                     <input type="date" class="form-control" id="endDate" name="endDate" min="2019-04-01" />
 
                     <div class="input-group-append">
-                        <button type="submit" id="TradeHistory" class="btn btn-info btn-block" formaction="../TH/TradeHistory" formmethod="post">История</button>
+                        <button type="submit" id="TradeHistory" class="btn btn-secondary" formaction="../TH/TradeHistory" formmethod="post">История</button>
                     </div>
 
                 </div>
