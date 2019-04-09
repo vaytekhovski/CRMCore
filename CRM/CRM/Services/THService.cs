@@ -49,6 +49,9 @@ namespace CRM.Services
         {
             foreach (var item in orders)
             {
+                if (item.ClosedAmount == 0)
+                    continue;
+
                 AccountTradeHistories.Add(new AccountTradeHistory
                 {
                     Time = item.TimeEnded,
