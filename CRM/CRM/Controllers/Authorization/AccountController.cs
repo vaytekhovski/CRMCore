@@ -32,11 +32,13 @@ namespace AuthApp.Controllers
                 return View(model);
             }
 
-            UserModel user = await db.UserModels.FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
+            UserModel user = await db.UserModels
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
 
             if (user != null)
             {
-                await Authenticate(model.Login); // аутентификация
+                await Authenticate(user); // аутентификация
 
                 return RedirectToAction("Index", "Home");
             }
@@ -65,10 +67,15 @@ namespace AuthApp.Controllers
             if (user == null)
             {
                 // добавляем пользователя в бд
-                db.UserModels.Add(new UserModel { Login = model.Login, Password = model.Password });
+                user = new UserModel { Login = model.Login, Password = model.Password };
+                Role userRole = await db.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                if (userRole != null)
+                    user.Role = userRole;
+
+                db.UserModels.Add(user);
                 await db.SaveChangesAsync();
 
-                await Authenticate(model.Login); // аутентификация
+                await Authenticate(user); // аутентификация
 
                 return RedirectToAction("Index", "Home");
             }
@@ -79,12 +86,13 @@ namespace AuthApp.Controllers
             return View(model);
         }
 
-        public async Task Authenticate(string userName)
+        public async Task Authenticate(UserModel user)
         {
             // создаем один claim
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
             };
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

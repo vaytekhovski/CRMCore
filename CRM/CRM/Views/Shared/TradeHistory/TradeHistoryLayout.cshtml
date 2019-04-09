@@ -28,9 +28,9 @@
                 <div>
                     <div class="input-group mt-3 mb-3">
 
-                        <select class="form-control form-control-sm" name="exchange" id="excange_selector">
+                        @*<select class="form-control form-control-sm" name="exchange" id="excange_selector">
                             <option value="binance">Binance</option>
-                        </select>
+                        </select>*@
 
                         <select class="form-control form-control-sm " name="coin" id="coin_selector">
                             @foreach (var item in CRM.Models.DropDownFields.Coins)
@@ -39,22 +39,22 @@
                             }
                         </select>
 
-                        <select class="form-control form-control-sm" name="accounts" id="excange_selector">
+                        @*<select class="form-control form-control-sm" name="accounts" id="excange_selector">
                             @foreach (var item in CRM.Models.DropDownFields.Accounts)
                             {
                                 <option value="@item.Value">@item.Name</option>
                             }
-                        </select>
+                        </select>*@
 
 
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="date" class="form-control" id="startDate" name="startDate" min="2019-04-01" />
+                        <input type="date" class="form-control" id="startDate" name="startDate" min="2019-04-04" />
                         <input type="date" class="form-control" id="endDate" name="endDate" min="2019-04-01"   />
                     </div>
 
-                    <button type="submit" id="TradeHistory" class="btn btn-info btn-block" formaction="../TradeHistory/TradeHistory" formmethod="post">TradeHistory</button>
+                    <button type="submit" id="TradeHistory" class="btn btn-info btn-block" formaction="../TH/TradeHistory" formmethod="post">TradeHistory</button>
 
 
                     <script type="text/javascript">
