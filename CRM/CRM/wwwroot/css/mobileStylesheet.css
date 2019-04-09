@@ -31,12 +31,7 @@
 }
 
 .cards {
-    padding: 5% 2% 0pt 2%;
-    
-}
-
-.color_card {
-    background-image: linear-gradient(to bottom, #ffffff, #b9b9b9, #777777, #3b3b3b, #000000);
+    padding: 5% 2% 0pt 2%
 }
 
 .col {
