@@ -38,7 +38,7 @@ namespace CRM.Services
                 }
             }
 
-            AccountTradeHistories = AccountTradeHistories.Where(x => x.Time > DateTime.Parse("2019-04-05")).ToList();
+            AccountTradeHistories = AccountTradeHistories.Where(x => x.Time > DateTime.Parse("2019-04-05T03:00:00")).ToList();
             //UpdateBalance(acc);
             UpdateProfit();
            
