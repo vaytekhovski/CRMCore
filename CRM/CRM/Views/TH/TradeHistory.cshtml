@@ -20,18 +20,13 @@
     <script src="~/js/datestocoockie.js"></script>
     <script src="~/js/sorttable.js"></script>
 
-    <style type="text/css">
-        #myTable{
-            width: 70%;
-            margin:auto;
-        }
-    </style>
 
 
 </head>
 <body>
-    <div>
-        <table id="myTable" class="sortable table table-bordered table-striped">
+    @ViewBag.Profit
+    <div class="container">
+        <table class="sortable table table-bordered">
             <thead>
                 <tr>
                     <th id="time">Время</th>

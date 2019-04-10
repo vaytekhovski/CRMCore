@@ -23,6 +23,7 @@ namespace CRM.Controllers
             tHService.Load(accounts,coin);
 
             ViewBag.Orders = tHService.AccountTradeHistories.OrderByDescending(x => x.Time);
+            ViewBag.Profit = tHService.Profit;
 
             DropDownFields.SwapCoins(coin);
             DropDownFields.SwapAccounts(accounts);

@@ -18,10 +18,12 @@ namespace CRM.Services
 
         private List<Field> Accounts = new List<Field>();
 
-        
+        public double Profit { get; set; }
+
 
         public void Load(string acc, string coin)
         {
+            Profit = 0;
             if (acc == "all") 
             {
                 foreach (var item in DropDownFields.Accounts)
@@ -92,17 +94,20 @@ namespace CRM.Services
                         break;
                 }
 
-                AccountTradeHistories.Add(new AccountTradeHistory
+                if (item.OrderId != "265" || item.OrderId != "266")
                 {
-                    Account = account,
-                    Time = item.TimeEnded,
-                    Side = item.Side,
-                    Pair = item.Base,
-                    Price = item.Rate,
-                    Quantity = item.ClosedAmount,
-                    DollarQuantity = item.Rate * item.ClosedAmount,
-                    BalanceUSDT = 0
-                });
+                    AccountTradeHistories.Add(new AccountTradeHistory
+                    {
+                        Account = account,
+                        Time = item.TimeEnded,
+                        Side = item.Side,
+                        Pair = item.Base,
+                        Price = item.Rate,
+                        Quantity = item.ClosedAmount,
+                        DollarQuantity = item.Rate * item.ClosedAmount,
+                        BalanceUSDT = 0
+                    });
+                }
             }
         }
 
@@ -173,6 +178,7 @@ namespace CRM.Services
                     if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
                     {
                         TH[i].Profit = profit;
+                        Profit += profit;
                         profit = 0;
                     }
                 }

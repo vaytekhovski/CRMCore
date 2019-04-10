@@ -15,7 +15,7 @@ namespace CRM.Master
         public string Base { get; set; }
         public string Quote { get; set; }
         //[Column("OrderId", TypeName = "char(36)")]
-        //public string OrderId { get; set; }
+        public string OrderId { get; set; }
         public string Side { get; set; }
         public DateTime TimeStarted { get; set; }
         public DateTime TimeEnded { get; set; }
