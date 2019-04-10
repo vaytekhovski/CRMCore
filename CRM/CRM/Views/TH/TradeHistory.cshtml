@@ -11,29 +11,27 @@
     <title>TradeHistory</title>
 
 
-    <link href="~/css/stylesheet.css" rel="stylesheet" media="screen" />
-    <link rel="stylesheet" href="~/css/mobileStylesheet.css" media="screen and (max-width:480px)" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="~/css/stylesheet.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="~/js/datestocoockie.js"></script>
 
+    <script src="~/js/datestocoockie.js"></script>
     <script src="~/js/sorttable.js"></script>
 
-    <style>
-        html {
-            overflow-x: hidden;
+    <style type="text/css">
+        #myTable{
+            width: 70%;
+            margin:auto;
         }
-
-
     </style>
+
 
 </head>
 <body>
     <div>
-        <table id="myTable" class="sortable table table-bordered table-striped" style=" margin: auto; width:60%">
+        <table id="myTable" class="sortable table table-bordered table-striped">
             <thead>
                 <tr>
                     <th id="time">Время</th>

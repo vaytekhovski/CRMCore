@@ -82,13 +82,13 @@ namespace CRM.Services
                 switch (item.AccountId)
                 {
                     case "bccd3ca1-0b5e-41ac-8233-3a35209912c7":
-                        account = "POLONIEX 1-й аккаунт";
+                        account = "POLONIEX 1-й";
                         break;
                     case "8025d4bf-4af6-466f-b93c-5a807fd37f68":
-                        account = "BINANCE 1-й аккаунт";
+                        account = "BINANCE 1-й";
                         break;
                     case "9560eadf-74cf-4596-a7e5-bffcd201f6ec":
-                        account = "BINANCE 2-й аккаунт";
+                        account = "BINANCE 2-й";
                         break;
                 }
 

@@ -1,44 +1,58 @@
 ﻿<header>
-    <form action="/" method="post">
-        <div>
-            <nav class="navbar navbar-expand-sm bg-light navbar-light" style="position:fixed; width:100%; z-index:99999;padding-left:20%;padding-right:20%">
-                <button class="btn btn-link" type="submit" formaction="../Home/Index" formmethod="post">
-                    <img src="~/images/logo.png" alt="Logo" style="height:50px">
-                </button>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <button class="btn nav-link" type="submit" formaction="../TH/Index" formmethod="post">История</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="btn nav-link" type="submit" formaction="../Data/Index" formmethod="post">Таблицы</button>
-                        </li>
-
-                        <li class="nav-item">
-                            <button class="btn nav-link" type="submit" formaction="../Charts/Charts" formmethod="post">Графики</button>
-                        </li>
-
-                        <li class="nav-item">
-                            <button class="btn nav-link" type="submit" formaction="../UserPanel/UserPanel" formmethod="post">Админ</button>
-                        </li>
 
 
-                    </ul>
-                    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <button style="width:100%" class="btn nav-link" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
-                            </li>
-                        </ul>
-                    </div>
+
+    <link href="~/css/app.css" rel="stylesheet">
+
+    <link href="~/css/mod.css" rel="stylesheet">
+
+
+    <nav class="navbar navbar-default navbar-static-top">
+
+        <div class="container">
+            <div class="navbar-header">
+
+
+
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="../Home/Index">
+                    <img class="navbar-brand-logo white-logo" src="http://datavisio.io/images/svg/logo-whitetext-horizontal.svg" alt="logo">
+                    <img class="navbar-brand-logo dark-logo" src="http://datavisio.io/images/svg/logo-darktext-horizontal.svg" alt="logo">
+                </a>
+
+                <div class="navbar-header-bottom-line col-xs-12 no-padding">
+                    <!-- Collapsed Hamburger -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+
                 </div>
-            </nav>
+
+            </div>
+
+
+
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Authentication Links -->
+                    <li><a class="anchor-link" href="../TH/TradeHistory">History </a></li>
+                    <li><a class="anchor-link" href="../Data/Index">Tables</a></li>
+                    <li><a class="anchor-link" href="../Charts/Charts">Charts</a></li>
+                    <li><a class="anchor-link" href="../UserPanel/UserPanel">Account</a></li>
+                    <li><a href="http://datavisio.io">Contact</a></li>
+
+                </ul>
+
+            </div>
+
+
         </div>
-        <div style=" padding-bottom:100px"></div>
-    </form>
+    </nav>
+
 </header>

@@ -10,63 +10,85 @@
     <meta name="viewport" content="width=device-width" />
     <title>TradeHistoryLayout</title>
 
-    <link href="~/css/stylesheet.css" rel="stylesheet" media="screen" />
-    <link rel="stylesheet" href="~/css/mobileStylesheet.css" media="screen and (max-width:480px)" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="~/js/datestocoockie.js"></script>
+    <style type="text/css">
+        .filter_element {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 0px;
+        }
+
+        .filter_input {
+            border: 2px solid #a76be3 !important;
+            background-color: transparent;
+            height:50px !important; 
+        }
+
+        .filter_button{
+            height: 50px !important;
+        }
+
+        .filter_panel {
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            width: 100%;
+            padding-top:20px;
+            padding-bottom:20px;
+        }
+    </style>
+
 </head>
 <body>
     <div>
         @Html.Partial("Navbar")
     </div>
 
-    <div class="layout_block" style="width:auto; margin:auto">
-        <form method="post">
-            <div>
+    <form method="post">
+        <div class="filter_panel">
 
-                <div class="input-group" >
-
-                    <select class="form-control" name="coin" id="coin_selector">
-                        @foreach (var item in CRM.Models.DropDownFields.Coins)
-                        {
-                            <option value="@item.Value">@item.Name</option>
-                        }
-                    </select>
-
-                    <select class="form-control" name="accounts" id="excange_selector">
-                        @foreach (var item in CRM.Models.DropDownFields.Accounts)
-                        {
-                            <option value="@item.Value">@item.Name</option>
-                        }
-                    </select>
-
-                    <input type="date" class="form-control" id="startDate" name="startDate" min="2019-04-04" />
-                    <input type="date" class="form-control" id="endDate" name="endDate" min="2019-04-01" />
-
-                    <div class="input-group-append">
-                        <button type="submit" id="TradeHistory" class="btn btn-secondary" formaction="../TH/TradeHistory" formmethod="post">История</button>
-                    </div>
-
-                </div>
-
-                <div style=" padding-bottom:30px"></div>
-
-                <script type="text/javascript">
-
-                    $("#TradeHistory").click(function () {
-                        setDataToCoockie()
-                    });
-
-                </script>
-
-
+            <div class="filter_element">
+                <select class="form-control filter_input" name="coin" id="coin_selector">
+                    @foreach (var item in CRM.Models.DropDownFields.Coins)
+                    {
+                        <option value="@item.Value">@item.Name</option>
+                    }
+                </select>
             </div>
-        </form>
-    </div>
+
+            <div class="filter_element">
+                <select class="form-control filter_input" name="accounts" id="excange_selector">
+                    @foreach (var item in CRM.Models.DropDownFields.Accounts)
+                    {
+                        <option value="@item.Value">@item.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="filter_element">
+                <input type="date" class="form-control filter_input" id="startDate" name="startDate" min="2019-04-04" />
+            </div>
+
+            <div class="filter_element">
+                <input type="date" class="form-control filter_input" id="endDate" name="endDate" min="2019-04-01" />
+            </div>
+
+            <div class="filter_element">
+                <button type="submit" id="TradeHistory" class="btn filter_button" formaction="../TH/TradeHistory" formmethod="post">
+                    История
+                </button>
+            </div>
+
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        $("#TradeHistory").click(function () {
+            setDataToCoockie()
+        });
+    </script>
+
+
 
     @RenderBody()
 </body>

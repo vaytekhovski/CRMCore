@@ -14,6 +14,10 @@
     <EmbeddedResource Remove="Services\Binance\**" />
     <None Remove="Controllers\TradeHistory\**" />
     <None Remove="Services\Binance\**" />
+    <Content Remove="wwwroot\js\app.js" />
+    <Content Remove="wwwroot\images\checked.svg" />
+    <Content Remove="wwwroot\images\star.svg" />
+    <Content Remove="wwwroot\css\mobileStylesheet.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +26,9 @@
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="wwwroot\js\app.js" />
+    <None Include="wwwroot\images\checked.svg" />
+    <None Include="wwwroot\images\star.svg" />
   </ItemGroup>
 
 
@@ -202,4 +209,7 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\json\" />
+  </ItemGroup>
 </Project>

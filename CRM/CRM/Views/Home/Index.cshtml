@@ -11,93 +11,192 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 
-    <link href="~/css/stylesheet.css" rel="stylesheet" media="screen" />
-    <link rel="stylesheet" href="~/css/mobileStylesheet.css" media="screen and (max-width:480px)"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link href="~/css/app.css" rel="stylesheet">
+
+    <link href="~/css/mod.css" rel="stylesheet">
+
+    <style media="screen">
+        #title-block {
+            min-height: 400px !important;
+        }
+    </style>
+    <script src="~/js/app.js"></script>
 
 </head>
+
 <body>
+
     <div>
         @Html.Partial("Navbar")
     </div>
-    <form action="/" method="post">
-        <div class="cards">
-            <div class="row">
 
-                <div class="col">
-                    <div class="card color_card">
-                        <img class="card-img-top" src="~/images/img_trading_history.jpg" alt="Card image" style="height: 400px">
-                        <div class="card-body">
-                            <h4 class="card-title">История торгов</h4>
-                            <p class="card-text">Просмотр последних торговых операций робота на биржах</p>
-                            <button class="btn btn-primary" type="submit" formaction="../TH/Index" formmethod="post">История</button>
+
+    <div id="app">
+
+        <section id="title-block" class="clearfix">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>DataVisio - A Revolution in Cryptocurrency Exchange</h1>
+
+                        <span>
+                            DataVisio is an artificial-intelligence-based automated trading system for cryptocurrency exchange with algorithms
+                            that secure investments and ensure risk-free trade.
+                        </span>
+
+                        <ul>
+                            <li><span>It is more efficient than technical analysis in cryptocurrency exchange rate predictions.</span></li>
+                            <li><span>It offers a more accurate prognosis with its Big Data, neural networks and proprietary algorithms.</span></li>
+                            <li><span>Agile architecture enables the system to scale and cater to Big Data analysis in various domains.</span></li>
+                        </ul>
+
+                        <div class="buttons-block">
+                            <a href="../TH/TradeHistory">
+                                <span class="btn btn-primary">
+
+                                    <span class="btn-text">Trade History</span>
+
+                                </span>
+                            </a>
+
+                            <a href="../Data/Index">
+                                <span class="btn btn-default">
+
+                                    <span class="btn-text">Tables</span>
+
+                                </span>
+                            </a>
+
+                            <a href="../Charts/Charts">
+                                <span class="btn btn-default">
+
+                                    <span class="btn-text">Charts</span>
+
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>
-
-                <div class="col">
-                    <div class="card color_card">
-                        <img class="card-img-top" src="~/images/img_table1.png" alt="Card image" style="height: 400px">
-                        <div class="card-body">
-                            <h4 class="card-title">Таблицы</h4>
-                            <p class="card-text">Просмотр статистических данных, по разного рода критериям</p>
-                            <button class="btn btn-primary" type="submit" formaction="../Data/Index" formmethod="post">Таблицы</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card color_card">
-                        <img class="card-img-top" src="~/images/img_chart1.png" alt="Card image" style="height: 400px">
-                        <div class="card-body">
-                            <h4 class="card-title">Графики</h4>
-                            <p class="card-text">Просмотр данных в графическом виде, для их исследования</p>
-                            <button class="btn btn-primary" type="submit" formaction="../Charts/Charts" formmethod="post">Графики</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card color_card">
-                        <img class="card-img-top" src="~/images/img_avatar1.png" alt="Card image" style="height: 400px">
-                        <div class="card-body">
-                            <h4 class="card-title">Админ</h4>
-                            <p class="card-text">Изменение данных профиля, а так же различных системных параметров</p>
-                            <button class="btn btn-primary" type="submit" formaction="../UserPanel/UserPanel" formmethod="post">Профиль</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card color_card">
-                        <img class="card-img-top" src="~/images/img_404.png" alt="Card image" style="height: 400px">
-                        <div class="card-body">
-                            <h4 class="card-title">error</h4>
-                            <p class="card-text">Comming soon...</p>
-                            <button class="btn btn-primary" type="submit">Open</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card color_card">
-                        <img class="card-img-top" src="~/images/img_404.png" alt="Card image" style="height: 400px">
-                        <div class="card-body">
-                            <h4 class="card-title">error</h4>
-                            <p class="card-text">Comming soon...</p>
-                            <button class="btn btn-primary" type="submit">Open</button>
-                        </div>
-                    </div>
-                </div>
-
-
-
             </div>
-        </div>
-    </form>
-    @Html.Partial("Footer")
+
+
+        </section>
+
+        <section id="why-datavisio-tabs-block" class="clearfix hidden-xs">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+
+
+                        <div class="tab-content clearfix hidden-xs" id="myTabContent">
+                            <div class="tab-pane fade active in" role="tabpanel" id="why1" aria-labelledby="home-tab">
+                                <div class="row">
+                                    <div class="col-md-4">
+
+
+                                        <img class="datavisio-values-image" src="http://datavisio.io/images/svg/efficiency.svg">
+
+                                        <h3>Efficiency</h3>
+
+                                        <span class="text-op-80">
+                                            It's based on a better alternative
+                                            to technical analysis which only
+                                            shows a current market situation
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="http://datavisio.io/images/svg/accuracy.svg">
+
+                                        <h3>Accuracy</h3>
+                                        <span class="text-op-80">
+                                            Our system uses AI to provide the
+                                            most accurate prognosys for
+                                            crypto currency exchange rates
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="http://datavisio.io/images/svg/lock.svg">
+
+                                        <h3>Secureness</h3>
+                                        <span class="text-op-80">
+                                            With more accurate data traders
+                                            are secured from investments
+                                            loss
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+
+
+                                        <img class="datavisio-values-image" src="http://datavisio.io/images/svg/analytics.svg">
+
+                                        <h3>Through Analytics</h3>
+
+                                        <span class="text-op-80">
+                                            Our system uses Big Data and neural
+                                            networks enabling trully thorough
+                                            analysis for accurate predicitons.
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="http://datavisio.io/images/svg/automations.svg">
+
+                                        <h3>Clever Automation</h3>
+                                        <span class="text-op-80">
+                                            Our system uses Big Data and neural
+                                            networks enabling trully thorough
+                                            analysis for accurate predicitons.
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="http://datavisio.io/images/svg/enchantment.svg">
+
+                                        <h3>Constant enchantment</h3>
+                                        <span class="text-op-80">
+                                            Based on scientific method we started
+                                            with hypothesis and developed a system
+                                            with a plan for constant improvement.
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+    <div>
+        @Html.Partial("Footer")
+    </div>
+
 </body>
 </html>

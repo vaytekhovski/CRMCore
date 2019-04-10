@@ -59,7 +59,7 @@ namespace CRM.Services
             int eYear = endDate.Year;
 
             // Путь к файлу, в который будет записан Json
-            string path = $"wwwroot/binance-{coin}.json";
+            string path = $"wwwroot/json/binance-{coin}.json";
             // Url запрос на сервер, который вернет Json
             string url = $"159.65.126.124:5000/export/binance/{coin}/usdt?from={sYear}/{sMonth}/{sDay}&to={eYear}/{eMonth}/{eDay}&format=json";
 
