@@ -7,11 +7,8 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TradeHistoryLayout</title>
-
-    <link rel="stylesheet" type="text/css" media="screen" href="sans-serif.css">
-    <link rel="stylesheet" type="text/css" media="print" href="serif.css">
 
     <style type="text/css">
         .filter_element {
@@ -46,11 +43,10 @@
             margin: auto;
         }
 
-        @@media only screen and (max-width: 600px) {
-            body {
-                font-size: 16px;
-            }
+        select {
+            font-size: 50px;
         }
+
     </style>
 
 </head>
@@ -86,11 +82,13 @@
             </div>
 
             @{
-                string currentDate = DateTime.Now.ToString();
+                var currentDate = DateTime.Now;
+                string curDate = currentDate.Year.ToString() + "-" + currentDate.Month.ToString() + "-" + currentDate.Day.ToString();
+               
             }
 
             <div class="filter_element">
-                <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@currentDate min="2019-04-01" />
+                <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@curDate min="2019-04-01" />
             </div>
 
             <div class="filter_element">
