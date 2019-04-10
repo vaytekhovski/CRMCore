@@ -16,11 +16,11 @@
             margin-right: 5px;
             padding-top: 10px;
         }
-       
+
         .filter_input {
             border: 2px solid #a76be3 !important;
             background-color: transparent;
-            height:50px !important; 
+            height:50px !important;
             width:150px !important;
         }
 
@@ -44,6 +44,11 @@
             margin: auto;
         }
 
+        @media only screen and (max-width: 600px) {
+         body {
+          font-size: 16px;
+             }
+        }
 
 
 
@@ -81,8 +86,12 @@
                 <input type="date" class="form-control filter_input" id="startDate" name="startDate" value="2019-04-05" min="2019-04-05" />
             </div>
 
+            @{
+                string currentDate = DateTime.Now.ToString();
+            }
+
             <div class="filter_element">
-                <input type="date" class="form-control filter_input" id="endDate" name="endDate" value="@DateTime.Now.ToString()" min="2019-04-01" />
+                <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@currentDate min="2019-04-01" />
             </div>
 
             <div class="filter_element">
