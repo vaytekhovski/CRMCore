@@ -78,16 +78,16 @@
 
 
             <div class="filter_element">
-                <input type="date" class="form-control filter_input" id="startDate" name="startDate" min="2019-04-05" />
+                <input type="date" class="form-control filter_input" id="startDate" name="startDate" value="2019-04-05" min="2019-04-05" />
             </div>
 
             <div class="filter_element">
-                <input type="date" class="form-control filter_input" id="endDate" name="endDate" min="2019-04-01" />
+                <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@DateTime.Now.ToString() min="2019-04-01" />
             </div>
 
             <div class="filter_element">
                 <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../TH/TradeHistory" formmethod="post">
-                    История
+                    Показать историю
                 </button>
             </div>
         </div>
