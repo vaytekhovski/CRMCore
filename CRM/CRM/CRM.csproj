@@ -18,6 +18,8 @@
     <Content Remove="wwwroot\images\checked.svg" />
     <Content Remove="wwwroot\images\star.svg" />
     <Content Remove="wwwroot\css\mobileStylesheet.css" />
+    <Content Remove="Views\Shared\TradeHistory\TradeHistoryLayout.cshtml" />
+    <Content Remove="Views\Shared\TradeHistory\TradeHistoryLayout .cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +31,7 @@
     <None Include="wwwroot\js\app.js" />
     <None Include="wwwroot\images\checked.svg" />
     <None Include="wwwroot\images\star.svg" />
+    <None Include="Views\Shared\TradeHistory\TradeHistoryLayout .cshtml" />
   </ItemGroup>
 
 
@@ -211,5 +214,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\json\" />
+    <Folder Include="Views\Shared\TradeHistory\" />
   </ItemGroup>
 </Project>
