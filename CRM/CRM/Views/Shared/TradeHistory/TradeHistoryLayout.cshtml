@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width" />
     <title>TradeHistoryLayout</title>
 
     <style type="text/css">
@@ -41,10 +41,6 @@
             flex-wrap: wrap;
             justify-content: center;
             margin: auto;
-        }
-
-        select {
-            font-size: 50px;
         }
 
     </style>
@@ -83,8 +79,12 @@
 
             @{
                 var currentDate = DateTime.Now;
-                string curDate = currentDate.Year.ToString() + "-" + currentDate.Month.ToString() + "-" + currentDate.Day.ToString();
-               
+
+                string dd = currentDate.Day < 10 ? "0" + currentDate.Day.ToString() : currentDate.Day.ToString();
+                string mm = currentDate.Month < 10 ? "0" + currentDate.Month.ToString() : currentDate.Month.ToString();
+                string yy = currentDate.Year.ToString();
+                string curDate = yy + "-" + mm + "-" + dd;
+
             }
 
             <div class="filter_element">
