@@ -30,6 +30,7 @@
 }
 
   .profit{
+      color: green;
       text-align:center;
   }
 
@@ -53,7 +54,10 @@
 </head>
 <body>
     <div class="profit">
-        Прибыль: @ViewBag.Profit
+        @{
+            string profitStr = ViewBag.Profit > 0 ? "+$" + ViewBag.Profit.ToString("0.00") : "-$" + ViewBag.Profit.ToString("0.00");
+             }
+        Прибыль: @profitStr
     </div>
     <div class="container table_block">
         <table class="sortable table table-bordered table-font">
