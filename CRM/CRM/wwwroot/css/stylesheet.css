@@ -37,8 +37,65 @@
 }
 
 
-
 .col {
     margin-bottom: 50pt;
 }
 
+/* trade history filter panel */
+.filter_element {
+    vertical-align: top;
+    margin-right: 5px;
+    padding-top: 10px;
+}
+
+.filter_input {
+    border: 2px solid #a76be3 !important;
+    background-color: transparent;
+    height: 50px !important;
+    width: 150px !important;
+}
+
+.filter_button {
+    height: 50px !important;
+    width: 305px !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+}
+
+.filter_panel {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+}
+
+/* trade history table */
+@@media only screen and (max-width: 600px) {
+    .table-font {
+        font-size: 8px !important;
+        text-align: center;
+    }
+
+    .profit {
+        display: none;
+    }
+
+    .table-font td, th {
+        padding: 1px !important;
+    }
+
+    .table_block {
+        padding: 0 !important;
+    }
+}
+
+.profit {
+    color: red;
+    text-align: center;
+}

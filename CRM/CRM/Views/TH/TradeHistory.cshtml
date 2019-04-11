@@ -1,58 +1,9 @@
 ﻿
 @{
     Layout = "~/Views/Shared/TradeHistory/TradeHistoryLayout.cshtml";
+    ViewBag.Title = "Trade History";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>TradeHistory</title>
-<style>
-  @@media only screen and (max-width: 600px) {
-    .table-font {
-        font-size: 8px !important;
-        text-align: center;
-    }
-
-    .profit{
-        display:none;
-    }
-
-    .table-font td,th{
-        padding: 1px !important;
-    }
-
-    .table_block{
-        padding: 0 !important;
-    }
-}
-
-  .profit{
-      color: red;
-      text-align:center;
-  }
-
-
-
-</style>
-
-    <link href="~/css/stylesheet.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="sans-serif.css">
-<link rel="stylesheet" type="text/css" media="print" href="serif.css">
-
-    <script src="~/js/datestocoockie.js"></script>
-    <script src="~/js/sorttable.js"></script>
-
-
-
-</head>
-<body>
+    @Html.Partial("_FilterPanel")
     <div class="profit profit_string">
         @{
             string profitStr = ViewBag.Profit > 0 ? "+$" + ViewBag.Profit.ToString("0.00") : "-$" + ViewBag.Profit.ToString("0.00");
@@ -124,12 +75,6 @@
                     }
                     
                 });
-
-
-
             });
-
         </script>
     </div>
-</body>
-</html>

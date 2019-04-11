@@ -1,113 +1,26 @@
-﻿
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>TradeHistoryLayout</title>
+    <title>@ViewBag.Title</title>
 
-    <style type="text/css">
-        .filter_element {
-            vertical-align: top;
-            margin-right: 5px;
-            padding-top: 10px;
-        }
+    <link href="~/css/stylesheet.css" rel="stylesheet">
+    <link href="~/css/stylesheet.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="sans-serif.css">
+    <link rel="stylesheet" type="text/css" media="print" href="serif.css">
 
-        .filter_input {
-            border: 2px solid #a76be3 !important;
-            background-color: transparent;
-            height: 50px !important;
-            width: 150px !important;
-        }
-
-        .filter_button {
-            height: 50px !important;
-            width: 305px !important;
-            margin-right: 0 !important;
-            padding: 0 !important;
-        }
-
-        .filter_panel {
-            display: flex;
-            align-items: center;
-            align-content: center;
-            justify-content: center;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: auto;
-        }
-
-    </style>
-
+    <script src="~/js/datestocoockie.js"></script>
+    <script src="~/js/sorttable.js"></script>
 </head>
 <body>
     <div>
         @Html.Partial("Navbar")
     </div>
-
-    <form method="post">
-        <div class="filter_panel container">
-
-            <div class="filter_element">
-                <select class="form-control filter_input" name="coin" id="coin_selector">
-                    @foreach (var item in CRM.Models.DropDownFields.Coins)
-                    {
-                <option value="@item.Value">@item.Name</option>
-                    }
-                </select>
-            </div>
-
-            <div class="filter_element">
-                <select class="form-control filter_input" name="accounts" id="excange_selector">
-                    @foreach (var item in CRM.Models.DropDownFields.Accounts)
-                    {
-                <option value="@item.Value">@item.Name</option>
-                    }
-                </select>
-            </div>
-
-
-            <div class="filter_element">
-                <input type="date" class="form-control filter_input" id="startDate" name="startDate" value="2019-04-05" min="2019-04-05" />
-            </div>
-
-            @{
-                var currentDate = DateTime.Now;
-
-                string dd = currentDate.Day < 10 ? "0" + currentDate.Day.ToString() : currentDate.Day.ToString();
-                string mm = currentDate.Month < 10 ? "0" + currentDate.Month.ToString() : currentDate.Month.ToString();
-                string yy = currentDate.Year.ToString();
-                string curDate = yy + "-" + mm + "-" + dd;
-
-            }
-
-            <div class="filter_element">
-                <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@curDate min="2019-04-01" />
-            </div>
-
-            <div class="filter_element">
-                <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../TH/TradeHistory" formmethod="post">
-                    Показать историю
-                </button>
-            </div>
-        </div>
-
-    </form>
-
-    <script type="text/javascript">
-        $("#TradeHistory").click(function () {
-            setDataToCoockie()
-        });
-    </script>
-
-
 
     @RenderBody()
 </body>

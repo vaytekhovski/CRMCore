@@ -11,12 +11,7 @@ namespace CRM.Controllers
 {
     public class THController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult TradeHistory(string coin, string accounts, string startDate, string endDate)
+        public ActionResult TradeHistory(string coin, string accounts, string startDate, string endDate) //TODO: load with default values
         {
             THService tHService = new THService();
 
