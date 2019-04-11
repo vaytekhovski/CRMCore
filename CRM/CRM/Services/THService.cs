@@ -16,8 +16,11 @@ namespace CRM.Services
 
         public double Profit { get; set; }
 
+        private List<int> IgnoreIds = new List<int>();
+
         public void Load(string acc, string coin)
         {
+            InitializeIgnoreList();
             Profit = 0;
 
             var minDateTosearch = new DateTime(2019, 4, 5);
@@ -34,42 +37,67 @@ namespace CRM.Services
             UpdateProfit();
         }
 
+        private void InitializeIgnoreList()
+        {
+            IgnoreIds.Add(265);
+            IgnoreIds.Add(266);
+            IgnoreIds.Add(267);
+            IgnoreIds.Add(268);
+            IgnoreIds.Add(272);
+            IgnoreIds.Add(273);
+            IgnoreIds.Add(274);
+            IgnoreIds.Add(275);
+        }
+
+        private string accountName(string accountId)
+        {
+            string account = "";
+
+            switch (accountId)
+            {
+                case "bccd3ca1-0b5e-41ac-8233-3a35209912c7":
+                    account = "POLONIEX 1-й";
+                    break;
+                case "8025d4bf-4af6-466f-b93c-5a807fd37f68":
+                    account = "BINANCE 1-й";
+                    break;
+                case "9560eadf-74cf-4596-a7e5-bffcd201f6ec":
+                    account = "BINANCE 2-й";
+                    break;
+            }
+
+            return account;
+        }
+
         private void AddToTradeHistories(ICollection<Orders> orders)
         {
             foreach (var item in orders)
             {
-                if (item.ClosedAmount == 0)
-                    continue;
-
-                string account = "";
-
-                switch (item.AccountId) // TODO: вынести
+                if (item.ClosedAmount == 0) continue;
+                
+                var isIgnore = false;
+                foreach (var id in IgnoreIds)
                 {
-                    case "bccd3ca1-0b5e-41ac-8233-3a35209912c7":
-                        account = "POLONIEX 1-й";
-                        break;
-                    case "8025d4bf-4af6-466f-b93c-5a807fd37f68":
-                        account = "BINANCE 1-й";
-                        break;
-                    case "9560eadf-74cf-4596-a7e5-bffcd201f6ec":
-                        account = "BINANCE 2-й";
-                        break;
-                }
-
-                if (item.Id != 265 && item.Id != 266)
-                {
-                    AccountTradeHistories.Add(new AccountTradeHistory
+                    if(item.Id == id)
                     {
-                        Account = account,
-                        Time = item.TimeEnded,
-                        Side = item.Side,
-                        Pair = item.Base,
-                        Price = item.Rate,
-                        Quantity = item.ClosedAmount,
-                        DollarQuantity = item.Rate * item.ClosedAmount,
-                        BalanceUSDT = 0
-                    });
+                        isIgnore = true;
+                        break;
+                    }
                 }
+
+                if (isIgnore) continue;
+
+                AccountTradeHistories.Add(new AccountTradeHistory
+                {
+                    Account = accountName(item.AccountId),
+                    Time = item.TimeEnded,
+                    Side = item.Side,
+                    Pair = item.Base,
+                    Price = item.Rate,
+                    Quantity = item.ClosedAmount,
+                    DollarQuantity = item.Rate * item.ClosedAmount,
+                    BalanceUSDT = 0
+                });
             }
         }
 

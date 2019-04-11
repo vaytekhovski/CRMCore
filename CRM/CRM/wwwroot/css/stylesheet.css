@@ -78,7 +78,7 @@
 /* trade history table */
 @@media only screen and (max-width: 600px) {
     .table-font {
-        font-size: 8px !important;
+        font-size: 6px !important;
         text-align: center;
     }
 
