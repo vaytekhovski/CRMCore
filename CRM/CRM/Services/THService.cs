@@ -94,7 +94,7 @@ namespace CRM.Services
                         break;
                 }
 
-                if (item.OrderId != "265" || item.OrderId != "266")
+                if (item.Id != 265 && item.Id != 266)
                 {
                     AccountTradeHistories.Add(new AccountTradeHistory
                     {
