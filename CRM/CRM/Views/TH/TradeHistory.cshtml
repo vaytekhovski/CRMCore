@@ -29,7 +29,7 @@
 
 @Html.Partial("_FilterPanel")
 <div class="content" style="min-height: 400px">
-    <div class="profit profit_string" style="color: @(Model.Profit > 0 ? "green" : "red"); display: @(Model.Profit == 0 ? "none" : "block");">
+    <div class="profit profit_string" style="text-align: center; color: @(Model.Profit > 0 ? "green" : "red"); display: @(Model.Profit == 0 ? "none" : "block");">
         @{
             string profitStr = Model.Profit > 0 ? "+" + Model.Profit.ToString("#.##") + "$" : Model.Profit.ToString("#.##") + "$";
         }
