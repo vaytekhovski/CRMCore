@@ -11,68 +11,30 @@ using CRM.Models.DropDown;
 namespace CRM.Services
 {
     public class THService
-    {
-        private IEnumerable<Orders> orders = null;
-        
+    {        
         public List<AccountTradeHistory> AccountTradeHistories { get; private set; } = new List<AccountTradeHistory>();
 
-        private List<Field> Accounts = new List<Field>();
-
         public double Profit { get; set; }
-
 
         public void Load(string acc, string coin)
         {
             Profit = 0;
-            if (acc == "all") 
-            {
-                foreach (var item in DropDownFields.Accounts)
-                {
-                    if (item.Value == "all")
-                        continue;
 
-                    Accounts.Add(item);
-                }
-                
-            }
-            else
-            {
-                Accounts.Add(new Field { Value = acc, Name = "" });
-            }
-
+            var minDateTosearch = new DateTime(2019, 4, 5);
             using (masterContext context = new masterContext())
             {
-                foreach (var account in Accounts)
-                {
-
-                if (coin != "all")
-                {
-                    orders = context.Orders.Where(x => x.Base == coin && x.AccountId == account.Value).ToList();
-                    AddToTradeHistories();
-                }
-                else
-                {
-                    foreach (var _coin in DropDownFields.Coins)
-                    {
-                        if (_coin.Value == "all")
-                            continue;
-
-                        orders = context.Orders.Where(x => x.Base == _coin.Value && x.AccountId == account.Value).ToList();
-                        AddToTradeHistories();
-                    }
-                }
-
-                }
+                var orders = context.Orders.Where(x => 
+                    (acc != "all" ? x.AccountId == acc : true) && 
+                    (coin != "all" ? x.Base == coin : true) &&
+                    x.TimeEnded > minDateTosearch).ToList();
+                AddToTradeHistories(orders);
             }
-
-            AccountTradeHistories = AccountTradeHistories.Where(x => x.Time > DateTime.Parse("2019-04-05T03:00:00")).ToList();
+            
             //UpdateBalance(acc);
             UpdateProfit();
-
-            
         }
 
-        private void AddToTradeHistories()
+        private void AddToTradeHistories(ICollection<Orders> orders)
         {
             foreach (var item in orders)
             {
@@ -81,7 +43,7 @@ namespace CRM.Services
 
                 string account = "";
 
-                switch (item.AccountId)
+                switch (item.AccountId) // TODO: вынести
                 {
                     case "bccd3ca1-0b5e-41ac-8233-3a35209912c7":
                         account = "POLONIEX 1-й";

@@ -6,7 +6,7 @@
     @Html.Partial("_FilterPanel")
     <div class="profit profit_string">
         @{
-            string profitStr = ViewBag.Profit > 0 ? "+$" + ViewBag.Profit.ToString("0.00") : "-$" + ViewBag.Profit.ToString("0.00");
+            string profitStr = Model.Profit > 0 ? "+$" + Model.Profit.ToString("0.00") : "-$" + Model.Profit.ToString("0.00");
              }
         Прибыль: @profitStr
     </div>
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in ViewBag.Orders)
+                @foreach (var item in Model.Orders)
                 {
                     string profit = "";
                     if (item.Profit != 0)
@@ -76,5 +76,12 @@
                     
                 });
             });
+
+            $('document').ready(function () {
+                    if (@Model.Profit > 0)
+                        $('.profit_string').css('color', 'green');
+                    else
+                        $('.profit_string').css('color', 'red');
+                });
         </script>
     </div>

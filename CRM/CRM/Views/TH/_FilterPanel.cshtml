@@ -1,22 +1,14 @@
-﻿<form method="post">
+﻿@model CRM.ViewModels.TradeHistoryFilterModel
+
+<form method="post">
     <div class="filter_panel container">
 
         <div class="filter_element">
-            <select class="form-control filter_input" name="coin" id="coin_selector">
-                @foreach (var item in CRM.Models.DropDownFields.Coins)
-                {
-                    <option value="@item.Value">@item.Name</option>
-                }
-            </select>
+            @Html.DropDownListFor(m => m.Coin, DropDownFields.GetCoins(), new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
         </div>
 
         <div class="filter_element">
-            <select class="form-control filter_input" name="accounts" id="excange_selector">
-                @foreach (var item in CRM.Models.DropDownFields.Accounts)
-                {
-                    <option value="@item.Value">@item.Name</option>
-                }
-            </select>
+            @Html.DropDownListFor(m => m.Account, DropDownFields.GetAccounts(), new { @class = "form-control filter_input", name = "accounts", id= "excange_selector" })
         </div>
 
 

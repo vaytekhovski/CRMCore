@@ -1,5 +1,8 @@
 ﻿using CRM.Models.DropDown;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+
+using System.Linq;
 
 namespace CRM.Models
 {
@@ -9,7 +12,7 @@ namespace CRM.Models
         public static List<Field> OrderType = new List<Field>();
         public static List<Field> Situation = new List<Field>();
         public static List<Field> Nulls = new List<Field>();
-        public static List<Field> Accounts = new List<Field>();
+        private static List<Field> Accounts = new List<Field>();
 
         public static void InitiateFields()
         {
@@ -150,27 +153,15 @@ namespace CRM.Models
             Nulls[1].Value = bufValue;
             Nulls[1].Name = bufName;
         }
-
-
-        public static void SwapAccounts(string Value)
+        
+        public static IEnumerable<SelectListItem> GetAccounts() //TODO: переделать все в таком же стиле
         {
-            foreach (var item in Accounts)
-            {
-                if (item.Value == Value)
-                {
-                    foreach (var first in Accounts)
-                    {
-                        string bufValue = first.Value;
-                        string bufName = first.Name;
+            return Accounts.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
+        }
 
-                        first.Value = item.Value;
-                        first.Name = item.Name;
-
-                        item.Value = bufValue;
-                        item.Name = bufName;
-                    }
-                }
-            }
+        public static IEnumerable<SelectListItem> GetCoins()
+        {
+            return Coins.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
         }
     }
 }
