@@ -11,7 +11,8 @@ namespace CRM.DTO
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
-    public class Ticker 
+    public class Ticker
+    { 
         [JsonProperty("OrderBookAsks")]
         public List<OrderBook> OrderBookAsks { get; set; }
 

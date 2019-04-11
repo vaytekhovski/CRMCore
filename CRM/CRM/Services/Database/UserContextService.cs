@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Services
 {
-    public class UserContext : DbContext //TODO: [COMPLETE] move from here to service/database
+    public class UserContext : DbContext 
     {
         public DbSet<UserModel> UserModels { get; set; }
         public DbSet<Role> Roles { get; set; }

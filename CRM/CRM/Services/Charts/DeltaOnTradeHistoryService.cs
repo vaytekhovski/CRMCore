@@ -7,7 +7,7 @@ namespace CRM.Services.Charts
 {
     public class DeltaOnTradeHistoryService
     {
-        public List<long> DatesDelta { get; private set; } = new List<long>(); // TODO: [COMPLETE] without fields where possible
+        public List<long> DatesDelta { get; private set; } = new List<long>(); 
         public List<string> DeltaValues { get; private set; } = new List<string>();
 
         public List<long> DatesTHBuy { get; private set; } = new List<long>();

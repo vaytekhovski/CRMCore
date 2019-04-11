@@ -13,7 +13,7 @@ using CRM.ViewModels;
 
 namespace CRM.Controllers.User
 {
-    [Authorize] // TODO: [COMPLETE] use for whole controllers where necessary
+    [Authorize] 
     public class UserPanelController : Controller
     {
         private UserContext db;
