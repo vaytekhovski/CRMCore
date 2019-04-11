@@ -14,11 +14,16 @@
 
         .table-font td, th {
             padding: 1px !important;
+            text-align: center;
         }
 
         .table_block {
             padding: 0 !important;
         }
+    }
+
+    .table-font td, th {
+        text-align: center;
     }
 </style>
 
@@ -33,7 +38,7 @@
     <div class="container table_block">
         <table class="sortable table table-bordered table-font" style=" display: @(Model.Profit == 0 ? "none" : "table");">
             <thead >
-                <tr style="text-align:center">
+                <tr >
                     <th id="time">Время</th>
                     <th class="sorttable_nosort">Аккаунт</th>
                     <th class="sorttable_nosort">Тип</th>

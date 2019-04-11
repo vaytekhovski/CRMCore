@@ -75,27 +75,3 @@
     margin: auto;
 }
 
-/* trade history table */
-@@media only screen and (max-width: 600px) {
-    .table-font {
-        font-size: 6px !important;
-        text-align: center;
-    }
-
-    .profit {
-        display: none;
-    }
-
-    .table-font td, th {
-        padding: 1px !important;
-    }
-
-    .table_block {
-        padding: 0 !important;
-    }
-}
-
-.profit {
-    color: red;
-    text-align: center;
-}

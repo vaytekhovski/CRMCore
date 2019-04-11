@@ -11,8 +11,7 @@ namespace CRM.DTO
     using System.Collections.Generic;
     using Newtonsoft.Json;
 
-    public class Ticker //TODO: [COMPLETE] remove partials
-    {
+    public class Ticker 
         [JsonProperty("OrderBookAsks")]
         public List<OrderBook> OrderBookAsks { get; set; }
 
