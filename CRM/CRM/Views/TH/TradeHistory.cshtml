@@ -30,7 +30,7 @@
 }
 
   .profit{
-      color: green;
+      color: red;
       text-align:center;
   }
 
@@ -53,7 +53,7 @@
 
 </head>
 <body>
-    <div class="profit">
+    <div class="profit profit_string">
         @{
             string profitStr = ViewBag.Profit > 0 ? "+$" + ViewBag.Profit.ToString("0.00") : "-$" + ViewBag.Profit.ToString("0.00");
              }
@@ -106,6 +106,8 @@
                     return $(this).text() == searchBUY;
                 }).parent('tr').css('backgroundColor', 'rgb(255, 255, 255)');
 
+               
+
                 var searchSELL = 'sell';
                 $("table tr td").filter(function () {
                     return $(this).text() == searchSELL;
@@ -120,7 +122,10 @@
                     else {
                         $(this).css('color', 'red');
                     }
+                    
                 });
+
+
 
             });
 
