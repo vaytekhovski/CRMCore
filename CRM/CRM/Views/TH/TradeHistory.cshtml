@@ -7,11 +7,10 @@
 <style type="text/css">
     @@media only screen and (max-width: 600px) {
         .table-font {
-            table-layout:auto;
+            table-layout: auto;
             font-size: 8px !important;
             text-align: center;
         }
-
 
         .table-font td, th {
             padding: 1px !important;
@@ -23,17 +22,18 @@
     }
 </style>
 
-    @Html.Partial("_FilterPanel")
+@Html.Partial("_FilterPanel")
+<div class="content" style="min-height: 400px">
     <div class="profit profit_string" style="color: @(Model.Profit > 0 ? "green" : "red"); display: @(Model.Profit == 0 ? "none" : "block");">
         @{
             string profitStr = Model.Profit > 0 ? "+" + Model.Profit.ToString("#.##") + "$" : Model.Profit.ToString("#.##") + "$";
-             }
+        }
         Прибыль: @profitStr
     </div>
-    <div class="container table_block" >
-        <table class="sortable table table-bordered table-font" style=" display: @(Model.Profit == 0 ? "none" : "table");" >
-            <thead>
-                <tr>
+    <div class="container table_block">
+        <table class="sortable table table-bordered table-font" style=" display: @(Model.Profit == 0 ? "none" : "table");">
+            <thead >
+                <tr style="text-align:center">
                     <th id="time">Время</th>
                     <th class="sorttable_nosort">Аккаунт</th>
                     <th class="sorttable_nosort">Тип</th>
@@ -45,7 +45,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var item in Model.Orders)
+                @foreach (var item in Model.Orders)
                 {
                     string itemProfitStr = "";
                     if (item.Profit != 0)
@@ -56,20 +56,20 @@
                     {
                         itemProfitStr = null;
                     }
-                <tr>
-                    <td>@item.Time.ToString("dd MM yy HH:mm")</td>
-                    <td>@item.Account</td>
-                    <td>@item.Side</td>
-                    <td>@item.Pair</td>
-                    <td>$@String.Format("{0:0.##}", item.Price)</td>
-                    <td>@item.Quantity</td>
-                    <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
-                    <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                </tr>
+                    <tr>
+                        <td>@item.Time.ToString("dd MM yy HH:mm")</td>
+                        <td>@item.Account</td>
+                        <td>@item.Side</td>
+                        <td>@item.Pair</td>
+                        <td>$@String.Format("{0:0.##}", item.Price)</td>
+                        <td>@item.Quantity</td>
+                        <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
+                        <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
+                    </tr>
                 }
 
-                
-                
+
+
             </tbody>
         </table>
 
@@ -79,12 +79,14 @@
                 $("table tr td").filter(function () {
                     return $(this).text() == searchBUY;
                 }).parent('tr').css('backgroundColor', 'rgb(255, 255, 255)');
-                
+
                 var searchSELL = 'sell';
                 $("table tr td").filter(function () {
                     return $(this).text() == searchSELL;
                 }).parent('tr').css('backgroundColor', 'rgb(242, 244, 247)');
-                
+
             });
         </script>
     </div>
+</div>
+@Html.Partial("Footer")
