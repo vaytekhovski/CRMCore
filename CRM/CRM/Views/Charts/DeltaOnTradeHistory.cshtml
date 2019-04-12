@@ -1,31 +1,22 @@
 ﻿@{
     Layout = "~/Views/Shared/Charts/ChartsLayout.cshtml";
+    ViewBag.Title = "Charts";
 }
 
-<!DOCTYPE html>
+@model CRM.ViewModels.Charts.DeltaOnTradeHistoryViewModel
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>DeltaOnTradeHistory</title>
 
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+@Html.Partial("_DeltaOnTradeHistoryFilterPanel");
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</head>
-<body>
+<div class="content">
     <div>
         <div>
-            <div>
-                <div id="Chart">
-
-                </div>
+            <div id="Chart">
 
             </div>
-            <script type="text/javascript">
+
+        </div>
+        <script type="text/javascript">
 
             CHART = document.getElementById('Chart');
 
@@ -41,7 +32,7 @@
 
 
 
-            @foreach (var item in ViewBag.datesDelta)
+            @foreach (var item in Model.DatesDelta)
             {
                 <text>
                     datesDelta.push(new Date(@item));
@@ -49,7 +40,7 @@
 
             }
 
-            @foreach (var item in ViewBag.deltaValues)
+            @foreach (var item in Model.DeltaValues)
             {
                 <text>
                     deltaValues.push(parseFloat(@item));
@@ -57,7 +48,7 @@
 
             }
 
-            @foreach (var item in ViewBag.datesTHBuy)
+            @foreach (var item in Model.DatesTHBuy)
             {
                 <text>
                     datesTHBuy.push(new Date(@item));
@@ -65,7 +56,7 @@
 
             }
 
-            @foreach (var item in ViewBag.THBuyValues)
+            @foreach (var item in Model.THBuyValues)
             {
                 <text>
                     THBuyValues.push(parseFloat(@item));
@@ -73,7 +64,7 @@
 
             }
 
-            @foreach (var item in ViewBag.datesTHSell)
+            @foreach (var item in Model.DatesTHSell)
             {
                 <text>
                     datesTHSell.push(new Date(@item));
@@ -81,7 +72,7 @@
 
             }
 
-            @foreach (var item in ViewBag.THSellValues)
+            @foreach (var item in Model.THSellValues)
             {
                 <text>
                     THSellValues.push(parseFloat(@item));
@@ -127,8 +118,8 @@
 
             Plotly.plot(CHART, data);
 
-            </script>
-        </div>
+        </script>
     </div>
-</body>
-</html>
+</div>
+
+@Html.Partial("Footer")

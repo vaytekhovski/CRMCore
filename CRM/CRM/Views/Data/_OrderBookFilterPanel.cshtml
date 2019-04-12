@@ -1,0 +1,63 @@
+﻿
+@model CRM.ViewModels.Data.OrderBookViewModel
+
+<form method="post">
+    <div class="filter_panel container">
+
+        <div class="filter_element">
+            @Html.DropDownListFor(m => m.Coin, DropDownFields.GetCoins(), new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
+        </div>
+
+        <div class="filter_element">
+            @Html.DropDownListFor(m => m.Situation, DropDownFields.GetSituations(), new { @class = "form-control filter_input", name = "situation", id = "situation_selector" })
+        </div>
+
+        <div class="filter_element">
+            <input type="date" class="form-control filter_input" id="startDate" name="startDate" value="2019-04-05" min="2019-03-01" />
+        </div>
+
+        @{
+            var currentDate = DateTime.Now;
+
+            string dd = currentDate.Day < 10 ? "0" + currentDate.Day.ToString() : currentDate.Day.ToString();
+            string mm = currentDate.Month < 10 ? "0" + currentDate.Month.ToString() : currentDate.Month.ToString();
+            string yy = currentDate.Year.ToString();
+            string curDate = yy + "-" + mm + "-" + dd;
+
+        }
+
+        <div class="filter_element">
+            <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@curDate min="2019-04-01" />
+        </div>
+
+    </div>
+    <div class="filter_panel container">
+        <div class="filter_element">
+            <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../Data/ShowOrderBookAsks" formmethod="post">
+                Показать OrderBooksAks
+            </button>
+            <div class="filter_element">
+                <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../Data/ShowOrderBookBids" formmethod="post">
+                    Показать OrderBookBids
+                </button>
+            </div>
+            <div class="filter_element">
+                <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../Data/ShowTradeHistory" formmethod="post">
+                    Показать TradeHistory
+                </button>
+            </div>
+            <div class="filter_element">
+                <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../Data/ShowTradeDelta" formmethod="post">
+                    Показать TradeDelta
+                </button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+    $("#TradeHistory").click(function () {
+        setDataToCoockie()
+    });
+</script>

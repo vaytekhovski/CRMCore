@@ -1,58 +1,65 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CRM.Services.Data;
 using Microsoft.AspNetCore.Authorization;
+using CRM.ViewModels.Data;
 
 namespace CRM.Controllers.Data
 {
     [Authorize]
     public class DataController : Controller
     {
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
-        
-        public ActionResult ShowOrderBookAsks(string coin, string situation, string startDate = "", string endDate = "")
+
+        [HttpPost]
+        public ActionResult ShowOrderBookAsks(OrderBookViewModel model)
         {
             OrderBookService orderBook = new OrderBookService();
-            orderBook.Load("ask", coin, situation, startDate, endDate);
+            orderBook.Load("ask", model.Coin, model.Situation, model.StartDate, model.EndDate);
 
-            ViewBag.show = orderBook.Show; // TODO: использовать модели, без необходимости ViewBag и ViewData не использовать
-            ViewBag.summVolume = orderBook.SummVolume;
+            model.Show = orderBook.Show; // TODO: использовать модели, без необходимости ViewBag и ViewData не использовать
+            model.SummVolume = orderBook.SummVolume;
 
-            return View();
+            return View(model);
         }
-        
-        public ActionResult ShowOrderBookBids(string coin, string situation, string startDate = "", string endDate = "")
+
+        [HttpPost]
+        public ActionResult ShowOrderBookBids(OrderBookViewModel model)
         {
             OrderBookService orderBook = new OrderBookService();
-            orderBook.Load("bid", coin, situation, startDate, endDate);
+            orderBook.Load("bid", model.Coin, model.Situation, model.StartDate, model.EndDate);
 
-            ViewBag.show = orderBook.Show;
-            ViewBag.summVolume = orderBook.SummVolume;
+            model.Show = orderBook.Show;
+            model.SummVolume = orderBook.SummVolume;
 
-            return View();
+            return View(model);
         }
-        
-        public ActionResult ShowTradeHistory(string coin, string situation, string orderType, string startDate = "", string endDate = "")
+
+        [HttpPost]
+        public ActionResult ShowTradeHistory(TradeHistoryViewModel model)
         {
             TradeHistoryService tradeHistory = new TradeHistoryService();
-            tradeHistory.Load(coin, situation, orderType, startDate, endDate);
+            model.OrderType = model.OrderType == null ? "all" : model.OrderType;
+            tradeHistory.Load(model.Coin, model.Situation, model.OrderType, model.StartDate, model.EndDate);
 
-            ViewBag.show = tradeHistory.Show;
-            ViewBag.summVolume = tradeHistory.SummVolume;
+            model.Show = tradeHistory.Show;
+            model.SummVolume = tradeHistory.SummVolume;
 
-            return View();
+            return View(model);
         }
-        
-        public ActionResult ShowTradeDelta(string coin, string startDate = "", string endDate = "", string nulldelta = "all")
+
+        [HttpPost]
+        public ActionResult ShowTradeDelta(TradeDeltaViewModel model)
         {
             TradeDeltaService tradeDelta = new TradeDeltaService();
-            tradeDelta.Load(coin, startDate, endDate, nulldelta);
+            tradeDelta.Load(model.Coin, model.StartDate, model.EndDate, model.NullDelta);
 
-            ViewBag.show = tradeDelta.Show;
-            ViewBag.summDelta = tradeDelta.SummDelta;
-            return View();
+            model.Show = tradeDelta.Show;
+            model.SummDelta = tradeDelta.SummDelta;
+            return View(model);
         }
     }
 }

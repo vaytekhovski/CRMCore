@@ -21,10 +21,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Charts\AsksOnBids.cshtml" />
+    <None Include="Views\Charts\Charts.cshtml" />
+    <None Include="Views\Charts\DeltaOnTradeHistory.cshtml" />
+    <None Include="Views\Charts\_AsksOnBidsFilterPanel.cshtml" />
+    <None Include="Views\Charts\_DeltaOnTradeHistoryFilterPanel.cshtml" />
+    <None Include="Views\Data\Index.cshtml" />
+    <None Include="Views\Data\ShowOrderBookAsks.cshtml" />
+    <None Include="Views\Data\ShowOrderBookBids.cshtml" />
+    <None Include="Views\Data\ShowTradeDelta.cshtml" />
+    <None Include="Views\Data\ShowTradeHistory.cshtml" />
+    <None Include="Views\Data\_OrderBookFilterPanel.cshtml" />
+    <None Include="Views\Data\_TradeDeltaFilterPanel.cshtml" />
+    <None Include="Views\Data\_TradeHistoryFilterPanel.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Shared\Charts\ChartsLayout.cshtml" />
+    <None Include="Views\Shared\Data\OrderBookLayout.cshtml" />
+    <None Include="Views\Shared\Data\TradeDeltaLayout.cshtml" />
+    <None Include="Views\Shared\Data\TradeHistoryLayout.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\Footer.cshtml" />
+    <None Include="Views\Shared\Navbar.cshtml" />
+    <None Include="Views\Shared\TradeHistory\TradeHistoryLayout.cshtml" />
     <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="wwwroot\js\app.js" />
     <None Include="wwwroot\images\checked.svg" />

@@ -1,59 +1,71 @@
 ﻿@{
     Layout = "~/Views/Shared/Data/TradeDeltaLayout.cshtml";
+    ViewBag.Title = "Trade Delta";
+
 }
+
+@model CRM.ViewModels.Data.TradeDeltaViewModel
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ShowTradeDelta</title>
 
-    <script type="text/javascript" src="~/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="~/jquery.tablesorter.js"></script>
+    <script src="~/js/sorttable.js"></script>
+
+    <style type="text/css">
+        @@media only screen and (max-width: 600px) {
+            .table-font {
+                table-layout: auto;
+                font-size: 8px !important;
+                text-align: center;
+            }
+
+                .table-font td, th {
+                    padding: 1px !important;
+                }
+
+            .table_block {
+                padding: 0 !important;
+            }
+        }
+    </style>
+
 </head>
 <body>
+    @Html.Partial("_TradeDeltaFilterPanel")
     <div>
         <div style="text-align:center">
             <span>
-                Суммарная дельта: @ViewBag.summDelta
+                Суммарная дельта: @Model.SummDelta
             </span>
         </div>
-        <table class="table table-bordered table-striped" style=" margin: auto; width:60%" id="myTable">
-            <thead>
-                <tr>
-                    <td><p>Валюта:</p></td>
-                    <td><p>Время от:</p></td>
-                    <td><p>Время до:</p></td>
-                    <td><p>Дельта:</p></td>
+        <div class="container table_block">
+            <table class="sortable table table-bordered table-font">
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var value in ViewBag.show)
-                {
-                    <tr>
-                        <td><p>@value.CurrencyName</p></td>
-                        <td><p>@value.TimeFrom.DateTime</p></td>
-                        <td><p>@value.TimeTo.DateTime</p></td>
-                        <td><p>@value.Delta</p></td>
+                <thead>
+                    <tr style="text-align:center">
+                        <th class="sorttable_nosort">Валюта:</th>
+                        <th class="sorttable_nosort">Время от:</th>
+                        <th class="sorttable_nosort">Время до:</th>
+                        <th class="sorttable_nosort">Дельта:</th>
+
                     </tr>
-                }
-            </tbody>
-        </table>
-        <script type="text/javascript">
-
-            $('#myTable').tablesorter(
-                {
-                    dateFormat: 'mmddYYYY',
-                    headers: {
-                        0: { sorter: false },
-                        1: { sorter: "shortDate", dateFormat: "ddmmyyyy" },
-                        2: { sorter: "shortDate", dateFormat: "ddmmyyyy" },
-                        3: { sorter: true }
+                </thead>
+                <tbody>
+                    @foreach (var value in Model.Show)
+                    {
+                        <tr>
+                            <td><p>@value.CurrencyName</p></td>
+                            <td><p>@value.TimeFrom.DateTime</p></td>
+                            <td><p>@value.TimeTo.DateTime</p></td>
+                            <td><p>@value.Delta</p></td>
+                        </tr>
                     }
-                });
-
-        </script>
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    @Html.Partial("Footer")
 </body>
 </html>

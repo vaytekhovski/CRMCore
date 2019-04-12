@@ -71,7 +71,7 @@ namespace CRM.Models
             Nulls.Add(new Field { Value = "all", Name = "Показывать нулевые значения" });
             Nulls.Add(new Field { Value = "notnull", Name = "Не показывать нулевые значения" });
         }
-        
+
 
         public static void SwapCoins(string Value)
         {
@@ -153,7 +153,7 @@ namespace CRM.Models
             Nulls[1].Value = bufValue;
             Nulls[1].Name = bufName;
         }
-        
+
         public static IEnumerable<SelectListItem> GetAccounts() //TODO: переделать все в таком же стиле
         {
             return Accounts.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
@@ -162,6 +162,21 @@ namespace CRM.Models
         public static IEnumerable<SelectListItem> GetCoins()
         {
             return Coins.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
+        }
+
+        public static IEnumerable<SelectListItem> GetSituations()
+        {
+            return Situation.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
+        }
+
+        public static IEnumerable<SelectListItem> GetNulls()
+        {
+            return Nulls.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
+        }
+
+        public static IEnumerable<SelectListItem> GetOrderTypes()
+        {
+            return OrderType.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
         }
     }
 }

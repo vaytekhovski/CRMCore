@@ -1,4 +1,5 @@
 ﻿using CRM.Services.Charts;
+using CRM.ViewModels.Charts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,40 +9,48 @@ namespace CRM.Controllers.Charts
     [Authorize]
     public class ChartsController : Controller
     {
+        [HttpGet]
         public ActionResult Charts()
         {
-            return View();
+            var model = new AskOnBidViewModel
+            {
+
+            };
+            return View(model);
         }
-        
-        public ActionResult AsksOnBids(string coin, string startDate = "", string endDate = "")
+
+        [HttpPost]
+        public ActionResult AsksOnBids(AskOnBidViewModel model)
         {
             AsksOnBidsService asksOnBids = new AsksOnBidsService();
-            asksOnBids.Load(coin, startDate, endDate);
+            asksOnBids.Load(model.Coin, model.StartDate, model.EndDate);
 
-            ViewBag.datesAsks = asksOnBids.DatesAsks;
-            ViewBag.datesBids = asksOnBids.DatesBids;
+            model.DatesAsks = asksOnBids.DatesAsks;
+            model.DatesBids = asksOnBids.DatesBids;
 
-            ViewBag.asksValues = asksOnBids.AsksValues;
-            ViewBag.bidsValues = asksOnBids.BidsValues;
+            model.AsksValues = asksOnBids.AsksValues;
+            model.BidsValues = asksOnBids.BidsValues;
 
-            return View();
+            return View(model);
         }
-        
-        public ActionResult DeltaOnTradeHistory(string coin, string startDate, string endDate)
+
+        [HttpPost]
+        public ActionResult DeltaOnTradeHistory(DeltaOnTradeHistoryViewModel model)
         {
             DeltaOnTradeHistoryService deltaOnTradeHistory = new DeltaOnTradeHistoryService();
-            deltaOnTradeHistory.Load(coin, startDate, endDate);
-            ViewBag.datesDelta = deltaOnTradeHistory.DatesDelta;
-            ViewBag.deltaValues = deltaOnTradeHistory.DeltaValues;
+            deltaOnTradeHistory.Load(model.Coin, model.StartDate, model.EndDate);
 
-            ViewBag.datesTHBuy = deltaOnTradeHistory.DatesTHBuy;
-            ViewBag.THBuyValues = deltaOnTradeHistory.THBuyValues;
+            model.DatesDelta = deltaOnTradeHistory.DatesDelta;
+            model.DeltaValues = deltaOnTradeHistory.DeltaValues;
 
-            ViewBag.datesTHSell = deltaOnTradeHistory.DatesTHSell;
-            ViewBag.THSellValues = deltaOnTradeHistory.THSellValues;
+            model.DatesTHBuy = deltaOnTradeHistory.DatesTHBuy;
+            model.THBuyValues = deltaOnTradeHistory.THBuyValues;
+
+            model.DatesTHSell = deltaOnTradeHistory.DatesTHSell;
+            model.THSellValues = deltaOnTradeHistory.THSellValues;
 
 
-            return View();
+            return View(model);
         }
     }
 }

@@ -3,25 +3,25 @@
     ViewBag.Title = "OrderBookLayout";
 }
 <!DOCTYPE html>
-<html>
 <head>
-    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
 
+    <link href="~/css/stylesheet.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
     <script src="~/js/datestocoockie.js"></script>
+    <script src="~/js/sorttable.js"></script>
 </head>
-
-
-
+   
 <body class="body_of_layout">
     <div>
-        @Html.Partial("Navbar")
+        @await Html.PartialAsync("Navbar")
     </div>
-    <div>
+    @*<div>
         <div class="layout_block">
             <form method="post">
                 <div>
@@ -34,7 +34,7 @@
                         </select>
 
                         <select class="form-control form-control-sm " name="coin" id="coin_selector">
-                            
+
                             @foreach (var item in CRM.Models.DropDownFields.Coins)
                             {
                                 <option value="@item.Value">@item.Name</option>
@@ -53,7 +53,7 @@
 
                     <div class="input-group mb-3">
                         <input type="date" class="form-control" id="startDate" name="startDate" />
-                        <input type="date" class="form-control" id="endDate" name="endDate"  />
+                        <input type="date" class="form-control" id="endDate" name="endDate" />
                     </div>
 
                     <div class="btn-group">
@@ -84,9 +84,9 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>*@
 
 
     @RenderBody()
 </body>
-</html>
+    </html>
