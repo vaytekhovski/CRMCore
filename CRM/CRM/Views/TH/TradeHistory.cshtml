@@ -55,7 +55,7 @@
                     string itemProfitStr = "";
                     if (item.Profit != 0)
                     {
-                        itemProfitStr = item.Profit > 0 ? "+" + item.Profit.ToString("#.##") + "$" : item.Profit.ToString("#.##") + "$";
+                        itemProfitStr = item.Profit > 0 ? "+" + String.Format("{0:0.##}", item.Profit) + "$" : String.Format("{0:0.##}", item.Profit) + "$";
                     }
                     else
                     {

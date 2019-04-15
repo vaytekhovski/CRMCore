@@ -49,7 +49,7 @@ namespace CRM.Services
             IgnoreIds.Add(275);
         }
 
-        private string accountName(string accountId)
+        private string AccountName(string accountId)
         {
             string account = "";
 
@@ -68,6 +68,8 @@ namespace CRM.Services
 
             return account;
         }
+        
+        
 
         private void AddToTradeHistories(ICollection<Orders> orders)
         {
@@ -89,7 +91,7 @@ namespace CRM.Services
 
                 AccountTradeHistories.Add(new AccountTradeHistory
                 {
-                    Account = accountName(item.AccountId),
+                    Account = AccountName(item.AccountId),
                     Time = item.TimeEnded,
                     Side = item.Side,
                     Pair = item.Base,
@@ -141,48 +143,50 @@ namespace CRM.Services
         {
             foreach (var _coin in DropDownFields.Coins)
             {
+                foreach (var _acc in DropDownFields.Accounts)
+                {
+                    if (_acc.Value == "all")
+                        continue;
+
+                    if (_coin.Value == "all")
+                        break;
+                    
+
+                    double profit = 0;
+                    var TH = AccountTradeHistories.Where(x => x.Pair == _coin.Value && x.Account == AccountName(_acc.Value)).OrderBy(x => x.Time).ToArray();
+
+                    for (int i = 0; i < TH.Count(); i++)
+                    {
+                        profit += TH[i].Side == "buy" ? ((double)TH[i].DollarQuantity) * -1 : (double)TH[i].DollarQuantity;
+                        
+                        if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
+                        {
+                            TH[i].Profit = profit;
+                            profit = 0;
+                        }
+                    }
+
+                    int j = 0;
+                    foreach (var item in AccountTradeHistories.Where(x => x.Pair == _coin.Value && x.Account == AccountName(_acc.Value)).OrderBy(x => x.Time))
+                    {
+                        if (TH[j].Profit != 0)
+                        {
+                            item.Profit = TH[j].Profit;
+                        }
+                        j++;
+                    }
+
+
+                }
                 if (_coin.Value == "all")
                     continue;
-
-                double profit = 0;
-                var TH = AccountTradeHistories.Where(x => x.Pair == _coin.Value).OrderBy(x => x.Time).ToArray();
-
-                for (int i = 0; i < TH.Count(); i++)
-                {
-                    //if (i != TH.Count() - 1)
-                    //    if (TH[i + 1].Time - TH[i].Time > new TimeSpan(2, 0, 0))
-                    //    {
-                    //        profit = 0;
-                    //        continue;
-                    //    }
-
-                    if (TH[i].Side == "buy")
-                    {
-                        profit -= (double)TH[i].DollarQuantity;
-                    }
-                    else
-                    {
-                        profit += (double)TH[i].DollarQuantity;
-                    }
-
-                    if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
-                    {
-                        TH[i].Profit = profit;
-                        Profit += profit;
-                        profit = 0;
-                    }
-                }
-
-                int j = 0;
-                foreach (var item in AccountTradeHistories.Where(x => x.Pair == _coin.Value).OrderBy(x => x.Time))
-                {
-                    if (TH[j].Profit != 0)
-                    {
-                        item.Profit = TH[j].Profit;
-                    }
-                    j++;
-                }
             }
+
+            foreach (var item in AccountTradeHistories.Where(x => x.Profit != 0))
+            {
+                Profit += item.Profit;
+            }
+
         }
 
 
