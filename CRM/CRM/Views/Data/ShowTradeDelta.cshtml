@@ -56,8 +56,8 @@
                     {
                         <tr>
                             <td><p>@value.CurrencyName</p></td>
-                            <td><p>@value.TimeFrom.DateTime</p></td>
-                            <td><p>@value.TimeTo.DateTime</p></td>
+                            <td><p>@value.TimeFrom.DateTime.ToString("dd.MM.yy HH:mm")</p></td>
+                            <td><p>@value.TimeTo.DateTime.ToString("dd.MM.yy HH:mm")</p></td>
                             <td><p>@value.Delta</p></td>
                         </tr>
                     }
