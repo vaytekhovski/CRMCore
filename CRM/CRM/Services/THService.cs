@@ -18,18 +18,21 @@ namespace CRM.Services
 
         private List<int> IgnoreIds = new List<int>();
 
-        public void Load(string acc, string coin)
+        public void Load(string acc, string coin, string startDate, string endDate)
         {
             InitializeIgnoreList();
             Profit = 0;
 
-            var minDateTosearch = new DateTime(2019, 4, 5);
+            DateTime StartDate = DateTime.Parse(startDate);
+            DateTime EndDate = DateTime.Parse(endDate);
+
             using (masterContext context = new masterContext())
             {
                 var orders = context.Orders.Where(x => 
                     (acc != "all" ? x.AccountId == acc : true) && 
                     (coin != "all" ? x.Base == coin : true) &&
-                    x.TimeEnded > minDateTosearch).ToList();
+                    x.TimeEnded >= StartDate &&
+                    x.TimeEnded <= EndDate).ToList();
                 AddToTradeHistories(orders);
             }
             
@@ -92,7 +95,7 @@ namespace CRM.Services
                 AccountTradeHistories.Add(new AccountTradeHistory
                 {
                     Account = AccountName(item.AccountId),
-                    Time = item.TimeEnded,
+                    Time = item.TimeEnded.AddHours(3),
                     Side = item.Side,
                     Pair = item.Base,
                     Price = item.Rate,

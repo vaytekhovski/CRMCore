@@ -32,7 +32,7 @@ namespace CRM.Controllers
         {
             THService tHService = new THService();
 
-            tHService.Load(model.Account, model.Coin);
+            tHService.Load(model.Account, model.Coin, model.StartDate, model.EndDate);
 
             model.Orders = tHService.AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
             model.Profit = tHService.Profit;
