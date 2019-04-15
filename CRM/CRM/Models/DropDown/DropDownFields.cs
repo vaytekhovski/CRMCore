@@ -12,7 +12,7 @@ namespace CRM.Models
         public static List<Field> OrderType = new List<Field>();
         public static List<Field> Situation = new List<Field>();
         public static List<Field> Nulls = new List<Field>();
-        private static List<Field> Accounts = new List<Field>();
+        public static List<Field> Accounts = new List<Field>();
 
         public static void InitiateFields()
         {
