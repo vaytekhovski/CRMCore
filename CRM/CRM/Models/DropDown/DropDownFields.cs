@@ -1,8 +1,15 @@
-﻿using CRM.Models.DropDown;
+﻿using CRM.Models.Database;
+using CRM.Models.DropDown;
+using CRM.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using System.Security;
 
 namespace CRM.Models
 {
@@ -71,10 +78,35 @@ namespace CRM.Models
             Nulls.Add(new Field { Value = "all", Name = "Показывать нулевые значения" });
             Nulls.Add(new Field { Value = "notnull", Name = "Не показывать нулевые значения" });
         }
-        
-        public static IEnumerable<SelectListItem> GetAccounts() //TODO: [COMPLETE] переделать все в таком же стиле
+
+        public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext) //TODO: [COMPLETE] переделать все в таком же стиле
         {
-            return Accounts.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
+            //return Accounts.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
+            
+            
+
+            using (UserContext context = new UserContext())
+            {
+                UserModel user = context.UserModels.FirstOrDefault(x => x.Login == httpContext.User.Identity.Name);
+                List<SelectListItem> lst = new List<SelectListItem>();
+
+                if (user.RoleId == 1)
+                {
+                    lst = context.ExchangeKeys
+                        .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
+                        .ToList();
+
+                }
+                else
+                {
+                    lst = context.ExchangeKeys
+                        .Where(x => x.UserId == user.Id)
+                        .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
+                        .ToList();
+                }
+
+                return lst;
+            }
         }
 
         public static IEnumerable<SelectListItem> GetCoins()

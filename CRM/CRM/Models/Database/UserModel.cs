@@ -35,6 +35,7 @@ namespace CRM.Models.Database
     {
         public int Id { get; set; }
         public int? UserId { get; set; }
+        public string Name { get; set; }
         public string AccountId { get; set; }
         public UserModel User { get; set; }
     }
