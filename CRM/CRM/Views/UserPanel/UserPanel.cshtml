@@ -10,7 +10,7 @@
 
 
     <link href="~/css/stylesheet.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -19,75 +19,69 @@
     <div>
         @Html.Partial("Navbar")
     </div>
-
-    <div class="user_panel">
-        <div class="parent">
-            <form action="/UserPanel/UserPanel" method="post">
-                <div style="text-align:center">
-                    <h1>USER PANEL</h1>
-                </div>
-
-                <label>Логин:</label><br />
-                <div class="input-group mb-3">
-                    <input class="form-control" placeholder="@ViewBag.Login" type="text" asp-for="Login" />
-                    <span asp-validation-for="Login" />
-                    <div class="input-group-append">
-                        <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangeLoginAsync" formmethod="get">Изменить</button>
+    <div class="content">
+        <div class="user_panel">
+            <div class="parent">
+                <form action="/UserPanel/UserPanel" method="post">
+                    <div style="text-align:center">
+                        <h1>USER PANEL</h1>
                     </div>
-                </div>
 
-                <label>Пароль:</label><br />
-                <div class="input-group mb-3">
-                    <input class="form-control" placeholder="@ViewBag.Password" type="text" asp-for="Password" />
-                    <span asp-validation-for="Password" />
-                    <div class="input-group-append">
-                        <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
+                    <label>Логин:</label><br />
+                    <div class="user_row">
+                        <input class="form-control" placeholder="@ViewBag.Login" type="text" asp-for="Login" />
+                        <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeLoginAsync" formmethod="get">Изменить</button>
                     </div>
-                </div>
 
-                <label>Обновление данных ежедневно в: </label><br />
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
-                    <div class="input-group-append">
-                        <button class="btn btn-success" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
+                    <label>Пароль:</label><br />
+                    <div class="user_row">
+                        <input class="form-control" placeholder="@ViewBag.Password" type="text" asp-for="Password" />
+                        <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
                     </div>
-                </div>
 
-                <label>Ручная загрузка данных: </label><br />
-                <div class="input-group mb-3">
-                    <input type="date" class="form-control" name="startDate" value="" />
-                    <input type="date" class="form-control" name="endDate" value="" />
-                    <div class="input-group-append">
-                        <button class="btn btn-success" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                    <label>Обновление данных ежедневно в: </label><br />
+                    <div class="user_row">
+                        <input type="text" class="form-control" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
+                        <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
                     </div>
-                </div>
-                <div style="margin-left:48%">
-                    <div id="Spinner" style="display:none" class="spinner-border text-success"></div>
-                </div>
-                <script>
 
-                    $("#loadData").click(function () {
-                        showDiv();
-                    });
+                    <label>Ручная загрузка данных: </label><br />
+                    <div class="user_row">
+                        <input type="date" class="form-control" name="startDate" value="" />
+                        <input type="date" class="form-control" name="endDate" value="" />
+                        <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                    </div>
+                    <div style="margin-left:48%">
+                        <div id="Spinner" style="display:none" class="spinner-border text-success"></div>
+                    </div>
+                    <script>
 
-                    function showDiv() {
-                        document.getElementById('Spinner').style.display = "block";
-                    }
-                </script>
+                        $("#loadData").click(function () {
+                            showDiv();
+                        });
 
-                <div style="text-align:center">
-                    @ViewBag.status
-                </div>
+                        function showDiv() {
+                            document.getElementById('Spinner').style.display = "block";
+                        }
+                    </script>
 
-                <div>
-                    <label>Дата регистрации: @ViewBag.RegistrationDate</label>
-                </div>
-                <div>
-                    <button class="btn btn-danger" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
-                </div>
+                    <div style="text-align:center">
+                        @ViewBag.status
+                    </div>
 
-            </form>
+                    <div>
+                        <label>Дата регистрации: @ViewBag.RegistrationDate</label>
+                    </div>
+                    <div>
+                        <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
+                    </div>
+
+                </form>
+            </div>
         </div>
+    </div>
+    <div style="margin-top:100px">
+        @Html.Partial("Footer")
     </div>
 </body>
 </html>

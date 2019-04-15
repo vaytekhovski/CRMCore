@@ -18,10 +18,8 @@
 }
 
 .user_panel{
-    padding-top: 100pt;
+    padding-top: 100px;
 }
-
-
 
 
 .layout_block {
@@ -75,3 +73,15 @@
     margin: auto;
 }
 
+/* User Panel */
+
+.user_button {
+    height: 50px !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+}
+
+.user_row{
+    padding-top: 30px;
+    display:inline-block;
+}
