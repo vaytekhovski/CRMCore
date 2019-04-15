@@ -28,7 +28,7 @@ namespace CRM.Controllers
         }
 
         [HttpPost] //TODO: разметить везде, где GET, а где POST
-        public ActionResult TradeHistory(TradeHistoryFilterModel model) //TODO: load with default values
+        public ActionResult TradeHistory(TradeHistoryFilterModel model) 
         {
             THService tHService = new THService();
 

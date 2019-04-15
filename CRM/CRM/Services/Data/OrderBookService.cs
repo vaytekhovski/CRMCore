@@ -41,15 +41,7 @@ namespace CRM.Services.Data
                 }
             }
 
-            if (coin != DropDownFields.Coins.First().Value)
-            {
-                DropDownFields.SwapCoins(coin);
-            }
-
-            if (situation != DropDownFields.Situation.First().Value)
-            {
-                DropDownFields.SwapSituations(situation);
-            }
+            
         }
     }
 }

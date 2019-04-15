@@ -25,10 +25,7 @@ namespace CRM.Services.Data
                 {
                     DateTime SD = DateTime.Parse(startDate);
                     DateTime ED = DateTime.Parse(endDate);
-
-                    //Session["SD"] = HomeController.DatesToSession(SD);
-                    //Session["ED"] = HomeController.DatesToSession(ED);
-
+                    
                     Show = Show.Where(x => x.TimeFrom >= SD && x.TimeTo <= ED).ToList();
                 }
 
@@ -41,17 +38,7 @@ namespace CRM.Services.Data
                 {
                     SummDelta += item.Delta;
                 }
-
-
-                if (coin != DropDownFields.Coins.ToArray()[0].Value)
-                {
-                    DropDownFields.SwapCoins(coin);
-                }
-
-                if (nulldelta != DropDownFields.Nulls.ToArray()[0].Value)
-                {
-                    DropDownFields.SwapNulls();
-                }
+                
                 
             }
         }

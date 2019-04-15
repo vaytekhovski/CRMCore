@@ -20,7 +20,7 @@ namespace CRM.Controllers.Data
             OrderBookService orderBook = new OrderBookService();
             orderBook.Load("ask", model.Coin, model.Situation, model.StartDate, model.EndDate);
 
-            model.Show = orderBook.Show; // TODO: использовать модели, без необходимости ViewBag и ViewData не использовать
+            model.Show = orderBook.Show; // TODO: [COMPLETE] использовать модели, без необходимости ViewBag и ViewData не использовать
             model.SummVolume = orderBook.SummVolume;
 
             return View(model);
@@ -55,6 +55,9 @@ namespace CRM.Controllers.Data
         public ActionResult ShowTradeDelta(TradeDeltaViewModel model)
         {
             TradeDeltaService tradeDelta = new TradeDeltaService();
+
+            model.NullDelta = model.NullDelta == null ? "all" : model.NullDelta;
+
             tradeDelta.Load(model.Coin, model.StartDate, model.EndDate, model.NullDelta);
 
             model.Show = tradeDelta.Show;
