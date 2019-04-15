@@ -18,13 +18,16 @@ namespace CRM.Services
 
         private List<int> IgnoreIds = new List<int>();
 
+        private DateTime StartDate;
+        private DateTime EndDate;
+
         public void Load(string acc, string coin, string startDate, string endDate)
         {
             InitializeIgnoreList();
             Profit = 0;
 
-            DateTime StartDate = DateTime.Parse(startDate);
-            DateTime EndDate = DateTime.Parse(endDate);
+            StartDate = DateTime.Parse(startDate);
+            EndDate = DateTime.Parse(endDate);
 
             using (masterContext context = new masterContext())
             {
