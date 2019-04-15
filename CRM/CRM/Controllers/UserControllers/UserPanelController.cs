@@ -23,15 +23,15 @@ namespace CRM.Controllers.User
             db = context;
         }
        
-        public ActionResult UserPanel()
+        public ActionResult UserPanel(UserPanelModel model)
         {
             UserModel user = db.UserModels.FirstOrDefault(x => x.Login == User.Identity.Name);
 
-            ViewBag.Login = user.Login;
-            ViewBag.Password = user.Password;
-            ViewBag.RegistrationDate = user.RegistrationDate;
+            model.Login = user.Login;
+            model.Password = user.Password;
+            model.RegistrationDate = user.RegistrationDate;
 
-            return View();
+            return View(model);
         }
         
         //[AllowAnonymous]
