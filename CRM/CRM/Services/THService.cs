@@ -14,7 +14,8 @@ namespace CRM.Services
     {        
         public List<AccountTradeHistory> AccountTradeHistories { get; private set; } = new List<AccountTradeHistory>();
 
-        public double Profit { get; set; }
+        public double TotalProfit { get; set; }
+        public double TotalPercentProfit { get; set; }
 
         private List<int> IgnoreIds = new List<int>();
 
@@ -24,7 +25,7 @@ namespace CRM.Services
         public void Load(string acc, string coin, string startDate, string endDate)
         {
             InitializeIgnoreList();
-            Profit = 0;
+            TotalProfit = 0;
 
             StartDate = DateTime.Parse(startDate);
             EndDate = DateTime.Parse(endDate);
@@ -75,8 +76,6 @@ namespace CRM.Services
             return account;
         }
         
-        
-
         private void AddToTradeHistories(ICollection<Orders> orders)
         {
             foreach (var item in orders)
@@ -159,15 +158,20 @@ namespace CRM.Services
                     
 
                     double profit = 0;
+                    double buyAmount = 0;
+
                     var TH = AccountTradeHistories.Where(x => x.Pair == _coin.Value && x.Account == AccountName(_acc.Value)).OrderBy(x => x.Time).ToArray();
 
                     for (int i = 0; i < TH.Count(); i++)
                     {
+                        buyAmount += TH[i].Side == "buy" ? (double)TH[i].DollarQuantity : 0;
+                        
                         profit += TH[i].Side == "buy" ? ((double)TH[i].DollarQuantity) * -1 : (double)TH[i].DollarQuantity;
                         
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
                         {
                             TH[i].Profit = profit;
+                            TH[i].PercentProfit = (profit / buyAmount) * 100;
                             profit = 0;
                         }
                     }
@@ -178,6 +182,7 @@ namespace CRM.Services
                         if (TH[j].Profit != 0)
                         {
                             item.Profit = TH[j].Profit;
+                            item.PercentProfit = TH[j].PercentProfit;
                         }
                         j++;
                     }
@@ -190,7 +195,8 @@ namespace CRM.Services
 
             foreach (var item in AccountTradeHistories.Where(x => x.Profit != 0))
             {
-                Profit += item.Profit;
+                TotalProfit += item.Profit;
+                TotalPercentProfit += item.PercentProfit;
             }
 
         }

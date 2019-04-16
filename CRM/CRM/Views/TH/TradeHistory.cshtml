@@ -29,14 +29,15 @@
 
 @Html.Partial("_THFilterPanel")
 <div class="content" style="min-height: 400px">
-    <div class="profit profit_string" style="text-align: center; color: @(Model.Profit > 0 ? "green" : "red"); display: @(Model.Profit == 0 ? "none" : "block");">
+    <div class="profit profit_string" style="text-align: center; color: @(Model.TotalProfit > 0 ? "green" : "red"); display: @(Model.TotalProfit == 0 ? "none" : "block");">
         @{
-        string profitStr = Model.Profit > 0 ? "+" + String.Format("{0:0.##}", Model.Profit) + "$" : String.Format("{0:0.##}", Model.Profit) + "$";
+        string profitStr = Model.TotalProfit > 0 ? "+" + String.Format("{0:0.##}", Model.TotalProfit) + "$" : String.Format("{0:0.##}", Model.TotalProfit) + "$";
+            profitStr += "  " + String.Format("{0:0.##}", Model.TotalPercentProfit) + "%";
         }
         Прибыль: @profitStr
     </div>
     <div class="container table_block">
-        <table class="sortable table table-bordered table-font" style=" display: @(Model.Profit == 0 ? "none" : "table");">
+        <table class="sortable table table-bordered table-font" style=" display: @(Model.TotalProfit == 0 ? "none" : "table");">
             <thead >
                 <tr >
                     <th id="time">Время</th>
@@ -56,6 +57,7 @@
                     if (item.Profit != 0)
                     {
                         itemProfitStr = item.Profit > 0 ? "+" + String.Format("{0:0.##}", item.Profit) + "$" : String.Format("{0:0.##}", item.Profit) + "$";
+                        itemProfitStr += "  " + String.Format("{0:0.##}", item.PercentProfit) + "%";
                     }
                     else
                     {
