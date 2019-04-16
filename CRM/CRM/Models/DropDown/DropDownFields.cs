@@ -81,29 +81,15 @@ namespace CRM.Models
 
         public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext) //TODO: [COMPLETE] переделать все в таком же стиле
         {
-            //return Accounts.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
-            
-            
-
             using (UserContext context = new UserContext())
             {
                 UserModel user = context.UserModels.FirstOrDefault(x => x.Login == httpContext.User.Identity.Name);
                 List<SelectListItem> lst = new List<SelectListItem>();
 
-                if (user.RoleId == 1)
-                {
-                    lst = context.ExchangeKeys
-                        .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
-                        .ToList();
 
-                }
-                else
-                {
-                    lst = context.ExchangeKeys
-                        .Where(x => x.UserId == user.Id)
-                        .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
-                        .ToList();
-                }
+                lst = context.ExchangeKeys.Where(x => (user.RoleId != 1 ? x.UserId == user.Id : true))
+                    .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
+                    .ToList();
 
                 return lst;
             }
