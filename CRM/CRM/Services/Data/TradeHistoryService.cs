@@ -24,9 +24,6 @@ namespace CRM.Services.Data
                     DateTime SD = DateTime.Parse(startDate);
                     DateTime ED = DateTime.Parse(endDate);
 
-                    //Session["SD"] = HomeController.DatesToSession(SD);
-                    //Session["ED"] = HomeController.DatesToSession(ED);
-
                     Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
                 }
 
