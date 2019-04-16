@@ -15,11 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <style type="text/css">
-        .user_block {
-            padding-top: 30px;
-        }
-    </style>
 </head>
 <body>
     <div>
@@ -36,7 +31,7 @@
                     <div class="user_block">
                         <label>Логин:</label><br />
                         <div class="user_row">
-                            <input class="form-control" placeholder="@Model.Login" type="text" asp-for="Login" />
+                            <input class="form-control user_input" placeholder="@Model.Login" type="text" asp-for="Login" />
                             <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeLoginAsync" formmethod="get">Изменить</button>
                         </div>
                     </div>
@@ -44,7 +39,7 @@
                     <div class="user_block">
                         <label>Пароль:</label><br />
                         <div class="user_row">
-                            <input class="form-control" placeholder="@Model.Password" type="text" asp-for="Password" />
+                            <input class="form-control user_input" placeholder="@Model.Password" type="text" asp-for="Password" />
                             <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
                         </div>
                     </div>
@@ -52,7 +47,7 @@
                     <div class="user_block">
                         <label>Обновление данных ежедневно в: </label><br />
                         <div class="user_row">
-                            <input type="text" class="form-control" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
+                            <input type="text" class="form-control user_input" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
                             <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
                         </div>
                     </div>
@@ -60,8 +55,8 @@
                     <div class="user_block">
                         <label>Ручная загрузка данных: </label><br />
                         <div class="user_row">
-                            <input type="date" class="form-control" name="startDate" value="" />
-                            <input type="date" class="form-control" name="endDate" value="" />
+                            <input type="date" class="form-control user_input" name="startDate" value="" />
+                            <input type="date" class="form-control user_input" name="endDate" value="" />
                             <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
                         </div>
                     </div>

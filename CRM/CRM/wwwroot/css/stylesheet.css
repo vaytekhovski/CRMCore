@@ -88,3 +88,8 @@
 .user_block {
     padding-top: 30px;
 }
+
+.user_input
+{
+    width:325px !important;
+}
