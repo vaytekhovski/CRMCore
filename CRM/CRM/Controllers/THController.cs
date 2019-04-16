@@ -34,7 +34,14 @@ namespace CRM.Controllers
 
             tHService.Load(model.Account, model.Coin, model.StartDate, model.EndDate);
 
-            model.Orders = tHService.AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
+            DateTime StartDate = DateTime.Parse(model.StartDate);
+            DateTime EndDate = DateTime.Parse(model.EndDate);
+
+            model.Orders = tHService.AccountTradeHistories
+                .OrderByDescending(x => x.Time)
+                .Where(x => x.Time >= StartDate && x.Time <= EndDate)
+                .ToList();
+
             model.TotalProfit = tHService.TotalProfit;
             model.TotalPercentProfit = tHService.TotalPercentProfit;
 

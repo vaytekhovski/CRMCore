@@ -7,6 +7,7 @@ using Binance;
 using CRM.Master;
 using CRM.Models;
 using CRM.Models.Binance;
+using CRM.Models.Database;
 using CRM.Models.DropDown;
 
 namespace CRM.Services
@@ -20,6 +21,8 @@ namespace CRM.Services
 
         private List<int> IgnoreIds = new List<int>();
 
+        private List<ExchangeKey> ExchangeKeys { get; set; }
+
         private DateTime StartDate;
         private DateTime EndDate;
 
@@ -31,18 +34,28 @@ namespace CRM.Services
             StartDate = DateTime.Parse(startDate);
             EndDate = DateTime.Parse(endDate);
 
+            InitializeExchangeKeys();
+
+            DateTime MinDate = new DateTime(2019, 04, 05);
+
             using (masterContext context = new masterContext())
             {
                 var orders = context.Orders.Where(x => 
                     (acc != "all" ? x.AccountId == acc : true) && 
                     (coin != "all" ? x.Base == coin : true) &&
-                    x.TimeEnded >= StartDate &&
-                    x.TimeEnded <= EndDate).ToList();
+                    x.TimeEnded >= MinDate).ToList();
                 AddToTradeHistories(orders);
             }
             
-            //UpdateBalance(acc);
             UpdateProfit();
+        }
+
+        private void InitializeExchangeKeys()
+        {
+            using (UserContext context = new UserContext())
+            {
+                ExchangeKeys = context.ExchangeKeys.ToList();
+            }
         }
 
         private void InitializeIgnoreList()
@@ -60,34 +73,7 @@ namespace CRM.Services
 
         private string AccountName(string accountId)
         {
-            string account = "";
-
-            switch (accountId)
-            {
-                case "bccd3ca1-0b5e-41ac-8233-3a35209912c7":
-                    account = "POLONIEX 1-й";
-                    break;
-                case "8025d4bf-4af6-466f-b93c-5a807fd37f68":
-                    account = "BINANCE 1-й";
-                    break;
-                case "9560eadf-74cf-4596-a7e5-bffcd201f6ec":
-                    account = "BINANCE 2-й";
-                    break;
-            }
-
-            //using (UserContext context = new UserContext())
-            //{
-            //    try
-            //    {
-            //        account = context.ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
-            //    }
-            //    catch(Exception e)
-            //    {
-            //        Debug.WriteLine(e.Message);
-            //    }
-            //}
-
-            return account;
+            return ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
         }
         
         private void AddToTradeHistories(ICollection<Orders> orders)
@@ -96,7 +82,7 @@ namespace CRM.Services
             {
                 if (item.ClosedAmount == 0) continue;
                 
-                var isIgnore = false;
+                bool isIgnore = false;
                 foreach (var id in IgnoreIds)
                 {
                     if(item.Id == id)
@@ -122,49 +108,14 @@ namespace CRM.Services
             }
         }
 
-        private void UpdateBalance(string account)
-        {
-            // 28.02.2019
-            // 1-й 5517.8
-            // 2-й 518.49
-
-            double currentBalace = 5525;//account.Balances.FirstOrDefault(x => x.Asset == "USDT").Free;
-            switch (account)
-            {
-                case "a1":
-                    currentBalace = 5525;
-                    break;
-                case "a2":
-                    currentBalace = 520;
-                    break;
-                default:
-                    break;
-            }
-
-            List<AccountTradeHistory> list = AccountTradeHistories.OrderBy(x => x.Time).ToList();
-            foreach (var item in list)
-            {
-                if (item.Side == "BUY")
-                {
-                    currentBalace -= double.Parse(item.DollarQuantity.ToString());
-                }
-                else
-                {
-                    currentBalace += double.Parse(item.DollarQuantity.ToString());
-                }
-                
-                item.BalanceUSDT = currentBalace;
-            }
-
-        }
-
+        
         private void UpdateProfit()
         {
             foreach (var _coin in DropDownFields.Coins)
             {
-                foreach (var _acc in DropDownFields.Accounts)
+                foreach (var _acc in ExchangeKeys)
                 {
-                    if (_acc.Value == "all")
+                    if (_acc.AccountId == "all")
                         continue;
 
                     if (_coin.Value == "all")
@@ -174,7 +125,7 @@ namespace CRM.Services
                     double profit = 0;
                     double buyAmount = 0;
 
-                    var TH = AccountTradeHistories.Where(x => x.Pair == _coin.Value && x.Account == AccountName(_acc.Value)).OrderBy(x => x.Time).ToArray();
+                    var TH = AccountTradeHistories.Where(x => x.Pair == _coin.Value && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time).ToArray();
 
                     for (int i = 0; i < TH.Count(); i++)
                     {
@@ -192,7 +143,9 @@ namespace CRM.Services
                     }
 
                     int j = 0;
-                    foreach (var item in AccountTradeHistories.Where(x => x.Pair == _coin.Value && x.Account == AccountName(_acc.Value)).OrderBy(x => x.Time))
+                    
+
+                    foreach (var item in AccountTradeHistories.Where(x => x.Pair == _coin.Value && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time))
                     {
                         if (TH[j].Profit != 0)
                         {
@@ -208,7 +161,7 @@ namespace CRM.Services
                     continue;
             }
 
-            foreach (var item in AccountTradeHistories.Where(x => x.Profit != 0))
+            foreach (var item in AccountTradeHistories.Where(x => x.Profit != 0 && x.Time >= StartDate && x.Time <= EndDate))
             {
                 TotalProfit += item.Profit;
             }
