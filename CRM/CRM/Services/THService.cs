@@ -185,8 +185,9 @@ namespace CRM.Services
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
                         {
                             TH[i].Profit = profit;
-                            TH[i].PercentProfit = (profit / buyAmount) * 100;
+                            TH[i].PercentProfit = profit / ((buyAmount + (buyAmount + profit)) / 2) * 100;
                             profit = 0;
+                            buyAmount = 0;
                         }
                     }
 

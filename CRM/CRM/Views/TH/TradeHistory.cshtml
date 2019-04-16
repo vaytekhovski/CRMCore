@@ -31,8 +31,10 @@
 <div class="content" style="min-height: 400px">
     <div class="profit profit_string" style="text-align: center; color: @(Model.TotalProfit > 0 ? "green" : "red"); display: @(Model.TotalProfit == 0 ? "none" : "block");">
         @{
-        string profitStr = Model.TotalProfit > 0 ? "+" + String.Format("{0:0.##}", Model.TotalProfit) + "$" : String.Format("{0:0.##}", Model.TotalProfit) + "$";
-            
+            string profitStr = Model.TotalProfit > 0 ? "+" : "";
+            profitStr += String.Format("{0:0.##}", Model.TotalProfit);
+            profitStr += "$";
+
         }
         Прибыль: @profitStr
     </div>
@@ -56,8 +58,13 @@
                     string itemProfitStr = "";
                     if (item.Profit != 0)
                     {
-                        itemProfitStr = item.Profit > 0 ? "+" + String.Format("{0:0.##}", item.Profit) + "$" : String.Format("{0:0.##}", item.Profit) + "$";
-                        itemProfitStr += " | " + String.Format("{0:0.##}", item.PercentProfit) + "%";
+                        itemProfitStr = item.Profit > 0 ? "+" : "";
+                        itemProfitStr += String.Format("{0:0.##}", item.Profit);
+                        itemProfitStr += "$";
+                        itemProfitStr += " | ";
+                        itemProfitStr += item.Profit > 0 ? "+" : "";
+                        itemProfitStr += String.Format("{0:0.##}", item.PercentProfit);
+                        itemProfitStr += "%";
                     }
                     else
                     {
