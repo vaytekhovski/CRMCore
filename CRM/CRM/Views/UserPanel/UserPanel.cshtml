@@ -14,6 +14,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        .user_block {
+            padding-top: 30px;
+        }
+    </style>
 </head>
 <body>
     <div>
@@ -27,33 +33,43 @@
                         <h1>USER PANEL</h1>
                     </div>
 
-                    <label>Логин:</label><br />
-                    <div class="user_row">
-                        <input class="form-control" placeholder="@Model.Login" type="text" asp-for="Login" />
-                        <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeLoginAsync" formmethod="get">Изменить</button>
+                    <div class="user_block">
+                        <label>Логин:</label><br />
+                        <div class="user_row">
+                            <input class="form-control" placeholder="@Model.Login" type="text" asp-for="Login" />
+                            <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeLoginAsync" formmethod="get">Изменить</button>
+                        </div>
                     </div>
 
-                    <label>Пароль:</label><br />
-                    <div class="user_row">
-                        <input class="form-control" placeholder="@Model.Password" type="text" asp-for="Password" />
-                        <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
+                    <div class="user_block">
+                        <label>Пароль:</label><br />
+                        <div class="user_row">
+                            <input class="form-control" placeholder="@Model.Password" type="text" asp-for="Password" />
+                            <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
+                        </div>
                     </div>
 
-                    <label>Обновление данных ежедневно в: </label><br />
-                    <div class="user_row">
-                        <input type="text" class="form-control" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
-                        <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
+                    <div class="user_block">
+                        <label>Обновление данных ежедневно в: </label><br />
+                        <div class="user_row">
+                            <input type="text" class="form-control" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
+                            <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
+                        </div>
                     </div>
 
-                    <label>Ручная загрузка данных: </label><br />
-                    <div class="user_row">
-                        <input type="date" class="form-control" name="startDate" value="" />
-                        <input type="date" class="form-control" name="endDate" value="" />
-                        <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                    <div class="user_block">
+                        <label>Ручная загрузка данных: </label><br />
+                        <div class="user_row">
+                            <input type="date" class="form-control" name="startDate" value="" />
+                            <input type="date" class="form-control" name="endDate" value="" />
+                            <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                        </div>
                     </div>
+
                     <div style="margin-left:48%">
                         <div id="Spinner" style="display:none" class="spinner-border text-success"></div>
                     </div>
+
                     <script>
 
                         $("#loadData").click(function () {
@@ -72,6 +88,7 @@
                     <div>
                         <label>Дата регистрации: @Model.RegistrationDate</label>
                     </div>
+
                     <div>
                         <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
                     </div>

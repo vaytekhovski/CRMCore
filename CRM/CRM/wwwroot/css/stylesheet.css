@@ -82,6 +82,9 @@
 }
 
 .user_row{
-    padding-top: 30px;
     display:inline-block;
+}
+
+.user_block {
+    padding-top: 30px;
 }
