@@ -30,7 +30,7 @@ namespace CRM.Controllers.User
             model.Login = user.Login;
             model.Password = user.Password;
             model.RegistrationDate = user.RegistrationDate;
-
+            ViewBag.isUser = user.RoleId != 1 ? true : false;
             return View(model);
         }
         

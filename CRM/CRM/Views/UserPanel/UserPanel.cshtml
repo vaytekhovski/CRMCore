@@ -43,23 +43,31 @@
                             <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
                         </div>
                     </div>
+                    
+                    @if (!ViewBag.isUser)
+                    {
+                    <div>
 
-                    <div class="user_block">
-                        <label>Обновление данных ежедневно в: </label><br />
-                        <div class="user_row">
-                            <input type="text" class="form-control user_input" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
-                            <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
+                        <div class="user_block">
+                            <label>Обновление данных ежедневно в: </label><br />
+                            <div class="user_row">
+                                <input type="text" class="form-control user_input" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
+                                <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="user_block">
-                        <label>Ручная загрузка данных: </label><br />
-                        <div class="user_row">
-                            <input type="date" class="form-control user_input" name="startDate" value="" />
-                            <input type="date" class="form-control user_input" name="endDate" value="" />
-                            <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                        <div class="user_block">
+                            <label>Ручная загрузка данных: </label><br />
+                            <div class="user_row">
+                                <input type="date" class="form-control user_input" name="startDate" value="" />
+                                <input type="date" class="form-control user_input" name="endDate" value="" />
+                                <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                            </div>
                         </div>
+
                     </div>
+                    }
+
 
                     <div style="margin-left:48%">
                         <div id="Spinner" style="display:none" class="spinner-border text-success"></div>
@@ -80,14 +88,15 @@
                         @ViewBag.status
                     </div>
 
-                    <div>
-                        <label>Дата регистрации: @Model.RegistrationDate</label>
-                    </div>
+                    <div class="user_block">
+                        <div>
+                            <label>Дата регистрации: @Model.RegistrationDate</label>
+                        </div>
 
-                    <div>
-                        <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
+                        <div>
+                            <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
+                        </div>
                     </div>
-
                 </form>
             </div>
         </div>

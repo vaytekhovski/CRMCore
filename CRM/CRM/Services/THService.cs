@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Binance;
@@ -54,6 +55,7 @@ namespace CRM.Services
             IgnoreIds.Add(273);
             IgnoreIds.Add(274);
             IgnoreIds.Add(275);
+            IgnoreIds.Add(312);
         }
 
         private string AccountName(string accountId)
@@ -72,6 +74,18 @@ namespace CRM.Services
                     account = "BINANCE 2-й";
                     break;
             }
+
+            //using (UserContext context = new UserContext())
+            //{
+            //    try
+            //    {
+            //        account = context.ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
+            //    }
+            //    catch(Exception e)
+            //    {
+            //        Debug.WriteLine(e.Message);
+            //    }
+            //}
 
             return account;
         }
@@ -196,7 +210,6 @@ namespace CRM.Services
             foreach (var item in AccountTradeHistories.Where(x => x.Profit != 0))
             {
                 TotalProfit += item.Profit;
-                TotalPercentProfit += item.PercentProfit;
             }
 
         }

@@ -32,7 +32,7 @@
     <div class="profit profit_string" style="text-align: center; color: @(Model.TotalProfit > 0 ? "green" : "red"); display: @(Model.TotalProfit == 0 ? "none" : "block");">
         @{
         string profitStr = Model.TotalProfit > 0 ? "+" + String.Format("{0:0.##}", Model.TotalProfit) + "$" : String.Format("{0:0.##}", Model.TotalProfit) + "$";
-            profitStr += " | " + String.Format("{0:0.##}", Model.TotalPercentProfit) + "%";
+            
         }
         Прибыль: @profitStr
     </div>
