@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CRM.Models.Database;
 using CRM.Services;
+using System;
 
 namespace AuthApp.Controllers
 {
@@ -67,7 +68,7 @@ namespace AuthApp.Controllers
             if (user == null)
             {
                 // добавляем пользователя в бд
-                user = new UserModel { Login = model.Login, Password = model.Password };
+                user = new UserModel { Login = model.Login, Password = model.Password, RegistrationDate = DateTime.Now};
                 Role userRole = await db.Roles.FirstOrDefaultAsync(r => r.Name == "user");
                 if (userRole != null)
                     user.Role = userRole;
