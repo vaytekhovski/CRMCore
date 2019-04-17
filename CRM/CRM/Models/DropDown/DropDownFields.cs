@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.Security;
+using CRM.Services.Database;
 
 namespace CRM.Models
 {
@@ -68,20 +69,9 @@ namespace CRM.Models
             Nulls.Add(new Field { Value = "notnull", Name = "Не показывать нулевые значения" });
         }
 
-        public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext) //TODO: работу с дата контекстом вынести в слой сервисов
+        public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext) //TODO: [COMPLETE] работу с дата контекстом вынести в слой сервисов
         {
-            using (UserContext context = new UserContext())
-            {
-                UserModel user = context.UserModels.FirstOrDefault(x => x.Login == httpContext.User.Identity.Name);
-                List<SelectListItem> lst = new List<SelectListItem>();
-
-
-                lst = context.ExchangeKeys.Where(x => (user.RoleId != 1 ? x.UserId == user.Id : true)) // TODO: 1 в enum
-                    .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
-                    .ToList();
-
-                return lst;
-            }
+            return AccountsExchangeKeys.GetExchangeKeys(httpContext);
         }
 
         public static IEnumerable<SelectListItem> GetCoins()
