@@ -71,7 +71,7 @@ namespace CRM.Models
 
         public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext) //TODO: [COMPLETE] работу с дата контекстом вынести в слой сервисов
         {
-            return AccountsExchangeKeys.GetExchangeKeys(httpContext);
+            return AccountsExchangeKeysService.GetExchangeKeys(httpContext);
         }
 
         public static IEnumerable<SelectListItem> GetCoins()
