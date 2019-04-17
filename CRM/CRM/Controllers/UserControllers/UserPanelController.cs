@@ -23,6 +23,7 @@ namespace CRM.Controllers.User
             db = context;
         }
        
+        [HttpGet]
         public ActionResult UserPanel(UserPanelModel model)
         {
             UserModel user = db.UserModels.FirstOrDefault(x => x.Login == User.Identity.Name);
