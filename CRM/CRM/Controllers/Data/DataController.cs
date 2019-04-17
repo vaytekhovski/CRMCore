@@ -20,7 +20,7 @@ namespace CRM.Controllers.Data
             OrderBookService orderBook = new OrderBookService();
             orderBook.Load("ask", model.Coin, model.Situation, model.StartDate, model.EndDate);
 
-            model.Show = orderBook.Show; // TODO: [COMPLETE] использовать модели, без необходимости ViewBag и ViewData не использовать
+            model.Show = orderBook.Show;
             model.SummVolume = orderBook.SummVolume;
 
             return View(model);
