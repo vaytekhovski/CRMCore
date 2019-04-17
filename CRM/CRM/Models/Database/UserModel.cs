@@ -18,6 +18,13 @@ namespace CRM.Models.Database
             Accounts = new List<ExchangeKey>();
         }
 
+
+        public enum Roles
+        {
+            admin = 1,
+            user = 2
+        }
+
     }
 
     public class Role

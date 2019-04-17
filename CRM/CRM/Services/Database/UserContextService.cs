@@ -24,5 +24,6 @@ namespace CRM.Services
         public UserContext()
         {
         }
+
     }
 }
