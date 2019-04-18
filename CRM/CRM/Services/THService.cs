@@ -26,13 +26,13 @@ namespace CRM.Services
         private DateTime StartDate;
         private DateTime EndDate;
 
-        public void Load(string acc, string coin, string startDate, string endDate)
+        public void Load(string acc, string coin, DateTime startDate, DateTime endDate)
         {
             InitializeIgnoreList();
             TotalProfit = 0;
 
-            StartDate = DateTime.Parse(startDate);
-            EndDate = DateTime.Parse(endDate);
+            StartDate = startDate;
+            EndDate = endDate;
 
             InitializeExchangeKeys();
 

@@ -18,44 +18,40 @@ namespace CRM.Controllers
         [HttpGet]
         public ActionResult TradeHistory()
         {
+            string minDate = "2019-04-05";
+
             var model = new TradeHistoryFilterModel
             {
                 Account = "all",
                 Coin = "all",
-                StartDate = "2019-04-05",
+                StartDate = minDate,
                 EndDate = CurrentDate()
             };
 
-            THService tHService = new THService();
+            model = LoadTradeHistory(model);
 
-            tHService.Load(model.Account, model.Coin, model.StartDate, model.EndDate);
-
-            DateTime StartDate = DateTime.Parse(model.StartDate);
-            DateTime EndDate = DateTime.Parse(model.EndDate);
-
-            model.Orders = tHService.AccountTradeHistories
-                .OrderByDescending(x => x.Time)
-                .Where(x => x.Time >= StartDate && x.Time <= EndDate)
-                .ToList();
-
-            model.TotalProfit = tHService.TotalProfit;
-            model.TotalPercentProfit = tHService.TotalPercentProfit;
+            return View(model);
+        }
+        
+        [HttpPost] //TODO: [COMPLETE]  разметить везде, где GET, а где POST
+        public ActionResult TradeHistory(TradeHistoryFilterModel model) 
+        {
+            model = LoadTradeHistory(model);
 
             return View(model);
         }
 
-        
 
 
-        [HttpPost] //TODO: [COMPLETE]  разметить везде, где GET, а где POST
-        public ActionResult TradeHistory(TradeHistoryFilterModel model) 
+        private TradeHistoryFilterModel LoadTradeHistory(TradeHistoryFilterModel model)
         {
             THService tHService = new THService();
 
-            tHService.Load(model.Account, model.Coin, model.StartDate, model.EndDate);
-
             DateTime StartDate = DateTime.Parse(model.StartDate);
-            DateTime EndDate = DateTime.Parse(model.EndDate);
+            DateTime EndDate = DateTime.Parse(model.EndDate).AddDays(1);
+
+            tHService.Load(model.Account, model.Coin, StartDate, EndDate);
+
 
             model.Orders = tHService.AccountTradeHistories
                 .OrderByDescending(x => x.Time)
@@ -64,9 +60,8 @@ namespace CRM.Controllers
 
             model.TotalProfit = tHService.TotalProfit;
             model.TotalPercentProfit = tHService.TotalPercentProfit;
-            
 
-            return View(model);
+            return model;
         }
 
         private string CurrentDate()
