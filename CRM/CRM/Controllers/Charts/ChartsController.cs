@@ -11,13 +11,13 @@ namespace CRM.Controllers.Charts
     [Authorize]
     public class ChartsController : Controller
     {
+
         [HttpGet]
         public ActionResult Charts()
         {
-            string minDate = "2019-04-05";
             var model = new AskOnBidViewModel
             {
-                StartDate = minDate,
+                StartDate = Dates.MinDate,
                 EndDate = Dates.CurrentDate()
             };
             return View(model);
@@ -26,10 +26,9 @@ namespace CRM.Controllers.Charts
         [HttpGet]
         public ActionResult AsksOnBids()
         {
-            string minDate = "2019-04-05";
             var model = new AskOnBidViewModel
             {
-                StartDate = minDate,
+                StartDate = Dates.MinDate,
                 EndDate = Dates.CurrentDate(),
                 DatesAsks = new List<long>(),
                 DatesBids = new List<long>(),
@@ -57,10 +56,9 @@ namespace CRM.Controllers.Charts
         [HttpGet]
         public ActionResult DeltaOnTradeHistory()
         {
-            string minDate = "2019-04-05";
             var model = new DeltaOnTradeHistoryViewModel
             {
-                StartDate = minDate,
+                StartDate = Dates.MinDate,
                 EndDate = Dates.CurrentDate(),
                 DatesDelta = new List<long>(),
                 DeltaValues = new List<string>(),

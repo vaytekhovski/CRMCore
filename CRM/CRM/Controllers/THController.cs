@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using CRM.Master;
-using CRM.Models;
-using CRM.Models.Binance;
 using CRM.Services;
 using CRM.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -18,13 +13,11 @@ namespace CRM.Controllers
         [HttpGet]
         public ActionResult TradeHistory()
         {
-            string minDate = "2019-04-05";
-
             var model = new TradeHistoryFilterModel
             {
                 Account = "all",
                 Coin = "all",
-                StartDate = minDate,
+                StartDate = Dates.MinDate,
                 EndDate = Dates.CurrentDate()
             };
 

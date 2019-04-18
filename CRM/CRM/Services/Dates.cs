@@ -7,6 +7,8 @@ namespace CRM.Services
 {
     public static class Dates
     {
+        public static string MinDate = "2019-04-05";
+
         public static string CurrentDate()
         {
             var currentDate = DateTime.Now;

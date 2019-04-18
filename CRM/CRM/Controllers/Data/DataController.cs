@@ -13,10 +13,9 @@ namespace CRM.Controllers.Data
         [HttpGet]
         public ActionResult Index()
         {
-            string minDate = "2019-04-05";
             var model = new OrderBookViewModel
             {
-                StartDate = minDate,
+                StartDate = Dates.MinDate,
                 EndDate = Dates.CurrentDate(),
                 Show = new List<Models.Database.OrderBookModel>()
 
@@ -28,10 +27,9 @@ namespace CRM.Controllers.Data
         [HttpGet]
         public ActionResult ShowOrderBookAsks()
         {
-            string minDate = "2019-04-05";
             var model = new OrderBookViewModel
             {
-                StartDate = minDate,
+                StartDate = Dates.MinDate,
                 EndDate = Dates.CurrentDate(),
                 Show = new List<Models.Database.OrderBookModel>()
             };
@@ -54,10 +52,9 @@ namespace CRM.Controllers.Data
         [HttpGet]
         public ActionResult ShowOrderBookBids()
         {
-            string minDate = "2019-04-05";
             var model = new OrderBookViewModel
             {
-                StartDate = minDate,
+                StartDate = Dates.MinDate,
                 EndDate = Dates.CurrentDate(),
                 Show = new List<Models.Database.OrderBookModel>()
             };
@@ -80,10 +77,9 @@ namespace CRM.Controllers.Data
         [HttpGet]
         public ActionResult ShowTradeHistory()
         {
-            string minDate = "2019-04-05";
             var model = new TradeHistoryViewModel
             {
-                StartDate = minDate,
+                StartDate = Dates.MinDate,
                 EndDate = Dates.CurrentDate(),
                 Show = new List<Models.Database.TradeHistoryModel>()
             };
@@ -107,10 +103,9 @@ namespace CRM.Controllers.Data
         [HttpGet]
         public ActionResult ShowTradeDelta()
         {
-            string minDate = "2019-04-05";
             var model = new TradeDeltaViewModel
             {
-                StartDate = minDate,
+                StartDate = Dates.MinDate,
                 EndDate = Dates.CurrentDate(),
                 Show = new List<Models.Database.TradeDeltaModel>()
             };
