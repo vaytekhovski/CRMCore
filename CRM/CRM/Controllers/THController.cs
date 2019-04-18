@@ -18,14 +18,22 @@ namespace CRM.Controllers
         [HttpGet]
         public ActionResult TradeHistory()
         {
+
+
             var model = new TradeHistoryFilterModel
             {
                 Account = "all",
-                Coin = "all"
+                Coin = "all",
+                StartDate = "2019-04-05",
+                EndDate = CurrentDate()
+
             };
 
             return View(model);
         }
+
+        
+
 
         [HttpPost] //TODO: [COMPLETE]  разметить везде, где GET, а где POST
         public ActionResult TradeHistory(TradeHistoryFilterModel model) 
@@ -44,8 +52,20 @@ namespace CRM.Controllers
 
             model.TotalProfit = tHService.TotalProfit;
             model.TotalPercentProfit = tHService.TotalPercentProfit;
+            
 
             return View(model);
+        }
+
+        private string CurrentDate()
+        {
+            var currentDate = DateTime.Now;
+
+            string dd = currentDate.Day < 10 ? "0" + currentDate.Day.ToString() : currentDate.Day.ToString();
+            string mm = currentDate.Month < 10 ? "0" + currentDate.Month.ToString() : currentDate.Month.ToString();
+            string yy = currentDate.Year.ToString();
+            string curDate = yy + "-" + mm + "-" + dd;
+            return curDate;
         }
     }
 }

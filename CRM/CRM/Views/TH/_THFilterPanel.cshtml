@@ -13,21 +13,12 @@
 
 
         <div class="filter_element">
-            <input type="date" class="form-control filter_input" id="startDate" name="startDate" value="2019-04-05" min="2019-04-05" />
+            <input type="date" class="form-control filter_input" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />
         </div>
 
-        @{
-            var currentDate = DateTime.Now;
-
-            string dd = currentDate.Day < 10 ? "0" + currentDate.Day.ToString() : currentDate.Day.ToString();
-            string mm = currentDate.Month < 10 ? "0" + currentDate.Month.ToString() : currentDate.Month.ToString();
-            string yy = currentDate.Year.ToString();
-            string curDate = yy + "-" + mm + "-" + dd;
-
-        }
 
         <div class="filter_element">
-            <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@curDate min="2019-04-01" />
+            <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-01" />
         </div>
 
         <div class="filter_element">
@@ -39,8 +30,3 @@
 
 </form>
 
-<script type="text/javascript">
-    $("#TradeHistory").click(function () {
-        setDataToCoockie()
-    });
-</script>
