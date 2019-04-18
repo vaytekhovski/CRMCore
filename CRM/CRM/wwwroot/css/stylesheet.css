@@ -1,5 +1,7 @@
 ﻿
-
+.content {
+    min-height: 400px
+}
 
 .parent {
     width: 100%;
@@ -39,7 +41,7 @@
     margin-bottom: 50pt;
 }
 
-/* trade history filter panel */
+/* filter panel */
 .filter_element {
     vertical-align: top;
     margin-right: 5px;
@@ -56,6 +58,13 @@
 .filter_button {
     height: 50px !important;
     width: 325px !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+}
+
+.short_filter_button {
+    height: 50px !important;
+    width: 160px !important;
     margin-right: 0 !important;
     padding: 0 !important;
 }

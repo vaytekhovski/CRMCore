@@ -25,7 +25,7 @@ namespace CRM.Controllers
                 Account = "all",
                 Coin = "all",
                 StartDate = minDate,
-                EndDate = CurrentDate()
+                EndDate = Dates.CurrentDate()
             };
 
             model = LoadTradeHistory(model);
@@ -64,15 +64,6 @@ namespace CRM.Controllers
             return model;
         }
 
-        private string CurrentDate()
-        {
-            var currentDate = DateTime.Now;
-
-            string dd = currentDate.Day < 10 ? "0" + currentDate.Day.ToString() : currentDate.Day.ToString();
-            string mm = currentDate.Month < 10 ? "0" + currentDate.Month.ToString() : currentDate.Month.ToString();
-            string yy = currentDate.Year.ToString();
-            string curDate = yy + "-" + mm + "-" + dd;
-            return curDate;
-        }
+        
     }
 }

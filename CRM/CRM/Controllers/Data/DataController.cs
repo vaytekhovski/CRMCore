@@ -2,6 +2,8 @@
 using CRM.Services.Data;
 using Microsoft.AspNetCore.Authorization;
 using CRM.ViewModels.Data;
+using CRM.Services;
+using System.Collections.Generic;
 
 namespace CRM.Controllers.Data
 {
@@ -11,7 +13,30 @@ namespace CRM.Controllers.Data
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            string minDate = "2019-04-05";
+            var model = new OrderBookViewModel
+            {
+                StartDate = minDate,
+                EndDate = Dates.CurrentDate(),
+                Show = new List<Models.Database.OrderBookModel>()
+
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ShowOrderBookAsks()
+        {
+            string minDate = "2019-04-05";
+            var model = new OrderBookViewModel
+            {
+                StartDate = minDate,
+                EndDate = Dates.CurrentDate(),
+                Show = new List<Models.Database.OrderBookModel>()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -22,6 +47,20 @@ namespace CRM.Controllers.Data
 
             model.Show = orderBook.Show;
             model.SummVolume = orderBook.SummVolume;
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ShowOrderBookBids()
+        {
+            string minDate = "2019-04-05";
+            var model = new OrderBookViewModel
+            {
+                StartDate = minDate,
+                EndDate = Dates.CurrentDate(),
+                Show = new List<Models.Database.OrderBookModel>()
+            };
 
             return View(model);
         }
@@ -38,6 +77,20 @@ namespace CRM.Controllers.Data
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult ShowTradeHistory()
+        {
+            string minDate = "2019-04-05";
+            var model = new TradeHistoryViewModel
+            {
+                StartDate = minDate,
+                EndDate = Dates.CurrentDate(),
+                Show = new List<Models.Database.TradeHistoryModel>()
+            };
+
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult ShowTradeHistory(TradeHistoryViewModel model)
         {
@@ -47,6 +100,20 @@ namespace CRM.Controllers.Data
 
             model.Show = tradeHistory.Show;
             model.SummVolume = tradeHistory.SummVolume;
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ShowTradeDelta()
+        {
+            string minDate = "2019-04-05";
+            var model = new TradeDeltaViewModel
+            {
+                StartDate = minDate,
+                EndDate = Dates.CurrentDate(),
+                Show = new List<Models.Database.TradeDeltaModel>()
+            };
 
             return View(model);
         }

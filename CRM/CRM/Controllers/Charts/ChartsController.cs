@@ -1,7 +1,9 @@
-﻿using CRM.Services.Charts;
+﻿using CRM.Services;
+using CRM.Services.Charts;
 using CRM.ViewModels.Charts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 
 namespace CRM.Controllers.Charts
@@ -12,9 +14,27 @@ namespace CRM.Controllers.Charts
         [HttpGet]
         public ActionResult Charts()
         {
+            string minDate = "2019-04-05";
             var model = new AskOnBidViewModel
             {
+                StartDate = minDate,
+                EndDate = Dates.CurrentDate()
+            };
+            return View(model);
+        }
 
+        [HttpGet]
+        public ActionResult AsksOnBids()
+        {
+            string minDate = "2019-04-05";
+            var model = new AskOnBidViewModel
+            {
+                StartDate = minDate,
+                EndDate = Dates.CurrentDate(),
+                DatesAsks = new List<long>(),
+                DatesBids = new List<long>(),
+                AsksValues = new List<string>(),
+                BidsValues = new List<string>()
             };
             return View(model);
         }
@@ -31,6 +51,24 @@ namespace CRM.Controllers.Charts
             model.AsksValues = asksOnBids.AsksValues;
             model.BidsValues = asksOnBids.BidsValues;
 
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult DeltaOnTradeHistory()
+        {
+            string minDate = "2019-04-05";
+            var model = new DeltaOnTradeHistoryViewModel
+            {
+                StartDate = minDate,
+                EndDate = Dates.CurrentDate(),
+                DatesDelta = new List<long>(),
+                DeltaValues = new List<string>(),
+                DatesTHBuy = new List<long>(),
+                THBuyValues = new List<string>(),
+                DatesTHSell = new List<long>(),
+                THSellValues = new List<string>()
+            };
             return View(model);
         }
 
