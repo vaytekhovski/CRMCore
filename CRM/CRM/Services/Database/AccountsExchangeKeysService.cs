@@ -18,7 +18,8 @@ namespace CRM.Services.Database
                 List<SelectListItem> lst = new List<SelectListItem>();
                 
 
-                lst = context.ExchangeKeys.Where(x => user.RoleId == (int)UserModel.Roles.user ? x.UserId == user.Id : true) // TODO: 1 в enum
+                lst = context.ExchangeKeys
+                    .Where(x => user.RoleId == (int)UserModel.Roles.user ? x.UserId == user.Id : true) // TODO: [COMPLETE] 1 в enum
                     .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
                     .ToList();
 

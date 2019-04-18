@@ -18,16 +18,28 @@ namespace CRM.Controllers
         [HttpGet]
         public ActionResult TradeHistory()
         {
-
-
             var model = new TradeHistoryFilterModel
             {
                 Account = "all",
                 Coin = "all",
                 StartDate = "2019-04-05",
                 EndDate = CurrentDate()
-
             };
+
+            THService tHService = new THService();
+
+            tHService.Load(model.Account, model.Coin, model.StartDate, model.EndDate);
+
+            DateTime StartDate = DateTime.Parse(model.StartDate);
+            DateTime EndDate = DateTime.Parse(model.EndDate);
+
+            model.Orders = tHService.AccountTradeHistories
+                .OrderByDescending(x => x.Time)
+                .Where(x => x.Time >= StartDate && x.Time <= EndDate)
+                .ToList();
+
+            model.TotalProfit = tHService.TotalProfit;
+            model.TotalPercentProfit = tHService.TotalPercentProfit;
 
             return View(model);
         }
