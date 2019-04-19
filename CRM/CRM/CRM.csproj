@@ -36,14 +36,7 @@
     <None Include="Views\Data\_TradeHistoryFilterPanel.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
-    <None Include="Views\Shared\Charts\ChartsLayout.cshtml" />
-    <None Include="Views\Shared\Data\OrderBookLayout.cshtml" />
-    <None Include="Views\Shared\Data\TradeDeltaLayout.cshtml" />
-    <None Include="Views\Shared\Data\TradeHistoryLayout.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
-    <None Include="Views\Shared\Footer.cshtml" />
-    <None Include="Views\Shared\Navbar.cshtml" />
-    <None Include="Views\Shared\TradeHistory\TradeHistoryLayout.cshtml" />
     <None Include="Views\Shared\_CookieConsentPartial.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />

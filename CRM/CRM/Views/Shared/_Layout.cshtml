@@ -3,12 +3,160 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApplication5</title>
+    <title>@ViewData["Title"] - Datavisio</title>
+    <link href="" rel="stylesheet">
+    <link href="~/css/app.css" rel="stylesheet">
+
+    <link href="~/css/mod.css" rel="stylesheet">
+    <script src="~/js/app.js"></script>
+
+    <link href="~/css/stylesheet.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+    <script src="~/js/sorttable.js"></script>
+
 </head>
-<body>
-    
+<body class="body_of_layout">
+    <nav class="navbar navbar-default navbar-static-top">
+
+        <div class="container">
+            <div class="navbar-header">
+
+
+
+                <!-- Branding Image -->
+                <a class="navbar-brand" href="../Home/Index">
+                    <img class="navbar-brand-logo white-logo" src="http://datavisio.io/images/svg/logo-whitetext-horizontal.svg" alt="logo">
+                    <img class="navbar-brand-logo dark-logo" src="http://datavisio.io/images/svg/logo-darktext-horizontal.svg" alt="logo">
+                </a>
+
+                <div class="navbar-header-bottom-line col-xs-12 no-padding">
+                    <!-- Collapsed Hamburger -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Authentication Links -->
+                    <li><a class="anchor-link" href="../TH/TradeHistory">История торгов </a></li>
+                    <li><a class="anchor-link" href="../Data/Index">Таблицы параметров</a></li>
+                    <li><a class="anchor-link" href="../Charts/Charts">Графики параметров</a></li>
+                    <li><a class="anchor-link" href="../UserPanel/UserPanel">Аккаунт</a></li>
+                    <li><a href="http://datavisio.io">Наш сайт</a></li>
+
+                </ul>
+
+            </div>
+
+
+        </div>
+    </nav>
+
     @RenderBody()
-    
+    <footer>
+    <section id="footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <h2>Связаться с нами</h2>
+
+                    <span class="text-op-80">Подпишитесь на наши обновления, чтобы узнавать новое первыми</span>
+
+
+                </div>
+
+                <div class="col-md-6 no-padding">
+
+                    <form class="col-md-12 with-thanks">
+
+                        <div class="col-md-6 no-padding">
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" placeholder="E-mail" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 no-padding">
+
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <span class="btn-text">Подписаться</span>
+                            </button>
+
+                        </div>
+                    </form>
+
+
+
+                    <div class="col-md-12 social-links">
+                        <a class='social-link' href="//www.facebook.com/datavisio/" target="_blank">
+                            <img class="social-link-img img-responsive" src="http://datavisio.io/images/social/facebook.svg">
+                        </a>
+
+                        <a class='social-link' href="//twitter.com/data_visio" target="_blank">
+                            <img class="social-link-img img-responsive" src="http://datavisio.io/images/social/twitter.svg">
+                        </a>
+
+                        <a class='social-link' href="//t.me/datavisioofficial" target="_blank">
+                            <img class="social-link-img img-responsive" src="http://datavisio.io/images/social/telegram.svg">
+                        </a>
+
+
+                        <a class='social-link' href="//www.reddit.com/user/DataVisio" target="_blank">
+                            <img class="social-link-img img-responsive" src="http://datavisio.io/images/social/reddit.svg">
+                        </a>
+
+                        <a class='social-link' href="//www.quora.com/profile/DataVisio" target="_blank">
+                            <img class="social-link-img img-responsive" src="http://datavisio.io/images/social/quora.svg">
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-md-6 footer-links-block no-padding">
+
+
+
+                    <div class="col-sm-4 col-xs-12">
+                        <h3>DataVisio</h3>
+                        <a href="../TH/TradeHistory">История торгов</a>
+                        <a href="../Data/Index">Таблицы параметров</a>
+                        <a href="../Charts/Charts">Графики параметров</a>
+                        <a href="../UserPanel/UserPanel">Аккаунт</a>
+                    </div>
+                    <div class="col-sm-4 col-xs-12">
+                        <h3>Сотрудничество</h3>
+                        <span>
+                            DataVisio поддерживается
+                            ООО "АНС технолоджис",
+                            Беларусь, Минск, 4ый
+                            переулок Кольцова, д. 51,
+                            офис 224
+                        </span>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </section>
+    </footer>
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>
