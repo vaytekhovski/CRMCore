@@ -13,29 +13,25 @@ namespace CRM.Services.Data
 
         public TradeHistoryService() { }
 
-        public void Load(string coin, string situation, string orderType, string startDate = "", string endDate = "")
+        public void Load(string coin, string situation, string orderType, string startDate, string endDate)
         {
+
+            if (startDate == null && endDate == null)
+                return;
+
+            DateTime SD = DateTime.Parse(startDate);
+            DateTime ED = DateTime.Parse(endDate);
+
             using (CRMContext context = new CRMContext())
             {
-                Show = context.TradeHistoryModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
+                Show = context.TradeHistoryModels
+                    .Where(z => coin == "all" ? true : z.CurrencyName == coin)
+                    .OrderByDescending(x => x.Date)
+                    .ToList();
 
-                if (startDate != "" && endDate != "")
-                {
-                    DateTime SD = DateTime.Parse(startDate);
-                    DateTime ED = DateTime.Parse(endDate);
-
-                    Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
-                }
-
-                if (situation != "all")
-                {
-                    Show = Show.Where(x => x.MarketSituation == situation).ToList();
-                }
-
-                if (orderType != "all")
-                {
-                    Show = Show.Where(x => x.Side == orderType).ToList();
-                }
+                Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
+                Show = Show.Where(x => situation == "all" ? true : x.MarketSituation == situation).ToList();
+                Show = Show.Where(x => orderType == "all" ? true : x.Side == orderType).ToList();
 
                 foreach (var item in Show)
                 {

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CRM.Master
+namespace CRM.Models.Master
 {
     public partial class Orders
     {

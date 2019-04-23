@@ -15,45 +15,45 @@ namespace CRM.Services.Charts
 
         public AsksOnBidsService() { }
 
-        public void Load(string coin, string startDate = "", string endDate = "")
+        public void Load(string coin, string startDate, string endDate)
         {
-            if (startDate != "" && endDate != "")
+            if (startDate == null && endDate == null)
+                return;
+
+            var SD = DateTime.Parse(startDate);
+            var ED = DateTime.Parse(endDate);
+
+            using (CRMContext context = new CRMContext())
             {
-                var SD = DateTime.Parse(startDate);
-                var ED = DateTime.Parse(endDate);
+                var Asks = context.OrderBookModels
+                    .Where(x => x.BookType == "ask" && x.CurrencyName == coin)
+                    .Where(x => x.Date >= SD && x.Date <= ED)
+                    .OrderBy(x => x.Date);
 
-                using (CRMContext context = new CRMContext())
+                var Bids = context.OrderBookModels
+                    .Where(x => x.BookType == "bid" && x.CurrencyName == coin)
+                    .Where(x => x.Date >= SD && x.Date <= ED)
+                    .OrderBy(x => x.Date);
+
+                foreach (var item in Asks)
                 {
-                    var Asks = context.OrderBookModels
-                        .Where(x => x.BookType == "ask" &&  x.CurrencyName == coin)
-                        .Where(x => x.Date >= SD && x.Date <= ED)
-                        .OrderBy(x => x.Date);
+                    DateTime DatePlusTime = item.Date.DateTime;
+                    string value = item.Volume.ToString();
 
-                    var Bids = context.OrderBookModels
-                        .Where(x => x.BookType == "bid" && x.CurrencyName == coin)
-                        .Where(x => x.Date >= SD && x.Date <= ED)
-                        .OrderBy(x => x.Date);
+                    DatesAsks.Add(item.Date.Date.ToJavascriptTicks());
+                    AsksValues.Add(value.Replace(',', '.'));
+                }
 
-                    foreach (var item in Asks)
-                    {
-                        DateTime DatePlusTime = item.Date.DateTime;
-                        string value = item.Volume.ToString();
+                foreach (var item in Bids)
+                {
+                    DateTime DatePlusTime = item.Date.DateTime;
+                    string value = item.Volume.ToString();
 
-                        DatesAsks.Add(item.Date.Date.ToJavascriptTicks());
-                        AsksValues.Add(value.Replace(',', '.'));
-                    }
-
-                    foreach (var item in Bids)
-                    {
-                        DateTime DatePlusTime = item.Date.DateTime;
-                        string value = item.Volume.ToString();
-
-                        DatesBids.Add(DatePlusTime.ToJavascriptTicks());
-                        BidsValues.Add(value.Replace(',', '.'));
-                    }
+                    DatesBids.Add(DatePlusTime.ToJavascriptTicks());
+                    BidsValues.Add(value.Replace(',', '.'));
                 }
             }
-            
+
         }
 
     }

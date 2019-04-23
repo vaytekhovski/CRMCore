@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using Binance;
 using CRM.Master;
 using CRM.Models;
 using CRM.Models.Binance;
 using CRM.Models.Database;
-using CRM.Models.DropDown;
+using CRM.Models.Master;
 
 namespace CRM.Services
 {
@@ -19,8 +17,7 @@ namespace CRM.Services
         public double TotalProfit { get; set; }
         public double TotalPercentProfit { get; set; }
 
-        private List<int> IgnoreIds = new List<int>();
-
+        private readonly List<int> IgnoreIds = new List<int>();
         private List<ExchangeKey> ExchangeKeys { get; set; }
 
         private DateTime StartDate;
@@ -38,16 +35,58 @@ namespace CRM.Services
 
             DateTime MinDate = new DateTime(2019, 04, 05);
 
+            List<Orders> orders = new List<Orders>();
+            List<SignalsPrivate> signals = new List<SignalsPrivate>();
+
             using (masterContext context = new masterContext())
             {
-                var orders = context.Orders.Where(x => 
+                orders = context.Orders.Where(x => 
                     (acc != "all" ? x.AccountId == acc : true) && 
                     (coin != "all" ? x.Base == coin : true) &&
                     x.TimeEnded >= MinDate).ToList();
-                AddToTradeHistories(orders);
+
+                signals = context.SignalsPrivate.Where(x => x.ErrorMessages == null).ToList();
             }
-            
+
+            AddToTradeHistories(orders);
             UpdateProfit();
+            AddSignals(signals);
+        }
+
+        private void AddSignals(List<SignalsPrivate> signals)
+        {
+            var previous = AccountTradeHistories.FirstOrDefault();
+
+            foreach (var _acc in ExchangeKeys.Where(x => x.AccountId != "all"))
+            {
+                foreach (var item in AccountTradeHistories.Where(x => x.Account == _acc.Name))
+                {
+                    if (item.Side == "buy" && previous.Side == "sell")
+                    {
+                        var signal = signals.FirstOrDefault(x =>
+                        x.SourceTime.Year == item.Time.Year &&
+                        x.SourceTime.Month == item.Time.Month &&
+                        x.SourceTime.Day == item.Time.Day &&
+                        x.SourceTime.Hour == item.Time.Hour &&
+                        x.SourceTime.Minute > item.Time.AddMinutes(-3).Minute &&
+                        x.SourceTime.Minute < item.Time.AddMinutes(3).Minute
+                        );
+
+                        if (signal != null)
+                        {
+                            item.SignalStr = signal.Id;
+                            item.SignalStr += " " + signal.Exchange;
+                            item.SignalStr += " " + signal.Base;
+                            item.SignalStr += " " + signal.SourceTime;
+                            item.SignalStr += " TrendDiff: " + signal.TrendDiff;
+                        }
+
+                    }
+                    
+                    previous = item;
+                }
+            }
+
         }
 
         private void InitializeExchangeKeys()
@@ -81,23 +120,24 @@ namespace CRM.Services
             foreach (var item in orders)
             {
                 if (item.ClosedAmount == 0) continue;
-                
-                bool isIgnore = false;
-                foreach (var id in IgnoreIds)
-                {
-                    if(item.Id == id)
-                    {
-                        isIgnore = true;
-                        break;
-                    }
-                }
 
-                if (isIgnore) continue;
+                //bool isIgnore = false;
+                //foreach (var id in IgnoreIds)
+                //{
+                //    if (item.Id == id)
+                //    {
+                //        isIgnore = true;
+                //        break;
+                //    }
+                //}
 
-                AccountTradeHistories.Add(new AccountTradeHistory
+
+                var ignore = IgnoreIds.FirstOrDefault(id => item.Id == id);
+
+                if (ignore == 0) AccountTradeHistories.Add(new AccountTradeHistory
                 {
                     Account = AccountName(item.AccountId),
-                    Time = item.TimeEnded.AddHours(3),
+                    Time = item.TimeEnded,
                     Side = item.Side,
                     Pair = item.Base,
                     Price = item.Rate,
@@ -111,15 +151,15 @@ namespace CRM.Services
         
         private void UpdateProfit()
         {
-            foreach (var _coin in DropDownFields.Coins)
+            foreach (var _coin in DropDownFields.Coins.Where(x => x.Value != "all")) 
             {
-                foreach (var _acc in ExchangeKeys)
+                foreach (var _acc in ExchangeKeys.Where(x=>x.AccountId != "all"))
                 {
-                    if (_acc.AccountId == "all")
-                        continue;
+                    //if (_acc.AccountId == "all")
+                    //    continue;
 
-                    if (_coin.Value == "all")
-                        break;
+                    //if (_coin.Value == "all")
+                    //    break;
                     
 
                     double profit = 0;
@@ -157,8 +197,8 @@ namespace CRM.Services
 
 
                 }
-                if (_coin.Value == "all")
-                    continue;
+                //if (_coin.Value == "all")
+                //    continue;
             }
 
             foreach (var item in AccountTradeHistories.Where(x => x.Profit != 0 && x.Time >= StartDate && x.Time <= EndDate))
@@ -167,7 +207,5 @@ namespace CRM.Services
             }
 
         }
-
-
     }
 }

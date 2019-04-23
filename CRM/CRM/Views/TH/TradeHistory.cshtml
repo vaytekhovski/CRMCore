@@ -69,7 +69,8 @@
                     {
                         itemProfitStr = null;
                     }
-                    <tr>
+
+                    <tr onclick="SignalMessage('@item.SignalStr')">
                         <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
                         <td>@item.Account</td>
                         <td>@item.Side</td>
@@ -99,6 +100,13 @@
                 }).parent('tr').css('backgroundColor', 'rgb(242, 244, 247)');
 
             });
+
+        function SignalMessage(str) {
+                if (str) {
+                    alert(str)
+                }
+            }
+
         </script>
     </div>
 </div>

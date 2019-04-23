@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRM.Models.Master;
+using System;
 
 namespace CRM.Models.Binance
 {
@@ -14,5 +15,6 @@ namespace CRM.Models.Binance
         public double BalanceUSDT { get; set; }
         public double Profit { get; set; }
         public double PercentProfit { get; set; }
+        public string SignalStr { get; set; }
     }
 }

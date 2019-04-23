@@ -13,26 +13,25 @@ namespace CRM.Services.Data
 
         public TradeDeltaService() { }
 
-        public void Load(string coin, string startDate = "", string endDate = "", string nulldelta = "all")
+        public void Load(string coin, string startDate, string endDate, string nulldelta = "all")
         {
+            if (startDate == null && endDate == null)
+                return;
+
+            DateTime SD = DateTime.Parse(startDate);
+            DateTime ED = DateTime.Parse(endDate);
+
             using (CRMContext context = new CRMContext())
             {
-                Show = context.TradeDeltaModels.ToList();
+                Show = context.TradeDeltaModels
+                    .Where(z => coin == "all" ? true : z.CurrencyName == coin)
+                    .OrderByDescending(x => x.TimeFrom)
+                    .ToList();
 
-                Show = context.TradeDeltaModels.Where(z => z.CurrencyName == coin).OrderByDescending(x => x.TimeFrom).ToList();
 
-                if (startDate != "" && endDate != "")
-                {
-                    DateTime SD = DateTime.Parse(startDate);
-                    DateTime ED = DateTime.Parse(endDate);
-                    
-                    Show = Show.Where(x => x.TimeFrom >= SD && x.TimeTo <= ED).ToList();
-                }
+                Show = Show.Where(x => x.TimeFrom >= SD && x.TimeTo <= ED).ToList();
+                Show = Show.Where(x => nulldelta == "all" ? true : x.Delta != 0).ToList();
 
-                if (nulldelta == "notnull")
-                {
-                    Show = Show.Where(x => x.Delta > 0 || x.Delta < 0).ToList();
-                }
 
                 foreach (var item in Show)
                 {

@@ -20,60 +20,61 @@ namespace CRM.Services.Charts
 
         public void Load(string coin, string startDate, string endDate)
         {
-            if (startDate != "" && endDate != "")
+            if (startDate == null && endDate == null)
+                return;
+
+
+            var SD = DateTime.Parse(startDate);
+            var ED = DateTime.Parse(endDate);
+
+            using (CRMContext context = new CRMContext())
             {
-                var SD = DateTime.Parse(startDate);
-                var ED = DateTime.Parse(endDate);
+                var Deltas = context.TradeDeltaModels
+                    .Where(x => x.CurrencyName == coin)
+                    .Where(x => x.TimeTo >= SD && x.TimeTo <= ED)
+                    .Where(x => x.Delta > 0 || x.Delta < 0)
+                    .OrderBy(x => x.TimeFrom);
 
-                using (CRMContext context = new CRMContext())
+                var THBuy = context.TradeHistoryModels
+                    .Where(x => x.CurrencyName == coin)
+                    .Where(x => x.Date >= SD && x.Date <= ED)
+                    .Where(x => x.Side == "Buy")
+                    .OrderBy(x => x.Date);
+
+                var THSell = context.TradeHistoryModels
+                    .Where(x => x.CurrencyName == coin)
+                    .Where(x => x.Date >= SD && x.Date <= ED)
+                    .Where(x => x.Side == "Sell")
+                    .OrderBy(x => x.Date);
+
+                foreach (var item in Deltas)
                 {
-                    var Deltas = context.TradeDeltaModels
-                        .Where(x => x.CurrencyName == coin)
-                        .Where(x => x.TimeTo >= SD && x.TimeTo <= ED)
-                        .Where(x => x.Delta > 0 || x.Delta < 0)
-                        .OrderBy(x => x.TimeFrom);
+                    DateTime DatePlusTime = item.TimeTo.DateTime;
+                    string value = item.Delta.ToString();
 
-                    var THBuy = context.TradeHistoryModels
-                        .Where(x => x.CurrencyName == coin)
-                        .Where(x => x.Date >= SD && x.Date <= ED)
-                        .Where(x => x.Side == "Buy")
-                        .OrderBy(x => x.Date);
+                    DatesDelta.Add(DatePlusTime.ToJavascriptTicks());
+                    DeltaValues.Add(value.Replace(',', '.'));
+                }
 
-                    var THSell = context.TradeHistoryModels
-                        .Where(x => x.CurrencyName == coin)
-                        .Where(x => x.Date >= SD && x.Date <= ED)
-                        .Where(x => x.Side == "Sell")
-                        .OrderBy(x => x.Date);
+                foreach (var item in THBuy)
+                {
+                    DateTime DatePlusTime = item.Date.DateTime;
+                    string value = item.Volume.ToString();
 
-                    foreach (var item in Deltas)
-                    {
-                        DateTime DatePlusTime = item.TimeTo.DateTime;
-                        string value = item.Delta.ToString();
+                    DatesTHBuy.Add(DatePlusTime.ToJavascriptTicks());
+                    THBuyValues.Add(value.Replace(',', '.'));
+                }
 
-                        DatesDelta.Add(DatePlusTime.ToJavascriptTicks());
-                        DeltaValues.Add(value.Replace(',', '.'));
-                    }
+                foreach (var item in THSell)
+                {
+                    DateTime DatePlusTime = item.Date.DateTime;
+                    string value = item.Volume.ToString();
 
-                    foreach (var item in THBuy)
-                    {
-                        DateTime DatePlusTime = item.Date.DateTime;
-                        string value = item.Volume.ToString();
-
-                        DatesTHBuy.Add(DatePlusTime.ToJavascriptTicks());
-                        THBuyValues.Add(value.Replace(',', '.'));
-                    }
-
-                    foreach (var item in THSell)
-                    {
-                        DateTime DatePlusTime = item.Date.DateTime;
-                        string value = item.Volume.ToString();
-
-                        DatesTHSell.Add(DatePlusTime.ToJavascriptTicks());
-                        THSellValues.Add(value.Replace(',', '.'));
-                    }
+                    DatesTHSell.Add(DatePlusTime.ToJavascriptTicks());
+                    THSellValues.Add(value.Replace(',', '.'));
                 }
             }
-            
+
         }
     }
 }

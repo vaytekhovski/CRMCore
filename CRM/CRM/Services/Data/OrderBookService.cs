@@ -13,24 +13,24 @@ namespace CRM.Services.Data
 
         public OrderBookService() { }
 
-        public void Load(string bookType, string coin, string situation, string startDate = "", string endDate = "")
+        public void Load(string bookType, string coin, string situation, string startDate, string endDate)
         {
+            if (startDate == null && endDate == null)
+                return;
+
+            DateTime SD = DateTime.Parse(startDate);
+            DateTime ED = DateTime.Parse(endDate);
+
             using (CRMContext context = new CRMContext())
             {
-                Show = context.OrderBookModels.Where(z => z.BookType == bookType && z.CurrencyName == coin).OrderByDescending(x => x.Date).ToList();
+                Show = context.OrderBookModels
+                    .Where(z => z.BookType == bookType &&
+                    coin == "all" ? true : z.CurrencyName == coin)
+                    .OrderByDescending(x => x.Date)
+                    .ToList();
 
-                if (startDate != "" && endDate != "")
-                {
-                    DateTime SD = DateTime.Parse(startDate);
-                    DateTime ED = DateTime.Parse(endDate);
-
-                    Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
-                }
-
-                if (situation != "all")
-                {
-                    Show = Show.Where(x => x.MarketSituation == situation).ToList();
-                }
+                Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
+                Show = Show.Where(x => situation == "all" ? true : x.MarketSituation == situation).ToList();
 
                 foreach (var item in Show)
                 {
