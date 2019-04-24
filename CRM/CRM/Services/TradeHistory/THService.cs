@@ -57,23 +57,36 @@ namespace CRM.Services
 
         private ICollection<Orders> ChangeOrdersAmount(List<Orders> orders)
         {
+            Orders order;
             try
             {
-                var order = orders.FirstOrDefault(x => x.Id == 319);
+                order = orders.FirstOrDefault(x => x.Id == 319);
                 orders.FirstOrDefault(x => x.Id == 322).ClosedAmount = order.ClosedAmount;
-
-                order = orders.FirstOrDefault(x => x.Id == 320);
-                orders.FirstOrDefault(x => x.Id == 323).ClosedAmount = order.ClosedAmount;
-
-                order = orders.FirstOrDefault(x => x.Id == 325);
-                orders.FirstOrDefault(x => x.Id == 325).ClosedAmount = order.ClosedAmount - (decimal)19.81;
-                //298,13
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-            
+
+            try
+            {
+                order = orders.FirstOrDefault(x => x.Id == 320);
+                orders.FirstOrDefault(x => x.Id == 323).ClosedAmount = order.ClosedAmount;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                order = orders.FirstOrDefault(x => x.Id == 325);
+                orders.FirstOrDefault(x => x.Id == 325).ClosedAmount = order.ClosedAmount - (decimal)19.81;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
 
             return orders;
         }
