@@ -32,7 +32,7 @@ namespace CRM.Services.Data
                 Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
                 Show = Show.Where(x => situation == "all" ? true : x.MarketSituation == situation).ToList();
                 Show = Show.Where(x => orderType == "all" ? true : x.Side == orderType).ToList();
-
+                //TODO: do like in OrderBookService
                 foreach (var item in Show)
                 {
                     SummVolume += item.Volume;

@@ -31,7 +31,7 @@ namespace CRM.Services.Data
 
                 Show = Show.Where(x => x.TimeFrom >= SD && x.TimeTo <= ED).ToList();
                 Show = Show.Where(x => nulldelta == "all" ? true : x.Delta != 0).ToList();
-
+                //TODO: do like in OrderBookService
 
                 foreach (var item in Show)
                 {

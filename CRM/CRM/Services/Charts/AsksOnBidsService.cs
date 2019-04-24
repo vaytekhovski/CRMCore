@@ -17,7 +17,7 @@ namespace CRM.Services.Charts
 
         public void Load(string coin, string startDate, string endDate)
         {
-            if (startDate == null && endDate == null)
+            if (startDate == null && endDate == null) //TODO: даты доллжны парситься снаружи сервисов (в контроллерах), поменять здесь и в остальных местах
                 return;
 
             var SD = DateTime.Parse(startDate);
@@ -25,7 +25,7 @@ namespace CRM.Services.Charts
 
             using (CRMContext context = new CRMContext())
             {
-                var Asks = context.OrderBookModels
+                var Asks = context.OrderBookModels //TODO: bids and asks -в один запрос
                     .Where(x => x.BookType == "ask" && x.CurrencyName == coin)
                     .Where(x => x.Date >= SD && x.Date <= ED)
                     .OrderBy(x => x.Date);
@@ -41,7 +41,7 @@ namespace CRM.Services.Charts
                     string value = item.Volume.ToString();
 
                     DatesAsks.Add(item.Date.Date.ToJavascriptTicks());
-                    AsksValues.Add(value.Replace(',', '.'));
+                    AsksValues.Add(value.Replace(',', '.')); //TODO: сделать через Select здесь и ниже, если будет возможно
                 }
 
                 foreach (var item in Bids)

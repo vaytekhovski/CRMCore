@@ -69,7 +69,7 @@ namespace CRM.Models
             Nulls.Add(new Field { Value = "notnull", Name = "Не показывать нулевые значения" });
         }
 
-        public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext) //TODO: [COMPLETE] работу с дата контекстом вынести в слой сервисов
+        public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext)
         {
             return AccountsExchangeKeysService.GetExchangeKeys(httpContext);
         }

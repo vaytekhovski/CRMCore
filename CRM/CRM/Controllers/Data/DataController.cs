@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using CRM.ViewModels.Data;
 using CRM.Services;
 using System.Collections.Generic;
+using CRM.Helpers;
 
 namespace CRM.Controllers.Data
 {
@@ -15,8 +16,8 @@ namespace CRM.Controllers.Data
         {
             var model = new OrderBookViewModel
             {
-                StartDate = Dates.MinDate,
-                EndDate = Dates.CurrentDate(),
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.OrderBookModel>()
 
             };
@@ -29,8 +30,8 @@ namespace CRM.Controllers.Data
         {
             var model = new OrderBookViewModel
             {
-                StartDate = Dates.MinDate,
-                EndDate = Dates.CurrentDate(),
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.OrderBookModel>()
             };
 
@@ -54,8 +55,8 @@ namespace CRM.Controllers.Data
         {
             var model = new OrderBookViewModel
             {
-                StartDate = Dates.MinDate,
-                EndDate = Dates.CurrentDate(),
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.OrderBookModel>()
             };
 
@@ -79,8 +80,8 @@ namespace CRM.Controllers.Data
         {
             var model = new TradeHistoryViewModel
             {
-                StartDate = Dates.MinDate,
-                EndDate = Dates.CurrentDate(),
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.TradeHistoryModel>()
             };
 
@@ -105,8 +106,8 @@ namespace CRM.Controllers.Data
         {
             var model = new TradeDeltaViewModel
             {
-                StartDate = Dates.MinDate,
-                EndDate = Dates.CurrentDate(),
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.TradeDeltaModel>()
             };
 

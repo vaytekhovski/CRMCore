@@ -1,4 +1,5 @@
-﻿using CRM.Services;
+﻿using CRM.Helpers;
+using CRM.Services;
 using CRM.Services.Charts;
 using CRM.ViewModels.Charts;
 using Microsoft.AspNetCore.Authorization;
@@ -17,8 +18,8 @@ namespace CRM.Controllers.Charts
         {
             var model = new AskOnBidViewModel
             {
-                StartDate = Dates.MinDate,
-                EndDate = Dates.CurrentDate()
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr
             };
             return View(model);
         }
@@ -28,8 +29,8 @@ namespace CRM.Controllers.Charts
         {
             var model = new AskOnBidViewModel
             {
-                StartDate = Dates.MinDate,
-                EndDate = Dates.CurrentDate(),
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr,
                 DatesAsks = new List<long>(),
                 DatesBids = new List<long>(),
                 AsksValues = new List<string>(),
@@ -44,7 +45,7 @@ namespace CRM.Controllers.Charts
             AsksOnBidsService asksOnBids = new AsksOnBidsService();
             asksOnBids.Load(model.Coin, model.StartDate, model.EndDate);
 
-            model.DatesAsks = asksOnBids.DatesAsks;
+            model.DatesAsks = asksOnBids.DatesAsks; // TODO: ToJavascriptTicks, ToString должен вызываться здесь, а не в сервисе. Поправить здесь и ниже.
             model.DatesBids = asksOnBids.DatesBids;
 
             model.AsksValues = asksOnBids.AsksValues;
@@ -58,8 +59,8 @@ namespace CRM.Controllers.Charts
         {
             var model = new DeltaOnTradeHistoryViewModel
             {
-                StartDate = Dates.MinDate,
-                EndDate = Dates.CurrentDate(),
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr,
                 DatesDelta = new List<long>(),
                 DeltaValues = new List<string>(),
                 DatesTHBuy = new List<long>(),

@@ -21,8 +21,8 @@ namespace CRM.Models.Database
 
         public enum Roles
         {
-            admin = 1,
-            user = 2
+            Admin = 1,
+            User = 2
         }
 
     }

@@ -24,21 +24,15 @@ namespace CRM.Services.Data
             using (CRMContext context = new CRMContext())
             {
                 Show = context.OrderBookModels
-                    .Where(z => z.BookType == bookType &&
-                    coin == "all" ? true : z.CurrencyName == coin)
+                    .Where(x => x.BookType == bookType &&
+                        (coin == "all" ? true : x.CurrencyName == coin) &&
+                        (situation == "all" ? true : x.MarketSituation == situation) &&
+                        x.Date >= SD && x.Date <= ED)
                     .OrderByDescending(x => x.Date)
                     .ToList();
 
-                Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
-                Show = Show.Where(x => situation == "all" ? true : x.MarketSituation == situation).ToList();
-
-                foreach (var item in Show)
-                {
-                    SummVolume += item.Volume;
-                }
+                SummVolume = Show.Sum(item => item.Volume);
             }
-
-            
         }
     }
 }

@@ -10,7 +10,7 @@ namespace CRM.Services.Database
 {
     public static class AccountsExchangeKeysService
     {
-        public static IEnumerable<SelectListItem> GetExchangeKeys(HttpContext httpContext)
+        public static IEnumerable<SelectListItem> GetExchangeKeys(HttpContext httpContext) // передавать только имя пользователя, + переделать запись в Identity (Id вместо имени пользователя)
         {
             using (UserContext context = new UserContext())
             {
@@ -19,7 +19,7 @@ namespace CRM.Services.Database
                 
 
                 lst = context.ExchangeKeys
-                    .Where(x => user.RoleId == (int)UserModel.Roles.user ? x.UserId == user.Id : true) // TODO: [COMPLETE] 1 в enum
+                    .Where(x => user.RoleId == (int)UserModel.Roles.User ? x.UserId == user.Id : true)
                     .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
                     .ToList();
 

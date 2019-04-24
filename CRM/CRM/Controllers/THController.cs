@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CRM.Helpers;
 using CRM.Services;
 using CRM.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -17,8 +18,8 @@ namespace CRM.Controllers
             {
                 Account = "all",
                 Coin = "all",
-                StartDate = Dates.MinDate,
-                EndDate = Dates.CurrentDate()
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr
             };
 
             model = LoadTradeHistory(model);
@@ -26,7 +27,7 @@ namespace CRM.Controllers
             return View(model);
         }
         
-        [HttpPost] //TODO: [COMPLETE]  разметить везде, где GET, а где POST
+        [HttpPost]
         public ActionResult TradeHistory(TradeHistoryFilterModel model) 
         {
             model = LoadTradeHistory(model);
