@@ -1,5 +1,7 @@
 ﻿@model CRM.ViewModels.UserPanelModel
-
+@{
+    ViewBag.Title = "User Panel";
+}
 
 <!DOCTYPE html>
 
@@ -10,7 +12,7 @@
 
 
     <link href="~/css/stylesheet.css" rel="stylesheet" />
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -41,29 +43,29 @@
                             <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
                         </div>
                     </div>
-                    
+
                     @if (!ViewBag.isUser)
                     {
-                    <div>
+                        <div>
 
-                        <div class="user_block">
-                            <label>Обновление данных ежедневно в: </label><br />
-                            <div class="user_row">
-                                <input type="text" class="form-control user_input" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
-                                <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
+                            <div class="user_block">
+                                <label>Обновление данных ежедневно в: </label><br />
+                                <div class="user_row">
+                                    <input type="text" class="form-control user_input" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
+                                    <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="user_block">
-                            <label>Ручная загрузка данных: </label><br />
-                            <div class="user_row">
-                                <input type="date" class="form-control user_input" name="startDate" value="" />
-                                <input type="date" class="form-control user_input" name="endDate" value="" />
-                                <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                            <div class="user_block">
+                                <label>Ручная загрузка данных: </label><br />
+                                <div class="user_row">
+                                    <input type="date" class="form-control user_input" name="startDate" value="" />
+                                    <input type="date" class="form-control user_input" name="endDate" value="" />
+                                    <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>
                     }
 
 
