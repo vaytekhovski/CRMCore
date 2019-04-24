@@ -66,7 +66,7 @@ namespace CRM.Services
                 orders.FirstOrDefault(x => x.Id == 323).ClosedAmount = order.ClosedAmount;
 
                 order = orders.FirstOrDefault(x => x.Id == 325);
-                orders.FirstOrDefault(x => x.Id == 325).ClosedAmount = order.ClosedAmount - 19.81;
+                orders.FirstOrDefault(x => x.Id == 325).ClosedAmount = order.ClosedAmount - (decimal)19.81;
                 //298,13
             }
             catch (Exception ex)
