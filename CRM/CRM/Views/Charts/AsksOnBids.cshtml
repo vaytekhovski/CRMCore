@@ -6,13 +6,11 @@
 @model CRM.ViewModels.Charts.AskOnBidViewModel
 
 @Html.Partial("_AsksOnBidsFilterPanel");
-
-
+    <head>
+        <script src="~/js/plotly-latest.min.js"></script>
+    </head>
 <div class="content">
-    <div>
-        <div id="Chart">
-
-        </div>
+    <div id="Chart">
 
     </div>
     <script type="text/javascript">

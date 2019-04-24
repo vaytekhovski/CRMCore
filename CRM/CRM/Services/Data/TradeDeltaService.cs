@@ -24,20 +24,14 @@ namespace CRM.Services.Data
             using (CRMContext context = new CRMContext())
             {
                 Show = context.TradeDeltaModels
-                    .Where(z => coin == "all" ? true : z.CurrencyName == coin)
+                    .Where(x => coin == "all" ? true : x.CurrencyName == coin &&
+                    x.TimeFrom >= SD && x.TimeTo <= ED &&
+                    nulldelta == "all" ? true : x.Delta != 0)
                     .OrderByDescending(x => x.TimeFrom)
                     .ToList();
 
 
-                Show = Show.Where(x => x.TimeFrom >= SD && x.TimeTo <= ED).ToList();
-                Show = Show.Where(x => nulldelta == "all" ? true : x.Delta != 0).ToList();
-                //TODO: do like in OrderBookService
-
-                foreach (var item in Show)
-                {
-                    SummDelta += item.Delta;
-                }
-                
+                SummDelta = Show.Sum(item => item.Delta);
                 
             }
         }

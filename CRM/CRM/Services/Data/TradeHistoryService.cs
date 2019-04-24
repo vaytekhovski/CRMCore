@@ -25,19 +25,14 @@ namespace CRM.Services.Data
             using (CRMContext context = new CRMContext())
             {
                 Show = context.TradeHistoryModels
-                    .Where(z => coin == "all" ? true : z.CurrencyName == coin)
+                    .Where(x => x.Date >= SD && x.Date <= ED &&
+                    coin == "all" ? true : x.CurrencyName == coin &&
+                    situation == "all" ? true : x.MarketSituation == situation &&
+                    orderType == "all" ? true : x.Side == orderType)
                     .OrderByDescending(x => x.Date)
                     .ToList();
 
-                Show = Show.Where(x => x.Date >= SD && x.Date <= ED).ToList();
-                Show = Show.Where(x => situation == "all" ? true : x.MarketSituation == situation).ToList();
-                Show = Show.Where(x => orderType == "all" ? true : x.Side == orderType).ToList();
-                //TODO: do like in OrderBookService
-                foreach (var item in Show)
-                {
-                    SummVolume += item.Volume;
-                }
-
+                SummVolume = Show.Sum(item => item.Volume);
             }
             
         }
