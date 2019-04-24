@@ -1,4 +1,5 @@
 ﻿using CRM.Models;
+using CRM.Models.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,74 +8,49 @@ namespace CRM.Services.Charts
 {
     public class DeltaOnTradeHistoryService
     {
-        public List<long> DatesDelta { get; private set; } = new List<long>(); 
-        public List<string> DeltaValues { get; private set; } = new List<string>();
+        public List<DateTime> DatesDelta { get; private set; } = new List<DateTime>(); 
+        public List<double> DeltaValues { get; private set; } = new List<double>();
 
-        public List<long> DatesTHBuy { get; private set; } = new List<long>();
-        public List<string> THBuyValues { get; private set; } = new List<string>();
+        public List<DateTime> DatesTHBuy { get; private set; } = new List<DateTime>();
+        public List<double> THBuyValues { get; private set; } = new List<double>();
 
-        public List<long> DatesTHSell { get; private set; } = new List<long>();
-        public List<string> THSellValues { get; private set; } = new List<string>();
+        public List<DateTime> DatesTHSell { get; private set; } = new List<DateTime>();
+        public List<double> THSellValues { get; private set; } = new List<double>();
+
+
+
+        private List<TradeDeltaModel> Deltas = new List<TradeDeltaModel>();
+        private List<TradeHistoryModel> TH = new List<TradeHistoryModel>();
 
         public DeltaOnTradeHistoryService() { }
 
-        public void Load(string coin, string startDate, string endDate)
+        public void Load(string coin, DateTime startDate, DateTime endDate)
         {
             if (startDate == null && endDate == null)
                 return;
 
-
-            var SD = DateTime.Parse(startDate);
-            var ED = DateTime.Parse(endDate);
-
             using (CRMContext context = new CRMContext())
             {
-                var Deltas = context.TradeDeltaModels
-                    .Where(x => x.CurrencyName == coin)
-                    .Where(x => x.TimeTo >= SD && x.TimeTo <= ED)
-                    .Where(x => x.Delta > 0 || x.Delta < 0)
-                    .OrderBy(x => x.TimeFrom);
+                Deltas = context.TradeDeltaModels
+                    .Where(x => x.CurrencyName == coin &&
+                    x.TimeTo >= startDate && x.TimeTo <= endDate &&
+                    x.Delta > 0 || x.Delta < 0)
+                    .OrderBy(x => x.TimeFrom).ToList();
 
-                var THBuy = context.TradeHistoryModels
-                    .Where(x => x.CurrencyName == coin)
-                    .Where(x => x.Date >= SD && x.Date <= ED)
-                    .Where(x => x.Side == "Buy")
-                    .OrderBy(x => x.Date);
-
-                var THSell = context.TradeHistoryModels
-                    .Where(x => x.CurrencyName == coin)
-                    .Where(x => x.Date >= SD && x.Date <= ED)
-                    .Where(x => x.Side == "Sell")
-                    .OrderBy(x => x.Date);
-
-                foreach (var item in Deltas)
-                {
-                    DateTime DatePlusTime = item.TimeTo.DateTime;
-                    string value = item.Delta.ToString();
-
-                    DatesDelta.Add(DatePlusTime.ToJavascriptTicks());
-                    DeltaValues.Add(value.Replace(',', '.'));
-                }
-
-                foreach (var item in THBuy)
-                {
-                    DateTime DatePlusTime = item.Date.DateTime;
-                    string value = item.Volume.ToString();
-
-                    DatesTHBuy.Add(DatePlusTime.ToJavascriptTicks());
-                    THBuyValues.Add(value.Replace(',', '.'));
-                }
-
-                foreach (var item in THSell)
-                {
-                    DateTime DatePlusTime = item.Date.DateTime;
-                    string value = item.Volume.ToString();
-
-                    DatesTHSell.Add(DatePlusTime.ToJavascriptTicks());
-                    THSellValues.Add(value.Replace(',', '.'));
-                }
+                TH = context.TradeHistoryModels
+                    .Where(x => x.CurrencyName == coin &&
+                    x.Date >= startDate && x.Date <= endDate)
+                    .OrderBy(x => x.Date).ToList();
             }
 
+            DatesDelta = Deltas.Select(x => x.TimeTo.Date).ToList();
+            DeltaValues = Deltas.Select(x => x.Delta).ToList();
+
+            DatesTHBuy = TH.Where(x => x.Side == "Buy").Select(x => x.Date.Date).ToList();
+            THBuyValues = TH.Where(x => x.Side == "Buy").Select(x => x.Volume).ToList();
+
+            DatesTHSell = TH.Where(x => x.Side == "Sell").Select(x => x.Date.Date).ToList();
+            THSellValues = TH.Where(x => x.Side == "Sell").Select(x => x.Volume).ToList();
         }
     }
 }

@@ -6,13 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\TradeHistory\**" />
     <Compile Remove="Services\Binance\**" />
-    <Content Remove="Controllers\TradeHistory\**" />
     <Content Remove="Services\Binance\**" />
-    <EmbeddedResource Remove="Controllers\TradeHistory\**" />
     <EmbeddedResource Remove="Services\Binance\**" />
-    <None Remove="Controllers\TradeHistory\**" />
     <None Remove="Services\Binance\**" />
     <Content Remove="wwwroot\js\app.js" />
     <Content Remove="wwwroot\images\checked.svg" />
