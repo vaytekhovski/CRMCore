@@ -23,8 +23,15 @@ namespace CRM.Services
         private DateTime StartDate;
         private DateTime EndDate;
 
+        private string Acc;
+        private string Coin;
+        private DateTime MinDate = new DateTime(2019, 04, 05);
+
         public void Load(string acc, string coin, DateTime startDate, DateTime endDate)
         {
+            Acc = acc;
+            Coin = coin;
+
             InitializeIgnoreList();
             TotalProfit = 0;
 
@@ -33,7 +40,6 @@ namespace CRM.Services
 
             InitializeExchangeKeys();
 
-            DateTime MinDate = new DateTime(2019, 04, 05);
 
             List<Orders> orders = new List<Orders>();
             List<SignalsPrivate> signals = new List<SignalsPrivate>();
@@ -47,13 +53,35 @@ namespace CRM.Services
 
                 signals = context.SignalsPrivate.Where(x => x.ErrorMessages == null).ToList();
             }
-
+            orders = (List<Orders>)InsertNewOrders(orders);
             orders = (List < Orders > )ChangeOrdersAmount(orders);
             AddToTradeHistories(orders);
             UpdateProfit();
             AddSignals(signals);
 
         }
+
+        private ICollection<Orders> InsertNewOrders(List<Orders> orders)
+        {
+            List<Orders> newOrders = new List<Orders>();
+
+            var date = new DateTime(2019, 04, 25, 0, 23, 08);
+            Orders item = new Orders(0, "8025d4bf-4af6-466f-b93c-5a807fd37f68", "DASH", "sell", date, 62.26038, 113.2751);
+            newOrders.Add(item);
+
+            date = new DateTime(2019, 04, 25, 0, 22, 47);
+            item = new Orders(0, "9560eadf-74cf-4596-a7e5-bffcd201f6ec", "DASH", "sell", date, 4.59701, 113.376);
+            newOrders.Add(item);
+
+            orders.AddRange(newOrders.Where(x =>
+                    (Acc != "all" ? x.AccountId == Acc : true) &&
+                    (Coin != "all" ? x.Base == Coin : true) &&
+                    x.TimeEnded >= MinDate).ToList());
+
+            return orders;
+        }
+
+
 
         private ICollection<Orders> ChangeOrdersAmount(List<Orders> orders)
         {
