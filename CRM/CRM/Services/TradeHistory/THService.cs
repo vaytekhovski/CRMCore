@@ -96,36 +96,33 @@ namespace CRM.Services
         {
             var previous = AccountTradeHistories.FirstOrDefault();
 
-            foreach (var _acc in ExchangeKeys.Where(x => x.AccountId != "all"))
+            foreach (var item in from _acc in ExchangeKeys.Where(x => x.AccountId != "all")
+                                 from th in AccountTradeHistories.Where(x => x.Account == _acc.Name)
+                                 select th)
             {
-                foreach (var item in AccountTradeHistories.Where(x => x.Account == _acc.Name))
+
+                if ((item.Side == "buy" && previous.Side == "sell") || (item.Side == "buy" && item.Pair != previous.Pair))
                 {
-                    if (item.Side == "buy" && previous.Side == "sell")
+                    var signal = signals.FirstOrDefault(x =>
+                    x.Base == item.Pair &&
+                    x.SourceTime.Year == item.Time.Year &&
+                    x.SourceTime.Month == item.Time.Month &&
+                    x.SourceTime.Day == item.Time.Day &&
+                    x.SourceTime.Hour == item.Time.AddHours(-3).Hour
+                    );
+
+                    if (signal != null)
                     {
-                        var signal = signals.FirstOrDefault(x =>
-                        x.SourceTime.Year == item.Time.Year &&
-                        x.SourceTime.Month == item.Time.Month &&
-                        x.SourceTime.Day == item.Time.Day &&
-                        x.SourceTime.Hour == item.Time.AddHours(-3).Hour &&
-                        x.SourceTime.Minute > item.Time.AddMinutes(-3).Minute &&
-                        x.SourceTime.Minute < item.Time.AddMinutes(3).Minute
-                        );
-
-                        if (signal != null)
-                        {
-                            item.SignalStr = signal.Id;
-                            item.SignalStr += " " + signal.Exchange;
-                            item.SignalStr += " " + signal.Base;
-                            item.SignalStr += " " + signal.SourceTime.AddHours(3);
-                            item.SignalStr += " TrendDiff: " + signal.TrendDiff;
-                        }
-
+                        item.SignalStr = signal.Id
+                            + " " + signal.Exchange
+                            + " " + signal.Base
+                            + " " + signal.SourceTime.AddHours(3)
+                            + " TrendDiff: " + signal.TrendDiff;
                     }
-                    
-                    previous = item;
                 }
-            }
 
+                previous = item;
+            }
         }
 
         private void InitializeExchangeKeys()
