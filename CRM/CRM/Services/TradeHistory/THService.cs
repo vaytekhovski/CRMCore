@@ -25,7 +25,7 @@ namespace CRM.Services
 
         private string Acc;
         private string Coin;
-        private DateTime MinDate = new DateTime(2019, 04, 05);
+        private readonly DateTime MinDate = new DateTime(2019, 04, 05);
 
         public void Load(string acc, string coin, DateTime startDate, DateTime endDate)
         {
@@ -65,7 +65,7 @@ namespace CRM.Services
         {
             List<Orders> newOrders = new List<Orders>();
 
-            var date = new DateTime(2019, 04, 25, 0, 23, 08);
+            DateTime date = new DateTime(2019, 04, 25, 0, 23, 08);
             Orders item = new Orders(0, "8025d4bf-4af6-466f-b93c-5a807fd37f68", "DASH", "sell", date, 62.26038000M, 113.2751M);
             newOrders.Add(item);
 
@@ -131,7 +131,7 @@ namespace CRM.Services
 
                 if ((item.Side == "buy" && previous.Side == "sell") || (item.Side == "buy" && item.Pair != previous.Pair))
                 {
-                    var signal = signals.FirstOrDefault(x =>
+                    SignalsPrivate signal = signals.FirstOrDefault(x =>
                     x.Base == item.Pair &&
                     x.SourceTime.Year == item.Time.Year &&
                     x.SourceTime.Month == item.Time.Month &&

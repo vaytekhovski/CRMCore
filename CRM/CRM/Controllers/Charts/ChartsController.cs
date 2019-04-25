@@ -48,7 +48,7 @@ namespace CRM.Controllers.Charts
             AsksOnBidsService asksOnBids = new AsksOnBidsService();
             asksOnBids.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
-            model.DatesAsks = asksOnBids.DatesAsks.Select(x => x.ToJavascriptTicks()).ToList(); // TODO: ToJavascriptTicks, ToString должен вызываться здесь, а не в сервисе. Поправить здесь и ниже.
+            model.DatesAsks = asksOnBids.DatesAsks.Select(x => x.ToJavascriptTicks()).ToList(); // TODO: [COMPLETE] ToJavascriptTicks, ToString должен вызываться здесь, а не в сервисе. Поправить здесь и ниже.
             model.DatesBids = asksOnBids.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
 
             model.AsksValues = asksOnBids.AsksValues.Select(x => x.ToString().Replace(',', '.')).ToList();

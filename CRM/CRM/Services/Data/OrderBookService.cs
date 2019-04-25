@@ -13,13 +13,10 @@ namespace CRM.Services.Data
 
         public OrderBookService() { }
 
-        public void Load(string bookType, string coin, string situation, string startDate, string endDate)
+        public void Load(string bookType, string coin, string situation, DateTime startDate, DateTime endDate)
         {
             if (startDate == null && endDate == null)
                 return;
-
-            DateTime SD = DateTime.Parse(startDate);
-            DateTime ED = DateTime.Parse(endDate);
 
             using (CRMContext context = new CRMContext())
             {
@@ -27,7 +24,7 @@ namespace CRM.Services.Data
                     .Where(x => x.BookType == bookType &&
                         (coin == "all" ? true : x.CurrencyName == coin) &&
                         (situation == "all" ? true : x.MarketSituation == situation) &&
-                        x.Date >= SD && x.Date <= ED)
+                        x.Date >= startDate && x.Date <= endDate)
                     .OrderByDescending(x => x.Date)
                     .ToList();
 

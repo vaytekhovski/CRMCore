@@ -45,7 +45,6 @@ namespace CRM.Services
 
         public void Loading(string coin, DateTime startDate, DateTime endDate)
         {
-            
             isLoading = true;
             Debug.WriteLine($"[{index}/{DropDownFields.Coins.Count}] Download {coin} started from {startDate} to {endDate}");
 
@@ -167,8 +166,8 @@ namespace CRM.Services
                     var buf = orderBook.FirstOrDefault(x =>
                        x.Date == DBItem.Date &&
                        x.Price == DBItem.Price &&
-                       x.Volume == DBItem.Volume
-                   );
+                       x.Volume == DBItem.Volume);
+
                     if (buf != null)
                     {
                         orderBook.Remove(buf);
@@ -181,8 +180,8 @@ namespace CRM.Services
                     var buf = orderBook.FirstOrDefault(x =>
                        x.Date == DBItem.Date &&
                        x.Price == DBItem.Price &&
-                       x.Volume == DBItem.Volume
-                   );
+                       x.Volume == DBItem.Volume);
+
                     if (buf != null)
                     {
                         orderBook.Remove(buf);
@@ -194,8 +193,8 @@ namespace CRM.Services
                     var buf = tradeHistories.FirstOrDefault(x =>
                        x.Date == DBItem.Date &&
                        x.Price == DBItem.Price &&
-                       x.Volume == DBItem.Volume
-                   );
+                       x.Volume == DBItem.Volume);
+
                     if (buf != null)
                     {
                         tradeHistories.Remove(buf);
@@ -207,8 +206,8 @@ namespace CRM.Services
                     var buf = tradeDeltas.FirstOrDefault(x =>
                         x.TimeFrom == DBItem.TimeFrom &&
                         x.TimeTo == DBItem.TimeTo &&
-                        x.Delta == DBItem.Delta
-                    );
+                        x.Delta == DBItem.Delta);
+
                     if (buf != null)
                     {
                         tradeDeltas.Remove(buf);

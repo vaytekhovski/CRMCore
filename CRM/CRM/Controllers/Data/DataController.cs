@@ -5,6 +5,7 @@ using CRM.ViewModels.Data;
 using CRM.Services;
 using System.Collections.Generic;
 using CRM.Helpers;
+using System;
 
 namespace CRM.Controllers.Data
 {
@@ -19,7 +20,6 @@ namespace CRM.Controllers.Data
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.OrderBookModel>()
-
             };
 
             return View(model);
@@ -42,7 +42,7 @@ namespace CRM.Controllers.Data
         public ActionResult ShowOrderBookAsks(OrderBookViewModel model)
         {
             OrderBookService orderBook = new OrderBookService();
-            orderBook.Load("ask", model.Coin, model.Situation, model.StartDate, model.EndDate);
+            orderBook.Load("ask", model.Coin, model.Situation, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
             model.Show = orderBook.Show;
             model.SummVolume = orderBook.SummVolume;
@@ -67,7 +67,7 @@ namespace CRM.Controllers.Data
         public ActionResult ShowOrderBookBids(OrderBookViewModel model)
         {
             OrderBookService orderBook = new OrderBookService();
-            orderBook.Load("bid", model.Coin, model.Situation, model.StartDate, model.EndDate);
+            orderBook.Load("bid", model.Coin, model.Situation, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
             model.Show = orderBook.Show;
             model.SummVolume = orderBook.SummVolume;
@@ -93,7 +93,7 @@ namespace CRM.Controllers.Data
         {
             TradeHistoryService tradeHistory = new TradeHistoryService();
             model.OrderType = model.OrderType == null ? "all" : model.OrderType;
-            tradeHistory.Load(model.Coin, model.Situation, model.OrderType, model.StartDate, model.EndDate);
+            tradeHistory.Load(model.Coin, model.Situation, model.OrderType, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
             model.Show = tradeHistory.Show;
             model.SummVolume = tradeHistory.SummVolume;
@@ -121,7 +121,7 @@ namespace CRM.Controllers.Data
 
             model.NullDelta = model.NullDelta == null ? "all" : model.NullDelta;
 
-            tradeDelta.Load(model.Coin, model.StartDate, model.EndDate, model.NullDelta);
+            tradeDelta.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), model.NullDelta);
 
             model.Show = tradeDelta.Show;
             model.SummDelta = tradeDelta.SummDelta;

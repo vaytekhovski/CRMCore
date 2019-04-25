@@ -16,7 +16,7 @@ namespace CRM.Controllers
         {
             var model = new TradeHistoryFilterModel
             {
-                Account = "all",
+                Account = "/",
                 Coin = "all",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
