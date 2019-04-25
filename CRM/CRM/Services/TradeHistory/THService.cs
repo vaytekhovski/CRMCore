@@ -54,7 +54,7 @@ namespace CRM.Services
                 signals = context.SignalsPrivate.Where(x => x.ErrorMessages == null).ToList();
             }
             orders = (List<Orders>)InsertNewOrders(orders);
-            orders = (List < Orders > )ChangeOrdersAmount(orders);
+            orders = (List<Orders>)ChangeOrdersAmount(orders);
             AddToTradeHistories(orders);
             UpdateProfit();
             AddSignals(signals);
@@ -66,11 +66,11 @@ namespace CRM.Services
             List<Orders> newOrders = new List<Orders>();
 
             var date = new DateTime(2019, 04, 25, 0, 23, 08);
-            Orders item = new Orders(0, "8025d4bf-4af6-466f-b93c-5a807fd37f68", "DASH", "sell", date, 62.26038, 113.2751);
+            Orders item = new Orders(0, "8025d4bf-4af6-466f-b93c-5a807fd37f68", "DASH", "sell", date, 62.26038000M, 113.2751M);
             newOrders.Add(item);
 
             date = new DateTime(2019, 04, 25, 0, 22, 47);
-            item = new Orders(0, "9560eadf-74cf-4596-a7e5-bffcd201f6ec", "DASH", "sell", date, 4.59701, 113.376);
+            item = new Orders(0, "9560eadf-74cf-4596-a7e5-bffcd201f6ec", "DASH", "sell", date, 4.59701000M, 113.376M);
             newOrders.Add(item);
 
             orders.AddRange(newOrders.Where(x =>

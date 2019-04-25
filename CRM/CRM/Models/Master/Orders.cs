@@ -10,15 +10,15 @@ namespace CRM.Models.Master
         }
 
 
-        public Orders(int _Id, string _AccountId, string _Base, string _Side, DateTime _TimeEnded, double _ClosedAmount, double _Rate)
+        public Orders(int _Id, string _AccountId, string _Base, string _Side, DateTime _TimeEnded, decimal _ClosedAmount, decimal _Rate)
         {
             Id = _Id;
             AccountId = _AccountId;
             Base = _Base;
             Side = _Side;
             TimeEnded = _TimeEnded;
-            ClosedAmount = Convert.ToDecimal(_ClosedAmount);
-            Rate = Convert.ToDecimal(_Rate);
+            ClosedAmount = _ClosedAmount;
+            Rate = _Rate;
         }
 
 
