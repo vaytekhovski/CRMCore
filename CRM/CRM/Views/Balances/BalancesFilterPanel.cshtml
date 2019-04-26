@@ -1,0 +1,19 @@
+﻿@model CRM.ViewModels.Balances.BalancesModel
+
+<form method="post">
+    <div class="filter_panel container">
+
+
+        <div class="filter_element">
+            @Html.DropDownListFor(m => m.Account, CRM.Models.DropDownFields.GetAccountsForBalance(Context), new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
+        </div>
+        
+        <div class="filter_element">
+            <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../Balances/Balances" formmethod="post">
+                Показать Баланс
+            </button>
+        </div>
+    </div>
+
+</form>
+

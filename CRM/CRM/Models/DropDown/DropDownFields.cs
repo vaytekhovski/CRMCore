@@ -71,8 +71,14 @@ namespace CRM.Models
 
         public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext)
         {
-            return AccountsExchangeKeysService.GetExchangeKeys(httpContext);
+            return AccountsExchangeKeysService.GetExchangeKeys(httpContext.User.Identity.Name);
         }
+
+        public static IEnumerable<SelectListItem> GetAccountsForBalance(HttpContext httpContext)
+        {
+            return AccountsExchangeKeysService.GetExchangeKeysForBalances(httpContext.User.Identity.Name);
+        }
+
 
         public static IEnumerable<SelectListItem> GetCoins()
         {

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Balances";
+}
+
+<style type="text/css">
+    @@media only screen and (max-width: 600px) {
+        .table-font {
+            table-layout: auto;
+            font-size: 16px !important;
+            text-align: center;
+        }
+
+        .table-font td, th {
+            padding: 1px !important;
+            text-align: center;
+        }
+
+        .table_block {
+            padding: 0 !important;
+        }
+    }
+
+    .table-font td, th {
+        text-align: center;
+    }
+
+
+</style>
+
+@Html.Partial("BalancesFilterPanel")
+<div class="content" style="min-height: 400px">
+    <div class="container table_block">
+        <table class="table table-bordered table-font">
+            <thead>
+                <tr>
+                    <th style="text-align:right">Валюта</th>
+                    <th style="text-align:left">Количество</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AccountBalances)
+                {
+                <tr>
+                    <th style="text-align:right">@item.Currency</th>
+                    <th style="text-align:left">@item.Amount</th>
+                </tr>
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

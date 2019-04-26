@@ -7,6 +7,7 @@ using CRM.Models;
 using CRM.Models.Binance;
 using CRM.Models.Database;
 using CRM.Models.Master;
+using CRM.Services.Balances;
 
 namespace CRM.Services
 {
@@ -53,6 +54,8 @@ namespace CRM.Services
 
                 signals = context.SignalsPrivate.Where(x => x.ErrorMessages == null).ToList();
             }
+
+
             orders = (List<Orders>)InsertNewOrders(orders);
             orders = (List<Orders>)ChangeOrdersAmount(orders);
             AddToTradeHistories(orders);
