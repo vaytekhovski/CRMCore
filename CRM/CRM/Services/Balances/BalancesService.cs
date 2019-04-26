@@ -38,6 +38,7 @@ namespace CRM.Services.Balances
             {
                 balance = new List<Balance>
                 {
+                    new Balance("USDT",currencies.USDT,0),
                     new Balance("BTC", (currencies.BTC), 0),
                     new Balance("BNB", (currencies.BNB), 0),
                     new Balance("EOS", (currencies.EOS), 0),
@@ -71,6 +72,7 @@ namespace CRM.Services.Balances
 
     public class Currencies
     {
+        public string USDT { get; set; }
         public string BTC { get; set; }
         public string BNB { get; set; }
         public string EOS { get; set; }
