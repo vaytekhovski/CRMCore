@@ -17,7 +17,7 @@ namespace CRM.DTO
                     return Situation.Flat;
                 case "trend":
                     return Situation.Trend;
-                case "unknown":
+                default:
                     return Situation.Unknown;
             }
             throw new Exception("Cannot unmarshal type Situation");
@@ -39,9 +39,10 @@ namespace CRM.DTO
                 case Situation.Trend:
                     serializer.Serialize(writer, "trend");
                     return;
-                case Situation.Unknown:
+                default:
                     serializer.Serialize(writer, "unknown");
                     return;
+                
             }
             throw new Exception("Cannot marshal type Situation");
         }
