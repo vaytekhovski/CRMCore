@@ -8,6 +8,10 @@ namespace CRM.ViewModels
 {
     public class TradeHistoryFilterModel
     {
+        public int CountOfPages { get; set; }
+
+        public int CurrentPage { get; set; }
+
         public string Coin { get; set; }
 
         public string Account { get; set; }

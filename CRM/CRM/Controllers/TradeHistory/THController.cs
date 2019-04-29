@@ -26,37 +26,61 @@ namespace CRM.Controllers
 
             return View(model);
         }
-        
+
         [HttpPost]
-        public ActionResult TradeHistory(TradeHistoryFilterModel model) 
+        public ActionResult TradeHistory(TradeHistoryFilterModel model)
         {
-            model = LoadTradeHistory(model);
+            model = LoadTradeHistory(model, 0);
 
             return View(model);
         }
 
-
-
-        private TradeHistoryFilterModel LoadTradeHistory(TradeHistoryFilterModel model)
+        public ActionResult PaginalOutPut(TradeHistoryFilterModel model, string PageButton)
         {
-            THService tHService = new THService();
+            model = GetTradeHistory(model, Convert.ToInt32(PageButton));
+
+            return View("TradeHistory", model);
+        }
+
+        private static THService tHService;
+
+        private TradeHistoryFilterModel LoadTradeHistory(TradeHistoryFilterModel model, int PageNumber = 0)
+        {
+            tHService = new THService();
 
             DateTime StartDate = DateTime.Parse(model.StartDate);
             DateTime EndDate = DateTime.Parse(model.EndDate).AddDays(1);
 
             tHService.Load(model.Account, model.Coin, StartDate, EndDate);
 
+            model.Orders = tHService.AccountTradeHistories;
 
-            model.Orders = tHService.AccountTradeHistories
-                .OrderByDescending(x => x.Time)
-                .Where(x => x.Time >= StartDate && x.Time <= EndDate)
-                .ToList();
+            model.CountOfPages = tHService.CountOfPages;
+
+            model.Orders = model.Orders.Take(100).Skip(PageNumber * 100).ToList();
 
             model.TotalProfit = tHService.TotalProfit;
             model.TotalPercentProfit = tHService.TotalPercentProfit;
 
             return model;
         }
+
+        private TradeHistoryFilterModel GetTradeHistory(TradeHistoryFilterModel model, int PageNumber)
+        {
+            model.Orders = tHService.AccountTradeHistories
+                .Skip(PageNumber * 100)
+                .Take(100)
+                .ToList();
+
+
+            model.CountOfPages = tHService.CountOfPages;
+
+            model.TotalProfit = tHService.TotalProfit;
+            model.TotalPercentProfit = tHService.TotalPercentProfit;
+
+            return model;
+        }
+
 
         
     }

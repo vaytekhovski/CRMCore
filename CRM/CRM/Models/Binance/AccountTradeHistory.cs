@@ -5,6 +5,7 @@ namespace CRM.Models.Binance
 {
     public class AccountTradeHistory
     {
+        public int Id { get; set; }
         public string Account { get; set; }
         public DateTime Time { get; set; }
         public string Side { get; set; }

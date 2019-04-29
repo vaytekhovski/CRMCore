@@ -86,6 +86,7 @@
         <table class="sortable table table-bordered table-font" style=" display: @(Model.TotalProfit == 0 ? "none" : "table");">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th id="time">Время</th>
                     <th class="sorttable_nosort">Аккаунт</th>
                     <th class="sorttable_nosort">Тип</th>
@@ -97,6 +98,7 @@
                 </tr>
             </thead>
             <tbody>
+                @{ int counter = 1;}
                 @foreach (var item in Model.Orders)
                 {
                     string itemProfitStr = "";
@@ -115,22 +117,31 @@
                         itemProfitStr = null;
                     }
 
-                    <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
-                        <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
-                        <td>@item.Account</td>
-                        <td>@item.Side</td>
-                        <td>@item.Pair</td>
-                        <td>$@String.Format("{0:0.##}", item.Price)</td>
-                        <td>@item.Quantity</td>
-                        <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
-                        <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                    </tr>
+                <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
+                    <td>@item.Id</td>
+                    <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.Account</td>
+                    <td>@item.Side</td>
+                    <td>@item.Pair</td>
+                    <td>$@String.Format("{0:0.##}", item.Price)</td>
+                    <td>@item.Quantity</td>
+                    <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
+                    <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
+                </tr>
 
                 }
             </tbody>
         </table>
 
+        <div style="margin-left:50%;padding-bottom:50px;">
+            <form action="../TH/PaginalOutPut" method="post">
+                @for (int i = 0; i < Model.CountOfPages; i++)
+                {
 
+                    <button style="background-color: #403577; color:white" type="submit" value="@i" name="PageButton"  formaction="../TH/PaginalOutPut" formmethod="post">@i</button>
+                }
+            </form>
+        </div>
 
         <script type="text/javascript">
             $(function () {

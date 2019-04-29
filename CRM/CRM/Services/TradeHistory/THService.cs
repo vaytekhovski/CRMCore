@@ -18,6 +18,8 @@ namespace CRM.Services
         public double TotalProfit { get; set; }
         public double TotalPercentProfit { get; set; }
 
+        public int CountOfPages { get; set; }
+
         private readonly List<int> IgnoreIds = new List<int>();
         private List<ExchangeKey> ExchangeKeys { get; set; }
 
@@ -28,6 +30,8 @@ namespace CRM.Services
         private string Coin;
         private readonly DateTime MinDate = new DateTime(2019, 04, 05);
 
+        
+
         public void Load(string acc, string coin, DateTime startDate, DateTime endDate)
         {
             Acc = acc;
@@ -36,7 +40,7 @@ namespace CRM.Services
             InitializeIgnoreList();
             TotalProfit = 0;
 
-            StartDate = startDate;
+            StartDate = startDate.AddDays(1);
             EndDate = endDate;
 
             InitializeExchangeKeys();
@@ -45,12 +49,15 @@ namespace CRM.Services
             List<Orders> orders = new List<Orders>();
             List<SignalsPrivate> signals = new List<SignalsPrivate>();
 
+            StartDate = MinDate > StartDate ? MinDate : StartDate;
+
             using (masterContext context = new masterContext())
             {
                 orders = context.Orders.Where(x => 
                     (acc != "all" ? x.AccountId == acc : true) && 
                     (coin != "all" ? x.Base == coin : true) &&
-                    x.TimeEnded >= MinDate).ToList();
+                    x.TimeEnded >= StartDate &&
+                    x.TimeEnded <= EndDate).ToList();
 
                 signals = context.SignalsPrivate.Where(x => x.ErrorMessages == null).ToList();
             }
@@ -61,6 +68,11 @@ namespace CRM.Services
             AddToTradeHistories(orders);
             UpdateProfit();
             AddSignals(signals);
+
+            AccountTradeHistories = AccountTradeHistories
+                .OrderByDescending(x => x.Time).ToList();
+
+            CountOfPages = (int)Math.Ceiling((decimal)((double)AccountTradeHistories.Count / 100));
 
         }
 
@@ -185,7 +197,8 @@ namespace CRM.Services
         
         private void AddToTradeHistories(ICollection<Orders> orders)
         {
-            foreach (var item in orders)
+            int counter = 1;
+            foreach (var item in orders.OrderBy(x => x.TimeEnded))
             {
                 if (item.ClosedAmount == 0) continue;
 
@@ -193,6 +206,7 @@ namespace CRM.Services
 
                 if (ignore == 0) AccountTradeHistories.Add(new AccountTradeHistory
                 {
+                    Id = counter++,
                     Account = AccountName(item.AccountId),
                     Time = item.TimeEnded.AddHours(3),
                     Side = item.Side,
