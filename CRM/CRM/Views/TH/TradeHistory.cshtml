@@ -1,4 +1,4 @@
-﻿
+﻿@model CRM.ViewModels.TradeHistoryFilterModel
 @{
     ViewBag.Title = "Trade History";
 }
@@ -11,10 +11,10 @@
             text-align: center;
         }
 
-        .table-font td, th {
-            padding: 1px !important;
-            text-align: center;
-        }
+            .table-font td, th {
+                padding: 1px !important;
+                text-align: center;
+            }
 
         .table_block {
             padding: 0 !important;
@@ -26,43 +26,41 @@
     }
 
     /* Popup box  */
-    .hover_bkgr_fricc{
-        cursor:pointer;
-        display:none;
-        height:100%;
-        position:fixed;
-        text-align:center;
-        top:0;
-        width:100%;
-        z-index:10000;
+    .hover_bkgr_fricc {
+        cursor: pointer;
+        display: none;
+        height: 100%;
+        position: fixed;
+        text-align: center;
+        top: 0;
+        width: 100%;
+        z-index: 10000;
     }
 
-    .hover_bkgr_fricc .helper{
-        display:inline-block;
-        height:100%;
-        vertical-align:middle;
-    }
+        .hover_bkgr_fricc .helper {
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
 
-    .hover_bkgr_fricc > div {
-        background-color: #a983f6;
-        box-shadow: 0px 0px 60px #a76be3;
-        display: inline-block;
-        height: auto;
-        max-width: 410px;
-        min-height: 100px;
-        vertical-align: middle;
-        width: 60%;
-        position: relative;
-        border-radius: 2px;
-        padding: 15px 5%;
-        color: white;
-    }
+        .hover_bkgr_fricc > div {
+            background-color: #a983f6;
+            box-shadow: 0px 0px 60px #a76be3;
+            display: inline-block;
+            height: auto;
+            max-width: 410px;
+            min-height: 100px;
+            vertical-align: middle;
+            width: 60%;
+            position: relative;
+            border-radius: 2px;
+            padding: 15px 5%;
+            color: white;
+        }
 
     .trigger_popup_fricc {
         cursor: pointer;
     }
-
-
 </style>
 
 @Html.Partial("_THFilterPanel")
@@ -98,7 +96,6 @@
                 </tr>
             </thead>
             <tbody>
-                @{ int counter = 1;}
                 @foreach (var item in Model.Orders)
                 {
                     string itemProfitStr = "";
@@ -117,28 +114,30 @@
                         itemProfitStr = null;
                     }
 
-                <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
-                    <td>@item.Id</td>
-                    <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
-                    <td>@item.Account</td>
-                    <td>@item.Side</td>
-                    <td>@item.Pair</td>
-                    <td>$@String.Format("{0:0.##}", item.Price)</td>
-                    <td>@item.Quantity</td>
-                    <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
-                    <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                </tr>
+                    <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
+                        <td>@item.Id</td>
+                        <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
+                        <td>@item.Account</td>
+                        <td>@item.Side</td>
+                        <td>@item.Pair</td>
+                        <td>$@String.Format("{0:0.##}", item.Price)</td>
+                        <td>@item.Quantity</td>
+                        <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
+                        <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
+                    </tr>
 
                 }
             </tbody>
         </table>
 
         <div style="margin-left:50%;padding-bottom:50px;">
-            <form action="../TH/PaginalOutPut" method="post">
-                @for (int i = 0; i < Model.CountOfPages; i++)
-                {
+            <form action="../TH/TradeHistory" method="post">
 
-                    <button style="background-color: #403577; color:white" type="submit" value="@i" name="PageButton"  formaction="../TH/PaginalOutPut" formmethod="post">@i</button>
+                <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
+                <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
+                @for (int i = 1; i <= Model.CountOfPages; i++)
+                {
+                    <button style="background-color: #403577; color:white" type="submit" value="@i" name="PageButton" formaction="../TH/TradeHistory" formmethod="post">@i</button>
                 }
             </form>
         </div>
@@ -168,7 +167,6 @@
 
             function SignalMessage(str) {
                 if (str) {
-                    //alert(str)
                     $('.hover_bkgr_fricc').show();
                     document.getElementById('signalP').innerHTML = str;
                 }
