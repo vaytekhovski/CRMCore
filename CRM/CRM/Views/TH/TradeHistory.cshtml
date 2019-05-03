@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Trade History";
 }
-
+@* TODO: style in file, define section for style files in <head> tag *@
 <style type="text/css">
     @@media only screen and (max-width: 600px) {
         .table-font {
@@ -142,7 +142,7 @@
             </form>
         </div>
 
-        <script type="text/javascript">
+        <script type="text/javascript"> @* TODO: переделать в razor*@
             $(function () {
                 var searchBUY = 'buy';
                 $("table tr td").filter(function () {
@@ -172,6 +172,6 @@
                 }
             }
 
-        </script>
+        </script>@* TODO: use section 'scripts' *@
     </div>
 </div>

@@ -15,5 +15,13 @@ namespace CRM.ViewModels.Charts
         public List<long> DatesBids { get; set; }
         public List<string> AsksValues { get; set; }
         public List<string> BidsValues { get; set; }
+
+        public AskOnBidViewModel()
+        {
+            DatesAsks = new List<long>();
+            DatesBids = new List<long>();
+            AsksValues = new List<string>();
+            BidsValues = new List<string>();
+        }
     }
 }

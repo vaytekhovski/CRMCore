@@ -33,11 +33,7 @@ namespace CRM.Controllers.Charts
             var model = new AskOnBidViewModel
             {
                 StartDate = DatesHelper.MinDateStr,
-                EndDate = DatesHelper.CurrentDateStr,
-                DatesAsks = new List<long>(),
-                DatesBids = new List<long>(),
-                AsksValues = new List<string>(),
-                BidsValues = new List<string>()
+                EndDate = DatesHelper.CurrentDateStr
             };
             return View(model);
         }
@@ -46,14 +42,20 @@ namespace CRM.Controllers.Charts
         public ActionResult AsksOnBids(AskOnBidViewModel model)
         {
             AsksOnBidsService asksOnBids = new AsksOnBidsService();
-            asksOnBids.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
+            if (DateTime.TryParse(model.StartDate, out var startDate) && DateTime.TryParse(model.EndDate, out var endDate))
+            {
+                asksOnBids.Load(model.Coin, startDate, endDate);
 
-            model.DatesAsks = asksOnBids.DatesAsks.Select(x => x.ToJavascriptTicks()).ToList(); // TODO: [COMPLETE] ToJavascriptTicks, ToString должен вызываться здесь, а не в сервисе. Поправить здесь и ниже.
-            model.DatesBids = asksOnBids.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
+                model.DatesAsks = asksOnBids.DatesAsks.Select(x => x.ToJavascriptTicks()).ToList();
+                model.DatesBids = asksOnBids.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
+                // TODO: instead of replace use this: https://stackoverflow.com/a/6587281/571203
+                model.AsksValues = asksOnBids.AsksValues.Select(x => x.ToString().Replace(',', '.')).ToList();
+                model.BidsValues = asksOnBids.BidsValues.Select(x => x.ToString().Replace(',', '.')).ToList();
 
-            model.AsksValues = asksOnBids.AsksValues.Select(x => x.ToString().Replace(',', '.')).ToList();
-            model.BidsValues = asksOnBids.BidsValues.Select(x => x.ToString().Replace(',', '.')).ToList();
+                return View(model);
+            }
 
+            ModelState.AddModelError("Date", "Dates invalid"); //TODO: применить везде такой паттерн работы с датами + перенести инициализацию списков в конструкторы
             return View(model);
         }
 

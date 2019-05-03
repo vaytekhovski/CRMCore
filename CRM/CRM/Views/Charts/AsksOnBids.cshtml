@@ -7,13 +7,14 @@
 
 @Html.Partial("_AsksOnBidsFilterPanel");
     <head>
-        <script src="~/js/plotly-latest.min.js"></script>
+        <script src="~/js/plotly-latest.min.js"></script> @*TODO: использовать для скриптов секцию scripts*@
     </head>
-<div class="content">
-    <div id="Chart">
+    <div class="content">
 
-    </div>
-    <script type="text/javascript">
+        @Html.ValidationSummary()
+        <div id="Chart">
+        </div>
+        <script type="text/javascript">
 
         CHART = document.getElementById('Chart');
 
@@ -86,5 +87,5 @@
 
         Plotly.plot(CHART, data);
 
-    </script>
-</div>
+        </script>
+    </div>

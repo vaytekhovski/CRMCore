@@ -11,7 +11,7 @@ namespace CRM.Controllers
     [Authorize]
     public class THController : Controller
     {
-        private static THService tHService;
+        private static THService tHService; // TODO: не статик, инициализируется в конструкторе контроллера
 
         [HttpGet]
         public ActionResult TradeHistory()
@@ -48,8 +48,10 @@ namespace CRM.Controllers
             }
 
             model.CountOfPages = tHService.CountOfPages;
-
-            model.Orders = tHService.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList();
+            //var model = service.Load(parameter1, parameter2, ...); TODO: использовать такой паттерн везде
+            //var viewModel = new ViewModel();
+            //viewModel.Items = model.Items.Select(x => ...);
+            model.Orders = tHService.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
 
             model.TotalProfit = tHService.TotalProfit;
             model.TotalPercentProfit = tHService.TotalPercentProfit;
