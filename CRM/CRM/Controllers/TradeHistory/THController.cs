@@ -42,7 +42,7 @@ namespace CRM.Controllers
             DateTime StartDate = DateTime.Parse(model.StartDate);
             DateTime EndDate = DateTime.Parse(model.EndDate).AddDays(1);
 
-            if (tHService.AccountTradeHistories.Count == 0)
+            if (tHService.AccountTradeHistories.Count == 0 || PageNumber == 0)
             {
                 tHService.Load(model.Account, model.Coin, StartDate, EndDate);
             }
