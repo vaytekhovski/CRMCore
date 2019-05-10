@@ -131,15 +131,6 @@ namespace CRM.Services
                 Debug.WriteLine(ex.Message);
             }
 
-            try
-            {
-                orders.FirstOrDefault(x => x.Id == 381).ClosedAmount = 0.87867500M;
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-
             return orders;
         }
 
@@ -196,6 +187,7 @@ namespace CRM.Services
             IgnoreIds.Add(274);
             IgnoreIds.Add(275);
             IgnoreIds.Add(312);
+            IgnoreIds.Add(383);
         }
 
 
@@ -206,7 +198,6 @@ namespace CRM.Services
         
         private void AddToTradeHistories(ICollection<Orders> orders)
         {
-            AccountTradeHistories.Clear();
             int counter = 1;
             foreach (var item in orders.OrderBy(x => x.TimeEnded))
             {
