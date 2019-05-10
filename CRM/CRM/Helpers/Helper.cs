@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,5 +12,13 @@ namespace CRM.Helpers
         public static string MinDateStr = MinDate.ToString("yyyy-MM-dd");
 
         public static string CurrentDateStr => DateTime.Now.ToString("yyyy-MM-dd");
+    }
+
+    public static class SeparateHelper
+    {
+       public static NumberFormatInfo Separator = new NumberFormatInfo();
+
+       
+       
     }
 }
