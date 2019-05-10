@@ -61,6 +61,17 @@
     .trigger_popup_fricc {
         cursor: pointer;
     }
+
+    .page_button {
+      background-color: #403577; /* Green */
+      border: none;
+      color: white;
+      padding: 5px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
 </style>
 
 @Html.Partial("_THFilterPanel")
@@ -130,14 +141,14 @@
             </tbody>
         </table>
 
-        <div style="margin-left:50%;padding-bottom:50px;">
+        <div style="display:table; margin:auto; padding-bottom:30px;">
             <form action="../TH/TradeHistory" method="post">
 
                 <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
                 <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
                 @for (int i = 1; i <= Model.CountOfPages; i++)
                 {
-                    <button style="background-color: #403577; color:white" type="submit" value="@i" name="PageButton" formaction="../TH/TradeHistory" formmethod="post">@i</button>
+                    <button class="page_button" type="submit" value="@i" name="PageButton" formaction="../TH/TradeHistory" formmethod="post">@i</button>
                 }
             </form>
         </div>

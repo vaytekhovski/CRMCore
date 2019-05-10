@@ -13,6 +13,7 @@ namespace CRM.Controllers
     {
         private static THService tHService; // TODO: не статик, инициализируется в конструкторе контроллера
 
+
         [HttpGet]
         public ActionResult TradeHistory()
         {

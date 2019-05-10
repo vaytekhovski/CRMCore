@@ -101,6 +101,7 @@ namespace CRM.Services
         private ICollection<Orders> ChangeOrdersAmount(List<Orders> orders)
         {
             Orders order;
+
             try
             {
                 order = orders.FirstOrDefault(x => x.Id == 319);
