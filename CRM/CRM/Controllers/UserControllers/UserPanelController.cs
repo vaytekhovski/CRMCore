@@ -26,7 +26,7 @@ namespace CRM.Controllers.User
         [HttpGet]
         public ActionResult UserPanel(UserPanelModel model)
         {
-            UserModel user = db.UserModels.FirstOrDefault(x => x.Login == User.Identity.Name);
+            UserModel user = db.UserModels.FirstOrDefault(x => x.Id == Convert.ToInt32(User.Identity.Name));
 
             model.Login = user.Login;
             model.Password = user.Password;
