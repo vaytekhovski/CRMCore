@@ -31,7 +31,7 @@ namespace CRM.Controllers.SignalsAnalytics
         {
             if (DateTime.TryParse(model.StartDate, out var StartDate) && DateTime.TryParse(model.EndDate, out var EndDate))
             {
-                model.SignalsPrivates = SignalsAnalyticsService.LoadSignalsPrivate(model.Exchange, model.Coin, StartDate, EndDate);
+                model.SignalsPrivates = SignalsAnalyticsService.LoadSignalsPrivate(model.Exchange.ToLower(), model.Coin, StartDate, EndDate);
 
                 return View(model);
             }
@@ -60,7 +60,7 @@ namespace CRM.Controllers.SignalsAnalytics
         {
             if (DateTime.TryParse(model.StartDate, out var StartDate) && DateTime.TryParse(model.EndDate, out var EndDate))
             {
-                model.TradeHistoryDeltas = SignalsAnalyticsService.LoadTradeHistoryDelta(model.Exchange, model.Coin, StartDate, EndDate);
+                model.TradeHistoryDeltas = SignalsAnalyticsService.LoadTradeHistoryDelta(model.Exchange.ToLower(), model.Coin, StartDate, EndDate);
 
                 return View(model);
             }

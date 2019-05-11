@@ -1,6 +1,5 @@
 ﻿using CRM.Master;
 using CRM.Models.Master;
-using CRM.Models.SignalsAnalytics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
