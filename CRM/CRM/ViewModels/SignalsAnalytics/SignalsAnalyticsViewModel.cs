@@ -1,4 +1,4 @@
-﻿using CRM.Models.SignalsAnalytics;
+﻿using CRM.Models.Master;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,7 @@ namespace CRM.ViewModels.SignalsAnalytics
 
         public string EndDate { get; set; }
 
-        public List<SignalsAnalyticsModel> SignalsAnalytics { get; set; }
+        public List<SignalsPrivate> SignalsPrivates { get; set; }
+        public List<TradeHistoryDelta> TradeHistoryDeltas { get; set; }
     }
 }
