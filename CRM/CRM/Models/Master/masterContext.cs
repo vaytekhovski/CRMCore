@@ -20,6 +20,8 @@ namespace CRM.Master
 
         public virtual DbSet<SignalsPrivate> SignalsPrivate { get; set; }
 
+        public virtual DbSet<TradeHistoryDelta> TradeHistoryDelta { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
