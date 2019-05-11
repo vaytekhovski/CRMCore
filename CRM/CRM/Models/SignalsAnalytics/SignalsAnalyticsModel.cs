@@ -13,5 +13,7 @@ namespace CRM.Models.SignalsAnalytics
         public decimal MaxLongDiff { get; set; }
         public decimal TrendDiff { get; set; }
         public string ErrorMessages { get; set; }
+        public DateTime TimeFrom { get; internal set; }
+        public DateTime TimeTo { get; internal set; }
     }
 }

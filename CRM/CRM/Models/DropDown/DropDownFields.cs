@@ -17,6 +17,7 @@ namespace CRM.Models
 {
     public class DropDownFields
     {
+        public static List<Field> Exchanges = new List<Field>();
         public static List<Field> Coins = new List<Field>();
         public static List<Field> OrderType = new List<Field>();
         public static List<Field> Situation = new List<Field>();
@@ -24,10 +25,18 @@ namespace CRM.Models
 
         public static void InitiateFields()
         {
+            InitiateExchanges();
             InitiateCoins();
             InitiateOrderType();
             InitiateSituations();
             InitiateNulls();
+
+        }
+
+        private static void InitiateExchanges()
+        {
+            Exchanges.Add(new Field { Value = "Binance", Name = "Binance" });
+            Exchanges.Add(new Field { Value = "Poloniex", Name = "Poloniex" });
         }
 
         private static void InitiateCoins()
@@ -80,6 +89,10 @@ namespace CRM.Models
             return AccountsExchangeKeysService.GetExchangeKeysForBalances(Convert.ToInt32(httpContext.User.Identity.Name));
         }
 
+        public static IEnumerable<SelectListItem> GetExchanges()
+        {
+            return Exchanges.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
+        }
 
         public static IEnumerable<SelectListItem> GetCoins()
         {
