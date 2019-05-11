@@ -55,7 +55,7 @@ namespace CRM.Controllers.Charts
                 return View(model);
             }
 
-            ModelState.AddModelError("Date", "Dates invalid"); //TODO: применить везде такой паттерн работы с датами + перенести инициализацию списков в конструкторы
+            ModelState.AddModelError("Date", "Dates invalid"); //TODO: [COMPLETE]  применить везде такой паттерн работы с датами + перенести инициализацию списков в конструкторы
             return View(model);
         }
 
@@ -80,18 +80,23 @@ namespace CRM.Controllers.Charts
         public ActionResult DeltaOnTradeHistory(DeltaOnTradeHistoryViewModel model)
         {
             DeltaOnTradeHistoryService deltaOnTradeHistory = new DeltaOnTradeHistoryService();
-            deltaOnTradeHistory.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
+            if (DateTime.TryParse(model.StartDate, out var startDate) && DateTime.TryParse(model.EndDate, out var endDate))
+            {
+                deltaOnTradeHistory.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
-            model.DatesDelta = deltaOnTradeHistory.DatesDelta.Select(x => x.ToJavascriptTicks()).ToList();
-            model.DeltaValues = deltaOnTradeHistory.DeltaValues.Select(x => x.ToString().Replace(',', '.')).ToList();
+                model.DatesDelta = deltaOnTradeHistory.DatesDelta.Select(x => x.ToJavascriptTicks()).ToList();
+                model.DeltaValues = deltaOnTradeHistory.DeltaValues.Select(x => x.ToString().Replace(',', '.')).ToList();
 
-            model.DatesTHBuy = deltaOnTradeHistory.DatesTHBuy.Select(x => x.ToJavascriptTicks()).ToList();
-            model.THBuyValues = deltaOnTradeHistory.THBuyValues.Select(x => x.ToString().Replace(',', '.')).ToList();
+                model.DatesTHBuy = deltaOnTradeHistory.DatesTHBuy.Select(x => x.ToJavascriptTicks()).ToList();
+                model.THBuyValues = deltaOnTradeHistory.THBuyValues.Select(x => x.ToString().Replace(',', '.')).ToList();
 
-            model.DatesTHSell = deltaOnTradeHistory.DatesTHSell.Select(x => x.ToJavascriptTicks()).ToList();
-            model.THSellValues = deltaOnTradeHistory.THSellValues.Select(x => x.ToString().Replace(',', '.')).ToList();
+                model.DatesTHSell = deltaOnTradeHistory.DatesTHSell.Select(x => x.ToJavascriptTicks()).ToList();
+                model.THSellValues = deltaOnTradeHistory.THSellValues.Select(x => x.ToString().Replace(',', '.')).ToList();
 
+                return View(model);
+            }
 
+            ModelState.AddModelError("Date", "Dates invalid"); 
             return View(model);
         }
     }

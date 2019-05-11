@@ -40,23 +40,28 @@ namespace CRM.Controllers
 
         private TradeHistoryFilterModel LoadTradeHistory(TradeHistoryFilterModel model, int PageNumber = 0)
         {
-            DateTime StartDate = DateTime.Parse(model.StartDate);
-            DateTime EndDate = DateTime.Parse(model.EndDate).AddDays(1);
-
-            if (tHService.AccountTradeHistories.Count == 0 || PageNumber == 0)
+            if (DateTime.TryParse(model.StartDate, out var StartDate) && DateTime.TryParse(model.EndDate, out var EndDate))
             {
-                tHService.Load(model.Account, model.Coin, StartDate, EndDate);
+                EndDate = EndDate.AddDays(1);
+                if (tHService.AccountTradeHistories.Count == 0 || PageNumber == 0)
+                {
+                    tHService.Load(model.Account, model.Coin, StartDate, EndDate);
+                }
+
+                model.CountOfPages = tHService.CountOfPages;
+                // TODO: использовать такой паттерн везде
+                //var model = service.Load(parameter1, parameter2, ...); 
+                //var viewModel = new ViewModel();
+                //viewModel.Items = model.Items.Select(x => ...);
+                model.Orders = tHService.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
+
+                model.TotalProfit = tHService.TotalProfit;
+                model.TotalPercentProfit = tHService.TotalPercentProfit;
+
+                return model;
             }
 
-            model.CountOfPages = tHService.CountOfPages;
-            //var model = service.Load(parameter1, parameter2, ...); TODO: использовать такой паттерн везде
-            //var viewModel = new ViewModel();
-            //viewModel.Items = model.Items.Select(x => ...);
-            model.Orders = tHService.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
-
-            model.TotalProfit = tHService.TotalProfit;
-            model.TotalPercentProfit = tHService.TotalPercentProfit;
-
+            ModelState.AddModelError("Date", "Dates invalid");
             return model;
         }
 

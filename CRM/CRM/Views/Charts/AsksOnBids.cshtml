@@ -6,9 +6,10 @@
 @model CRM.ViewModels.Charts.AskOnBidViewModel
 
 @Html.Partial("_AsksOnBidsFilterPanel");
-    <head>
+    <scripts>
         <script src="~/js/plotly-latest.min.js"></script> @*TODO: использовать для скриптов секцию scripts*@
-    </head>
+    </scripts>
+
     <div class="content">
 
         @Html.ValidationSummary()

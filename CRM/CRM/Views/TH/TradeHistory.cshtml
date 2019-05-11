@@ -76,6 +76,7 @@
 
 @Html.Partial("_THFilterPanel")
 <div class="content" style="min-height: 400px">
+    @Html.ValidationSummary()
     <div class="hover_bkgr_fricc">
         <span class="helper"></span>
         <div>
@@ -153,7 +154,8 @@
             </form>
         </div>
 
-        <script type="text/javascript"> @* TODO: переделать в razor*@
+        <script type="text/javascript">
+ @* TODO: переделать в razor*@
             $(function () {
                 var searchBUY = 'buy';
                 $("table tr td").filter(function () {
