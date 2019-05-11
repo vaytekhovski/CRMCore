@@ -56,7 +56,7 @@ namespace CRM.Controllers.Charts
                 return View(model);
             }
 
-            ModelState.AddModelError("Date", "Dates invalid"); //TODO: применить везде такой паттерн работы с датами + перенести инициализацию списков в конструкторы
+            ModelState.AddModelError("Date", "Dates invalid"); //TODO: [COMPLETE] применить везде такой паттерн работы с датами + перенести инициализацию списков в конструкторы
             return View(model);
         }
 
