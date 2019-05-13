@@ -62,6 +62,13 @@
     padding: 0 !important;
 }
 
+.filter_half_button {
+    height: 50px !important;
+    width: 200px !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+}
+
 .short_filter_button {
     height: 50px !important;
     width: 160px !important;
