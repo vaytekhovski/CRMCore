@@ -13,7 +13,6 @@
             <table class="sortable table table-bordered table-font">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Base</th>
                         <th id="time">TimeFrom</th>
                         <th id="time">TimeTo</th>
@@ -27,7 +26,6 @@
                     @foreach (var item in Model.TradeHistoryDeltas)
                     {
                         <tr>
-                            <td>@item.Id</td>
                             <td>@item.Base</td>
                             <td>@item.TimeFrom</td>
                             <td>@item.TimeTo</td>

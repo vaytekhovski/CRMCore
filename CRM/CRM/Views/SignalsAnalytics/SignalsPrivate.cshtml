@@ -16,7 +16,6 @@
         <table class="sortable table table-bordered table-font">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Base</th>
                     <th id="time">SourceTime</th>
                     <th class="sorttable_nosort">TrendDiff</th>
@@ -27,7 +26,6 @@
                 @foreach (var item in Model.SignalsPrivates)
                 {
                 <tr>
-                    <td>@item.Id</td>
                     <td>@item.Base</td>
                     <td>@item.SourceTime</td>
                     <td>@item.TrendDiff</td>
