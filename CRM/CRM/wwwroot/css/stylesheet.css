@@ -52,7 +52,7 @@
     border: 2px solid #a76be3 !important;
     background-color: transparent;
     height: 50px !important;
-    width: 160px !important;
+    width: 150px !important;
 }
 
 .filter_button {
@@ -62,16 +62,10 @@
     padding: 0 !important;
 }
 
-.filter_half_button {
-    height: 50px !important;
-    width: 200px !important;
-    margin-right: 0 !important;
-    padding: 0 !important;
-}
 
 .short_filter_button {
     height: 50px !important;
-    width: 160px !important;
+    width: 170px !important;
     margin-right: 0 !important;
     padding: 0 !important;
 }

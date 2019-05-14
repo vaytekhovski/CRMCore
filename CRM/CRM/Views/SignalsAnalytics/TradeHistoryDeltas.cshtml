@@ -9,7 +9,7 @@
 
 
 
-        <div class="container table_block">
+        <div class="container table_block" style="display: @(Model.SignalsPrivates.Count != 0 ? "display" : "none")">
             <table class="sortable table table-bordered table-font">
                 <thead>
                     <tr>
@@ -40,7 +40,7 @@
                 </tbody>
             </table>
         </div>
-        @if (Model.TradeHistoryDeltas != null)
+        @if (Model.TradeHistoryDeltas.Count > 0)
         {
             <div style="display:table; margin:auto; padding-bottom:30px;">
                 <form action="../SignalsAnalytics/TradeHistoryDeltas" method="post">
