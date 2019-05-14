@@ -9,11 +9,12 @@
 
 
 
-        <div class="container table_block" style="display: @(Model.SignalsPrivates.Count != 0 ? "display" : "none")">
+        <div class="container table_block" style="display: @(Model.TradeHistoryDeltas.Count != 0 ? "display" : "none")">
             <table class="sortable table table-bordered table-font">
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Base</th>
                         <th id="time">TimeFrom</th>
                         <th id="time">TimeTo</th>
                         <th class="sorttable_nosort">Situation</th>
@@ -27,6 +28,7 @@
                     {
                         <tr>
                             <td>@item.Id</td>
+                            <td>@item.Base</td>
                             <td>@item.TimeFrom</td>
                             <td>@item.TimeTo</td>
                             <td>@item.Situation</td>
@@ -48,13 +50,14 @@
                     <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
                     <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
 
-                    @for (int i = Model.CurrentPage - 3; i <= Model.CurrentPage + 5; i++)
+                    @for (int i = Model.CurrentPage - 3; i <= Model.MaxAvailablePageNumber; i++)
                     {
                         if (i > 0)
                         {
                             <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageNumber" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">@i</button>
                         }
                     }
+                    @Model.CountOfPages
                 </form>
             </div>
         }

@@ -19,44 +19,46 @@ namespace CRM.Services.SignalsAnalytics
         public List<TradeHistoryDelta> TradeHistoryDeltas { get; set; }
 
 
+        public SignalsAnalyticsViewModel LoadSignalsPrivate(SignalsAnalyticsViewModel model)
+        {
+            using (masterContext context = new masterContext())
+            {
+                SignalsPrivates = context.SignalsPrivate
+                    .Where(x =>
+                    model.Nullable == "null" ? x.ErrorMessages == null : model.Nullable == "notnull" ? x.ErrorMessages != null : true && 
+                    x.Exchange == model.Exchange.ToLower() &&
+                    model.Coin != "all" ? x.Base == model.Coin : true &&
+                    x.SourceTime >= DateTime.Parse(model.StartDate) &&
+                    x.SourceTime <= DateTime.Parse(model.EndDate))
+                    .OrderBy(x => x.SourceTime).ToList();
+
+                model.SignalsPrivates = SignalsPrivates;
+
+
+                return model;
+            }
+        }
+
         public SignalsAnalyticsViewModel LoadTradeHistoryDelta(SignalsAnalyticsViewModel model)
         {
             using (masterContext context = new masterContext())
             {
                 TradeHistoryDeltas = context.TradeHistoryDelta
-                    .Where(x => x.Exchange == model.Exchange && 
-                    x.Base == model.Coin && 
-                    model.Nullable == "notnull" ? (x.MaxLongDiff != null && x.MinLongDiff != null): true &&
+                    .Where(x =>
+                    (model.Nullable == "notnull" ? (x.MaxLongDiff != null && x.MinLongDiff != null) : model.Nullable == "null" ? (x.MaxLongDiff == null && x.MinLongDiff == null) : true) &&
+                    x.Exchange == model.Exchange.ToLower() && 
+                    model.Coin != "all" ? x.Base == model.Coin : true && 
                     x.TimeFrom >= DateTime.Parse(model.StartDate) && 
                     x.TimeTo <= DateTime.Parse(model.EndDate))
                     .ToList();
 
                 model.TradeHistoryDeltas = TradeHistoryDeltas;
 
-                model.CountOfPages = (int)Math.Ceiling((decimal)((double)model.TradeHistoryDeltas.Count / 100));
 
                 return model;
             }
         }
 
-        public SignalsAnalyticsViewModel LoadSignalsPrivate(SignalsAnalyticsViewModel model)
-        {
-            using (masterContext context = new masterContext())
-            {
-                SignalsPrivates = context.SignalsPrivate
-                    .Where(x => x.Exchange == model.Exchange.ToLower() &&
-                    x.Base == model.Coin &&
-                    model.Nullable == "null" ? x.ErrorMessages == null : true &&
-                    x.SourceTime >= DateTime.Parse(model.StartDate) &&
-                    x.SourceTime <= DateTime.Parse(model.EndDate))
-                    .ToList();
-
-                model.SignalsPrivates = SignalsPrivates;
-
-                model.CountOfPages = (int)Math.Ceiling((decimal)((double)model.SignalsPrivates.Count / 100));
-
-                return model;
-            }
-        }
+        
     }
 }

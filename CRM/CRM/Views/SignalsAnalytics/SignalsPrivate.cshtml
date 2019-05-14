@@ -17,6 +17,7 @@
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>Base</th>
                     <th id="time">SourceTime</th>
                     <th class="sorttable_nosort">TrendDiff</th>
                     <th class="sorttable_nosort">ErrorMessage</th>
@@ -25,12 +26,13 @@
             <tbody>
                 @foreach (var item in Model.SignalsPrivates)
                 {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td>@item.SourceTime</td>
-                        <td>@item.TrendDiff</td>
-                        <td>@item.ErrorMessages</td>
-                    </tr>
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Base</td>
+                    <td>@item.SourceTime</td>
+                    <td>@item.TrendDiff</td>
+                    <td>@item.ErrorMessages</td>
+                </tr>
 
                 }
             </tbody>
@@ -44,13 +46,14 @@
                 <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
                 <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
 
-                @for (int i = Model.CurrentPage - 3; i <= Model.CurrentPage + 5; i++)
+                @for (int i = Model.CurrentPage - 3; i <= Model.MaxAvailablePageNumber; i++)
                 {
                     if (i > 0)
                     {
                         <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageNumber" formaction="../SignalsAnalytics/SignalsPrivate" formmethod="post">@i</button>
                     }
                 }
+                @Model.CountOfPages
             </form>
         </div>
     }
