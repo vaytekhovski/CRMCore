@@ -11,6 +11,8 @@ namespace CRM.Controllers.SignalsAnalytics
 {
     public class SignalsAnalyticsController : Controller
     {
+        private static SignalsAnalyticsService _SignalsAnalyticsService;
+
         [HttpGet]
         public ActionResult SignalsPrivate()
         {
@@ -23,16 +25,24 @@ namespace CRM.Controllers.SignalsAnalytics
                 TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
                 SignalsPrivates = new List<Models.Master.SignalsPrivate>()
             };
+
+            _SignalsAnalyticsService = new SignalsAnalyticsService();
+            model.CurrentPage = 0;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult SignalsPrivate(SignalsAnalyticsViewModel model)
+        public ActionResult SignalsPrivate(SignalsAnalyticsViewModel model, int PageNumber = 0)
         {
             if (DateTime.TryParse(model.StartDate, out var StartDate) && DateTime.TryParse(model.EndDate, out var EndDate))
             {
-                model.SignalsPrivates = SignalsAnalyticsService.LoadSignalsPrivate(model.Exchange.ToLower(), model.Coin, StartDate, EndDate);
+                if (_SignalsAnalyticsService.SignalsPrivates.Count == 0 || PageNumber == 0)
+                {
+                    model = _SignalsAnalyticsService.LoadSignalsPrivate(model);
+                }
 
+                model.SignalsPrivates = _SignalsAnalyticsService.SignalsPrivates.Skip((PageNumber - 1) * 100).Take(100).ToList();
+                model.CurrentPage = PageNumber;
                 return View(model);
             }
 
@@ -52,16 +62,23 @@ namespace CRM.Controllers.SignalsAnalytics
                 TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
                 SignalsPrivates = new List<Models.Master.SignalsPrivate>()
             };
+
+            model.CurrentPage = 0;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult TradeHistoryDeltas(SignalsAnalyticsViewModel model)
+        public ActionResult TradeHistoryDeltas(SignalsAnalyticsViewModel model, int PageNumber = 0)
         {
             if (DateTime.TryParse(model.StartDate, out var StartDate) && DateTime.TryParse(model.EndDate, out var EndDate))
             {
-                model.TradeHistoryDeltas = SignalsAnalyticsService.LoadTradeHistoryDelta(model.Exchange.ToLower(), model.Coin, StartDate, EndDate);
+                if (_SignalsAnalyticsService.TradeHistoryDeltas.Count == 0 || PageNumber == 0)
+                {
+                    model = _SignalsAnalyticsService.LoadTradeHistoryDelta(model);
+                }
 
+                model.TradeHistoryDeltas = _SignalsAnalyticsService.TradeHistoryDeltas.Skip((PageNumber - 1) * 100).Take(100).ToList();
+                model.CurrentPage = PageNumber;
                 return View(model);
             }
 

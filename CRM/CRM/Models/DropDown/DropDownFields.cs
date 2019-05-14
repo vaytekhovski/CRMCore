@@ -75,8 +75,9 @@ namespace CRM.Models
 
         private static void InitiateNulls()
         {
-            Nulls.Add(new Field { Value = "all", Name = "Показывать нулевые значения" });
-            Nulls.Add(new Field { Value = "notnull", Name = "Не показывать нулевые значения" });
+            Nulls.Add(new Field { Value = "all", Name = "Показывать нулевые" });
+            Nulls.Add(new Field { Value = "notnull", Name = "Не показывать нулевые" });
+            Nulls.Add(new Field { Value = "null", Name = "Только нулевые" });
         }
 
         public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext)

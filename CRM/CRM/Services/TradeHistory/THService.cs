@@ -17,7 +17,6 @@ namespace CRM.Services
 
         public double TotalProfit { get; set; }
         public double TotalPercentProfit { get; set; }
-
         public int CountOfPages { get; set; }
 
         private readonly List<int> IgnoreIds = new List<int>();

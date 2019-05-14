@@ -10,9 +10,11 @@ namespace CRM.ViewModels.SignalsAnalytics
     {
         public string Exchange { get; set; }
         public string Coin { get; set; }
-
+        public string Nullable { get; set; }
         public string StartDate { get; set; }
+        public int CountOfPages { get; set; }
 
+        public int CurrentPage { get; set; }
         public string EndDate { get; set; }
 
         public List<SignalsPrivate> SignalsPrivates { get; set; }

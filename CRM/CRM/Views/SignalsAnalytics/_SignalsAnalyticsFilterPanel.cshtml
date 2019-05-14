@@ -11,6 +11,10 @@
             @Html.DropDownListFor(m => m.Exchange, CRM.Models.DropDownFields.GetExchanges(), new { @class = "form-control filter_input", name = "exchange", id = "excange_selector" })
         </div>
 
+        <div class="filter_element">
+            @Html.DropDownListFor(m => m.Nullable, DropDownFields.GetNulls(), new { @class = "form-control filter_input", name = "null", id = "null_selector" })
+        </div>
+
 
         <div class="filter_element">
             <input type="date" class="form-control filter_input" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />
