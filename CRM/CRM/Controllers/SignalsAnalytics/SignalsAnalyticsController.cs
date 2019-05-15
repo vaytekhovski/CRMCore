@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CRM.Helpers;
 using CRM.Services.SignalsAnalytics;
 using CRM.ViewModels.SignalsAnalytics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.Controllers.SignalsAnalytics
