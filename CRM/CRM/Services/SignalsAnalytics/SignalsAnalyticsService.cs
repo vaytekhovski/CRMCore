@@ -25,7 +25,7 @@ namespace CRM.Services.SignalsAnalytics
             {
                 SignalsPrivates = context.SignalsPrivate
                     .Where(x =>
-                    model.Nullable == "null" ? x.ErrorMessages == null : model.Nullable == "notnull" ? x.ErrorMessages != null : true && 
+                    model.Nullable == "null" ? x.ErrorMessages == null : model.Nullable == "all" ? x.ErrorMessages != null : true &&
                     x.Exchange == model.Exchange.ToLower() &&
                     model.Coin != "all" ? x.Base == model.Coin : true &&
                     x.SourceTime >= DateTime.Parse(model.StartDate) &&
@@ -35,7 +35,6 @@ namespace CRM.Services.SignalsAnalytics
                     .OrderByDescending(x => x.SourceTime).ToList();
 
                 model.SignalsPrivates = SignalsPrivates;
-
 
                 return model;
             }
@@ -47,7 +46,7 @@ namespace CRM.Services.SignalsAnalytics
             {
                 TradeHistoryDeltas = context.TradeHistoryDelta
                     .Where(x =>
-                    (model.Nullable == "notnull" ? (x.MaxLongDiff != null && x.MinLongDiff != null) : model.Nullable == "null" ? (x.MaxLongDiff == null && x.MinLongDiff == null) : true) &&
+                    model.Nullable == "null" ? (x.MaxLongDiff == null && x.MinLongDiff == null) : model.Nullable == "notnull" ? (x.MaxLongDiff != null && x.MinLongDiff != null) : true &&
                     x.Exchange == model.Exchange.ToLower() &&
                     model.Coin != "all" ? x.Base == model.Coin : true &&
                     x.TimeFrom >= DateTime.Parse(model.StartDate) &&
@@ -58,7 +57,6 @@ namespace CRM.Services.SignalsAnalytics
                     .ToList();
 
                 model.TradeHistoryDeltas = TradeHistoryDeltas;
-
 
                 return model;
             }
