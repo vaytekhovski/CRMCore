@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.Controllers.SignalsAnalytics
 {
+    [Authorize]
     public class SignalsAnalyticsController : Controller
     {
         private static SignalsAnalyticsService _SignalsAnalyticsService;
