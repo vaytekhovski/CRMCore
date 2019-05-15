@@ -9,7 +9,27 @@
 <div class="content" style="min-height: 400px">
     @Html.ValidationSummary()
 
+    @if (Model.SignalsPrivates.Count != 0)
+    {
+        <div style="display:table; margin:auto; padding-bottom:30px;">
+            <form action="../SignalsAnalytics/SignalsPrivate" method="post">
 
+                <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
+                <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
+                <input style="display:none" type="time" name="startTime" value=@Model.StartTime />
+                <input style="display:none" type="time" name="endTime" value=@Model.StartTime />
+
+                @for (int i = Model.CurrentPage - 3; i <= Model.MaxAvailablePageNumber; i++)
+                {
+                    if (i > 0)
+                    {
+                        <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageNumber" formaction="../SignalsAnalytics/SignalsPrivate" formmethod="post">@i</button>
+                    }
+                }
+                @Model.CountOfPages
+            </form>
+        </div>
+    }
 
 
     <div class="container table_block" style="display: @(Model.SignalsPrivates.Count != 0 ? "display" : "none")">
@@ -25,17 +45,18 @@
             <tbody>
                 @foreach (var item in Model.SignalsPrivates)
                 {
-                <tr>
-                    <td>@item.Base</td>
-                    <td>@item.SourceTime</td>
-                    <td>@item.TrendDiff</td>
-                    <td>@item.ErrorMessages</td>
-                </tr>
+                    <tr>
+                        <td>@item.Base</td>
+                        <td>@item.SourceTime</td>
+                        <td>@item.TrendDiff</td>
+                        <td>@item.ErrorMessages</td>
+                    </tr>
 
                 }
             </tbody>
         </table>
     </div>
+
     @if (Model.SignalsPrivates.Count != 0)
     {
         <div style="display:table; margin:auto; padding-bottom:30px;">
