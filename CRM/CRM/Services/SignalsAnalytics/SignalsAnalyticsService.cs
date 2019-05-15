@@ -29,7 +29,9 @@ namespace CRM.Services.SignalsAnalytics
                     x.Exchange == model.Exchange.ToLower() &&
                     model.Coin != "all" ? x.Base == model.Coin : true &&
                     x.SourceTime >= DateTime.Parse(model.StartDate) &&
-                    x.SourceTime <= DateTime.Parse(model.EndDate))
+                    x.SourceTime <= DateTime.Parse(model.EndDate) &&
+                    x.SourceTime.TimeOfDay >= TimeSpan.Parse(model.StartTime) &&
+                    x.SourceTime.TimeOfDay <= TimeSpan.Parse(model.EndTime))
                     .OrderBy(x => x.SourceTime).ToList();
 
                 model.SignalsPrivates = SignalsPrivates;
@@ -49,7 +51,9 @@ namespace CRM.Services.SignalsAnalytics
                     x.Exchange == model.Exchange.ToLower() && 
                     model.Coin != "all" ? x.Base == model.Coin : true && 
                     x.TimeFrom >= DateTime.Parse(model.StartDate) && 
-                    x.TimeTo <= DateTime.Parse(model.EndDate))
+                    x.TimeTo <= DateTime.Parse(model.EndDate) &&
+                    x.TimeFrom.TimeOfDay >= TimeSpan.Parse(model.StartTime) &&
+                    x.TimeTo.TimeOfDay <= TimeSpan.Parse(model.EndTime))
                     .ToList();
 
                 model.TradeHistoryDeltas = TradeHistoryDeltas;

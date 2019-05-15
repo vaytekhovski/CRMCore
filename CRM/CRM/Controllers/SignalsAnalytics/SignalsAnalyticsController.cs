@@ -24,6 +24,8 @@ namespace CRM.Controllers.SignalsAnalytics
                 Coin = "",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
+                StartTime = "00:00",
+                EndTime = "23:59",
                 TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
                 SignalsPrivates = new List<Models.Master.SignalsPrivate>()
             };
@@ -36,21 +38,15 @@ namespace CRM.Controllers.SignalsAnalytics
         [HttpPost]
         public ActionResult SignalsPrivate(SignalsAnalyticsViewModel model, int PageNumber = 0)
         {
-            if (DateTime.TryParse(model.StartDate, out var StartDate) && DateTime.TryParse(model.EndDate, out var EndDate))
+            if (_SignalsAnalyticsService.SignalsPrivates.Count == 0 || PageNumber == 0)
             {
-                if (_SignalsAnalyticsService.SignalsPrivates.Count == 0 || PageNumber == 0)
-                {
-                    model = _SignalsAnalyticsService.LoadSignalsPrivate(model);
-                }
-
-                model.CountOfPages = (int)Math.Ceiling((decimal)((double)_SignalsAnalyticsService.SignalsPrivates.Count / 100));
-                model.SignalsPrivates = _SignalsAnalyticsService.SignalsPrivates.Skip((PageNumber - 1) * 100).Take(100).ToList();
-                model.CurrentPage = PageNumber;
-                model.MaxAvailablePageNumber = PageNumber + 5 > model.CountOfPages ? model.CountOfPages : PageNumber + 5;
-                return View(model);
+                model = _SignalsAnalyticsService.LoadSignalsPrivate(model);
             }
 
-            ModelState.AddModelError("Date", "Dates invalid");
+            model.CountOfPages = (int)Math.Ceiling((decimal)((double)_SignalsAnalyticsService.SignalsPrivates.Count / 100));
+            model.SignalsPrivates = _SignalsAnalyticsService.SignalsPrivates.Skip((PageNumber - 1) * 100).Take(100).ToList();
+            model.CurrentPage = PageNumber;
+            model.MaxAvailablePageNumber = PageNumber + 5 > model.CountOfPages ? model.CountOfPages : PageNumber + 5;
             return View(model);
         }
 
@@ -63,6 +59,8 @@ namespace CRM.Controllers.SignalsAnalytics
                 Coin = "",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
+                StartTime = "00:00",
+                EndTime = "23:59",
                 TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
                 SignalsPrivates = new List<Models.Master.SignalsPrivate>()
             };
@@ -74,21 +72,15 @@ namespace CRM.Controllers.SignalsAnalytics
         [HttpPost]
         public ActionResult TradeHistoryDeltas(SignalsAnalyticsViewModel model, int PageNumber = 0)
         {
-            if (DateTime.TryParse(model.StartDate, out var StartDate) && DateTime.TryParse(model.EndDate, out var EndDate))
+            if (_SignalsAnalyticsService.TradeHistoryDeltas.Count == 0 || PageNumber == 0)
             {
-                if (_SignalsAnalyticsService.TradeHistoryDeltas.Count == 0 || PageNumber == 0)
-                {
-                    model = _SignalsAnalyticsService.LoadTradeHistoryDelta(model);
-                }
-
-                model.CountOfPages = (int)Math.Ceiling((decimal)((double)_SignalsAnalyticsService.TradeHistoryDeltas.Count / 100));
-                model.TradeHistoryDeltas = _SignalsAnalyticsService.TradeHistoryDeltas.Skip((PageNumber - 1) * 100).Take(100).ToList();
-                model.CurrentPage = PageNumber;
-                model.MaxAvailablePageNumber = PageNumber + 5 > model.CountOfPages ? model.CountOfPages : PageNumber + 5;
-                return View(model);
+                model = _SignalsAnalyticsService.LoadTradeHistoryDelta(model);
             }
 
-            ModelState.AddModelError("Date", "Dates invalid");
+            model.CountOfPages = (int)Math.Ceiling((decimal)((double)_SignalsAnalyticsService.TradeHistoryDeltas.Count / 100));
+            model.TradeHistoryDeltas = _SignalsAnalyticsService.TradeHistoryDeltas.Skip((PageNumber - 1) * 100).Take(100).ToList();
+            model.CurrentPage = PageNumber;
+            model.MaxAvailablePageNumber = PageNumber + 5 > model.CountOfPages ? model.CountOfPages : PageNumber + 5;
             return View(model);
         }
 

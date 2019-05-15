@@ -12,11 +12,13 @@ namespace CRM.ViewModels.SignalsAnalytics
         public string Coin { get; set; }
         public string Nullable { get; set; }
         public string StartDate { get; set; }
+        public string EndDate { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
         public int CountOfPages { get; set; }
 
         public int MaxAvailablePageNumber { get; set; }
         public int CurrentPage { get; set; }
-        public string EndDate { get; set; }
 
         public List<SignalsPrivate> SignalsPrivates { get; set; }
         public List<TradeHistoryDelta> TradeHistoryDeltas { get; set; }
