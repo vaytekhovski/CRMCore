@@ -42,6 +42,8 @@ namespace CRM.Services.SignalsAnalytics
 
         public SignalsAnalyticsViewModel LoadTradeHistoryDelta(SignalsAnalyticsViewModel model)
         {
+            model.Situation = model.Situation == null ? "all" : model.Situation;
+
             using (masterContext context = new masterContext())
             {
                 TradeHistoryDeltas = context.TradeHistoryDelta
@@ -49,6 +51,7 @@ namespace CRM.Services.SignalsAnalytics
                     model.Nullable == "null" ? (x.MaxLongDiff == null && x.MinLongDiff == null) : model.Nullable == "notnull" ? (x.MaxLongDiff != null && x.MinLongDiff != null) : true &&
                     x.Exchange == model.Exchange.ToLower() &&
                     model.Coin != "all" ? x.Base == model.Coin : true &&
+                    model.Situation != "all" ? x.Situation == model.Situation.ToLower() : true && 
                     x.TimeFrom >= DateTime.Parse(model.StartDate) &&
                     x.TimeTo <= DateTime.Parse(model.EndDate).AddDays(1) &&
                     x.TimeFrom.TimeOfDay >= TimeSpan.Parse(model.StartTime) &&

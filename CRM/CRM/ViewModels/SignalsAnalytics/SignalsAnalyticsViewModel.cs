@@ -16,6 +16,7 @@ namespace CRM.ViewModels.SignalsAnalytics
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public int CountOfPages { get; set; }
+        public string Situation { get; set; }
 
         public int MaxAvailablePageNumber { get; set; }
         public int CurrentPage { get; set; }

@@ -76,7 +76,6 @@ namespace CRM.Controllers.SignalsAnalytics
             {
                 model = _SignalsAnalyticsService.LoadTradeHistoryDelta(model);
             }
-
             model.CountOfPages = (int)Math.Ceiling((decimal)((double)_SignalsAnalyticsService.TradeHistoryDeltas.Count / 100));
             model.TradeHistoryDeltas = _SignalsAnalyticsService.TradeHistoryDeltas.Skip((PageNumber - 1) * 100).Take(100).ToList();
             model.CurrentPage = PageNumber;
