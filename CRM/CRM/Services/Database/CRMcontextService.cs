@@ -1,4 +1,5 @@
-﻿using CRM.Models.Database;
+﻿using CRM.Models.Binance;
+using CRM.Models.Database;
 using CRM.Services.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ namespace CRM.Services
         public DbSet<UserModel> UserModels { get; set; }
         public DbSet<DailyUpdate> DailyUpdates { get; set; }
 
+        public DbSet<AccountTradeHistory> AccountTradeHistories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

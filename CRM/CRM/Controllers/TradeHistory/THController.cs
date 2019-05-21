@@ -56,7 +56,6 @@ namespace CRM.Controllers
                 model.Orders = tHService.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
 
                 model.TotalProfit = tHService.TotalProfit;
-                model.TotalPercentProfit = tHService.TotalPercentProfit;
 
                 return model;
             }

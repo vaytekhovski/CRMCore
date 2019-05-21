@@ -15,6 +15,7 @@ namespace CRM.Models.Binance
         public decimal DollarQuantity { get; set; }
         public double BalanceUSDT { get; set; }
         public double Profit { get; set; }
+        public double TotalProfit { get; set; }
         public double PercentProfit { get; set; }
         public string SignalStr { get; set; }
     }

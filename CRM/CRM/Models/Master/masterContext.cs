@@ -1,4 +1,5 @@
 ﻿using System;
+using CRM.Models.Binance;
 using CRM.Models.Master;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -21,7 +22,8 @@ namespace CRM.Master
         public virtual DbSet<SignalsPrivate> SignalsPrivate { get; set; }
 
         public virtual DbSet<TradeHistoryDelta> TradeHistoryDelta { get; set; }
-        
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
