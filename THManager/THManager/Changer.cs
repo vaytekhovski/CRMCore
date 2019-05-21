@@ -212,8 +212,8 @@ namespace THManager
                     Time = item.TimeEnded.AddHours(3),
                     Side = item.Side,
                     Pair = item.Base,
-                    Price = item.Rate,
-                    Quantity = item.ClosedAmount,
+                    Price = Convert.ToDouble(item.Rate),
+                    Quantity = Convert.ToDouble(item.ClosedAmount),
                     DollarQuantity = item.Rate * item.ClosedAmount,
                     BalanceUSDT = 0
                 });
