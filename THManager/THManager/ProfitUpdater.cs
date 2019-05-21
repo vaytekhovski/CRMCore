@@ -27,10 +27,10 @@ namespace THManager
 
             using (CRMContext context = new CRMContext())
             {
-                //var currentDate = DateTime.Now.Date;
-                //List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Time > currentDate).ToList();
+                var currentDate = DateTime.Now.Date;
+                List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Time > currentDate).ToList();
 
-                //context.AccountTradeHistories.RemoveRange(buf);
+                context.AccountTradeHistories.RemoveRange(buf);
                 context.AccountTradeHistories.AddRange(CalculatedTradeHistories);
 
                 context.Database.OpenConnection();

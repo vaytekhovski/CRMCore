@@ -48,7 +48,7 @@ namespace THManager
             InitializeIgnoreList();
             InitializeExchangeKeys();
 
-            orders = (List<Orders>)InsertNewOrders(orders);
+            //orders = (List<Orders>)InsertNewOrders(orders);
             orders = (List<Orders>)ChangeOrdersAmount(orders);
             AddToTradeHistories(orders);
             AddSignals(Signals);
