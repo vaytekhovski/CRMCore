@@ -140,6 +140,23 @@ namespace CRM.Services
                 Debug.WriteLine(ex.Message);
             }
 
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 389).ClosedAmount = 6853.85893474M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 394).ClosedAmount = 7086.49496043M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             return orders;
         }
