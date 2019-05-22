@@ -57,9 +57,9 @@ namespace THManager
 
         private static List<AccountTradeHistory> CalculateProfit(List<AccountTradeHistory> UncalculatedTradeHistories)
         {
-            foreach (var _coin in Coins.Where(x => x.Value != "all"))
+            foreach (var _coin in Coins.Where(x => x.Value != "all")) // TODO: select base + distinct
             {
-                foreach (var _acc in Changer.ExchangeKeys.Where(x => x.AccountId != "all"))
+                foreach (var _acc in Changer.ExchangeKeys.Where(x => x.AccountId != "all")) // TODO: select AccountId + distinct
                 {
                     double profit = 0;
                     double buyAmount = 0;

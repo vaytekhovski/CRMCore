@@ -36,10 +36,8 @@ namespace THManager
 
         static void DrowLine()
         {
-            for (int i = 0; i < 70; i++)
-            {
-                Console.Write("*");
-            }
+            var starsStr = new string('*', 70);
+            Console.Write(starsStr);
         }
     }
 }

@@ -47,28 +47,12 @@ namespace THManager
 
             InitializeIgnoreList();
             InitializeExchangeKeys();
-
-            //orders = (List<Orders>)InsertNewOrders(orders);
+            
             orders = (List<Orders>)ChangeOrdersAmount(orders);
             AddToTradeHistories(orders);
             AddSignals(Signals);
             
             return AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
-        }
-
-        private static ICollection<Orders> InsertNewOrders(List<Orders> orders)
-        {
-            DateTime date = new DateTime(2019, 04, 25, 0, 23, 08);
-            Orders item = new Orders(0, "8025d4bf-4af6-466f-b93c-5a807fd37f68", "DASH", "sell", date, 62.26038000M, 113.2751M);
-            if (!orders.Contains(item))
-                orders.Add(item);
-
-            date = new DateTime(2019, 04, 25, 0, 22, 47);
-            item = new Orders(0, "9560eadf-74cf-4596-a7e5-bffcd201f6ec", "DASH", "sell", date, 4.59701000M, 113.376M);
-            if (!orders.Contains(item))
-                orders.Add(item);
-
-            return orders;
         }
 
         private static ICollection<Orders> ChangeOrdersAmount(List<Orders> orders)
