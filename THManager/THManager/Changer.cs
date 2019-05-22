@@ -44,6 +44,7 @@ namespace THManager
                 }
             }
 
+            LastId = 1;
 
             InitializeIgnoreList();
             InitializeExchangeKeys();
