@@ -27,7 +27,7 @@ namespace THManager
 
             using (CRMContext context = new CRMContext())
             {
-                var currentDate = DateTime.Now.Date;
+                var currentDate = DateTime.Now.AddDays(-1);
                 List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Time > currentDate).ToList();
                 context.AccountTradeHistories.RemoveRange(buf);
 
