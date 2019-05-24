@@ -11,10 +11,10 @@
             text-align: center;
         }
 
-            .table-font td, th {
-                padding: 1px !important;
-                text-align: center;
-            }
+        .table-font td, th {
+            padding: 1px !important;
+            text-align: center;
+        }
 
         .table_block {
             padding: 0 !important;
@@ -37,29 +37,65 @@
         z-index: 10000;
     }
 
-        .hover_bkgr_fricc .helper {
-            display: inline-block;
-            height: 100%;
-            vertical-align: middle;
-        }
+    .hover_bkgr_fricc .helper {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
 
-        .hover_bkgr_fricc > div {
-            background-color: #a983f6;
-            box-shadow: 0px 0px 60px #a76be3;
-            display: inline-block;
-            height: auto;
-            max-width: 410px;
-            min-height: 100px;
-            vertical-align: middle;
-            width: 60%;
-            position: relative;
-            border-radius: 2px;
-            padding: 15px 5%;
-            color: white;
-        }
+    .hover_bkgr_fricc > div {
+        background-color: #a983f6;
+        box-shadow: 0px 0px 60px #a76be3;
+        display: inline-block;
+        height: auto;
+        max-width: 410px;
+        min-height: 100px;
+        vertical-align: middle;
+        width: 60%;
+        position: relative;
+        border-radius: 2px;
+        padding: 15px 5%;
+        color: white;
+    }
 
     .trigger_popup_fricc {
         cursor: pointer;
+    }
+
+    #toTopButton {
+        display: inline-block;
+        background-color: #a76be3;
+        width: 120px;
+        height: 80px;
+        text-align: center;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        transition: background-color .3s, opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;  
+        color: white;
+        padding-top: 20px;
+    }
+    #toTopButton::after {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+    #toTopButton:hover {
+        cursor: pointer;
+        background-color: #333;
+    }
+    #toTopButton:active {
+        background-color: #555;
+    }
+    #toTopButton.show {
+        opacity: 1;
+        visibility: visible;
     }
 
     
@@ -67,6 +103,9 @@
 
 @Html.Partial("_THFilterPanel")
 <div class="content" style="min-height: 400px">
+
+    <a id="toTopButton">Наверх</a>
+
     @Html.ValidationSummary()
     <div class="hover_bkgr_fricc">
         <span class="helper"></span>
@@ -153,37 +192,52 @@
             </form>
         </div>
 
-        <script type="text/javascript">
- @* TODO: переделать в razor*@
-            $(function () {
-                var searchBUY = 'buy';
-                $("table tr td").filter(function () {
-                    return $(this).text() == searchBUY;
-                }).parent('tr').css('backgroundColor', 'rgb(255, 255, 255)');
+    <script type="text/javascript">
+    @* TODO: переделать в razor*@
+    $(function () {
+        var searchBUY = 'buy';
+        $("table tr td").filter(function () {
+            return $(this).text() == searchBUY;
+        }).parent('tr').css('backgroundColor', 'rgb(255, 255, 255)');
 
-                var searchSELL = 'sell';
-                $("table tr td").filter(function () {
-                    return $(this).text() == searchSELL;
-                }).parent('tr').css('backgroundColor', 'rgb(242, 244, 247)');
-
-
-                $('.hover_bkgr_fricc').click(function () {
-                    $('.hover_bkgr_fricc').hide();
-                });
-                $('.popupCloseButton').click(function () {
-                    $('.hover_bkgr_fricc').hide();
-                });
+        var searchSELL = 'sell';
+        $("table tr td").filter(function () {
+            return $(this).text() == searchSELL;
+        }).parent('tr').css('backgroundColor', 'rgb(242, 244, 247)');
 
 
-            });
+        $('.hover_bkgr_fricc').click(function () {
+            $('.hover_bkgr_fricc').hide();
+        });
+        $('.popupCloseButton').click(function () {
+            $('.hover_bkgr_fricc').hide();
+        });
 
-            function SignalMessage(str) {
-                if (str) {
-                    $('.hover_bkgr_fricc').show();
-                    document.getElementById('signalP').innerHTML = str;
-                }
-            }
 
-        </script>@* TODO: use section 'scripts' *@
+    });
+
+    function SignalMessage(str) {
+        if (str) {
+            $('.hover_bkgr_fricc').show();
+            document.getElementById('signalP').innerHTML = str;
+        }
+    }
+
+    var btn = $('#toTopButton');
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 300) {
+            btn.addClass('show');
+        } else {
+            btn.removeClass('show');
+        }
+    });
+
+    btn.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, '300');
+    });
+
+    </script>@* TODO: use section 'scripts' *@
     </div>
 </div>
