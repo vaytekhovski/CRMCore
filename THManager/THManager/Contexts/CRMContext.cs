@@ -10,6 +10,8 @@ namespace Contexts
 
         public DbSet<AccountTradeHistory> AccountTradeHistories { get; set; }
 
+        public DbSet<SecondAccountTH> SecondAccountTHs { get; set; }
+
         public CRMContext(DbContextOptions<CRMContext> options)
             : base(options)
         {
