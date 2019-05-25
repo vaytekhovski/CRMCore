@@ -170,6 +170,77 @@ namespace THManager
                 Console.WriteLine(ex.Message);
             }
 
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 530).ClosedAmount = 285525.4M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 532).ClosedAmount = 35368.1M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 534).ClosedAmount = 6154.44296213M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 546).ClosedAmount = 6094.0137037M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 553).ClosedAmount = 25234.8137037M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 555).ClosedAmount = 281500.2M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 562).ClosedAmount = 6040.242M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 566).ClosedAmount = 5961.542M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             return orders;
         }
 
