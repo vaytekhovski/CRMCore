@@ -15,7 +15,6 @@ namespace CRM.Services
         public DbSet<DailyUpdate> DailyUpdates { get; set; }
 
         public DbSet<AccountTradeHistory> AccountTradeHistories { get; set; }
-        public DbSet<SecondAccountTH> SecondAccountTHs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -19,6 +19,11 @@
 
 }
 
+table
+{
+    font-size: 14px;
+}
+
 .table-font td, th {
     text-align: center;
 }

@@ -91,9 +91,12 @@
                     <th class="sorttable_nosort">Тип</th>
                     <th class="sorttable_nosort">Пара</th>
                     <th class="sorttable_nosort">Цена</th>
-                    <th class="sorttable_nosort">Количество</th>
-                    <th class="sorttable_nosort">Количество</th>
+                    <th class="sorttable_nosort">Кол-во</th>
+                    <th class="sorttable_nosort">Жел. кол-во</th>
+                    <th class="sorttable_nosort">Кол-во</th>
+                    <th class="sorttable_nosort">Жел. кол-во</th>
                     <th class="sorttable_nosort">Прибыль</th>
+                    <th class="sorttable_nosort">Жел. прибыль</th>
                 </tr>
             </thead>
             <tbody>
@@ -115,17 +118,36 @@
                         itemProfitStr = null;
                     }
 
-                    <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
-                        <td>@item.Id</td>
-                        <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
-                        <td>@item.Account</td>
-                        <td>@item.Side</td>
-                        <td>@item.Pair</td>
-                        <td>$@String.Format("{0:0.########}", item.Price)</td>
-                        <td>@item.Quantity</td>
-                        <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
-                        <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                    </tr>
+                    string itemDesiredProfitStr = "";
+                    if (item.DesiredProfit != 0)
+                    {
+                        itemDesiredProfitStr = item.DesiredProfit > 0 ? "+" : "";
+                        itemDesiredProfitStr += String.Format("{0:0.##}", item.DesiredProfit);
+                        itemDesiredProfitStr += "$";
+                        itemDesiredProfitStr += " | ";
+                        itemDesiredProfitStr += item.DesiredProfit > 0 ? "+" : "";
+                        itemDesiredProfitStr += String.Format("{0:0.##}", item.DesiredPercentProfit);
+                        itemDesiredProfitStr += "%";
+                    }
+                    else
+                    {
+                        itemDesiredProfitStr = null;
+                    }
+
+                <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
+                    <td>@item.Id</td>
+                    <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.Account</td>
+                    <td>@item.Side</td>
+                    <td>@item.Pair</td>
+                    <td>$@String.Format("{0:0.########}", item.Price)</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.DesiredQuantity</td>
+                    <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
+                    <td>$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
+                    <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
+                    <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
+                </tr>
 
                 }
             </tbody>
