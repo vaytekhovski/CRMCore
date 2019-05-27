@@ -157,18 +157,21 @@
         <div style="display: @(Model.CountOfPages == 0 ? "none" : "table");; margin:auto; padding-bottom:30px;">
             <form action="../TH/TradeHistory" method="post">
                 @{
-                    var nextPage = Model.CurrentPage + 1;
-                    var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
+        var nextPage = Model.CurrentPage + 1;
+        var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
                 }
 
                 <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
                 <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
 
+                <input style="display:none" type="text" name="account" value=@Model.Account />
+                <input style="display:none" type="text" name="coin" value=@Model.Coin />
+
                 <button class="page_button" type="submit" value="@previusPage" name="PageButton" formaction="../TH/TradeHistory" formmethod="post"><</button>
                 @for (int i = 1; i <= Model.CountOfPages; i++)
-                {
-                    <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../TH/TradeHistory" formmethod="post">@i</button>
-                }
+    {
+            <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../TH/TradeHistory" formmethod="post">@i</button>
+}
                 <button class="page_button" type="submit" value="@nextPage" name="PageButton" formaction="../TH/TradeHistory" formmethod="post">></button>
 
             </form>

@@ -12,13 +12,21 @@ namespace CRM.Controllers
     [Authorize]
     public class THController : Controller
     {
-        private THService tHService; // TODO: [COMPLETE] не статик, инициализируется в конструкторе контроллера
+        private THService THService; // TODO: [COMPLETE] не статик, инициализируется в конструкторе контроллера
+        private TradeHistoryModel Model;
+
+        public THController()
+        {
+            Model = new TradeHistoryModel();
+            THService = new THService();
+
+        }
 
 
         [HttpGet]
         public ActionResult TradeHistory()
         {
-            var model = new TradeHistoryFilterModel
+            var viewModel = new TradeHistoryFilterModel
             {
                 Account = "/",
                 Coin = "all",
@@ -27,41 +35,37 @@ namespace CRM.Controllers
             };
 
 
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult TradeHistory(TradeHistoryFilterModel model, string PageButton = "0")
+        public ActionResult TradeHistory(TradeHistoryFilterModel viewModel, string PageButton = "1")
         {
-
-            tHService = new THService();
-            model = LoadTradeHistory(model, Convert.ToInt32(PageButton));
-
-            return View(model);
-        }
-
-        private TradeHistoryFilterModel LoadTradeHistory(TradeHistoryFilterModel model, int PageNumber = 1)
-        {
-            TradeHistoryModel tradeHistoryModel = new TradeHistoryModel();
-
-            if (tHService.AccountTradeHistories.Count == 0 || PageNumber == 0)
-            {
-               tradeHistoryModel = tHService.Load(model.Account, model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate).AddDays(1));
-            }
-
-            model.CountOfPages = tradeHistoryModel.CountOfPages;
-            model.CurrentPage = PageNumber;
+            int PageNumber = Convert.ToInt32(PageButton);
 
             // TODO: [COMPLETE] использовать такой паттерн везде
             //var model = service.Load(parameter1, parameter2, ...); 
             //var viewModel = new ViewModel();
             //viewModel.Items = model.Items.Select(x => ...);
-            model.Orders = tradeHistoryModel.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
 
-            model.TotalProfit = tradeHistoryModel.TotalProfit;
+            viewModel.Account = viewModel.Account == "Все" ? "Все аккаунты" : viewModel.Account;
 
-            return model;
+            if (Model.AccountTradeHistories.Count == 0)
+            {
+                Model = THService.Load(viewModel.Account, viewModel.Coin, DateTime.Parse(viewModel.StartDate), DateTime.Parse(viewModel.EndDate).AddDays(1));
+            }
+           
+            viewModel.CountOfPages = Model.CountOfPages;
+            viewModel.CurrentPage = PageNumber;
+
+            viewModel.Orders = Model.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
+
+            viewModel.TotalProfit = Model.TotalProfit;
+
+
+            return View(viewModel);
         }
+
 
 
         
