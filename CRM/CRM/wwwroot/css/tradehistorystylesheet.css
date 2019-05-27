@@ -1,0 +1,102 @@
+﻿
+@@media only screen and (max-width: 600px) {
+    .table-font
+
+{
+    table-layout: auto;
+    font-size: 8px !important;
+    text-align: center;
+}
+
+.table-font td, th {
+    padding: 1px !important;
+    text-align: center;
+}
+
+.table_block {
+    padding: 0 !important;
+}
+
+}
+
+.table-font td, th {
+    text-align: center;
+}
+
+/* Popup box  */
+.hover_bkgr_fricc {
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+
+    .hover_bkgr_fricc .helper {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+
+    .hover_bkgr_fricc > div {
+        background-color: #a983f6;
+        box-shadow: 0px 0px 60px #a76be3;
+        display: inline-block;
+        height: auto;
+        max-width: 410px;
+        min-height: 100px;
+        vertical-align: middle;
+        width: 60%;
+        position: relative;
+        border-radius: 2px;
+        padding: 15px 5%;
+        color: white;
+    }
+
+.trigger_popup_fricc {
+    cursor: pointer;
+}
+
+#toTopButton {
+    display: inline-block;
+    background-color: #a76be3;
+    width: 120px;
+    height: 80px;
+    text-align: center;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    color: white;
+    padding-top: 20px;
+}
+
+    #toTopButton::after {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #fff;
+    }
+
+    #toTopButton:hover {
+        cursor: pointer;
+        background-color: #333;
+    }
+
+    #toTopButton:active {
+        background-color: #555;
+    }
+
+    #toTopButton.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
