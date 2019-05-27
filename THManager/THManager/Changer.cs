@@ -8,7 +8,7 @@ namespace THManager
 {
     class Changer
     {
-        public static List<SecondAccountTH> SecondAccountTHs { get; private set; }
+        public static List<AccountTradeHistory> AccountTradeHistories { get; private set; }
 
         public static List<SignalsPrivate> Signals { get; set; }
 
@@ -22,9 +22,9 @@ namespace THManager
         private static int LastId;
 
 
-        public static List<SecondAccountTH> ChangeOrdersBeforeCalculate(List<Orders> _orders)
+        public static List<AccountTradeHistory> ChangeOrdersBeforeCalculate(List<Orders> _orders)
         {
-            SecondAccountTHs = new List<SecondAccountTH>();
+            AccountTradeHistories = new List<AccountTradeHistory>();
             orders = _orders;
 
             using (MySqlContext context = new MySqlContext())
@@ -36,7 +36,7 @@ namespace THManager
             {
                 try
                 {
-                    LastId = context.SecondAccountTHs.FirstOrDefault(x => x.Time > ProfitUpdater.FindTimeLastSell()).Id;
+                    LastId = context.AccountTradeHistories.FirstOrDefault(x => x.Time > ProfitUpdater.FindTimeLastSell()).Id;
                 }
                 catch
                 {
@@ -52,7 +52,7 @@ namespace THManager
             AddToTradeHistories(orders);
             AddSignals(Signals);
             
-            return SecondAccountTHs.OrderByDescending(x => x.Time).ToList();
+            return AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
         }
 
         private static ICollection<Orders> ChangeOrdersAmount(List<Orders> orders)
@@ -228,10 +228,10 @@ namespace THManager
 
         private static void AddSignals(List<SignalsPrivate> signals)
         {
-            var previous = SecondAccountTHs.FirstOrDefault();
+            var previous = AccountTradeHistories.FirstOrDefault();
 
             foreach (var item in from _acc in ExchangeKeys.Where(x => x.AccountId != "all")
-                                 from th in SecondAccountTHs.Where(x => x.Account == _acc.Name)
+                                 from th in AccountTradeHistories.Where(x => x.Account == _acc.Name)
                                  select th)
             {
 
@@ -288,7 +288,7 @@ namespace THManager
 
         private static void AddToTradeHistories(ICollection<Orders> orders)
         {
-            SecondAccountTHs.Clear();
+            AccountTradeHistories.Clear();
             int counter = LastId;
             foreach (var item in orders.OrderBy(x => x.TimeEnded))
             {
@@ -296,7 +296,7 @@ namespace THManager
 
                 var ignore = IgnoreIds.FirstOrDefault(id => item.Id == id);
 
-                if (ignore == 0) SecondAccountTHs.Add(new SecondAccountTH
+                if (ignore == 0) AccountTradeHistories.Add(new AccountTradeHistory
                 {
                     Id = counter++,
                     Account = AccountName(item.AccountId),
@@ -305,8 +305,7 @@ namespace THManager
                     Pair = item.Base,
                     Price = Convert.ToDouble(item.Rate),
                     Quantity = Convert.ToDouble(item.ClosedAmount),
-                    DollarQuantity = item.Rate * item.ClosedAmount,
-                    BalanceUSDT = 0
+                    DollarQuantity = (double)(item.Rate * item.ClosedAmount)
                 });
             }
         }

@@ -12,11 +12,13 @@ namespace CRM.Models.Binance
         public string Pair { get; set; }
         public double Price { get; set; }
         public double Quantity { get; set; }
-        public decimal DollarQuantity { get; set; }
-        public double BalanceUSDT { get; set; }
+        public double DesiredQuantity { get; set; }
+        public double DollarQuantity { get; set; }
+        public double DesiredDollarQuantity { get; set; }
         public double Profit { get; set; }
-        public double TotalProfit { get; set; }
+        public double DesiredProfit { get; set; }
         public double PercentProfit { get; set; }
+        public double DesiredPercentProfit { get; set; }
         public string SignalStr { get; set; }
     }
 }

@@ -10,45 +10,36 @@ namespace THManager
 {
     class ProfitUpdater
     {
-        private static List<SecondAccountTH> SecondAccountTHs { get; set; }
+        private static List<AccountTradeHistory> AccountTradeHistories { get; set; }
 
         private static List<Field> Coins = new List<Field>();
 
         private static int LastSellId;
-        private static int FirstIdToCalculate;
 
-        public static void UpdateProfit(List<SecondAccountTH> _SecondAccountTHs)
+        public static void UpdateProfit(List<AccountTradeHistory> _AccountTradeHistories)
         {
-            SecondAccountTHs = _SecondAccountTHs;
+            AccountTradeHistories = _AccountTradeHistories;
             InitiateCoins();
             LastSellId = FindLastSell();
 
             using (CRMContext context = new CRMContext())
             {
-                //SecondAccountTH order = context.SecondAccountTHs.FirstOrDefault(x => x.Id > LastSellId);
-                //try
-                //{
-                //    FirstIdToCalculate = SecondAccountTHs.FirstOrDefault(x => x.Account == order.Account && x.Time == order.Time).Id;
-                //}
-                //catch 
-                //{
-                //    FirstIdToCalculate = 0;
-                //}
-                List<SecondAccountTH> CalculatedTradeHistories = CalculateProfit(SecondAccountTHs/*.Where(x => x.Id >= FirstIdToCalculate)*/.ToList());
 
+                AccountTradeHistories = UpdateDesiredAmounts(AccountTradeHistories);
+                List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories.ToList());
 
+                //List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastSellId).ToList();
+                //context.AccountTradeHistories.RemoveRange(buf);
 
-                List<SecondAccountTH> buf = context.SecondAccountTHs.Where(x => x.Id > LastSellId).ToList();
-                context.SecondAccountTHs.RemoveRange(buf);
+                context.AccountTradeHistories.AddRange(CalculatedTradeHistories);
 
-                context.SecondAccountTHs.AddRange(CalculatedTradeHistories);
 
                 context.Database.OpenConnection();
                 try
                 {
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.SecondAccountTHs ON");
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.AccountTradeHistories ON");
                     context.SaveChanges();
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.SecondAccountTHs OFF");
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.AccountTradeHistories OFF");
                 }
                 finally
                 {
@@ -65,9 +56,10 @@ namespace THManager
             {
                 try
                 {
-                    LastSellId = context.SecondAccountTHs.LastOrDefault(x => x.Side == "sell" && x.Profit != 0).Id;
-                    var previusBuy = context.SecondAccountTHs.LastOrDefault(x => x.Side == "buy" && x.Id < LastSellId).Id;
-                    LastSellId = context.SecondAccountTHs.LastOrDefault(x => x.Side == "sell" && x.Id < previusBuy).Id;
+                    LastSellId = context.AccountTradeHistories.LastOrDefault(x => 
+                        x.Time < DateTime.Now.AddDays(-1) &&
+                        x.Side == "sell" &&
+                        x.Profit != 0).Id;
                 }
                 catch
                 {
@@ -84,9 +76,10 @@ namespace THManager
             {
                 try
                 {
-                    var _lastSellId = context.SecondAccountTHs.LastOrDefault(x => x.Side == "sell" && x.Profit != 0).Id;
-                    var previusBuy = context.SecondAccountTHs.LastOrDefault(x => x.Side == "buy" && x.Id < _lastSellId).Id;
-                    LastSellTime = context.SecondAccountTHs.LastOrDefault(x => x.Side == "sell" && x.Id < previusBuy).Time;
+                    LastSellTime = context.AccountTradeHistories.LastOrDefault(x => 
+                        x.Time < DateTime.Now.AddDays(-1) && 
+                        x.Side == "sell" && 
+                        x.Profit != 0).Time;
                 }
                 catch
                 {
@@ -95,51 +88,95 @@ namespace THManager
             }
             return LastSellTime;
         }
-        
-        private static List<SecondAccountTH> CalculateProfit(List<SecondAccountTH> UncalculatedTradeHistories)
+
+        private static List<AccountTradeHistory> UpdateDesiredAmounts(List<AccountTradeHistory> UncalculatedTradeHistories)
         {
-            foreach (var _coin in Coins.Where(x => x.Value != "all")) // TODO: select base + distinct
+            foreach (var _coin in UncalculatedTradeHistories.Where(x => x.Pair != "all").Select(x => x.Pair).Distinct())
             {
-                foreach (var _acc in Changer.ExchangeKeys.Where(x => x.AccountId != "all")) // TODO: select AccountId + distinct
+                foreach (var _acc in Changer.ExchangeKeys.Where(x => x.AccountId != "all"))
                 {
-                    double profit = 0;
                     double buyAmount = 0;
 
-                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin.Value && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time).ToArray();
+                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time).ToArray();
 
                     for (int i = 0; i < TH.Count(); i++)
                     {
-                        buyAmount += TH[i].Side == "buy" ? (double)TH[i].DollarQuantity : 0;
+                        buyAmount += TH[i].Side == "buy" ? TH[i].Quantity : 0;
 
-                        profit += TH[i].Side == "buy" ? ((double)TH[i].DollarQuantity) * -1 : (double)TH[i].DollarQuantity;
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
                         {
-                            TH[i].Profit = profit;
-                            TH[i].PercentProfit = profit / ((buyAmount + (buyAmount + profit)) / 2) * 100;
-                            profit = 0;
+                            TH[i].DesiredQuantity = buyAmount;
+                            TH[i].DesiredDollarQuantity = buyAmount * TH[i].Price;
                             buyAmount = 0;
                         }
                     }
 
                     int j = 0;
-                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin.Value && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time))
+                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time))
+                    {
+                        if (TH[j].DesiredQuantity != 0)
+                        {
+                            item.DesiredQuantity = TH[j].DesiredQuantity;
+                            item.DesiredDollarQuantity = TH[j].DesiredDollarQuantity;
+                        }
+                        j++;
+                    }
+                }
+            }
+
+            return UncalculatedTradeHistories;
+        }
+
+
+        private static List<AccountTradeHistory> CalculateProfit(List<AccountTradeHistory> UncalculatedTradeHistories)
+        {
+            foreach (var _coin in UncalculatedTradeHistories.Where(x=>x.Pair != "all").Select(x => x.Pair).Distinct()) // TODO: [COMPLETE] select base + distinct
+            {
+                foreach (var _acc in Changer.ExchangeKeys.Where(x => x.AccountId != "all")) // TODO: select AccountId + distinct
+                {
+                    double profit = 0;
+                    double desiredProfit = 0;
+                    double buyAmount = 0;
+
+                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time).ToArray();
+
+                    for (int i = 0; i < TH.Count(); i++)
+                    {
+                        buyAmount += TH[i].Side == "buy" ? TH[i].DollarQuantity : 0;
+
+                        profit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity;
+                        desiredProfit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DesiredDollarQuantity;
+
+                        if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
+                        {
+                            TH[i].Profit = profit;
+                            TH[i].DesiredProfit = desiredProfit;
+
+                            TH[i].PercentProfit = profit / ((buyAmount + (buyAmount + profit)) / 2) * 100;
+                            TH[i].DesiredPercentProfit = desiredProfit / ((buyAmount + (buyAmount + desiredProfit)) / 2) * 100;
+
+                            profit = 0;
+                            desiredProfit = 0;
+                            buyAmount = 0;
+                        }
+                    }
+
+                    int j = 0;
+                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time))
                     {
                         if (TH[j].Profit != 0)
                         {
                             item.Profit = TH[j].Profit;
+                            item.DesiredProfit = TH[j].DesiredProfit;
+
                             item.PercentProfit = TH[j].PercentProfit;
+                            item.DesiredPercentProfit = TH[j].DesiredPercentProfit;
                         }
                         j++;
                     }
                     
                 }
-            }
-
-
-            foreach (var item in UncalculatedTradeHistories.Where(x => x.Profit != 0).OrderBy(x => x.Time)) 
-            {
-                UncalculatedTradeHistories.First().TotalProfit += item.Profit;
             }
 
             return UncalculatedTradeHistories;
