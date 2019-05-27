@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CRM.Helpers;
+using CRM.Models.TradeHistory;
 using CRM.Services;
 using CRM.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -39,23 +40,25 @@ namespace CRM.Controllers
             return View(model);
         }
 
-        private TradeHistoryFilterModel LoadTradeHistory(TradeHistoryFilterModel model, int PageNumber = 0)
+        private TradeHistoryFilterModel LoadTradeHistory(TradeHistoryFilterModel model, int PageNumber = 1)
         {
+            TradeHistoryModel tradeHistoryModel = new TradeHistoryModel();
+
             if (tHService.AccountTradeHistories.Count == 0 || PageNumber == 0)
             {
-                tHService.Load(model.Account, model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate).AddDays(1));
+               tradeHistoryModel = tHService.Load(model.Account, model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate).AddDays(1));
             }
 
-            model.CountOfPages = tHService.CountOfPages;
-            model.CurrentPage = PageNumber == 0 ? 1 : PageNumber;
+            model.CountOfPages = tradeHistoryModel.CountOfPages;
+            model.CurrentPage = PageNumber;
 
-            // TODO: использовать такой паттерн везде
+            // TODO: [COMPLETE] использовать такой паттерн везде
             //var model = service.Load(parameter1, parameter2, ...); 
             //var viewModel = new ViewModel();
             //viewModel.Items = model.Items.Select(x => ...);
-            model.Orders = tHService.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
+            model.Orders = tradeHistoryModel.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
 
-            model.TotalProfit = tHService.TotalProfit;
+            model.TotalProfit = tradeHistoryModel.TotalProfit;
 
             return model;
         }

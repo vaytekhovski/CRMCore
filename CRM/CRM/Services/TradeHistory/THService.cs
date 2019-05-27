@@ -28,7 +28,7 @@ namespace CRM.Services
 
         private readonly DateTime MinDate = new DateTime(2019, 04, 05);
 
-        public void Load(string acc, string coin, DateTime startDate, DateTime endDate)
+        public Models.TradeHistory.TradeHistoryModel Load(string acc, string coin, DateTime startDate, DateTime endDate)
         {
             TotalProfit = 0;
             StartDate = startDate.AddDays(1);
@@ -47,8 +47,12 @@ namespace CRM.Services
             CountOfPages = (int)Math.Ceiling((decimal)((double)AccountTradeHistories.Count / 100));
             UpdateTotalProfit();
 
-            AccountTradeHistories = AccountTradeHistories
-                .OrderByDescending(x => x.Time).ToList();
+            Models.TradeHistory.TradeHistoryModel tradeHistoryModel = new Models.TradeHistory.TradeHistoryModel();
+            tradeHistoryModel.AccountTradeHistories = AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
+            tradeHistoryModel.CountOfPages = CountOfPages;
+            tradeHistoryModel.TotalProfit = TotalProfit;
+
+            return tradeHistoryModel;
         }
 
         private void UpdateTotalProfit()
