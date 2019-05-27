@@ -10,35 +10,45 @@ namespace THManager
 {
     class ProfitUpdater
     {
-        private static List<AccountTradeHistory> AccountTradeHistories { get; set; }
+        private static List<SecondAccountTH> SecondAccountTHs { get; set; }
 
         private static List<Field> Coins = new List<Field>();
 
         private static int LastSellId;
-        
+        private static int FirstIdToCalculate;
 
-        public static void UpdateProfit(List<AccountTradeHistory> _AccountTradeHistories)
+        public static void UpdateProfit(List<SecondAccountTH> _SecondAccountTHs)
         {
-            AccountTradeHistories = _AccountTradeHistories;
+            SecondAccountTHs = _SecondAccountTHs;
             InitiateCoins();
-            FindLastSell();
-
-            List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories.Where(x => x.Id > LastSellId).ToList());
+            LastSellId = FindLastSell();
 
             using (CRMContext context = new CRMContext())
             {
-                var currentDate = DateTime.Now.AddDays(-1);
-                List<AccountTradeHistory> buf = context.AccountTradeHistories.ToList();
-                context.AccountTradeHistories.RemoveRange(buf);
+                //SecondAccountTH order = context.SecondAccountTHs.FirstOrDefault(x => x.Id > LastSellId);
+                //try
+                //{
+                //    FirstIdToCalculate = SecondAccountTHs.FirstOrDefault(x => x.Account == order.Account && x.Time == order.Time).Id;
+                //}
+                //catch 
+                //{
+                //    FirstIdToCalculate = 0;
+                //}
+                List<SecondAccountTH> CalculatedTradeHistories = CalculateProfit(SecondAccountTHs/*.Where(x => x.Id >= FirstIdToCalculate)*/.ToList());
 
-                context.AccountTradeHistories.AddRange(CalculatedTradeHistories);
+
+
+                List<SecondAccountTH> buf = context.SecondAccountTHs.Where(x => x.Id > LastSellId).ToList();
+                context.SecondAccountTHs.RemoveRange(buf);
+
+                context.SecondAccountTHs.AddRange(CalculatedTradeHistories);
 
                 context.Database.OpenConnection();
                 try
                 {
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.AccountTradeHistories ON");
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.SecondAccountTHs ON");
                     context.SaveChanges();
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.AccountTradeHistories OFF");
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.SecondAccountTHs OFF");
                 }
                 finally
                 {
@@ -49,13 +59,44 @@ namespace THManager
 
 
         
-        private static void FindLastSell()
+        public static int FindLastSell()
         {
-            LastSellId = AccountTradeHistories.FindLastIndex(x => x.Side == "sell" && x.Profit != 0);
+            using (CRMContext context = new CRMContext())
+            {
+                try
+                {
+                    LastSellId = context.SecondAccountTHs.LastOrDefault(x => x.Side == "sell" && x.Profit != 0).Id;
+                    var previusBuy = context.SecondAccountTHs.LastOrDefault(x => x.Side == "buy" && x.Id < LastSellId).Id;
+                    LastSellId = context.SecondAccountTHs.LastOrDefault(x => x.Side == "sell" && x.Id < previusBuy).Id;
+                }
+                catch
+                {
+                    LastSellId = 0;
+                }
+            }
+            return LastSellId;
+        }
+
+        public static DateTime FindTimeLastSell()
+        {
+            DateTime LastSellTime;
+            using (CRMContext context = new CRMContext())
+            {
+                try
+                {
+                    var _lastSellId = context.SecondAccountTHs.LastOrDefault(x => x.Side == "sell" && x.Profit != 0).Id;
+                    var previusBuy = context.SecondAccountTHs.LastOrDefault(x => x.Side == "buy" && x.Id < _lastSellId).Id;
+                    LastSellTime = context.SecondAccountTHs.LastOrDefault(x => x.Side == "sell" && x.Id < previusBuy).Time;
+                }
+                catch
+                {
+                    LastSellTime = new DateTime(1999,01,01);
+                }
+            }
+            return LastSellTime;
         }
         
-
-        private static List<AccountTradeHistory> CalculateProfit(List<AccountTradeHistory> UncalculatedTradeHistories)
+        private static List<SecondAccountTH> CalculateProfit(List<SecondAccountTH> UncalculatedTradeHistories)
         {
             foreach (var _coin in Coins.Where(x => x.Value != "all")) // TODO: select base + distinct
             {
@@ -94,6 +135,7 @@ namespace THManager
                     
                 }
             }
+
 
             foreach (var item in UncalculatedTradeHistories.Where(x => x.Profit != 0).OrderBy(x => x.Time)) 
             {
