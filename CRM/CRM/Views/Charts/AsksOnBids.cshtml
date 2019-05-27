@@ -3,19 +3,10 @@
 
 }
 
-@model CRM.ViewModels.Charts.AskOnBidViewModel
-
-@Html.Partial("_AsksOnBidsFilterPanel");
-    <scripts>
-        <script src="~/js/plotly-latest.min.js"></script> @*TODO: использовать для скриптов секцию scripts*@
-    </scripts>
-
-    <div class="content">
-
-        @Html.ValidationSummary()
-        <div id="Chart">
-        </div>
-        <script type="text/javascript">
+@section Scripts
+{
+    <script src="~/js/plotly-latest.min.js"></script> @*TODO [COMPLETE]: использовать для скриптов секцию scripts*@
+    <script type="text/javascript">
 
         CHART = document.getElementById('Chart');
 
@@ -88,5 +79,18 @@
 
         Plotly.plot(CHART, data);
 
-        </script>
+    </script>
+}
+
+@model CRM.ViewModels.Charts.AskOnBidViewModel
+
+@Html.Partial("_AsksOnBidsFilterPanel");
+
+<div class="content">
+
+    @Html.ValidationSummary()
+    
+    <div id="Chart">
     </div>
+
+</div>

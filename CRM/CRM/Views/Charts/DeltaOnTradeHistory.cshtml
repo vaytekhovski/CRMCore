@@ -1,24 +1,11 @@
 ﻿@{
-    
+
     ViewBag.Title = "Charts";
 }
 
-@model CRM.ViewModels.Charts.DeltaOnTradeHistoryViewModel
-
-
-@Html.Partial("_DeltaOnTradeHistoryFilterPanel");
-    <head>
-        <script src="~/js/plotly-latest.min.js"></script>
-    </head>
-<div class="content">
-    <div>
-        <div>
-            <div id="Chart">
-
-            </div>
-
-        </div>
-        <script type="text/javascript">
+@section Scripts{
+    <script src="~/js/plotly-latest.min.js"></script>
+    <script type="text/javascript">
 
             CHART = document.getElementById('Chart');
 
@@ -120,6 +107,22 @@
 
             Plotly.plot(CHART, data);
 
-        </script>
-    </div>
+    </script>
+}
+
+@model CRM.ViewModels.Charts.DeltaOnTradeHistoryViewModel
+
+
+@Html.Partial("_DeltaOnTradeHistoryFilterPanel");
+<head>
+
+</head>
+<div class="content">
+        
+            <div id="Chart">
+
+            </div>
+
+
+    
 </div>
