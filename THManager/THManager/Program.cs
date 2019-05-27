@@ -19,16 +19,19 @@ namespace THManager
 
         static void Calculate()
         {
+            Loader loader = new Loader();
             Console.WriteLine($"\n{DateTime.Now} | Load Orders started");
-            var Orders = Loader.LoadOrders();
+            var Orders = loader.LoadOrders();
             Console.WriteLine($"{DateTime.Now} | Load Orders ended\n");
 
+            Changer changer = new Changer();
             Console.WriteLine($"{DateTime.Now} | Change Orders started");
-            var TH = Changer.ChangeOrdersBeforeCalculate(Orders);
+            var TH = changer.ChangeOrdersBeforeCalculate(Orders);
             Console.WriteLine($"{DateTime.Now} | Change Orders ended\n");
 
+            ProfitUpdater profitUpdater = new ProfitUpdater();
             Console.WriteLine($"{DateTime.Now} | Update Profit and load to DB started");
-            ProfitUpdater.UpdateProfit(TH);
+            profitUpdater.UpdateProfit(TH);
             Console.WriteLine($"{DateTime.Now} | Update Profit and load to DB ended\n");
             
             DrowLine();

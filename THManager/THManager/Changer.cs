@@ -8,21 +8,26 @@ namespace THManager
 {
     class Changer
     {
-        public static List<AccountTradeHistory> AccountTradeHistories { get; private set; }
+        public Changer()
+        {
 
-        public static List<SignalsPrivate> Signals { get; set; }
+        }
 
-        public static List<Orders> orders { get; set; }
+        public List<AccountTradeHistory> AccountTradeHistories { get; private set; }
+
+        public List<SignalsPrivate> Signals { get; set; }
+
+        public List<Orders> orders { get; set; }
 
         public static List<ExchangeKey> ExchangeKeys { get; set; }
         
 
-        private static List<int> IgnoreIds = new List<int>();
+        private List<int> IgnoreIds = new List<int>();
 
-        private static int LastId;
+        private int LastId;
 
 
-        public static List<AccountTradeHistory> ChangeOrdersBeforeCalculate(List<Orders> _orders)
+        public List<AccountTradeHistory> ChangeOrdersBeforeCalculate(List<Orders> _orders)
         {
             AccountTradeHistories = new List<AccountTradeHistory>();
             orders = _orders;
@@ -36,7 +41,7 @@ namespace THManager
             {
                 try
                 {
-                    LastId = context.AccountTradeHistories.FirstOrDefault(x => x.Time > ProfitUpdater.FindTimeLastSell()).Id;
+                    LastId = context.AccountTradeHistories.FirstOrDefault(x => x.Time > Helper.FindTimeLastSell()).Id;
                 }
                 catch
                 {
@@ -55,7 +60,7 @@ namespace THManager
             return AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
         }
 
-        private static ICollection<Orders> ChangeOrdersAmount(List<Orders> orders)
+        private ICollection<Orders> ChangeOrdersAmount(List<Orders> orders)
         {
             Orders order;
 
@@ -226,7 +231,7 @@ namespace THManager
             return orders;
         }
 
-        private static void AddSignals(List<SignalsPrivate> signals)
+        private void AddSignals(List<SignalsPrivate> signals)
         {
             var previous = AccountTradeHistories.FirstOrDefault();
 
@@ -259,7 +264,7 @@ namespace THManager
             }
         }
 
-        private static void InitializeExchangeKeys()
+        private void InitializeExchangeKeys()
         {
             using (CRMContext context = new CRMContext())
             {
@@ -267,7 +272,7 @@ namespace THManager
             }
         }
 
-        private static void InitializeIgnoreList()
+        private void InitializeIgnoreList()
         {
             IgnoreIds.Add(265);
             IgnoreIds.Add(266);
@@ -281,12 +286,12 @@ namespace THManager
             IgnoreIds.Add(383);
         }
 
-        private static string AccountName(string accountId)
+        private string AccountName(string accountId)
         {
             return ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
         }
 
-        private static void AddToTradeHistories(ICollection<Orders> orders)
+        private void AddToTradeHistories(ICollection<Orders> orders)
         {
             AccountTradeHistories.Clear();
             int counter = LastId;

@@ -10,17 +10,21 @@ namespace THManager
 {
     class ProfitUpdater
     {
-        private static List<AccountTradeHistory> AccountTradeHistories { get; set; }
+        public ProfitUpdater()
+        {
 
-        private static List<Field> Coins = new List<Field>();
+        }
+        private List<AccountTradeHistory> AccountTradeHistories { get; set; }
 
-        private static int LastSellId;
+        private List<Field> Coins = new List<Field>();
 
-        public static void UpdateProfit(List<AccountTradeHistory> _AccountTradeHistories)
+        private int LastSellId;
+
+        public void UpdateProfit(List<AccountTradeHistory> _AccountTradeHistories)
         {
             AccountTradeHistories = _AccountTradeHistories;
             InitiateCoins();
-            LastSellId = FindLastSell();
+            LastSellId = Helper.FindLastSell();
 
             using (CRMContext context = new CRMContext())
             {
@@ -49,46 +53,11 @@ namespace THManager
 
 
         
-        public static int FindLastSell()
-        {
-            using (CRMContext context = new CRMContext())
-            {
-                try
-                {
-                    LastSellId = context.AccountTradeHistories.LastOrDefault(x => 
-                        x.Time < DateTime.Now.AddDays(-1) &&
-                        x.Side == "sell" &&
-                        x.Profit != 0).Id;
-                }
-                catch
-                {
-                    LastSellId = 0;
-                }
-            }
-            return LastSellId;
-        }
+        
 
-        public static DateTime FindTimeLastSell()
-        {
-            DateTime LastSellTime;
-            using (CRMContext context = new CRMContext())
-            {
-                try
-                {
-                    LastSellTime = context.AccountTradeHistories.LastOrDefault(x => 
-                        x.Time < DateTime.Now.AddDays(-1) && 
-                        x.Side == "sell" && 
-                        x.Profit != 0).Time;
-                }
-                catch
-                {
-                    LastSellTime = new DateTime(1999,01,01);
-                }
-            }
-            return LastSellTime;
-        }
+        
 
-        private static List<AccountTradeHistory> UpdateDesiredAmounts(List<AccountTradeHistory> UncalculatedTradeHistories)
+        private List<AccountTradeHistory> UpdateDesiredAmounts(List<AccountTradeHistory> UncalculatedTradeHistories)
         {
             foreach (var _coin in UncalculatedTradeHistories.Where(x => x.Pair != "all").Select(x => x.Pair).Distinct())
             {
@@ -128,7 +97,7 @@ namespace THManager
         }
 
 
-        private static List<AccountTradeHistory> CalculateProfit(List<AccountTradeHistory> UncalculatedTradeHistories)
+        private List<AccountTradeHistory> CalculateProfit(List<AccountTradeHistory> UncalculatedTradeHistories)
         {
             foreach (var _coin in UncalculatedTradeHistories.Where(x=>x.Pair != "all").Select(x => x.Pair).Distinct()) // TODO: [COMPLETE] select base + distinct
             {
@@ -181,12 +150,12 @@ namespace THManager
             return UncalculatedTradeHistories;
         }
 
-        private static string AccountName(string accountId)
+        private string AccountName(string accountId)
         {
             return Changer.ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
         }
 
-        private static void InitiateCoins()
+        private void InitiateCoins()
         {
             Coins.Add(new Field { Value = "all", Name = "Все валюты" });
             Coins.Add(new Field { Value = "BTC", Name = "USDT-BTC" });

@@ -13,6 +13,11 @@ namespace CRM.Services
 {
     public class THService
     {        
+        public THService()
+        {
+
+        }
+
         public List<AccountTradeHistory> AccountTradeHistories { get; private set; } = new List<AccountTradeHistory>();
 
         public double TotalProfit { get; set; }

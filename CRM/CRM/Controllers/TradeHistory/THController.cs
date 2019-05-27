@@ -11,7 +11,7 @@ namespace CRM.Controllers
     [Authorize]
     public class THController : Controller
     {
-        private static THService tHService; // TODO: не статик, инициализируется в конструкторе контроллера
+        private THService tHService; // TODO: [COMPLETE] не статик, инициализируется в конструкторе контроллера
 
 
         [HttpGet]
@@ -25,7 +25,6 @@ namespace CRM.Controllers
                 EndDate = DatesHelper.CurrentDateStr
             };
 
-            tHService = new THService();
 
             return View(model);
         }
@@ -33,6 +32,8 @@ namespace CRM.Controllers
         [HttpPost]
         public ActionResult TradeHistory(TradeHistoryFilterModel model, string PageButton = "0")
         {
+
+            tHService = new THService();
             model = LoadTradeHistory(model, Convert.ToInt32(PageButton));
 
             return View(model);
@@ -40,29 +41,22 @@ namespace CRM.Controllers
 
         private TradeHistoryFilterModel LoadTradeHistory(TradeHistoryFilterModel model, int PageNumber = 0)
         {
-            if (DateTime.TryParse(model.StartDate, out var StartDate) && DateTime.TryParse(model.EndDate, out var EndDate))
+            if (tHService.AccountTradeHistories.Count == 0 || PageNumber == 0)
             {
-                EndDate = EndDate.AddDays(1);
-                if (tHService.AccountTradeHistories.Count == 0 || PageNumber == 0)
-                {
-                    tHService.Load(model.Account, model.Coin, StartDate, EndDate);
-                }
-
-                model.CountOfPages = tHService.CountOfPages;
-                model.CurrentPage = PageNumber == 0 ? 1 : PageNumber;
-
-                // TODO: использовать такой паттерн везде
-                //var model = service.Load(parameter1, parameter2, ...); 
-                //var viewModel = new ViewModel();
-                //viewModel.Items = model.Items.Select(x => ...);
-                model.Orders = tHService.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
-
-                model.TotalProfit = tHService.TotalProfit;
-
-                return model;
+                tHService.Load(model.Account, model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate).AddDays(1));
             }
 
-            ModelState.AddModelError("Date", "Dates invalid");
+            model.CountOfPages = tHService.CountOfPages;
+            model.CurrentPage = PageNumber == 0 ? 1 : PageNumber;
+
+            // TODO: использовать такой паттерн везде
+            //var model = service.Load(parameter1, parameter2, ...); 
+            //var viewModel = new ViewModel();
+            //viewModel.Items = model.Items.Select(x => ...);
+            model.Orders = tHService.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
+
+            model.TotalProfit = tHService.TotalProfit;
+
             return model;
         }
 
