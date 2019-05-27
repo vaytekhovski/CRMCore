@@ -310,9 +310,9 @@ namespace THManager
                     Pair = item.Base,
                     Price = Convert.ToDouble(item.Rate),
                     Quantity = Convert.ToDouble(item.ClosedAmount),
-                    //DesiredQuantity = Convert.ToDouble(item.ClosedAmount),
+                    DesiredQuantity = item.Side == "buy" ? Convert.ToDouble(item.ClosedAmount) : 0,
                     DollarQuantity = (double)(item.Rate * item.ClosedAmount),
-                    //DesiredDollarQuantity = (double)(item.Rate * item.ClosedAmount)
+                    DesiredDollarQuantity = item.Side == "buy" ? (double)(item.Rate * item.ClosedAmount) : 0
                 });
             }
         }
