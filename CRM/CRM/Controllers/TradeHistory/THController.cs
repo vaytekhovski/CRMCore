@@ -61,6 +61,7 @@ namespace CRM.Controllers
             viewModel.Orders = Model.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
 
             viewModel.TotalProfit = Model.TotalProfit;
+            viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
 
 
             return View(viewModel);

@@ -21,6 +21,7 @@ namespace CRM.Services
         public List<AccountTradeHistory> AccountTradeHistories { get; private set; } = new List<AccountTradeHistory>();
 
         public double TotalProfit { get; set; }
+        public double DesiredTotalProfit { get; set; }
         public int CountOfPages { get; set; }
 
         private DateTime StartDate;
@@ -51,6 +52,7 @@ namespace CRM.Services
             tradeHistoryModel.AccountTradeHistories = AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
             tradeHistoryModel.CountOfPages = CountOfPages;
             tradeHistoryModel.TotalProfit = TotalProfit;
+            tradeHistoryModel.DesiredTotalProfit = DesiredTotalProfit;
 
             return tradeHistoryModel;
         }
@@ -60,6 +62,7 @@ namespace CRM.Services
             foreach (var item in AccountTradeHistories.Where(x => x.Profit != 0))
             {
                 TotalProfit += item.Profit;
+                DesiredTotalProfit += item.DesiredProfit;
             }
         }
 

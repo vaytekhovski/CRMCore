@@ -78,9 +78,12 @@
             profitStr += String.Format("{0:0.##}", Model.TotalProfit);
             profitStr += "$";
 
+            string DesiredProfitStr = Model.DesiredTotalProfit > 0 ? "+" : "";
+            DesiredProfitStr += String.Format("{0:0.##}", Model.DesiredTotalProfit);
+            DesiredProfitStr += "$";
 
         }
-        Прибыль: @profitStr
+        Прибыль: @profitStr  Жел. прибыль: @DesiredProfitStr
     </div>
     <div class="container table_block">
         <table class="sortable table table-bordered table-font" style=" display: @(Model.TotalProfit == 0 ? "none" : "table");">
@@ -147,7 +150,7 @@
                     <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
                     <td>$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
                     <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                    <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
+                    <td class="profit" style="color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
                 </tr>
 
                 }
