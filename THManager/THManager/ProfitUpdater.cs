@@ -31,8 +31,8 @@ namespace THManager
                 AccountTradeHistories = UpdateDesiredAmounts(AccountTradeHistories);
                 List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories.ToList());
 
-                List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastSellId).ToList();
-                context.AccountTradeHistories.RemoveRange(buf);
+                //List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastSellId).ToList();
+                //context.AccountTradeHistories.RemoveRange(buf);
 
                 context.AccountTradeHistories.AddRange(CalculatedTradeHistories);
 

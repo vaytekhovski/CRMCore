@@ -72,19 +72,24 @@
             <p id="signalP">Signal</p>
         </div>
     </div>
-    <div class="profit profit_string" style="text-align: center; color: @(Model.TotalProfit > 0 ? "green" : "red"); display: @(Model.TotalProfit == 0 ? "none" : "block");">
-        @{
+
+    <span  class="profit profit_string" style="text-align: center; color: @(Model.TotalProfit > 0 ? "green" : "red"); display: @(Model.TotalProfit == 0 ? "none" : "block");">
+        @{ 
             string profitStr = Model.TotalProfit > 0 ? "+" : "";
             profitStr += String.Format("{0:0.##}", Model.TotalProfit);
             profitStr += "$";
+            }
+            Прибыль: @profitStr
+    </span>
+    <span  class="profit profit_string" style="text-align: center; color: @(Model.DesiredTotalProfit > 0 ? "green" : "red"); display: @(Model.DesiredTotalProfit == 0 ? "none" : "block");">
+        @{ 
+                string DesiredProfitStr = Model.DesiredTotalProfit > 0 ? "+" : "";
+                DesiredProfitStr += String.Format("{0:0.##}", Model.DesiredTotalProfit);
+                DesiredProfitStr += "$";
 
-            string DesiredProfitStr = Model.DesiredTotalProfit > 0 ? "+" : "";
-            DesiredProfitStr += String.Format("{0:0.##}", Model.DesiredTotalProfit);
-            DesiredProfitStr += "$";
-
-        }
-        Прибыль: @profitStr  Жел. прибыль: @DesiredProfitStr
-    </div>
+            }
+            Жел. прибыль: @DesiredProfitStr
+    </span>
     <div class="container table_block">
         <table class="sortable table table-bordered table-font" style=" display: @(Model.TotalProfit == 0 ? "none" : "table");">
             <thead>
