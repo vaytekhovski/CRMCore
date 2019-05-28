@@ -12,17 +12,13 @@ namespace CRM.Controllers
     [Authorize]
     public class THController : Controller
     {
-        private THService THService; // TODO: [COMPLETE] не статик, инициализируется в конструкторе контроллера
-        private TradeHistoryModel Model;
+        private readonly THService THService; // TODO: [COMPLETE] не статик, инициализируется в конструкторе контроллера
 
         public THController()
         {
-            Model = new TradeHistoryModel();
             THService = new THService();
-
         }
-
-
+        
         [HttpGet]
         public ActionResult TradeHistory()
         {
@@ -42,8 +38,8 @@ namespace CRM.Controllers
         public ActionResult TradeHistory(TradeHistoryFilterModel viewModel, string PageButton = "1")
         {
             int PageNumber = Convert.ToInt32(PageButton);
-
-            // TODO: [COMPLETE] использовать такой паттерн везде
+            TradeHistoryModel Model = new TradeHistoryModel();
+            // TODO: использовать такой паттерн везде
             //var model = service.Load(parameter1, parameter2, ...); 
             //var viewModel = new ViewModel();
             //viewModel.Items = model.Items.Select(x => ...);

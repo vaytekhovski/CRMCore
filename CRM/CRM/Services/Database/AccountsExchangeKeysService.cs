@@ -9,7 +9,7 @@ namespace CRM.Services.Database
 {
     public static class AccountsExchangeKeysService
     {
-        public static IEnumerable<SelectListItem> GetExchangeKeys(int UserId) // TODO: [COMPLETE] передавать только Id пользователя, + переделать запись в Identity (Id вместо имени пользователя)
+        public static IEnumerable<SelectListItem> GetExchangeKeys(int UserId)
         {
             List<SelectListItem> lst = new List<SelectListItem>();
             using (UserContext context = new UserContext())

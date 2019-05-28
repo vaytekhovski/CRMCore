@@ -49,14 +49,13 @@ namespace CRM.Controllers.Charts
 
                 model.DatesAsks = asksOnBids.DatesAsks.Select(x => x.ToJavascriptTicks()).ToList();
                 model.DatesBids = asksOnBids.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
-                // TODO: [COMPLETE] instead of replace use this: https://stackoverflow.com/a/6587281/571203
                 model.AsksValues = asksOnBids.AsksValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
                 model.BidsValues = asksOnBids.BidsValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
 
                 return View(model);
             }
 
-            ModelState.AddModelError("Date", "Dates invalid"); //TODO: [COMPLETE] применить везде такой паттерн работы с датами + перенести инициализацию списков в конструкторы
+            ModelState.AddModelError("Date", "Dates invalid");
             return View(model);
         }
 
