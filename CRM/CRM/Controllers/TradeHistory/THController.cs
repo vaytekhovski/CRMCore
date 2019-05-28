@@ -3,6 +3,7 @@ using System.Linq;
 using CRM.Helpers;
 using CRM.Models.TradeHistory;
 using CRM.Services;
+using CRM.Services.Pagination;
 using CRM.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace CRM.Controllers
     public class THController : Controller
     {
         private readonly THService THService; // TODO: [COMPLETE] не статик, инициализируется в конструкторе контроллера
+        private readonly PaginationService paginationService;
 
         public THController()
         {
             THService = new THService();
+            paginationService = new PaginationService();
         }
         
         [HttpGet]
@@ -51,14 +54,18 @@ namespace CRM.Controllers
                 Model = THService.Load(viewModel.Account, viewModel.Coin, DateTime.Parse(viewModel.StartDate), DateTime.Parse(viewModel.EndDate).AddDays(1));
             }
            
-            viewModel.CountOfPages = Model.CountOfPages;
-            viewModel.CurrentPage = PageNumber;
-
             viewModel.Orders = Model.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
 
             viewModel.TotalProfit = Model.TotalProfit;
             viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
 
+            viewModel.CountOfPages = Model.CountOfPages;
+            viewModel.CurrentPage = PageNumber;
+
+            var pagination = paginationService.GetPaginationModel(PageNumber, Model.CountOfPages);
+
+            viewModel.FirstVisiblePage = pagination.FirstVisiblePage;
+            viewModel.LastVisiblePage = pagination.LastVisiblePage;
 
             return View(viewModel);
         }

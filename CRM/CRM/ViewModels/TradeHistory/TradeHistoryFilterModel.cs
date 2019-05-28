@@ -10,6 +10,9 @@ namespace CRM.ViewModels
     {
         public int CountOfPages { get; set; }
 
+        public int FirstVisiblePage { get; set; }
+        public int LastVisiblePage { get; set; }
+
         public int CurrentPage { get; set; }
 
         public string Coin { get; set; }
