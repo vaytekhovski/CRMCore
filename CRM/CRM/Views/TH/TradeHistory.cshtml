@@ -73,25 +73,25 @@
         </div>
     </div>
 
-    <span  class="profit profit_string" style="text-align: center; color: @(Model.TotalProfit > 0 ? "green" : "red"); display: @(Model.TotalProfit == 0 ? "none" : "block");">
-        @{ 
-            string profitStr = Model.TotalProfit > 0 ? "+" : "";
-            profitStr += String.Format("{0:0.##}", Model.TotalProfit);
-            profitStr += "$";
-        }
-        Прибыль: @profitStr
+    <span style="display: @(Context.User.Identity.Name != "1" ? "none" : "block");">
+        <span class="profit profit_string" style="text-align: center; color: @(Model.TotalProfit > 0 ? "green" : "red"); display: @(Model.TotalProfit == 0 ? "none" : "block");">
+            @{
+                string profitStr = Model.TotalProfit > 0 ? "+" : "";
+                profitStr += String.Format("{0:0.##}", Model.TotalProfit);
+                profitStr += "$";
+            }
+            Прибыль: @profitStr
+        </span>
     </span>
 
-    <span style="display: @(Model.DesiredTotalProfit == 0 ? "none" : "block");">
-        <span class="profit profit_string" style="text-align: center; color: @(Model.DesiredTotalProfit > 0 ? "green" : "red"); display: @(Context.User.Identity.Name != "1" ? "none" : "block");">
-            @{
-                string DesiredProfitStr = Model.DesiredTotalProfit > 0 ? "+" : "";
-                DesiredProfitStr += String.Format("{0:0.##}", Model.DesiredTotalProfit);
-                DesiredProfitStr += "$";
+    <span class="profit profit_string" style="text-align: center; color: @(Model.DesiredTotalProfit > 0 ? "green" : "red"); display: @(Model.DesiredTotalProfit == 0 ? "none" : "block"); ">
+        @{
+            string DesiredProfitStr = Model.DesiredTotalProfit > 0 ? "+" : "";
+            DesiredProfitStr += String.Format("{0:0.##}", Model.DesiredTotalProfit);
+            DesiredProfitStr += "$";
 
-            }
-            Расч. прибыль: @DesiredProfitStr
-        </span>
+        }
+        Расч. прибыль: @DesiredProfitStr
     </span>
 
     <div class="container table_block">
@@ -104,12 +104,12 @@
                     <th class="sorttable_nosort">Тип</th>
                     <th class="sorttable_nosort">Пара</th>
                     <th class="sorttable_nosort">Цена</th>
-                    <th class="sorttable_nosort">Кол-во</th>
-                    <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. кол-во</th >
-                    <th class="sorttable_nosort">Кол-во</th>
-                    <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. кол-во</th>
-                    <th class="sorttable_nosort">Прибыль</th>
-                    <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. прибыль</th>
+                    <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Кол-во</th>
+                    <th class="sorttable_nosort">Расч. кол-во</th >
+                    <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Кол-во</th>
+                    <th class="sorttable_nosort">Расч. кол-во</th>
+                    <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Прибыль</th>
+                    <th class="sorttable_nosort">Расч. прибыль</th>
                 </tr>
             </thead>
             <tbody>
@@ -154,12 +154,12 @@
                     <td>@item.Side</td>
                     <td>@item.Pair</td>
                     <td>$@String.Format("{0:0.########}", item.Price)</td>
-                    <td>@item.Quantity</td>
-                    <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">@item.DesiredQuantity</td>
-                    <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
-                    <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
-                    <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                    <td class="profit" style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell"); color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
+                    <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">@item.Quantity</td>
+                    <td>@item.DesiredQuantity</td>
+                    <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">$@String.Format("{0:0.##}", item.DollarQuantity)</td>
+                    <td>$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
+                    <td class="profit" style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell"); color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
+                    <td class="profit" style="color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
                 </tr>
 
                 }
