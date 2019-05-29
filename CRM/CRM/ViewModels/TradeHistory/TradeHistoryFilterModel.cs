@@ -25,9 +25,9 @@ namespace CRM.ViewModels
 
         public ICollection<AccountTradeHistory> Orders { get; set; }
 
-        public double TotalProfit { get; set; }
+        public decimal TotalProfit { get; set; }
 
-        public double DesiredTotalProfit { get; set; }
+        public decimal DesiredTotalProfit { get; set; }
 
         public TradeHistoryFilterModel()
         {

@@ -13,7 +13,13 @@ namespace CRM.Models.TradeHistory
 
         }
         public List<AccountTradeHistory> AccountTradeHistories { get; set; } = new List<AccountTradeHistory>();
+<<<<<<< HEAD
         public double TotalProfit { get; set; }
         public double DesiredTotalProfit { get; set; }
+=======
+        public decimal TotalProfit { get; set; }
+        public decimal DesiredTotalProfit { get; set; }
+        public int CountOfPages { get; set; }
+>>>>>>> ars
     }
 }
