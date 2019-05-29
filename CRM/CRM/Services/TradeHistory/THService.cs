@@ -31,16 +31,16 @@ namespace CRM.Services
         public Models.TradeHistory.TradeHistoryModel Load(string acc, string coin, DateTime startDate, DateTime endDate)
         {
             TotalProfit = 0;
-            StartDate = startDate.AddDays(1);
+            StartDate = startDate;
             StartDate = MinDate > StartDate ? MinDate : StartDate;
             EndDate = endDate;
 
             using (CRMContext context = new CRMContext())
             {
-                AccountTradeHistories = context.AccountTradeHistories.Where(x =>
-                    acc != "Все аккаунты" ? x.Account == acc : true &&
-                    coin != "all" ? x.Pair == coin : true &&
-                    x.Time >= StartDate &&
+                AccountTradeHistories = context.AccountTradeHistories
+                    .Where(x => coin == "all" ? true : x.Pair == coin)
+                    .Where(x => acc == "Все аккаунты" ? true : x.Account == acc)
+                    .Where(x => x.Time >= StartDate &&
                     x.Time <= EndDate).ToList();
             }
 

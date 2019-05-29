@@ -23,8 +23,7 @@ namespace CRM.Services.SignalsAnalytics
         {
             using (masterContext context = new masterContext())
             {
-                SignalsPrivates = context.SignalsPrivate
-                    .Where(x =>
+                SignalsPrivates = context.SignalsPrivate.Where(x =>
                     model.Nullable == "null" ? x.ErrorMessages == null : model.Nullable == "all" ? x.ErrorMessages != null : true &&
                     x.Exchange == model.Exchange.ToLower() &&
                     model.Coin != "all" ? x.Base == model.Coin : true &&
