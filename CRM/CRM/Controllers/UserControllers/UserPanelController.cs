@@ -19,14 +19,11 @@ namespace CRM.Controllers.User
         private readonly ChangeUserDataService changeUserDataService;
         private UserContext db;
 
-        public UserPanelController()
-        {
-            changeUserDataService = new ChangeUserDataService();
-        }
-
         public UserPanelController(UserContext context)
         {
             db = context;
+
+            changeUserDataService = new ChangeUserDataService();
         }
        
         [HttpGet]

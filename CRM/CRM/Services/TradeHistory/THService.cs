@@ -20,8 +20,8 @@ namespace CRM.Services
 
         public List<AccountTradeHistory> AccountTradeHistories { get; private set; } = new List<AccountTradeHistory>();
 
-        public double TotalProfit { get; set; }
-        public double DesiredTotalProfit { get; set; }
+        public decimal TotalProfit { get; set; }
+        public decimal DesiredTotalProfit { get; set; }
 
         private DateTime StartDate;
         private DateTime EndDate;
