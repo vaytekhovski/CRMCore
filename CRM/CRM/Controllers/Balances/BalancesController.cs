@@ -14,13 +14,20 @@ namespace CRM.Controllers.Balances
     [Authorize]
     public class BalancesController : Controller
     {
+        private readonly BalancesService balancesService;
+
+        public BalancesController()
+        {
+            balancesService = new BalancesService();
+        }
+
         [HttpGet]
         public ActionResult Balances()
         {
             var model = new BalancesModel
             {
                 Account = "/",
-                AccountBalances = new System.Collections.Generic.List<Balance>()
+                AccountBalances = new List<Balance>()
             };
 
             return View(model);
@@ -29,7 +36,7 @@ namespace CRM.Controllers.Balances
         [HttpPost]
         public ActionResult Balances(BalancesModel model)
         {
-            model.AccountBalances = BalancesService.LoadBalances(model.Account);
+            model.AccountBalances = balancesService.LoadBalances(model.Account);
             return View(model);
         }
     }

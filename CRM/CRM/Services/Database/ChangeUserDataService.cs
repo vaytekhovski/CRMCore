@@ -2,9 +2,9 @@
 
 namespace CRM.Services.Database
 {
-    public static class ChangeUserDataService
+    public class ChangeUserDataService
     {
-        public static void ChangeUserLogin(string lastUserLogin, string newUserLogin)
+        public void ChangeUserLogin(string lastUserLogin, string newUserLogin)
         {
             using (CRMContext context = new CRMContext())
             {
@@ -13,7 +13,7 @@ namespace CRM.Services.Database
             }
         }
 
-        public static void ChangeUserPassword(string lastUserLogin, string newUserPassword)
+        public void ChangeUserPassword(string lastUserLogin, string newUserPassword)
         {
             using (CRMContext context = new CRMContext())
             {

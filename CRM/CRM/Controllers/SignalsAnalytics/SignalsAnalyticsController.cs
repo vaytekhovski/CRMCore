@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CRM.Helpers;
+using CRM.Services.Pagination;
 using CRM.Services.SignalsAnalytics;
 using CRM.ViewModels.SignalsAnalytics;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,15 @@ namespace CRM.Controllers.SignalsAnalytics
     [Authorize]
     public class SignalsAnalyticsController : Controller
     {
-        private static SignalsAnalyticsService _SignalsAnalyticsService;
+        private readonly SignalsAnalyticsService signalsAnalyticsService;
+        private readonly PaginationService paginationService;
+
+        public SignalsAnalyticsController()
+        {
+            signalsAnalyticsService = new SignalsAnalyticsService();
+            paginationService = new PaginationService();
+        }
+
 
         [HttpGet]
         public ActionResult SignalsPrivate()
@@ -30,23 +39,28 @@ namespace CRM.Controllers.SignalsAnalytics
                 SignalsPrivates = new List<Models.Master.SignalsPrivate>()
             };
 
-            _SignalsAnalyticsService = new SignalsAnalyticsService();
             model.CurrentPage = 0;
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult SignalsPrivate(SignalsAnalyticsViewModel model, int PageNumber = 0)
+        public ActionResult SignalsPrivate(SignalsAnalyticsViewModel model, string PageButton = "1")
         {
-            if (_SignalsAnalyticsService.SignalsPrivates.Count == 0 || PageNumber == 0)
+            int PageNumber = Convert.ToInt32(PageButton);
+            if (signalsAnalyticsService.SignalsPrivates.Count == 0 || PageNumber == 0)
             {
-                model = _SignalsAnalyticsService.LoadSignalsPrivate(model);
+                signalsAnalyticsService.LoadSignalsPrivate(model);
             }
 
-            model.CountOfPages = (int)Math.Ceiling((decimal)((double)_SignalsAnalyticsService.SignalsPrivates.Count / 100));
-            model.SignalsPrivates = _SignalsAnalyticsService.SignalsPrivates.Skip((PageNumber - 1) * 100).Take(100).ToList();
+            model.SignalsPrivates = signalsAnalyticsService.SignalsPrivates.Skip((PageNumber - 1) * 100).Take(100).ToList();
             model.CurrentPage = PageNumber;
-            model.MaxAvailablePageNumber = PageNumber + 5 > model.CountOfPages ? model.CountOfPages : PageNumber + 5;
+
+
+            var pagination = paginationService.GetPaginationModel(PageNumber, signalsAnalyticsService.SignalsPrivates.Count);
+
+            model.FirstVisiblePage = pagination.FirstVisiblePage;
+            model.LastVisiblePage = pagination.LastVisiblePage;
+            model.CountOfPages = pagination.CountOfPages;
             return View(model);
         }
 
@@ -72,12 +86,12 @@ namespace CRM.Controllers.SignalsAnalytics
         [HttpPost]
         public ActionResult TradeHistoryDeltas(SignalsAnalyticsViewModel model, int PageNumber = 0)
         {
-            if (_SignalsAnalyticsService.TradeHistoryDeltas.Count == 0 || PageNumber == 0)
+            if (signalsAnalyticsService.TradeHistoryDeltas.Count == 0 || PageNumber == 0)
             {
-                model = _SignalsAnalyticsService.LoadTradeHistoryDelta(model);
+                signalsAnalyticsService.LoadTradeHistoryDelta(model);
             }
-            model.CountOfPages = (int)Math.Ceiling((decimal)((double)_SignalsAnalyticsService.TradeHistoryDeltas.Count / 100));
-            model.TradeHistoryDeltas = _SignalsAnalyticsService.TradeHistoryDeltas.Skip((PageNumber - 1) * 100).Take(100).ToList();
+            model.CountOfPages = (int)Math.Ceiling((decimal)((double)signalsAnalyticsService.TradeHistoryDeltas.Count / 100));
+            model.TradeHistoryDeltas = signalsAnalyticsService.TradeHistoryDeltas.Skip((PageNumber - 1) * 100).Take(100).ToList();
             model.CurrentPage = PageNumber;
             model.MaxAvailablePageNumber = PageNumber + 5 > model.CountOfPages ? model.CountOfPages : PageNumber + 5;
             return View(model);

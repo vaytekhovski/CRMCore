@@ -31,8 +31,8 @@ namespace THManager
                 AccountTradeHistories = UpdateDesiredAmounts(AccountTradeHistories);
                 List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories.ToList());
 
-                List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastSellId).ToList();
-                context.AccountTradeHistories.RemoveRange(buf);
+                //List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastSellId).ToList();
+                //context.AccountTradeHistories.RemoveRange(buf);
 
                 context.AccountTradeHistories.AddRange(CalculatedTradeHistories);
 
@@ -63,7 +63,7 @@ namespace THManager
             {
                 foreach (var _acc in Changer.ExchangeKeys.Where(x => x.AccountId != "all"))
                 {
-                    double buyAmount = 0;
+                    decimal buyAmount = 0;
 
                     var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time).ToArray();
 
@@ -103,9 +103,9 @@ namespace THManager
             {
                 foreach (var _acc in Changer.ExchangeKeys.Where(x => x.AccountId != "all")) // TODO: select AccountId + distinct
                 {
-                    double profit = 0;
-                    double desiredProfit = 0;
-                    double buyAmount = 0;
+                    decimal profit = 0;
+                    decimal desiredProfit = 0;
+                    decimal buyAmount = 0;
 
                     var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time).ToArray();
 

@@ -136,11 +136,11 @@ namespace THManager
                     Time = item.TimeEnded.AddHours(3),
                     Side = item.Side,
                     Pair = item.Base,
-                    Price = Convert.ToDouble(item.Rate),
-                    Quantity = Convert.ToDouble(item.ClosedAmount),
-                    DesiredQuantity = item.Side == "buy" ? Convert.ToDouble(item.ClosedAmount) : 0,
-                    DollarQuantity = (double)(item.Rate * item.ClosedAmount),
-                    DesiredDollarQuantity = item.Side == "buy" ? (double)(item.Rate * item.ClosedAmount) : 0
+                    Price = item.Rate,
+                    Quantity = item.ClosedAmount,
+                    DesiredQuantity = item.Side == "buy" ? item.ClosedAmount : 0,
+                    DollarQuantity = item.Rate * item.ClosedAmount,
+                    DesiredDollarQuantity = item.Side == "buy" ? item.Rate * item.ClosedAmount : 0
                 });
             }
         }

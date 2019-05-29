@@ -22,7 +22,6 @@ namespace CRM.Services
 
         public double TotalProfit { get; set; }
         public double DesiredTotalProfit { get; set; }
-        public int CountOfPages { get; set; }
 
         private DateTime StartDate;
         private DateTime EndDate;
@@ -45,12 +44,10 @@ namespace CRM.Services
                     x.Time <= EndDate).ToList();
             }
 
-            CountOfPages = (int)Math.Ceiling((decimal)((double)AccountTradeHistories.Count / 100));
             UpdateTotalProfit();
 
             Models.TradeHistory.TradeHistoryModel tradeHistoryModel = new Models.TradeHistory.TradeHistoryModel();
             tradeHistoryModel.AccountTradeHistories = AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
-            tradeHistoryModel.CountOfPages = CountOfPages;
             tradeHistoryModel.TotalProfit = TotalProfit;
             tradeHistoryModel.DesiredTotalProfit = DesiredTotalProfit;
 

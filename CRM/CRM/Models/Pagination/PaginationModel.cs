@@ -10,6 +10,6 @@ namespace CRM.Models.Pagination
         public int FirstVisiblePage { get; set; }
         public int LastVisiblePage { get; set; }
 
-        public int LastPage { get; set; }
+        public int CountOfPages { get; set; }
     }
 }

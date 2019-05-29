@@ -12,6 +12,18 @@ namespace CRM.Controllers.Data
     [Authorize]
     public class DataController : Controller
     {
+        private readonly OrderBookService orderBook;
+        private readonly TradeHistoryService tradeHistory;
+        private readonly TradeDeltaService tradeDelta;
+
+        public DataController()
+        {
+            orderBook = new OrderBookService();
+            tradeHistory = new TradeHistoryService();
+            tradeDelta = new TradeDeltaService();
+        }
+
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -41,18 +53,11 @@ namespace CRM.Controllers.Data
         [HttpPost]
         public ActionResult ShowOrderBookAsks(OrderBookViewModel model)
         {
-            OrderBookService orderBook = new OrderBookService();
-            if (DateTime.TryParse(model.StartDate, out var startDate) && DateTime.TryParse(model.EndDate, out var endDate))
-            {
-                orderBook.Load("ask", model.Coin, model.Situation, startDate, endDate);
+            orderBook.Load("ask", model.Coin, model.Situation, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
-                model.Show = orderBook.Show;
-                model.SummVolume = orderBook.SummVolume;
+            model.Show = orderBook.Show;
+            model.SummVolume = orderBook.SummVolume;
 
-                return View(model);
-            }
-
-            ModelState.AddModelError("Date", "Dates invalid");
             return View(model);
         }
 
@@ -72,18 +77,11 @@ namespace CRM.Controllers.Data
         [HttpPost]
         public ActionResult ShowOrderBookBids(OrderBookViewModel model)
         {
-            OrderBookService orderBook = new OrderBookService();
-            if (DateTime.TryParse(model.StartDate, out var startDate) && DateTime.TryParse(model.EndDate, out var endDate))
-            {
-                orderBook.Load("bid", model.Coin, model.Situation, startDate, endDate);
+            orderBook.Load("bid", model.Coin, model.Situation, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
-                model.Show = orderBook.Show;
-                model.SummVolume = orderBook.SummVolume;
+            model.Show = orderBook.Show;
+            model.SummVolume = orderBook.SummVolume;
 
-                return View(model);
-            }
-
-            ModelState.AddModelError("Date", "Dates invalid");
             return View(model);
         }
 
@@ -103,19 +101,12 @@ namespace CRM.Controllers.Data
         [HttpPost]
         public ActionResult ShowTradeHistory(TradeHistoryViewModel model)
         {
-            TradeHistoryService tradeHistory = new TradeHistoryService();
-            if (DateTime.TryParse(model.StartDate, out var startDate) && DateTime.TryParse(model.EndDate, out var endDate))
-            {
-                model.OrderType = model.OrderType == null ? "all" : model.OrderType;
-                tradeHistory.Load(model.Coin, model.Situation, model.OrderType, startDate, endDate);
+            model.OrderType = model.OrderType == null ? "all" : model.OrderType;
+            tradeHistory.Load(model.Coin, model.Situation, model.OrderType, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
-                model.Show = tradeHistory.Show;
-                model.SummVolume = tradeHistory.SummVolume;
+            model.Show = tradeHistory.Show;
+            model.SummVolume = tradeHistory.SummVolume;
 
-                return View(model);
-            }
-
-            ModelState.AddModelError("Date", "Dates invalid");
             return View(model);
         }
 
@@ -135,19 +126,12 @@ namespace CRM.Controllers.Data
         [HttpPost]
         public ActionResult ShowTradeDelta(TradeDeltaViewModel model)
         {
-            TradeDeltaService tradeDelta = new TradeDeltaService();
-            if (DateTime.TryParse(model.StartDate, out var startDate) && DateTime.TryParse(model.EndDate, out var endDate))
-            {
-                model.NullDelta = model.NullDelta == null ? "all" : model.NullDelta;
+            model.NullDelta = model.NullDelta == null ? "all" : model.NullDelta;
 
-                tradeDelta.Load(model.Coin, startDate, endDate, model.NullDelta);
+            tradeDelta.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), model.NullDelta);
 
-                model.Show = tradeDelta.Show;
-                model.SummDelta = tradeDelta.SummDelta;
-                return View(model);
-            }
-
-            ModelState.AddModelError("Date", "Dates invalid");
+            model.Show = tradeDelta.Show;
+            model.SummDelta = tradeDelta.SummDelta;
             return View(model);
         }
     }

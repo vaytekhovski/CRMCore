@@ -16,7 +16,13 @@ namespace CRM.Controllers.User
     [Authorize] 
     public class UserPanelController : Controller
     {
+        private readonly ChangeUserDataService changeUserDataService;
         private UserContext db;
+
+        public UserPanelController()
+        {
+            changeUserDataService = new ChangeUserDataService();
+        }
 
         public UserPanelController(UserContext context)
         {
@@ -39,7 +45,7 @@ namespace CRM.Controllers.User
         [HttpGet]
         public async Task<ActionResult> ChangeLoginAsync(UserPanelModel model)
         {
-            ChangeUserDataService.ChangeUserLogin(User.Identity.Name, model.Login);
+            changeUserDataService.ChangeUserLogin(User.Identity.Name, model.Login);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
@@ -47,7 +53,7 @@ namespace CRM.Controllers.User
         [HttpGet]
         public ActionResult ChangePassword(UserPanelModel model)
         {
-            ChangeUserDataService.ChangeUserPassword(User.Identity.Name, model.Password);
+            changeUserDataService.ChangeUserPassword(User.Identity.Name, model.Password);
             return RedirectToAction("UserPanel");
         }
         

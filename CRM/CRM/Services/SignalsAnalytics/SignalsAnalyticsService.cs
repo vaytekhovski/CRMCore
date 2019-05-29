@@ -9,14 +9,14 @@ namespace CRM.Services.SignalsAnalytics
 {
     public class SignalsAnalyticsService
     {
+        public List<SignalsPrivate> SignalsPrivates { get; set; }
+        public List<TradeHistoryDelta> TradeHistoryDeltas { get; set; }
+
         public SignalsAnalyticsService()
         {
             SignalsPrivates = new List<SignalsPrivate>();
             TradeHistoryDeltas = new List<TradeHistoryDelta>();
         }
-
-        public List<SignalsPrivate> SignalsPrivates { get; set; }
-        public List<TradeHistoryDelta> TradeHistoryDeltas { get; set; }
 
 
         public SignalsAnalyticsViewModel LoadSignalsPrivate(SignalsAnalyticsViewModel model)

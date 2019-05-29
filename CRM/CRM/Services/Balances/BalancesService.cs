@@ -14,9 +14,9 @@ namespace CRM.Services.Balances
         {
         }
 
-        private static string ResponseBody;
+        private  string ResponseBody;
 
-        public static List<Balance> LoadBalances(string AccountId)
+        public  List<Balance> LoadBalances(string AccountId)
         {
             var client = new HttpClient();
             var httpRequestMessage = new HttpRequestMessage
@@ -64,7 +64,7 @@ namespace CRM.Services.Balances
             return balance;
         }
 
-        public static async void GetResponseBodyAsync(HttpResponseMessage response)
+        public  async void GetResponseBodyAsync(HttpResponseMessage response)
         {
             ResponseBody = await response.Content.ReadAsStringAsync();
         }

@@ -15,6 +15,15 @@ namespace CRM.Controllers.Charts
     [Authorize]
     public class ChartsController : Controller
     {
+        private readonly AsksOnBidsService asksOnBids;
+
+        private readonly DeltaOnTradeHistoryService deltaOnTradeHistory;
+
+        public ChartsController()
+        {
+            asksOnBids = new AsksOnBidsService();
+            deltaOnTradeHistory = new DeltaOnTradeHistoryService();
+        }
 
         [HttpGet]
         public ActionResult Charts()
@@ -42,20 +51,14 @@ namespace CRM.Controllers.Charts
         public ActionResult AsksOnBids(AskOnBidViewModel model)
         {
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
-            AsksOnBidsService asksOnBids = new AsksOnBidsService();
-            if (DateTime.TryParse(model.StartDate, out var startDate) && DateTime.TryParse(model.EndDate, out var endDate))
-            {
-                asksOnBids.Load(model.Coin, startDate, endDate);
 
-                model.DatesAsks = asksOnBids.DatesAsks.Select(x => x.ToJavascriptTicks()).ToList();
-                model.DatesBids = asksOnBids.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
-                model.AsksValues = asksOnBids.AsksValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
-                model.BidsValues = asksOnBids.BidsValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            asksOnBids.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
-                return View(model);
-            }
+            model.DatesAsks = asksOnBids.DatesAsks.Select(x => x.ToJavascriptTicks()).ToList();
+            model.DatesBids = asksOnBids.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
+            model.AsksValues = asksOnBids.AsksValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            model.BidsValues = asksOnBids.BidsValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
 
-            ModelState.AddModelError("Date", "Dates invalid");
             return View(model);
         }
 
@@ -80,24 +83,18 @@ namespace CRM.Controllers.Charts
         public ActionResult DeltaOnTradeHistory(DeltaOnTradeHistoryViewModel model)
         {
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
-            DeltaOnTradeHistoryService deltaOnTradeHistory = new DeltaOnTradeHistoryService();
-            if (DateTime.TryParse(model.StartDate, out var startDate) && DateTime.TryParse(model.EndDate, out var endDate))
-            {
-                deltaOnTradeHistory.Load(model.Coin, startDate, endDate);
 
-                model.DatesDelta = deltaOnTradeHistory.DatesDelta.Select(x => x.ToJavascriptTicks()).ToList();
-                model.DeltaValues = deltaOnTradeHistory.DeltaValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            deltaOnTradeHistory.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
-                model.DatesTHBuy = deltaOnTradeHistory.DatesTHBuy.Select(x => x.ToJavascriptTicks()).ToList();
-                model.THBuyValues = deltaOnTradeHistory.THBuyValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            model.DatesDelta = deltaOnTradeHistory.DatesDelta.Select(x => x.ToJavascriptTicks()).ToList();
+            model.DeltaValues = deltaOnTradeHistory.DeltaValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
 
-                model.DatesTHSell = deltaOnTradeHistory.DatesTHSell.Select(x => x.ToJavascriptTicks()).ToList();
-                model.THSellValues = deltaOnTradeHistory.THSellValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            model.DatesTHBuy = deltaOnTradeHistory.DatesTHBuy.Select(x => x.ToJavascriptTicks()).ToList();
+            model.THBuyValues = deltaOnTradeHistory.THBuyValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
 
-                return View(model);
-            }
+            model.DatesTHSell = deltaOnTradeHistory.DatesTHSell.Select(x => x.ToJavascriptTicks()).ToList();
+            model.THSellValues = deltaOnTradeHistory.THSellValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
 
-            ModelState.AddModelError("Date", "Dates invalid");
             return View(model);
         }
     }

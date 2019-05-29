@@ -59,13 +59,13 @@ namespace CRM.Controllers
             viewModel.TotalProfit = Model.TotalProfit;
             viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
 
-            viewModel.CountOfPages = Model.CountOfPages;
             viewModel.CurrentPage = PageNumber;
 
-            var pagination = paginationService.GetPaginationModel(PageNumber, Model.CountOfPages);
+            var pagination = paginationService.GetPaginationModel(PageNumber, Model.AccountTradeHistories.Count);
 
             viewModel.FirstVisiblePage = pagination.FirstVisiblePage;
             viewModel.LastVisiblePage = pagination.LastVisiblePage;
+            viewModel.CountOfPages = pagination.CountOfPages;
 
             return View(viewModel);
         }
