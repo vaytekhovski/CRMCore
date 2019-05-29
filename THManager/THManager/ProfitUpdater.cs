@@ -32,7 +32,7 @@ namespace THManager
                 List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories.ToList());
 
                 List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastSellId).ToList();
-                context.AccountTradeHistories.RemoveRange(buf);
+                context.AccountTradeHistories.RemoveRange(context.AccountTradeHistories.ToList());
 
                 context.AccountTradeHistories.AddRange(CalculatedTradeHistories);
 
