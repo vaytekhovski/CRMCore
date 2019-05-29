@@ -68,12 +68,12 @@ table
 #toTopButton {
     display: inline-block;
     background-color: #a76be3;
-    width: 120px;
+    width: 220px;
     height: 80px;
     text-align: center;
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 100px;
+    right: 100px;
     transition: background-color .3s, opacity .5s, visibility .5s;
     opacity: 0;
     visibility: hidden;

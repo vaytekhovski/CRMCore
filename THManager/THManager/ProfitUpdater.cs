@@ -121,8 +121,17 @@ namespace THManager
                             TH[i].Profit = profit;
                             TH[i].DesiredProfit = desiredProfit;
 
-                            TH[i].PercentProfit = profit / ((buyAmount + (buyAmount + profit)) / 2) * 100;
-                            TH[i].DesiredPercentProfit = desiredProfit / ((buyAmount + (buyAmount + desiredProfit)) / 2) * 100;
+                            try
+                            {
+                                TH[i].PercentProfit = profit / ((buyAmount + (buyAmount + profit)) / 2) * 100;
+                                TH[i].DesiredPercentProfit = desiredProfit / ((buyAmount + (buyAmount + desiredProfit)) / 2) * 100;
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                                throw;
+                            }
+                            
 
                             profit = 0;
                             desiredProfit = 0;
