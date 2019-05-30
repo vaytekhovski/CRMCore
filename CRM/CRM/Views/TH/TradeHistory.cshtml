@@ -74,16 +74,6 @@
         </div>
     </div>
 
-    <span style="display: @(Context.User.Identity.Name != "1" ? "none" : "block");">
-        <span class="profit profit_string" style="text-align: center; color: @(Model.TotalProfit > 0 ? "green" : "red"); display: @(Model.TotalProfit == 0 ? "none" : "block");">
-            @{
-                string profitStr = Model.TotalProfit > 0 ? "+" : "";
-                profitStr += String.Format("{0:0.##}", Model.TotalProfit);
-                profitStr += "$";
-            }
-            Прибыль: @profitStr
-        </span>
-    </span>
 
     <span class="profit profit_string" style="text-align: center; color: @(Model.DesiredTotalProfit > 0 ? "green" : "red"); display: @(Model.DesiredTotalProfit == 0 ? "none" : "block"); ">
         @{
