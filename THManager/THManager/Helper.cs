@@ -16,7 +16,7 @@ namespace THManager
                 try
                 {
                     LastSellTime = context.AccountTradeHistories.LastOrDefault(x =>
-                        x.Time < DateTime.Now.AddDays(-1) &&
+                        x.Time < DateTime.Now.AddDays(-2) &&
                         x.Side == "sell" &&
                         x.Profit != 0).Time;
                 }
@@ -36,7 +36,7 @@ namespace THManager
                 try
                 {
                     LastSellId = context.AccountTradeHistories.LastOrDefault(x =>
-                        x.Time < DateTime.Now.AddDays(-1) &&
+                        x.Time < DateTime.Now.AddDays(-2) &&
                         x.Side == "sell" &&
                         x.Profit != 0).Id;
                 }
