@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Datavisio</title>
+    @RenderSection("Styles", required: false)
     <link href="" rel="stylesheet">
     <link href="~/css/app.css" rel="stylesheet">
 
@@ -17,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
     <script src="~/js/sorttable.js"></script>
-    @RenderSection("Styles", required: false)
+
 
 </head>
 <body class="body_of_layout">

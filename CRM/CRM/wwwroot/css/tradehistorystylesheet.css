@@ -1,10 +1,9 @@
-﻿
-@@media only screen and (max-width: 600px) {
+﻿@media only screen and (max-width: 600px) {
     .table-font
 
 {
     table-layout: auto;
-    font-size: 8px !important;
+    font-size: 7px !important;
     text-align: center;
 }
 
