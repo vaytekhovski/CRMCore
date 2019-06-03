@@ -20,7 +20,7 @@ namespace THManager
 
         private int LastSellId;
 
-        public void UpdateProfit(List<AccountTradeHistory> _AccountTradeHistories)
+        public void UpdateProfit(List<AccountTradeHistory> _AccountTradeHistories, bool regularCalculating = true)
         {
             AccountTradeHistories = _AccountTradeHistories;
             InitiateCoins();
@@ -31,8 +31,15 @@ namespace THManager
                 AccountTradeHistories = UpdateDesiredAmounts(AccountTradeHistories);
                 List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories.ToList());
 
-                List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastSellId).ToList();
-                context.AccountTradeHistories.RemoveRange(buf);
+                if (regularCalculating)
+                {
+                    List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastSellId).ToList();
+                    context.AccountTradeHistories.RemoveRange(buf);
+                }
+                else
+                {
+                    context.AccountTradeHistories.RemoveRange(context.AccountTradeHistories.ToList());
+                }
 
                 context.AccountTradeHistories.AddRange(CalculatedTradeHistories);
 
@@ -51,12 +58,7 @@ namespace THManager
             }
         }
 
-
         
-        
-
-        
-
         private List<AccountTradeHistory> UpdateDesiredAmounts(List<AccountTradeHistory> UncalculatedTradeHistories)
         {
             foreach (var _coin in UncalculatedTradeHistories.Where(x => x.Pair != "all").Select(x => x.Pair).Distinct())
@@ -70,6 +72,10 @@ namespace THManager
                     for (int i = 0; i < TH.Count(); i++)
                     {
                         buyAmount += TH[i].Side == "buy" ? TH[i].Quantity : 0;
+
+                        int a;
+                        if (TH[i].Time == new DateTime(2019, 06, 01, 03, 34, 38))
+                            a = 5;
 
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
@@ -130,7 +136,6 @@ namespace THManager
                             {
                                 Console.WriteLine(ex.Message);
                             }
-                            
 
                             profit = 0;
                             desiredProfit = 0;
@@ -173,7 +178,6 @@ namespace THManager
             Coins.Add(new Field { Value = "XRP", Name = "USDT-XRP" });
             Coins.Add(new Field { Value = "LTC", Name = "USDT-LTC" });
             Coins.Add(new Field { Value = "TRX", Name = "USDT-TRX" });
-
             Coins.Add(new Field { Value = "ZEC", Name = "USDT-ZEC" });
             Coins.Add(new Field { Value = "DASH", Name = "USDT-DASH" });
             Coins.Add(new Field { Value = "XMR", Name = "USDT-XMR" });
@@ -182,7 +186,6 @@ namespace THManager
             Coins.Add(new Field { Value = "ADA", Name = "USDT-ADA" });
             Coins.Add(new Field { Value = "BCHABC", Name = "USDT-BCHABC" });
         }
-
 
     }
 

@@ -4,43 +4,90 @@ namespace THManager
 {
     class Program
     {
+
+        private static bool isDailyLoadEnded;
+
         static void Main(string[] args)
         {
             var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromMinutes(2);
 
-            var timer = new System.Threading.Timer((e) =>
+            var DailyPeriodTimeSpan = TimeSpan.FromHours(24);
+            var DailyTimer = new System.Threading.Timer((e) =>
             {
-                Calculate();
-            }, null, startTimeSpan, periodTimeSpan);
-            
+                isDailyLoadEnded = false;
+                DailyCalculate();
+                isDailyLoadEnded = true;
+            }, null, startTimeSpan, DailyPeriodTimeSpan);
+
+
+            var regularPeriodTimeSpan = TimeSpan.FromMinutes(2);
+            var RegularTimer = new System.Threading.Timer((e) =>
+            {
+                if(isDailyLoadEnded)
+                    EveryTwoMinCalculate();
+            }, null, startTimeSpan, regularPeriodTimeSpan);
+
+
+
             Console.ReadKey();
         }
 
-        static void Calculate()
+        static void EveryTwoMinCalculate()
         {
             Loader loader = new Loader();
-            Console.WriteLine($"\n{DateTime.Now} | Load Orders started");
-            var Orders = loader.LoadOrders();
-            Console.WriteLine($"{DateTime.Now} | Load Orders ended\n");
+            Console.WriteLine($"\n{DateTime.Now} |EveryTwoMinCalculate| Load Orders started");
+            DateTime timeToLoad = Helper.FindTimeLastSell().AddHours(-3);
+            var Orders = loader.LoadOrders(timeToLoad);
+            Console.WriteLine($"\n{DateTime.Now} |EveryTwoMinCalculate| Load Orders ended");
 
             Changer changer = new Changer();
-            Console.WriteLine($"{DateTime.Now} | Change Orders started");
+            Console.WriteLine($"\n{DateTime.Now} |EveryTwoMinCalculate| Change Orders started");
             var TH = changer.ChangeOrdersBeforeCalculate(Orders);
-            Console.WriteLine($"{DateTime.Now} | Change Orders ended\n");
+            Console.WriteLine($"\n{DateTime.Now} |EveryTwoMinCalculate| Change Orders ended");
 
             ProfitUpdater profitUpdater = new ProfitUpdater();
-            Console.WriteLine($"{DateTime.Now} | Update Profit and load to DB started");
+            Console.WriteLine($"\n{DateTime.Now} |EveryTwoMinCalculate| Update Profit and load to DB started");
             profitUpdater.UpdateProfit(TH);
-            Console.WriteLine($"{DateTime.Now} | Update Profit and load to DB ended\n");
+            Console.WriteLine($"\n{DateTime.Now} |EveryTwoMinCalculate| Update Profit and load to DB ended");
             
             DrowLine();
         }
 
+        static void DailyCalculate()
+        {
+            DrowStars();
+
+            Loader loader = new Loader();
+            Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Load Orders started");
+            DateTime timeToLoad = new DateTime(2019, 04, 06);
+            var Orders = loader.LoadOrders(timeToLoad);
+            Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Load Orders ended");
+
+            Changer changer = new Changer();
+            Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Change Orders started");
+            var TH = changer.ChangeOrdersBeforeCalculate(Orders);
+            Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Change Orders ended");
+
+            ProfitUpdater profitUpdater = new ProfitUpdater();
+            Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Update Profit and load to DB started");
+            profitUpdater.UpdateProfit(TH, false);
+            Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Update Profit and load to DB ended");
+
+            DrowStars();
+        }
+
+
+
         static void DrowLine()
         {
-            var starsStr = new string('*', 70);
-            Console.Write(starsStr);
+            var lineStr = new string('-', 80);
+            Console.Write('\n' + lineStr);
+        }
+
+        static void DrowStars()
+        {
+            var starStr = new string('*', 80);
+            Console.Write('\n' + starStr);
         }
     }
 }
