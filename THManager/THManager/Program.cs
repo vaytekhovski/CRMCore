@@ -65,7 +65,7 @@ namespace THManager
 
             Changer changer = new Changer();
             Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Change Orders started");
-            var TH = changer.ChangeOrdersBeforeCalculate(Orders);
+            var TH = changer.ChangeOrdersBeforeCalculate(Orders, false);
             Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Change Orders ended");
 
             ProfitUpdater profitUpdater = new ProfitUpdater();

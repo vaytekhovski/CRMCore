@@ -27,7 +27,7 @@ namespace THManager
         private int LastId;
 
 
-        public List<AccountTradeHistory> ChangeOrdersBeforeCalculate(List<Orders> _orders)
+        public List<AccountTradeHistory> ChangeOrdersBeforeCalculate(List<Orders> _orders, bool regularCalculating = true)
         {
             AccountTradeHistories = new List<AccountTradeHistory>();
             orders = _orders;
@@ -39,14 +39,17 @@ namespace THManager
 
             using (CRMContext context = new CRMContext())
             {
-                try
-                {
-                    LastId = context.AccountTradeHistories.FirstOrDefault(x => x.Time > Helper.FindTimeLastSell()).Id;
-                }
-                catch
-                {
-                    LastId = 1;
-                }
+                //try
+                //{
+                //    LastId = context.AccountTradeHistories.FirstOrDefault(x => x.Time > Helper.FindTimeLastSell()).Id;
+                //}
+                //catch
+                //{
+                //    LastId = 1;
+                //}
+
+                LastId = regularCalculating ? context.AccountTradeHistories.FirstOrDefault(x => x.Time > Helper.FindTimeLastSell()).Id : 1;
+
             }
 
 

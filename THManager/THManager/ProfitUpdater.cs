@@ -73,11 +73,6 @@ namespace THManager
                     {
                         buyAmount += TH[i].Side == "buy" ? TH[i].Quantity : 0;
 
-                        int a;
-                        if (TH[i].Time == new DateTime(2019, 06, 01, 03, 34, 38))
-                            a = 5;
-
-
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
                         {
                             TH[i].DesiredQuantity = buyAmount;
