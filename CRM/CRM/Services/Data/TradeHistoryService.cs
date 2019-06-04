@@ -21,10 +21,10 @@ namespace CRM.Services.Data
             using (CRMContext context = new CRMContext())
             {
                 Show = context.TradeHistoryModels
-                    .Where(x => x.Date >= startDate && x.Date <= endDate &&
-                    coin == "all" ? true : x.CurrencyName == coin &&
-                    situation == "all" ? true : x.MarketSituation == situation &&
-                    orderType == "all" ? true : x.Side == orderType)
+                    .Where(x => x.Date >= startDate && x.Date <= endDate)
+                    .Where(x => coin == "all" ? true : x.CurrencyName == coin)
+                    .Where(x => situation == "all" ? true : x.MarketSituation == situation)
+                    .Where(x => orderType == "all" ? true : x.Side == orderType)
                     .OrderByDescending(x => x.Date)
                     .ToList();
 

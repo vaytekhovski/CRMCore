@@ -21,10 +21,10 @@ namespace CRM.Services.Data
             using (CRMContext context = new CRMContext())
             {
                 Show = context.OrderBookModels
-                    .Where(x => x.BookType == bookType &&
-                        (coin == "all" ? true : x.CurrencyName == coin) &&
-                        (situation == "all" ? true : x.MarketSituation == situation) &&
-                        x.Date >= startDate && x.Date <= endDate)
+                    .Where(x => x.BookType == bookType)
+                    .Where(x => coin == "all" ? true : x.CurrencyName == coin)
+                    .Where(x => situation == "all" ? true : x.MarketSituation == situation)
+                    .Where(x => x.Date >= startDate && x.Date <= endDate)
                     .OrderByDescending(x => x.Date)
                     .ToList();
 

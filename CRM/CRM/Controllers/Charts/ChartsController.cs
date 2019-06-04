@@ -83,7 +83,6 @@ namespace CRM.Controllers.Charts
         public ActionResult DeltaOnTradeHistory(DeltaOnTradeHistoryViewModel model)
         {
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
-
             deltaOnTradeHistory.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
 
             model.DatesDelta = deltaOnTradeHistory.DatesDelta.Select(x => x.ToJavascriptTicks()).ToList();

@@ -32,14 +32,14 @@ namespace CRM.Services.Charts
             using (CRMContext context = new CRMContext())
             {
                 Deltas = context.TradeDeltaModels
-                    .Where(x => x.CurrencyName == coin &&
-                    x.TimeTo >= startDate && x.TimeTo <= endDate &&
-                    x.Delta > 0 || x.Delta < 0)
+                    .Where(x => x.CurrencyName == coin)
+                    .Where(x => x.TimeTo >= startDate && x.TimeTo <= endDate)
+                    .Where(x => x.Delta > 0 || x.Delta < 0)
                     .OrderBy(x => x.TimeFrom).ToList();
 
                 TH = context.TradeHistoryModels
-                    .Where(x => x.CurrencyName == coin &&
-                    x.Date >= startDate && x.Date <= endDate)
+                    .Where(x => x.CurrencyName == coin)
+                    .Where(x => x.Date >= startDate && x.Date <= endDate)
                     .OrderBy(x => x.Date).ToList();
             }
 

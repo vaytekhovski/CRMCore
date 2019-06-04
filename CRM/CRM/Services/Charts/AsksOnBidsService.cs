@@ -24,8 +24,8 @@ namespace CRM.Services.Charts
             using (CRMContext context = new CRMContext())
             {
                 AsksBids = context.OrderBookModels
-                    .Where(x => x.CurrencyName == coin &&
-                    x.Date >= startDate && x.Date <= endDate)
+                    .Where(x => x.CurrencyName == coin)
+                    .Where(x => x.Date >= startDate && x.Date <= endDate)
                     .OrderBy(x => x.Date).ToList();
             }
 
