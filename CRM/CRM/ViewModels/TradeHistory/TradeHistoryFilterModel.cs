@@ -29,6 +29,18 @@ namespace CRM.ViewModels
 
         public decimal DesiredTotalProfit { get; set; }
 
+        public int LossOrdersCount { get; set; }
+        public int ProfitOrdersCount { get; set; }
+
+        public int DesiredLossOrdersCount { get; set; }
+        public int DesiredProfitOrdersCount { get; set; }
+
+        public decimal LossOrdersSumm { get; set; }
+        public decimal ProfitOrdersSumm { get; set; }
+
+        public decimal DesiredLossOrdersSumm { get; set; }
+        public decimal DesiredProfitOrdersSumm { get; set; }
+
         public TradeHistoryFilterModel()
         {
             Orders = new List<AccountTradeHistory>();

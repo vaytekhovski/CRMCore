@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CRM.Helpers;
+using CRM.Models.Filters;
 using CRM.Models.TradeHistory;
 using CRM.Services;
 using CRM.Services.Pagination;
@@ -13,7 +14,7 @@ namespace CRM.Controllers
     [Authorize]
     public class THController : Controller
     {
-        private readonly THService THService; // TODO: [COMPLETE] не статик, инициализируется в конструкторе контроллера
+        private readonly THService THService; // TODO: убрать сокращения в именах бизнес сущностей и сервисов
         private readonly PaginationService paginationService;
 
         public THController()
@@ -40,8 +41,8 @@ namespace CRM.Controllers
         [HttpPost]
         public ActionResult TradeHistory(TradeHistoryFilterModel viewModel, string PageButton = "1")
         {
-            int PageNumber = Convert.ToInt32(PageButton);
-            TradeHistoryModel Model = new TradeHistoryModel();
+            var Model = new TradeHistoryModel();
+
             // TODO: использовать такой паттерн везде
             //var model = service.Load(parameter1, parameter2, ...); 
             //var viewModel = new ViewModel();
@@ -49,20 +50,22 @@ namespace CRM.Controllers
 
             viewModel.Account = viewModel.Account == "Все" ? "Все аккаунты" : viewModel.Account;
 
-            if (Model.AccountTradeHistories.Count == 0)
+            var filter = new TradeHistoryFilter
             {
-                Model = THService.Load(viewModel.Account, viewModel.Coin, DateTime.Parse(viewModel.StartDate), DateTime.Parse(viewModel.EndDate).AddDays(1));
-            }
-           
-            viewModel.Orders = Model.AccountTradeHistories.Skip((PageNumber - 1) * 100).Take(100).ToList(); //TODO: пагинация через IQueryable
+                Account = viewModel.Account,
+                Coin = viewModel.Coin,
+                StartDate = DateTime.Parse(viewModel.StartDate),
+                EndDate = DateTime.Parse(viewModel.EndDate).AddDays(1),
+                CurrentPage = Convert.ToInt32(PageButton)
+            };
 
-            viewModel.TotalProfit = Model.TotalProfit;
-            viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
+            Model = THService.Load(filter);
 
-            viewModel.CurrentPage = PageNumber;
+            viewModel = MoveDataFromModelToViewModel(viewModel, Model);
 
-            var pagination = paginationService.GetPaginationModel(PageNumber, Model.AccountTradeHistories.Count);
 
+            var pagination = paginationService.GetPaginationModel(filter.CurrentPage, Model.AccountTradeHistories.Count());
+            viewModel.CurrentPage = filter.CurrentPage;
             viewModel.FirstVisiblePage = pagination.FirstVisiblePage;
             viewModel.LastVisiblePage = pagination.LastVisiblePage;
             viewModel.CountOfPages = pagination.CountOfPages;
@@ -70,8 +73,30 @@ namespace CRM.Controllers
             return View(viewModel);
         }
 
+        private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryFilterModel viewModel, TradeHistoryModel Model)
+        {
+            viewModel.Orders = Model.AccountTradeHistories;
+
+            viewModel.TotalProfit = Model.TotalProfit;
+            viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
+
+            viewModel.LossOrdersCount = Model.LossOrdersCount;
+            viewModel.LossOrdersSumm = Model.LossOrdersSumm;
+
+            viewModel.ProfitOrdersCount = Model.ProfitOrdersCount;
+            viewModel.ProfitOrdersSumm = Model.ProfitOrdersSumm;
+
+            viewModel.DesiredLossOrdersCount = Model.DesiredLossOrdersCount;
+            viewModel.DesiredLossOrdersSumm = Model.DesiredLossOrdersSumm;
+
+            viewModel.DesiredProfitOrdersCount = Model.DesiredProfitOrdersCount;
+            viewModel.DesiredProfitOrdersSumm = Model.DesiredProfitOrdersSumm;
+
+            return viewModel;
+        }
 
 
-        
+
+
     }
 }

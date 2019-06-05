@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using CRM.Master;
-using CRM.Models;
 using CRM.Models.Binance;
-using CRM.Models.Database;
-using CRM.Models.Master;
-using CRM.Services.Balances;
+using CRM.Models.Filters;
+using CRM.Models.TradeHistory;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Services
 {
@@ -18,49 +14,57 @@ namespace CRM.Services
 
         }
 
-        public List<AccountTradeHistory> AccountTradeHistories { get; private set; } = new List<AccountTradeHistory>();
-
-        public decimal TotalProfit { get; set; }
-        public decimal DesiredTotalProfit { get; set; }
-
-        private DateTime StartDate;
-        private DateTime EndDate;
-
-        private readonly DateTime MinDate = new DateTime(2019, 04, 05);
-
-        public Models.TradeHistory.TradeHistoryModel Load(string acc, string coin, DateTime startDate, DateTime endDate)
+        public Models.TradeHistory.TradeHistoryModel Load(TradeHistoryFilter filter)
         {
-            TotalProfit = 0;
-            StartDate = startDate;
-            StartDate = MinDate > StartDate ? MinDate : StartDate;
-            EndDate = endDate;
+            var model = new TradeHistoryModel();
 
             using (CRMContext context = new CRMContext())
             {
-                AccountTradeHistories = context.AccountTradeHistories
-                    .Where(x => coin == "all" ? true : x.Pair == coin)
-                    .Where(x => acc == "Все аккаунты" ? true : x.Account == acc)
-                    .Where(x => x.Time >= StartDate &&
-                    x.Time <= EndDate).ToList();
+                var query = context.AccountTradeHistories
+                    .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
+                    .AsNoTracking();
+
+                if (filter.Coin != "all")
+                    query = query.Where(x => x.Pair == filter.Coin);
+
+                if (filter.Account != "Все аккаунты")
+                    query = query.Where(x => x.Account == filter.Account);
+
+
+                UpdateTotalProfit(model, query);
+                UpdateCountOfLossAndProfitOrders(model, query);
+                UpdateSummOfLossAndProfitOrders(model, query);
+
+                query = query.OrderByDescending(x => x.Time);
+
+                model.AccountTradeHistories = query.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
             }
 
-            UpdateTotalProfit();
-
-            Models.TradeHistory.TradeHistoryModel tradeHistoryModel = new Models.TradeHistory.TradeHistoryModel();
-            tradeHistoryModel.AccountTradeHistories = AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
-            tradeHistoryModel.TotalProfit = TotalProfit;
-            tradeHistoryModel.DesiredTotalProfit = DesiredTotalProfit;
-
-            return tradeHistoryModel;
+            return model;
         }
 
-        private void UpdateTotalProfit()
+        private void UpdateTotalProfit(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
         {
-            foreach (var item in AccountTradeHistories.Where(x => x.Profit != 0))
-            {
-                TotalProfit += item.Profit;
-                DesiredTotalProfit += item.DesiredProfit;
-            }
+            model.TotalProfit = query.Where(x => x.Profit != 0).Sum(x => x.Profit);
+            model.DesiredTotalProfit = query.Where(x => x.DesiredProfit != 0).Sum(x => x.DesiredProfit);
+        }
+
+        private void UpdateCountOfLossAndProfitOrders(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
+        {
+            model.LossOrdersCount = query.Where(x => x.Profit < 0).Count();
+            model.ProfitOrdersCount = query.Where(x => x.Profit > 0).Count();
+
+            model.DesiredLossOrdersCount = query.Where(x => x.DesiredProfit < 0).Count();
+            model.DesiredProfitOrdersCount = query.Where(x => x.DesiredProfit > 0).Count();
+        }
+
+        private void UpdateSummOfLossAndProfitOrders(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
+        {
+            model.LossOrdersSumm = query.Where(x => x.Profit < 0).Sum(x => x.Profit);
+            model.ProfitOrdersSumm = query.Where(x => x.Profit > 0).Sum(x => x.Profit);
+
+            model.DesiredLossOrdersSumm = query.Where(x => x.DesiredProfit < 0).Sum(x => x.DesiredProfit);
+            model.DesiredProfitOrdersSumm = query.Where(x => x.DesiredProfit > 0).Sum(x => x.DesiredProfit);
         }
 
     }
