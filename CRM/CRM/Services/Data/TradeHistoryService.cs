@@ -1,5 +1,6 @@
 ﻿using CRM.Models;
 using CRM.Models.Database;
+using CRM.ViewModels.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace CRM.Services.Data
 
         public TradeHistoryService() { }
 
-        public void Load(string coin, string situation, string orderType, DateTime startDate, DateTime endDate)
+        public TradeHistoryViewModel Load(string coin, string situation, string orderType, DateTime startDate, DateTime endDate)
         {
             if (startDate == null && endDate == null)
-                return;
+                return null;
 
             using (CRMContext context = new CRMContext())
             {
@@ -30,7 +31,14 @@ namespace CRM.Services.Data
 
                 SummVolume = Show.Sum(item => item.Volume);
             }
-            
+
+            TradeHistoryViewModel model = new TradeHistoryViewModel
+            {
+                Show = Show,
+                SummVolume = SummVolume
+            };
+
+            return model;
         }
     }
 }

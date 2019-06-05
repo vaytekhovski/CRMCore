@@ -44,24 +44,20 @@ namespace CRM.Controllers.SignalsAnalytics
         }
 
         [HttpPost]
-        public ActionResult SignalsPrivate(SignalsAnalyticsViewModel model, string PageButton = "1")
+        public ActionResult SignalsPrivate(SignalsAnalyticsViewModel ViewModel, string PageButton = "1")
         {
             int PageNumber = Convert.ToInt32(PageButton);
-            if (signalsAnalyticsService.SignalsPrivates.Count == 0 || PageNumber == 0)
-            {
-                signalsAnalyticsService.LoadSignalsPrivate(model);
-            }
 
-            model.SignalsPrivates = signalsAnalyticsService.SignalsPrivates.Skip((PageNumber - 1) * 100).Take(100).ToList();
-            model.CurrentPage = PageNumber;
+            var model = signalsAnalyticsService.LoadSignalsPrivate(ViewModel);
 
-
-            var pagination = paginationService.GetPaginationModel(PageNumber, signalsAnalyticsService.SignalsPrivates.Count);
-
-            model.FirstVisiblePage = pagination.FirstVisiblePage;
-            model.LastVisiblePage = pagination.LastVisiblePage;
-            model.CountOfPages = pagination.CountOfPages;
-            return View(model);
+            ViewModel.SignalsPrivates = model.SignalsPrivates.Skip((PageNumber - 1) * 100).Take(100).ToList();
+            
+            var pagination = paginationService.GetPaginationModel(PageNumber, model.SignalsPrivates.Count);
+            ViewModel.CurrentPage = PageNumber;
+            ViewModel.FirstVisiblePage = pagination.FirstVisiblePage;
+            ViewModel.LastVisiblePage = pagination.LastVisiblePage;
+            ViewModel.CountOfPages = pagination.CountOfPages;
+            return View(ViewModel);
         }
 
         [HttpGet]
@@ -84,17 +80,20 @@ namespace CRM.Controllers.SignalsAnalytics
         }
 
         [HttpPost]
-        public ActionResult TradeHistoryDeltas(SignalsAnalyticsViewModel model, int PageNumber = 0)
+        public ActionResult TradeHistoryDeltas(SignalsAnalyticsViewModel ViewModel, string PageButton = "1")
         {
-            if (signalsAnalyticsService.TradeHistoryDeltas.Count == 0 || PageNumber == 0)
-            {
-                signalsAnalyticsService.LoadTradeHistoryDelta(model);
-            }
-            model.CountOfPages = (int)Math.Ceiling((decimal)((double)signalsAnalyticsService.TradeHistoryDeltas.Count / 100));
-            model.TradeHistoryDeltas = signalsAnalyticsService.TradeHistoryDeltas.Skip((PageNumber - 1) * 100).Take(100).ToList();
-            model.CurrentPage = PageNumber;
-            model.MaxAvailablePageNumber = PageNumber + 5 > model.CountOfPages ? model.CountOfPages : PageNumber + 5;
-            return View(model);
+            int PageNumber = Convert.ToInt32(PageButton);
+
+            var model = signalsAnalyticsService.LoadTradeHistoryDelta(ViewModel);
+
+            ViewModel.TradeHistoryDeltas = model.TradeHistoryDeltas.Skip((PageNumber - 1) * 100).Take(100).ToList();
+
+            var pagination = paginationService.GetPaginationModel(PageNumber, model.TradeHistoryDeltas.Count);
+            ViewModel.CurrentPage = PageNumber;
+            ViewModel.FirstVisiblePage = pagination.FirstVisiblePage;
+            ViewModel.LastVisiblePage = pagination.LastVisiblePage;
+            ViewModel.CountOfPages = pagination.CountOfPages;
+            return View(ViewModel);
         }
 
 

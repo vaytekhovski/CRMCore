@@ -1,5 +1,6 @@
 ﻿using CRM.Models;
 using CRM.Models.Database;
+using CRM.ViewModels.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace CRM.Services.Data
 
         public TradeDeltaService() { }
 
-        public void Load(string coin, DateTime startDate, DateTime endDate, string nulldelta = "all")
+        public TradeDeltaViewModel Load(string coin, DateTime startDate, DateTime endDate, string nulldelta = "all")
         {
             if (startDate == null && endDate == null)
-                return;
+                return null;
 
             using (CRMContext context = new CRMContext())
             {
@@ -29,8 +30,15 @@ namespace CRM.Services.Data
 
 
                 SummDelta = Show.Sum(item => item.Delta);
-                
             }
+
+            TradeDeltaViewModel model = new TradeDeltaViewModel
+            {
+                Show = Show,
+                SummDelta = SummDelta
+            };
+
+            return model;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace CRM.Controllers.Balances
         [HttpPost]
         public ActionResult Balances(BalancesModel model)
         {
-            model.AccountBalances = balancesService.LoadBalances(model.Account);
+            model = balancesService.LoadBalances(model.Account);
             return View(model);
         }
     }

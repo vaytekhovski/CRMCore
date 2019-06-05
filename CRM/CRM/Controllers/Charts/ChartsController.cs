@@ -48,18 +48,16 @@ namespace CRM.Controllers.Charts
         }
 
         [HttpPost]
-        public ActionResult AsksOnBids(AskOnBidViewModel model)
+        public ActionResult AsksOnBids(AskOnBidViewModel ViewModel)
         {
-            SeparateHelper.Separator.NumberDecimalSeparator = ".";
+            var model = asksOnBids.Load(ViewModel.Coin, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
 
-            asksOnBids.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
+            ViewModel.DatesAsks = model.DatesAsks;
+            ViewModel.AsksValues = model.AsksValues;
+            ViewModel.DatesBids = model.DatesBids;
+            ViewModel.BidsValues = model.BidsValues;
 
-            model.DatesAsks = asksOnBids.DatesAsks.Select(x => x.ToJavascriptTicks()).ToList();
-            model.DatesBids = asksOnBids.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
-            model.AsksValues = asksOnBids.AsksValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
-            model.BidsValues = asksOnBids.BidsValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
-
-            return View(model);
+            return View(ViewModel);
         }
 
         [HttpGet]
@@ -80,19 +78,18 @@ namespace CRM.Controllers.Charts
         }
 
         [HttpPost]
-        public ActionResult DeltaOnTradeHistory(DeltaOnTradeHistoryViewModel model)
+        public ActionResult DeltaOnTradeHistory(DeltaOnTradeHistoryViewModel ViewModel)
         {
-            SeparateHelper.Separator.NumberDecimalSeparator = ".";
-            deltaOnTradeHistory.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
+            var model = deltaOnTradeHistory.Load(ViewModel.Coin, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
 
-            model.DatesDelta = deltaOnTradeHistory.DatesDelta.Select(x => x.ToJavascriptTicks()).ToList();
-            model.DeltaValues = deltaOnTradeHistory.DeltaValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.DatesDelta = model.DatesDelta;
+            ViewModel.DeltaValues = model.DeltaValues;
 
-            model.DatesTHBuy = deltaOnTradeHistory.DatesTHBuy.Select(x => x.ToJavascriptTicks()).ToList();
-            model.THBuyValues = deltaOnTradeHistory.THBuyValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.DatesTHBuy = model.DatesTHBuy;
+            ViewModel.THBuyValues = model.THBuyValues;
 
-            model.DatesTHSell = deltaOnTradeHistory.DatesTHSell.Select(x => x.ToJavascriptTicks()).ToList();
-            model.THSellValues = deltaOnTradeHistory.THSellValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.DatesTHSell = model.DatesTHSell;
+            ViewModel.THSellValues = model.THSellValues;
 
             return View(model);
         }

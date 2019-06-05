@@ -51,14 +51,14 @@ namespace CRM.Controllers.Data
         }
 
         [HttpPost]
-        public ActionResult ShowOrderBookAsks(OrderBookViewModel model)
+        public ActionResult ShowOrderBookAsks(OrderBookViewModel ViewModel)
         {
-            orderBook.Load("ask", model.Coin, model.Situation, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
+            var model = orderBook.Load("ask", ViewModel.Coin, ViewModel.Situation, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
 
-            model.Show = orderBook.Show;
-            model.SummVolume = orderBook.SummVolume;
+            ViewModel.Show = model.Show;
+            ViewModel.SummVolume = model.SummVolume;
 
-            return View(model);
+            return View(ViewModel);
         }
 
         [HttpGet]
@@ -75,14 +75,14 @@ namespace CRM.Controllers.Data
         }
 
         [HttpPost]
-        public ActionResult ShowOrderBookBids(OrderBookViewModel model)
+        public ActionResult ShowOrderBookBids(OrderBookViewModel ViewModel)
         {
-            orderBook.Load("bid", model.Coin, model.Situation, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
+            var model = orderBook.Load("bid", ViewModel.Coin, ViewModel.Situation, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
 
-            model.Show = orderBook.Show;
-            model.SummVolume = orderBook.SummVolume;
+            ViewModel.Show = model.Show;
+            ViewModel.SummVolume = model.SummVolume;
 
-            return View(model);
+            return View(ViewModel);
         }
 
         [HttpGet]
@@ -99,15 +99,16 @@ namespace CRM.Controllers.Data
         }
 
         [HttpPost]
-        public ActionResult ShowTradeHistory(TradeHistoryViewModel model)
+        public ActionResult ShowTradeHistory(TradeHistoryViewModel ViewModel)
         {
-            model.OrderType = model.OrderType == null ? "all" : model.OrderType;
-            tradeHistory.Load(model.Coin, model.Situation, model.OrderType, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate));
+            ViewModel.OrderType = ViewModel.OrderType == null ? "all" : ViewModel.OrderType;
 
-            model.Show = tradeHistory.Show;
-            model.SummVolume = tradeHistory.SummVolume;
+            var model = tradeHistory.Load(ViewModel.Coin, ViewModel.Situation, ViewModel.OrderType, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
 
-            return View(model);
+            ViewModel.Show = model.Show;
+            ViewModel.SummVolume = model.SummVolume;
+
+            return View(ViewModel);
         }
 
         [HttpGet]
@@ -124,15 +125,16 @@ namespace CRM.Controllers.Data
         }
 
         [HttpPost]
-        public ActionResult ShowTradeDelta(TradeDeltaViewModel model)
+        public ActionResult ShowTradeDelta(TradeDeltaViewModel ViewModel)
         {
-            model.NullDelta = model.NullDelta == null ? "all" : model.NullDelta;
+            ViewModel.NullDelta = ViewModel.NullDelta == null ? "all" : ViewModel.NullDelta;
 
-            tradeDelta.Load(model.Coin, DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), model.NullDelta);
+            var model = tradeDelta.Load(ViewModel.Coin, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate), ViewModel.NullDelta);
 
-            model.Show = tradeDelta.Show;
-            model.SummDelta = tradeDelta.SummDelta;
-            return View(model);
+            ViewModel.Show = model.Show;
+            ViewModel.SummDelta = model.SummDelta;
+
+            return View(ViewModel);
         }
     }
 }

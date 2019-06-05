@@ -1,5 +1,7 @@
-﻿using CRM.Models;
+﻿using CRM.Helpers;
+using CRM.Models;
 using CRM.Models.Database;
+using CRM.ViewModels.Charts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +18,12 @@ namespace CRM.Services.Charts
         private List<OrderBookModel> AsksBids = new List<OrderBookModel>();
         public AsksOnBidsService() { }
 
-        public void Load(string coin, DateTime startDate, DateTime endDate)
+        public AskOnBidViewModel Load(string coin, DateTime startDate, DateTime endDate)
         {
             if (startDate == null && endDate == null)
-                return;
+                return null;
+
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
             using (CRMContext context = new CRMContext())
             {
@@ -35,6 +39,16 @@ namespace CRM.Services.Charts
             DatesBids = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Date.Date).ToList();
             BidsValues = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Volume).ToList();
 
+            AskOnBidViewModel askOnBidViewModel = new AskOnBidViewModel
+            {
+                DatesAsks = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Date.Date).Select(x => x.ToJavascriptTicks()).ToList(),
+                AsksValues = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Volume).Select(x => x.ToString(SeparateHelper.Separator)).ToList(),
+
+                DatesBids = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Date.Date).Select(x => x.ToJavascriptTicks()).ToList(),
+                BidsValues = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Volume).Select(x => x.ToString(SeparateHelper.Separator)).ToList()
+            };
+
+            return askOnBidViewModel;
         }
 
     }

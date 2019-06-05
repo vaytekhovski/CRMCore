@@ -12,19 +12,26 @@
         <div style="display:table; margin:auto; padding-bottom:30px;">
             <form action="../SignalsAnalytics/TradeHistoryDeltas" method="post">
 
+                @{
+                    var nextPage = Model.CurrentPage < Model.CountOfPages ? Model.CurrentPage + 1 : Model.CurrentPage;
+                    var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
+                }
+
+
                 <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
                 <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
                 <input style="display:none" type="time" name="startTime" value=@Model.StartTime />
                 <input style="display:none" type="time" name="endTime" value=@Model.EndTime />
+                <input style="display:none" type="text" name="coin" value=@Model.Coin />
+                <input style="display:none" type="text" name="exchange" value=@Model.Exchange />
 
-                @for (int i = Model.CurrentPage - 3; i <= Model.MaxAvailablePageNumber; i++)
+                <button class="page_button" type="submit" value="@previusPage" name="PageButton" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post"><</button>
+                @for (int i = Model.FirstVisiblePage; i <= Model.LastVisiblePage; i++)
                 {
-                    if (i > 0)
-                    {
-                        <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageNumber" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">@i</button>
-                    }
+                    <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">@i</button>
                 }
-                @Model.CountOfPages
+                <button class="page_button" type="submit" value="@nextPage" name="PageButton" formaction=".../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">></button>
+
             </form>
         </div>
     }
@@ -67,19 +74,26 @@
         <div style="display:table; margin:auto; padding-bottom:30px;">
             <form action="../SignalsAnalytics/TradeHistoryDeltas" method="post">
 
+                @{
+                    var nextPage = Model.CurrentPage < Model.CountOfPages ? Model.CurrentPage + 1 : Model.CurrentPage;
+                    var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
+                }
+
+
                 <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
                 <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
                 <input style="display:none" type="time" name="startTime" value=@Model.StartTime />
                 <input style="display:none" type="time" name="endTime" value=@Model.EndTime />
+                <input style="display:none" type="text" name="coin" value=@Model.Coin />
+                <input style="display:none" type="text" name="exchange" value=@Model.Exchange />
 
-                @for (int i = Model.CurrentPage - 3; i <= Model.MaxAvailablePageNumber; i++)
+                <button class="page_button" type="submit" value="@previusPage" name="PageButton" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post"><</button>
+                @for (int i = Model.FirstVisiblePage; i <= Model.LastVisiblePage; i++)
                 {
-                    if (i > 0)
-                    {
-                        <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageNumber" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">@i</button>
-                    }
+                    <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">@i</button>
                 }
-                @Model.CountOfPages
+                <button class="page_button" type="submit" value="@nextPage" name="PageButton" formaction=".../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">></button>
+
             </form>
         </div>
     }
