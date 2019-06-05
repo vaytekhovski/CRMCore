@@ -81,26 +81,29 @@ table
     padding-top: 20px;
 }
 
-    #toTopButton::after {
-        font-family: FontAwesome;
-        font-weight: normal;
-        font-style: normal;
-        font-size: 2em;
-        line-height: 50px;
-        color: #fff;
-    }
+#toTopButton::after {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
+}
 
-    #toTopButton:hover {
-        cursor: pointer;
-        background-color: #333;
-    }
+#toTopButton:hover {
+    cursor: pointer;
+    background-color: #333;
+}
 
-    #toTopButton:active {
-        background-color: #555;
-    }
+#toTopButton:active {
+    background-color: #555;
+}
 
-    #toTopButton.show {
-        opacity: 1;
-        visibility: visible;
-    }
+#toTopButton.show {
+    opacity: 1;
+    visibility: visible;
+}
 
+.ProfitTableSell{
+    width:100px;
+}

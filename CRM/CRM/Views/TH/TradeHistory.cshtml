@@ -75,15 +75,39 @@
     </div>
 
 
-    <span class="profit profit_string" style="text-align: center; color: @(Model.DesiredTotalProfit > 0 ? "green" : "red"); display: @(Model.DesiredTotalProfit == 0 ? "none" : "block"); ">
+
+    <div>
+
         @{
-            string DesiredProfitStr = Model.DesiredTotalProfit > 0 ? "+" : "";
+            string DesiredProfitStr = Model.DesiredTotalProfit > 0 ? "Прибыль: +" : "Убыток: ";
             DesiredProfitStr += String.Format("{0:0.##}", Model.DesiredTotalProfit);
             DesiredProfitStr += "$";
 
         }
-        Расч. прибыль: @DesiredProfitStr
-    </span>
+
+        <table style="margin: 0 auto; width: 400px; font-size: 14px; display: @(Model.DesiredTotalProfit == 0 ? "none" : "block"); ">
+            <tr>
+                <th colspan="2">Убыточные сделки</th>
+                <th colspan="2">Прибыльные сделки</th>
+            </tr>
+            <tr>
+                <th class="ProfitTableSell">Кол-во</th>
+                <th class="ProfitTableSell">Сумма</th>
+                <th class="ProfitTableSell">Кол-во</th>
+                <th class="ProfitTableSell">Сумма</th>
+            </tr>
+            <tr>
+                <td>@Model.DesiredLossOrdersCount</td>
+                <td>$@Model.DesiredLossOrdersSumm.ToString("#.##")</td>
+                <td>@Model.DesiredProfitOrdersCount</td>
+                <td>$@Model.DesiredProfitOrdersSumm.ToString("#.##")</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align:center; color: @(Model.DesiredTotalProfit > 0 ? "green" : "red")">@DesiredProfitStr</td>
+            </tr>
+        </table>
+    </div>
+
 
     <div class="container table_block">
         <table class="sortable table table-bordered table-font" style=" display: @(Model.TotalProfit == 0 ? "none" : "table");">
