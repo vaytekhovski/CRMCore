@@ -56,10 +56,8 @@ namespace CRM.Controllers
             {
                 Account = viewModel.Account,
                 Coin = viewModel.Coin,
-                StartDate = DateTime.Parse(viewModel.StartDate),
-                EndDate = DateTime.Parse(viewModel.EndDate).AddDays(1),
-                StartTime = TimeSpan.Parse(viewModel.StartTime),
-                EndTime = TimeSpan.Parse(viewModel.EndTime),
+                StartDate = DateTime.Parse(viewModel.StartDate).Add(TimeSpan.Parse(viewModel.StartTime)),
+                EndDate = DateTime.Parse(viewModel.EndDate).AddDays(1).Add(TimeSpan.Parse(viewModel.EndTime)),
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 

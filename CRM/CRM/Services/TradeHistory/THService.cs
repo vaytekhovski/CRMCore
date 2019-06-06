@@ -22,7 +22,6 @@ namespace CRM.Services
             {
                 var query = context.AccountTradeHistories
                     .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
-                    .Where(x => x.Time.TimeOfDay >= filter.StartTime && x.Time.TimeOfDay <= filter.EndTime)
                     .AsNoTracking();
 
                 if (filter.Coin != "all")
