@@ -30,6 +30,8 @@ namespace CRM.Controllers
             {
                 Account = "/",
                 Coin = "all",
+                StartTime = "00:00",
+                EndTime = "23:59",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
             };
