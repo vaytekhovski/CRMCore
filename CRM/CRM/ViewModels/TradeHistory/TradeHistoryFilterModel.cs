@@ -23,6 +23,9 @@ namespace CRM.ViewModels
 
         public string EndDate { get; set; }
 
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+
         public ICollection<AccountTradeHistory> Orders { get; set; }
 
         public decimal TotalProfit { get; set; }

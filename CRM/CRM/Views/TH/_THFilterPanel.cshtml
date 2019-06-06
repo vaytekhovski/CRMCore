@@ -8,7 +8,7 @@
         </div>
 
         <div class="filter_element">
-            @Html.DropDownListFor(m => m.Account, CRM.Models.DropDownFields.GetAccounts(Context), new { @class = "form-control filter_input", name = "accounts", id= "excange_selector" })
+            @Html.DropDownListFor(m => m.Account, CRM.Models.DropDownFields.GetAccounts(Context), new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
         </div>
 
 
@@ -20,6 +20,15 @@
 
         <div class="filter_element">
             <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-01" />
+        </div>
+
+
+        <div class="filter_element">
+            <input required type="time" style="width: 100px !important" class="form-control filter_input" id="startTime" name="startTime" value=@Model.StartTime />
+        </div>
+
+        <div class="filter_element">
+            <input required type="time" style="width: 100px !important" class="form-control filter_input" id="endTime" name="endTime" value=@Model.EndTime />
         </div>
 
         <div class="filter_element">

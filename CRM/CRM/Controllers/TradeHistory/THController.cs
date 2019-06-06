@@ -56,6 +56,8 @@ namespace CRM.Controllers
                 Coin = viewModel.Coin,
                 StartDate = DateTime.Parse(viewModel.StartDate),
                 EndDate = DateTime.Parse(viewModel.EndDate).AddDays(1),
+                StartTime = TimeSpan.Parse(viewModel.StartTime),
+                EndTime = TimeSpan.Parse(viewModel.EndTime),
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
