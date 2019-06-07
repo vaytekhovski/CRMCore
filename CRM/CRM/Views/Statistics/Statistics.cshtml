@@ -51,7 +51,7 @@
                         itemTotalProfitStr += String.Format("{0:0.##}", item.TotalProfit);
                         itemTotalProfitStr += "$";
                 <tr>
-                    <td>@item.Date.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.Date.ToString("dd.MM.yy")</td>
                     <td class="profit" style="color: @(item.ProfitOfDay < 0 ? "red" : (item.ProfitOfDay > 0 ? "green" : "black"));">@itemProfitStr</td>
                     <td class="profit" style="color: @(item.TotalProfit < 0 ? "red" : "green");">@itemTotalProfitStr</td>
                 </tr>
