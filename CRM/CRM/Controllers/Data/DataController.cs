@@ -13,13 +13,13 @@ namespace CRM.Controllers.Data
     public class DataController : Controller
     {
         private readonly OrderBookService orderBook;
-        private readonly TradeHistoryService tradeHistory;
+        private readonly Services.Data.TradeHistoryService tradeHistory;
         private readonly TradeDeltaService tradeDelta;
 
         public DataController()
         {
             orderBook = new OrderBookService();
-            tradeHistory = new TradeHistoryService();
+            tradeHistory = new Services.Data.TradeHistoryService();
             tradeDelta = new TradeDeltaService();
         }
 

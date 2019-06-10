@@ -12,14 +12,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace CRM.Controllers
 {
     [Authorize]
-    public class THController : Controller
+    public class TradeHistoryController : Controller
     {
-        private readonly THService THService; // TODO: убрать сокращения в именах бизнес сущностей и сервисов
+        private readonly TradeHistoryService THService; // TODO: убрать сокращения в именах бизнес сущностей и сервисов
         private readonly PaginationService paginationService;
 
-        public THController()
+        public TradeHistoryController()
         {
-            THService = new THService();
+            THService = new TradeHistoryService();
             paginationService = new PaginationService();
         }
         
@@ -57,7 +57,7 @@ namespace CRM.Controllers
                 Account = viewModel.Account,
                 Coin = viewModel.Coin,
                 StartDate = DateTime.Parse(viewModel.StartDate).Add(TimeSpan.Parse(viewModel.StartTime)),
-                EndDate = DateTime.Parse(viewModel.EndDate).Add(TimeSpan.Parse(viewModel.EndTime)),
+                EndDate = DateTime.Parse(viewModel.EndDate).AddDays(1).Add(TimeSpan.Parse(viewModel.EndTime)),
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
@@ -66,7 +66,7 @@ namespace CRM.Controllers
             viewModel = MoveDataFromModelToViewModel(viewModel, Model);
 
 
-            var pagination = paginationService.GetPaginationModel(filter.CurrentPage, Model.AccountTradeHistories.Count());
+            var pagination = paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
             viewModel.CurrentPage = filter.CurrentPage;
             viewModel.FirstVisiblePage = pagination.FirstVisiblePage;
             viewModel.LastVisiblePage = pagination.LastVisiblePage;

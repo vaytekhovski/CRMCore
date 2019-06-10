@@ -16,6 +16,7 @@ namespace CRM.Models.TradeHistory
         public decimal TotalProfit { get; set; }
         public decimal DesiredTotalProfit { get; set; }
         public int CountOfPages { get; set; }
+        public int CountOfElements { get; set; }
 
         public int LossOrdersCount { get; set; }
         public int ProfitOrdersCount { get; set; }

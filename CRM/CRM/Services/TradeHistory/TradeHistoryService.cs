@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Services
 {
-    public class THService
+    public class TradeHistoryService
     {        
-        public THService()
+        public TradeHistoryService()
         {
 
         }
@@ -36,6 +36,8 @@ namespace CRM.Services
                 UpdateSummOfLossAndProfitOrders(model, query);
 
                 query = query.OrderByDescending(x => x.Time);
+
+                model.CountOfElements = query.Count();
 
                 model.AccountTradeHistories = query.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
             }
