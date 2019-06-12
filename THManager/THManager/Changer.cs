@@ -87,7 +87,7 @@ namespace THManager
                             + " " + signal.Exchange
                             + " " + signal.Base
                             + " " + signal.SourceTime.AddHours(3)
-                            + " TrendDiff: " + signal.TrendDiff;
+                            + " TrendDiff: " + signal.Value;
                     }
                 }
 
