@@ -13,8 +13,10 @@ namespace CRM.Models.Master
         [Key]
         public string Base { get; set; }
         [Key]
+        public string Quote { get; set; }
+        [Key]
         public DateTime Time { get; set; }
-        public decimal MACD { get; set; }
-        public decimal SIG { get; set; }
+        public decimal? MACD { get; set; }
+        public decimal? SIG { get; set; }
     }
 }

@@ -35,5 +35,10 @@ namespace CRM.Master
             }
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<IndicatorPoints>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
+        }
+
     }
 }

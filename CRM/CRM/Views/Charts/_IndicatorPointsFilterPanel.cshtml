@@ -11,13 +11,6 @@
         </div>
 
         <div class="filter_element">
-            <select name="Type" class="form-control filter_input">
-                <option value="MACD">MACD</option>
-                <option value="SIG">SIG</option>
-            </select>
-        </div>
-
-        <div class="filter_element">
             @Html.DropDownListFor(m => m.Base, CRM.Models.DropDownFields.GetCoins(), new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
         </div>
 

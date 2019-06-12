@@ -30,7 +30,6 @@ namespace CRM.Models
             InitiateOrderType();
             InitiateSituations();
             InitiateNulls();
-
         }
 
         private static void InitiateExchanges()

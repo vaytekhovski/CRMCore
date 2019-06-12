@@ -14,13 +14,14 @@ namespace CRM.ViewModels.Charts
         public string Base { get; set; }
 
         public List<long> Dates { get; set; }
-        public List<string> Values { get; set; }
+        public List<string> MACDValues { get; set; }
+        public List<string> SIGValues { get; set; }
 
-        public string Type { get; set; }
 
         public IndicatorPointsViewModel()
         {
-            Values = new List<string>();
+            MACDValues = new List<string>();
+            SIGValues = new List<string>();
             Dates = new List<long>();
         }
     }

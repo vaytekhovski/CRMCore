@@ -17,16 +17,21 @@ namespace CRM.Services.IndicatorPoints
 
             using(masterContext context = new masterContext())
             {
-                var query = context.IndicatorPoints.Where(x => x.Time > filter.StartDate && x.Time < filter.EndDate);
+                var query = context.IndicatorPoints
+                    .Where(x => x.Time > filter.StartDate && x.Time < filter.EndDate);
 
-                if (filter.Coin != null)
+                if (filter.Coin != "all")
                     query = query.Where(x => x.Base == filter.Coin);
 
                 if (filter.Exchange != null)
                     query = query.Where(x => x.Exchange == filter.Exchange);
 
-                model.Dates = query.Select(x => x.Time.Date).Select(x => x.ToJavascriptTicks()).ToList();
-                model.Values = query.Select(x => filter.Type == "MACD" ? x.MACD.ToString() : x.SIG.ToString()).ToList();
+                model.Dates = query.Select(x => x.Time).Select(x => x.ToJavascriptTicks()).ToList();
+
+                model.MACDValues = query.Select(x => x.MACD.ToString().Replace(',','.')).ToList();
+                model.SIGValues = query.Select(x => x.SIG.ToString().Replace(',', '.')).ToList();
+
+
             };
 
             return model;

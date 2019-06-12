@@ -11,7 +11,8 @@
         CHART = document.getElementById('Chart');
 
         var Dates = [];
-        var Values = [];
+        var MACDValues = [];
+        var SIGValues = [];
 
         @foreach (var item in Model.Dates)
         {
@@ -21,26 +22,45 @@
 
         }
 
-        @foreach (var item in Model.Values)
+        @foreach (var item in Model.MACDValues)
         {
             <text>
-            Values.push(parseFloat(@item));
+            MACDValues.push(parseFloat(@item));
             </text>
 
         }
 
-        var Indicator = {
+        @foreach (var item in Model.SIGValues)
+        {
+            <text>
+            SIGValues.push(parseFloat(@item));
+            </text>
+
+        }
+
+        var MACD = {
             x: Dates,
-            y: Values,
+            y: MACDValues,
             mode: 'lines',
             line: {
                 color: 'rgb(128, 0, 128)',
                 width: 2
             },
-            name: 'OrderBookAsks'
+            name: 'MACD'
         };
 
-        var data = [Indicator];
+        var SIG = {
+            x: Dates,
+            y: SIGValues,
+            mode: 'lines',
+            line: {
+                color: 'rgb(0, 128, 128)',
+                width: 2
+            },
+            name: 'SIG'
+        };
+
+        var data = [MACD, SIG];
 
         Plotly.plot(CHART, data);
 

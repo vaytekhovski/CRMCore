@@ -59,13 +59,13 @@ namespace CRM.Services.Charts
 
             DeltaOnTradeHistoryViewModel deltaOnTradeHistoryViewModel = new DeltaOnTradeHistoryViewModel
             {
-                DatesDelta = Deltas.Select(x => x.TimeTo.Date).Select(x => x.ToJavascriptTicks()).ToList(),
+                DatesDelta = Deltas.Select(x => x.TimeTo.DateTime).Select(x => x.ToJavascriptTicks()).ToList(),
                 DeltaValues = Deltas.Select(x => x.Delta).Select(x => x.ToString(SeparateHelper.Separator)).ToList(),
 
-                DatesTHBuy = TH.Where(x => x.Side == "Buy").Select(x => x.Date.Date).Select(x => x.ToJavascriptTicks()).ToList(),
+                DatesTHBuy = TH.Where(x => x.Side == "Buy").Select(x => x.Date.DateTime).Select(x => x.ToJavascriptTicks()).ToList(),
                 THBuyValues = TH.Where(x => x.Side == "Buy").Select(x => x.Volume).Select(x => x.ToString(SeparateHelper.Separator)).ToList(),
 
-                DatesTHSell = TH.Where(x => x.Side == "Sell").Select(x => x.Date.Date).Select(x => x.ToJavascriptTicks()).ToList(),
+                DatesTHSell = TH.Where(x => x.Side == "Sell").Select(x => x.Date.DateTime).Select(x => x.ToJavascriptTicks()).ToList(),
                 THSellValues = TH.Where(x => x.Side == "Sell").Select(x => x.Volume).Select(x => x.ToString(SeparateHelper.Separator)).ToList()
             };
 

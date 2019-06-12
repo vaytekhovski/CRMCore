@@ -115,17 +115,17 @@ namespace CRM.Controllers.Charts
         {
             IndicatorPointsFilter filter = new IndicatorPointsFilter
             {
-                Coin = viewModel.Base,
+                Coin = viewModel.Base == null ? "all" : viewModel.Base,
                 Exchange = viewModel.Exchange,
                 StartDate = DateTime.Parse(viewModel.StartDate),
                 EndDate = DateTime.Parse(viewModel.EndDate),
-                Type = "MACD" /* viewModel.Type */,
             };
 
             var model = indicatorPointsService.Load(filter);
 
             viewModel.Dates = model.Dates;
-            viewModel.Values = model.Values;
+            viewModel.MACDValues = model.MACDValues;
+            viewModel.SIGValues = model.SIGValues;
 
             return View(viewModel);
         }

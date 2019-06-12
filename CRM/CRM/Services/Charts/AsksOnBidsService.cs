@@ -33,18 +33,18 @@ namespace CRM.Services.Charts
                     .OrderBy(x => x.Date).ToList();
             }
 
-            DatesAsks = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Date.Date).ToList();
+            DatesAsks = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Date.DateTime).ToList();
             AsksValues = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Volume).ToList();
 
-            DatesBids = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Date.Date).ToList();
+            DatesBids = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Date.DateTime).ToList();
             BidsValues = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Volume).ToList();
 
             AskOnBidViewModel askOnBidViewModel = new AskOnBidViewModel
             {
-                DatesAsks = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Date.Date).Select(x => x.ToJavascriptTicks()).ToList(),
+                DatesAsks = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Date.DateTime).Select(x => x.ToJavascriptTicks()).ToList(),
                 AsksValues = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Volume).Select(x => x.ToString(SeparateHelper.Separator)).ToList(),
 
-                DatesBids = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Date.Date).Select(x => x.ToJavascriptTicks()).ToList(),
+                DatesBids = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Date.DateTime).Select(x => x.ToJavascriptTicks()).ToList(),
                 BidsValues = AsksBids.Where(x => x.BookType == "bid").Select(x => x.Volume).Select(x => x.ToString(SeparateHelper.Separator)).ToList()
             };
 
