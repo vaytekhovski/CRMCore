@@ -51,15 +51,16 @@ namespace CRM.Services.Statistics
 
             var lastDate = query.LastOrDefault().Time.Date;
 
-            for (DateTime i = query.FirstOrDefault().Time.Date; i <= lastDate; i = i.AddDays(1))
+            foreach (var date in query.Select(x => x.Time.Date).Distinct())
             {
                 statistics.Add(new StatisticsElement
                 {
-                    Date = i,
-                    ProfitOfDay = query.Where(x => x.Time.Date == i).Sum(x => x.DesiredProfit),
+                    Date = date,
+                    ProfitOfDay = query.Where(x => x.Time.Date == date).Sum(x => x.DesiredProfit),
                     TotalProfit = 0
                 });
             }
+
 
             return statistics;
         }

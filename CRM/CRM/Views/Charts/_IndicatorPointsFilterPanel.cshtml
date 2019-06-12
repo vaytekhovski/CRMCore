@@ -1,24 +1,29 @@
-﻿@model CRM.ViewModels.Charts.DeltaOnTradeHistoryViewModel
+﻿@model CRM.ViewModels.Charts.IndicatorPointsViewModel
 
 <form action="/" method="post">
 
     <div class="filter_panel container">
 
         <div class="filter_element">
-            <select class="form-control filter_input">
+            <select name="Exchange" class="form-control filter_input">
                 <option value="binance">Binance</option>
             </select>
         </div>
 
         <div class="filter_element">
-            @Html.DropDownListFor(m => m.Coin, CRM.Models.DropDownFields.GetCoins(), new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
+            <select name="Type" class="form-control filter_input">
+                <option value="MACD">MACD</option>
+                <option value="SIG">SIG</option>
+            </select>
         </div>
 
+        <div class="filter_element">
+            @Html.DropDownListFor(m => m.Base, CRM.Models.DropDownFields.GetCoins(), new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
+        </div>
 
         <div class="filter_element">
             <input type="date" class="form-control filter_input" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />
         </div>
-
 
         <div class="filter_element">
             <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-01" />

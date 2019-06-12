@@ -14,7 +14,7 @@ namespace CRM.Controllers
     [Authorize]
     public class TradeHistoryController : Controller
     {
-        private readonly TradeHistoryService THService; // TODO: убрать сокращения в именах бизнес сущностей и сервисов
+        private readonly TradeHistoryService THService; // TODO: [COMPLETE] убрать сокращения в именах бизнес сущностей и сервисов
         private readonly PaginationService paginationService;
 
         public TradeHistoryController()
@@ -43,8 +43,6 @@ namespace CRM.Controllers
         [HttpPost]
         public ActionResult TradeHistory(TradeHistoryFilterModel viewModel, string PageButton = "1")
         {
-            var Model = new TradeHistoryModel();
-
             // TODO: использовать такой паттерн везде
             //var model = service.Load(parameter1, parameter2, ...); 
             //var viewModel = new ViewModel();
@@ -61,7 +59,7 @@ namespace CRM.Controllers
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
-            Model = THService.Load(filter);
+            TradeHistoryModel Model = THService.Load(filter);
 
             viewModel = MoveDataFromModelToViewModel(viewModel, Model);
 

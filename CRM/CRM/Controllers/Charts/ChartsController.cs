@@ -1,7 +1,9 @@
 ﻿using CRM.Helpers;
 using CRM.Models;
+using CRM.Models.Filters;
 using CRM.Services;
 using CRM.Services.Charts;
+using CRM.Services.IndicatorPoints;
 using CRM.ViewModels.Charts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +21,13 @@ namespace CRM.Controllers.Charts
 
         private readonly DeltaOnTradeHistoryService deltaOnTradeHistory;
 
+        private readonly IndicatorPointsService indicatorPointsService;
+
         public ChartsController()
         {
             asksOnBids = new AsksOnBidsService();
             deltaOnTradeHistory = new DeltaOnTradeHistoryService();
+            indicatorPointsService = new IndicatorPointsService();
         }
 
         [HttpGet]
@@ -92,6 +97,37 @@ namespace CRM.Controllers.Charts
             ViewModel.THSellValues = model.THSellValues;
 
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult IndicatorPoints()
+        {
+            var viewModel = new IndicatorPointsViewModel
+            {
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult IndicatorPoints(IndicatorPointsViewModel viewModel)
+        {
+            IndicatorPointsFilter filter = new IndicatorPointsFilter
+            {
+                Coin = viewModel.Base,
+                Exchange = viewModel.Exchange,
+                StartDate = DateTime.Parse(viewModel.StartDate),
+                EndDate = DateTime.Parse(viewModel.EndDate),
+                Type = "MACD" /* viewModel.Type */,
+            };
+
+            var model = indicatorPointsService.Load(filter);
+
+            viewModel.Dates = model.Dates;
+            viewModel.Values = model.Values;
+
+            return View(viewModel);
         }
     }
 }

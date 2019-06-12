@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Charts";
+
+}
+
+@section Scripts
+{
+    <script src="~/js/plotly-latest.min.js"></script> @*TODO [COMPLETE]: использовать для скриптов секцию scripts*@
+    <script type="text/javascript">
+
+        CHART = document.getElementById('Chart');
+
+        var Dates = [];
+        var Values = [];
+
+        @foreach (var item in Model.Dates)
+        {
+            <text>
+            Dates.push(new Date(@item));
+            </text>
+
+        }
+
+        @foreach (var item in Model.Values)
+        {
+            <text>
+            Values.push(parseFloat(@item));
+            </text>
+
+        }
+
+        var Indicator = {
+            x: Dates,
+            y: Values,
+            mode: 'lines',
+            line: {
+                color: 'rgb(128, 0, 128)',
+                width: 2
+            },
+            name: 'OrderBookAsks'
+        };
+
+        var data = [Indicator];
+
+        Plotly.plot(CHART, data);
+
+    </script>
+}
+
+@model CRM.ViewModels.Charts.IndicatorPointsViewModel
+
+@Html.Partial("_IndicatorPointsFilterPanel");
+
+<div class="content">
+
+    @Html.ValidationSummary()
+
+    <div id="Chart">
+    </div>
+
+</div>

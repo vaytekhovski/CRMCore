@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace CRM.Models.Filters
 {
-    public class StatisticsFilter
+    public class IndicatorPointsFilter
     {
-        public string Account { get; set; }
         public string Exchange { get; set; }
         public string Coin { get; set; }
         public int CurrentPage { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        public string Type { get; set; }
     }
 }
