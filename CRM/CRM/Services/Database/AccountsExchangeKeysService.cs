@@ -18,7 +18,7 @@ namespace CRM.Services.Database
 
                 lst = context.ExchangeKeys
                     .Where(x => user.RoleId == (int)UserModel.Roles.User ? x.UserId == user.Id : true)
-                    .Select(x => new SelectListItem { Text = x.Name, Value = x.Name })
+                    .Select(x => new SelectListItem { Text = x.Name, Value = x.Name }) // TODO: use Id as value instead of name
                     .ToList();
             }
 
