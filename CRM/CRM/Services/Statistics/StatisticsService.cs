@@ -69,7 +69,7 @@ namespace CRM.Services.Statistics
         {
             decimal totalProfit = 0;
 
-            foreach (var item in statistics)
+            foreach (var item in statistics.OrderBy(x => x.Date))
             {
                 totalProfit += item.ProfitOfDay;
                 item.TotalProfit = totalProfit;
