@@ -23,7 +23,7 @@ namespace CRM.Services.Statistics
             using (CRMContext context = new CRMContext())
             {
                 var query = context.AccountTradeHistories
-                    .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
+                    .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate.AddDays(1))
                     .AsNoTracking();
 
                 if (filter.Coin != "all")
