@@ -10,13 +10,10 @@ namespace CRM.Services.Balances
 {
     public class BalancesService
     {
-        public BalancesService()
-        {
-        }
 
         private  string ResponseBody;
 
-        public BalancesModel LoadBalances(string AccountId)
+        public async Task<BalancesModel> LoadBalancesAsync(string AccountId)
         {
             var client = new HttpClient();
             var httpRequestMessage = new HttpRequestMessage
@@ -29,12 +26,26 @@ namespace CRM.Services.Balances
                 Content = new StringContent(string.Empty)
             };
 
-            var response = client.SendAsync(httpRequestMessage).Result;
-            GetResponseBodyAsync(response);
+            var response =  client.SendAsync(httpRequestMessage).Result;
+            await GetResponseBodyAsync(response);
 
-            Currencies currencies = JsonConvert.DeserializeObject<Currencies>(ResponseBody);
-            List<Balance> balance = new List<Balance>();
+            var currencies = JsonConvert.DeserializeObject<Currencies>(ResponseBody);
+            var balance = InitiateBalance(currencies);
 
+            var balancesModel = new BalancesModel { AccountBalances = balance };
+
+            return balancesModel;
+        }
+
+
+        public async Task GetResponseBodyAsync(HttpResponseMessage response)
+        {
+            ResponseBody = await response.Content.ReadAsStringAsync();
+        }
+
+        private List<Balance> InitiateBalance(Currencies currencies)
+        {
+            var balance = new List<Balance>();
             try
             {
                 balance = new List<Balance>
@@ -51,7 +62,7 @@ namespace CRM.Services.Balances
                     new Balance("DASH", (currencies.DASH), 0),
                     new Balance("XMR", (currencies.XMR), 0),
                     new Balance("ONT", (currencies.ONT), 0),
-                    new Balance("ADA", (currencies.ADA), 0),
+                    new Balance("ADA", currencies.ADA, 0),
                     new Balance("XMR", (currencies.XMR), 0)
                 };
             }
@@ -60,15 +71,9 @@ namespace CRM.Services.Balances
                 Debug.WriteLine(ex.Message);
             }
 
-            BalancesModel balancesModel = new BalancesModel { AccountBalances = balance };
-
-            return balancesModel;
+            return balance;
         }
 
-        public  async void GetResponseBodyAsync(HttpResponseMessage response)
-        {
-            ResponseBody = await response.Content.ReadAsStringAsync();
-        }
     }
 
 
