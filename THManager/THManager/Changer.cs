@@ -56,10 +56,25 @@ namespace THManager
             InitializeIgnoreList();
             InitializeExchangeKeys();
 
+            orders = ChangeAmounts(orders);
             AddToTradeHistories(orders);
             AddSignals(Signals);
             
             return AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
+        }
+
+        private List<Orders> ChangeAmounts(List<Orders> orders)
+        {
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 1942).ClosedAmount = orders.FirstOrDefault(x => x.Id == 1940).ClosedAmount;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return orders;
         }
 
         private void AddSignals(List<SignalsPrivate> signals)
