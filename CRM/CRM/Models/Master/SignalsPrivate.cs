@@ -9,7 +9,7 @@ namespace CRM.Models.Master
         public string Base { get; set; }
         public string Quote { get; set; }
         public DateTime SourceTime { get; set; }
-        public decimal TrendDiff { get; set; }
+        public decimal Value { get; set; }
         public string Side { get; set; }
         public string ErrorMessages { get; set; }
     }
