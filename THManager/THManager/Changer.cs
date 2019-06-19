@@ -125,6 +125,10 @@ namespace THManager
             IgnoreIds.Add(1917);
             IgnoreIds.Add(1951);
             IgnoreIds.Add(1952);
+            IgnoreIds.Add(1953);
+            IgnoreIds.Add(1950);
+            IgnoreIds.Add(1949);
+            IgnoreIds.Add(1948);
         }
 
         private string AccountName(string accountId)
