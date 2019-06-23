@@ -37,8 +37,7 @@ namespace CRM.Controllers.User
             ViewBag.isUser = user.RoleId != 1 ? true : false;
             return View(model);
         }
-        
-        //[AllowAnonymous]
+
         [HttpGet]
         public async Task<ActionResult> ChangeLoginAsync(UserPanelModel model)
         {

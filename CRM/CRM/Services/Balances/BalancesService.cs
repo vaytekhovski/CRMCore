@@ -11,7 +11,6 @@ namespace CRM.Services.Balances
     public class BalancesService
     {
 
-        private  string ResponseBody;
 
         public async Task<BalancesModel> LoadBalancesAsync(string AccountId)
         {
@@ -26,22 +25,18 @@ namespace CRM.Services.Balances
                 Content = new StringContent(string.Empty)
             };
 
-            var response =  client.SendAsync(httpRequestMessage).Result;
-            await GetResponseBodyAsync(response);
+            Currencies currencies;
+            using (var response = client.SendAsync(httpRequestMessage))
+            {
+                currencies = JsonConvert.DeserializeObject<Currencies>(await response.Result.Content.ReadAsStringAsync());
+            }
 
-            var currencies = JsonConvert.DeserializeObject<Currencies>(ResponseBody);
             var balance = InitiateBalance(currencies);
-
             var balancesModel = new BalancesModel { AccountBalances = balance };
 
             return balancesModel;
         }
 
-
-        public async Task GetResponseBodyAsync(HttpResponseMessage response)
-        {
-            ResponseBody = await response.Content.ReadAsStringAsync();
-        }
 
         private List<Balance> InitiateBalance(Currencies currencies)
         {
@@ -51,19 +46,19 @@ namespace CRM.Services.Balances
                 balance = new List<Balance>
                 {
                     new Balance("USDT",currencies.USDT,0),
-                    new Balance("BTC", (currencies.BTC), 0),
-                    new Balance("BNB", (currencies.BNB), 0),
-                    new Balance("EOS", (currencies.EOS), 0),
-                    new Balance("ETH", (currencies.ETH), 0),
-                    new Balance("XRP", (currencies.XRP), 0),
-                    new Balance("LTC", (currencies.LTC), 0),
-                    new Balance("TRX", (currencies.TRX), 0),
-                    new Balance("ZEC", (currencies.ZEC), 0),
-                    new Balance("DASH", (currencies.DASH), 0),
-                    new Balance("XMR", (currencies.XMR), 0),
-                    new Balance("ONT", (currencies.ONT), 0),
+                    new Balance("BTC", currencies.BTC, 0),
+                    new Balance("BNB", currencies.BNB, 0),
+                    new Balance("EOS", currencies.EOS, 0),
+                    new Balance("ETH", currencies.ETH, 0),
+                    new Balance("XRP", currencies.XRP, 0),
+                    new Balance("LTC", currencies.LTC, 0),
+                    new Balance("TRX", currencies.TRX, 0),
+                    new Balance("ZEC", currencies.ZEC, 0),
+                    new Balance("DASH", currencies.DASH, 0),
+                    new Balance("XMR", currencies.XMR, 0),
+                    new Balance("ONT", currencies.ONT, 0),
                     new Balance("ADA", currencies.ADA, 0),
-                    new Balance("XMR", (currencies.XMR), 0)
+                    new Balance("XMR", currencies.XMR, 0)
                 };
             }
             catch (Exception ex)

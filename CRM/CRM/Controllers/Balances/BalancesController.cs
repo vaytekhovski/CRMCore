@@ -36,7 +36,7 @@ namespace CRM.Controllers.Balances
         [HttpPost]
         public ActionResult Balances(BalancesModel model)
         {
-            model = balancesService.LoadBalancesAsync(model.Account);
+            model = balancesService.LoadBalancesAsync(model.Account).Result;
             return View(model);
         }
     }

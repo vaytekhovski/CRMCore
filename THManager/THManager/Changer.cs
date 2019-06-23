@@ -74,6 +74,15 @@ namespace THManager
                 Console.WriteLine(ex.Message);
             }
 
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 2282).ClosedAmount = 12.805860M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             return orders;
         }
 
