@@ -42,7 +42,9 @@ namespace CRM.Controllers.Statistics
         public IActionResult Statistics(StatisticsViewModel viewModel, string PageButton = "1")
         {
             var Model = new StatisticsModel();
-            viewModel.Account = viewModel.Account == "Все" ? "Все аккаунты" : viewModel.Account; //TODO: remove string check, like "All", "Все", "Все аккаунты" etc. Use null check for default list value
+
+            //TODO: [COMPLETE] remove string check, like "All", "Все", "Все аккаунты" etc. Use null check for default list value
+            //viewModel.Account = viewModel.Account == "Все" ? "Все аккаунты" : viewModel.Account; 
 
             var filter = new StatisticsFilter
             {

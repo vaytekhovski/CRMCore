@@ -23,9 +23,9 @@ namespace CRM.Services.Data
             {
                 Show = context.TradeHistoryModels
                     .Where(x => x.Date >= startDate && x.Date <= endDate)
-                    .Where(x => coin == "all" ? true : x.CurrencyName == coin)
-                    .Where(x => situation == "all" ? true : x.MarketSituation == situation)
-                    .Where(x => orderType == "all" ? true : x.Side == orderType)
+                    .Where(x => coin == null ? true : x.CurrencyName == coin)
+                    .Where(x => situation == null ? true : x.MarketSituation == situation)
+                    .Where(x => orderType == null ? true : x.Side == orderType)
                     .OrderByDescending(x => x.Date)
                     .ToList();
 

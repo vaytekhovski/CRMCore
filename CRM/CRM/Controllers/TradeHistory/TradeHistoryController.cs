@@ -14,12 +14,12 @@ namespace CRM.Controllers
     [Authorize]
     public class TradeHistoryController : Controller
     {
-        private readonly TradeHistoryService THService; // TODO: [COMPLETE] убрать сокращения в именах бизнес сущностей и сервисов
+        private readonly TradeHistoryService TradeHistoryService; // TODO: [COMPLETE] убрать сокращения в именах бизнес сущностей и сервисов
         private readonly PaginationService paginationService;
 
         public TradeHistoryController()
         {
-            THService = new TradeHistoryService();
+            TradeHistoryService = new TradeHistoryService();
             paginationService = new PaginationService();
         }
         
@@ -48,7 +48,6 @@ namespace CRM.Controllers
             //var viewModel = new ViewModel();
             //viewModel.Items = model.Items.Select(x => ...);
 
-            viewModel.Account = viewModel.Account == "Все" ? "Все аккаунты" : viewModel.Account;
 
             var filter = new TradeHistoryFilter
             {
@@ -59,9 +58,9 @@ namespace CRM.Controllers
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
-            TradeHistoryModel Model = THService.Load(filter);
+            TradeHistoryModel Model = TradeHistoryService.Load(filter);
 
-            viewModel = MoveDataFromModelToViewModel(viewModel, Model);
+            viewModel = MoveDataFromModelToViewModel(Model, viewModel);
 
 
             var pagination = paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
@@ -73,7 +72,7 @@ namespace CRM.Controllers
             return View(viewModel);
         }
 
-        private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryFilterModel viewModel, TradeHistoryModel Model)
+        private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryModel Model, TradeHistoryFilterModel viewModel)
         {
             viewModel.Orders = Model.AccountTradeHistories;
 

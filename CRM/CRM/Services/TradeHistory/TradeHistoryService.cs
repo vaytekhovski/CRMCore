@@ -24,12 +24,11 @@ namespace CRM.Services
                     .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
                     .AsNoTracking();
 
-                if (filter.Coin != "all")
+                if (filter.Coin != null)
                     query = query.Where(x => x.Pair == filter.Coin);
 
-                if (filter.Account != "Все аккаунты")
+                if (filter.Account != null)
                     query = query.Where(x => x.Account == filter.Account);
-
 
                 UpdateTotalProfit(model, query);
                 UpdateCountOfLossAndProfitOrders(model, query);

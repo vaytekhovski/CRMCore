@@ -24,15 +24,21 @@ namespace CRM.Services.SignalsAnalytics
             using (masterContext context = new masterContext())
             {
                 SignalsPrivates = context.SignalsPrivate
-                    .Where(x => ViewModel.Nullable == "null" ? x.ErrorMessages == null : ViewModel.Nullable == "all" ? x.ErrorMessages != null : true)
-                    .Where(x => x.Exchange == ViewModel.Exchange.ToLower())
-                    .Where(x => ViewModel.Coin != "all" ? x.Base == ViewModel.Coin : true)
                     .Where(x => x.SourceTime >= DateTime.Parse(ViewModel.StartDate))
                     .Where(x => x.SourceTime <= DateTime.Parse(ViewModel.EndDate).AddDays(1))
                     .Where(x => x.SourceTime.TimeOfDay >= TimeSpan.Parse(ViewModel.StartTime))
                     .Where(x => x.SourceTime.TimeOfDay <= TimeSpan.Parse(ViewModel.EndTime))
                     .OrderByDescending(x => x.SourceTime)
                     .ToList();
+
+                if (ViewModel.Coin != null)
+                    SignalsPrivates = SignalsPrivates.Where(x => x.Base == ViewModel.Coin).ToList();
+
+                if (ViewModel.Nullable != null)
+                    SignalsPrivates = SignalsPrivates.Where(x => ViewModel.Nullable == "notnull" ? x.ErrorMessages != null : x.ErrorMessages == null).ToList();
+
+                if (ViewModel.Exchange != null)
+                    SignalsPrivates = SignalsPrivates.Where(x => x.Exchange == ViewModel.Exchange.ToLower()).ToList();
 
                 SignalsAnalyticsViewModel model = new SignalsAnalyticsViewModel
                 {
@@ -45,21 +51,33 @@ namespace CRM.Services.SignalsAnalytics
 
         public SignalsAnalyticsViewModel LoadTradeHistoryDelta(SignalsAnalyticsViewModel ViewModel)
         {
-            ViewModel.Situation = ViewModel.Situation == null ? "all" : ViewModel.Situation;
-
             using (masterContext context = new masterContext())
             {
                 TradeHistoryDeltas = context.TradeHistoryDelta
-                    .Where(x => ViewModel.Nullable == "null" ? (x.MaxLongDiff == null && x.MinLongDiff == null) : ViewModel.Nullable == "notnull" ? (x.MaxLongDiff != null && x.MinLongDiff != null) : true)
-                    .Where(x => x.Exchange == ViewModel.Exchange.ToLower())
-                    .Where(x => ViewModel.Coin != "all" ? x.Base == ViewModel.Coin : true)
-                    .Where(x => ViewModel.Situation != "all" ? x.Situation == ViewModel.Situation.ToLower() : true)
                     .Where(x => x.TimeFrom >= DateTime.Parse(ViewModel.StartDate))
                     .Where(x => x.TimeTo <= DateTime.Parse(ViewModel.EndDate).AddDays(1))
                     .Where(x => x.TimeFrom.TimeOfDay >= TimeSpan.Parse(ViewModel.StartTime))
                     .Where(x => x.TimeTo.TimeOfDay <= TimeSpan.Parse(ViewModel.EndTime))
                     .OrderByDescending(x => x.TimeFrom)
                     .ToList();
+
+                if (ViewModel.Coin != null)
+                    TradeHistoryDeltas = TradeHistoryDeltas.Where(x => x.Base == ViewModel.Coin).ToList();
+
+                if (ViewModel.Nullable != null)
+                {
+                    if (ViewModel.Nullable == "notnull")
+                        TradeHistoryDeltas = TradeHistoryDeltas.Where(x => x.MaxLongDiff != null).Where(x => x.MinLongDiff != null).ToList();
+                    else
+                        TradeHistoryDeltas = TradeHistoryDeltas.Where(x => x.MaxLongDiff == null).Where(x => x.MinLongDiff == null).ToList();
+                }
+
+                if (ViewModel.Situation != null)
+                    TradeHistoryDeltas = TradeHistoryDeltas.Where(x => x.Situation == ViewModel.Situation.ToLower()).ToList();
+
+                if (ViewModel.Exchange != null)
+                    TradeHistoryDeltas = TradeHistoryDeltas.Where(x => x.Exchange == ViewModel.Exchange.ToLower()).ToList();
+
 
                 SignalsAnalyticsViewModel model = new SignalsAnalyticsViewModel
                 {

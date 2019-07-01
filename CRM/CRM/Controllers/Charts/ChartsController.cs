@@ -115,7 +115,7 @@ namespace CRM.Controllers.Charts
         {
             IndicatorPointsFilter filter = new IndicatorPointsFilter
             {
-                Coin = viewModel.Base == null ? "all" : viewModel.Base,
+                Coin = viewModel.Base,
                 Exchange = viewModel.Exchange,
                 StartDate = DateTime.Parse(viewModel.StartDate),
                 EndDate = DateTime.Parse(viewModel.EndDate),

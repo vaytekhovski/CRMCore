@@ -40,7 +40,6 @@ namespace CRM.Models
 
         private static void InitiateCoins()
         {
-            Coins.Add(new Field { Value = "all", Name = "Все валюты" });
             Coins.Add(new Field { Value = "BTC", Name = "USDT-BTC" });
             Coins.Add(new Field { Value = "BNB", Name = "USDT-BNB" });
             Coins.Add(new Field { Value = "EOS", Name = "USDT-EOS" });
@@ -60,14 +59,12 @@ namespace CRM.Models
 
         private static void InitiateOrderType()
         {
-            OrderType.Add(new Field { Value = "all", Name = "Все" });
             OrderType.Add(new Field { Value = "Sell", Name = "Sell" });
             OrderType.Add(new Field { Value = "Buy", Name = "Buy" });
         }
 
         private static void InitiateSituations()
         {
-            Situation.Add(new Field { Value = "all", Name = "Все" });
             Situation.Add(new Field { Value = "Flat", Name = "Flat" });
             Situation.Add(new Field { Value = "Trend", Name = "Trend" });
             Situation.Add(new Field { Value = "Middle", Name = "Middle" });
@@ -75,7 +72,6 @@ namespace CRM.Models
 
         private static void InitiateNulls()
         {
-            Nulls.Add(new Field { Value = "all", Name = "Показывать нулевые" });
             Nulls.Add(new Field { Value = "notnull", Name = "Не показывать нулевые" });
             Nulls.Add(new Field { Value = "null", Name = "Только нулевые" });
         }

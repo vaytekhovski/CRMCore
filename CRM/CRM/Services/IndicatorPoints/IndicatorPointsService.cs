@@ -20,7 +20,7 @@ namespace CRM.Services.IndicatorPoints
                 var query = context.IndicatorPoints
                     .Where(x => x.Time > filter.StartDate && x.Time < filter.EndDate);
 
-                if (filter.Coin != "all")
+                if (filter.Coin != null)
                     query = query.Where(x => x.Base == filter.Coin);
 
                 if (filter.Exchange != null)

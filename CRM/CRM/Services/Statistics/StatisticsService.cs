@@ -26,10 +26,10 @@ namespace CRM.Services.Statistics
                     .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate.AddDays(1))
                     .AsNoTracking();
 
-                if (filter.Coin != "all")
+                if (filter.Coin != null)
                     query = query.Where(x => x.Pair == filter.Coin);
 
-                if (filter.Account != "Все аккаунты")
+                if (filter.Account != null)
                     query = query.Where(x => x.Account == filter.Account);
 
 
@@ -48,8 +48,6 @@ namespace CRM.Services.Statistics
         private List<StatisticsElement> UpdateStatistics(IQueryable<AccountTradeHistory> query)
         {
             var statistics = new List<StatisticsElement>();
-
-            var lastDate = query.LastOrDefault().Time.Date;
 
             foreach (var date in query.Select(x => x.Time.Date).Distinct())
             {

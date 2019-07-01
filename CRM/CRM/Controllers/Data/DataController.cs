@@ -101,8 +101,6 @@ namespace CRM.Controllers.Data
         [HttpPost]
         public ActionResult ShowTradeHistory(TradeHistoryViewModel ViewModel)
         {
-            ViewModel.OrderType = ViewModel.OrderType ?? "all";
-
             var model = tradeHistory.Load(ViewModel.Coin, ViewModel.Situation, ViewModel.OrderType, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
 
             ViewModel.Show = model.Show;
@@ -127,8 +125,6 @@ namespace CRM.Controllers.Data
         [HttpPost]
         public ActionResult ShowTradeDelta(TradeDeltaViewModel ViewModel)
         {
-            ViewModel.NullDelta = ViewModel.NullDelta ?? "all";
-
             var model = tradeDelta.Load(ViewModel.Coin, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate), ViewModel.NullDelta);
 
             ViewModel.Show = model.Show;

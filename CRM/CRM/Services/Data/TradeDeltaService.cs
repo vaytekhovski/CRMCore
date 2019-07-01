@@ -22,9 +22,9 @@ namespace CRM.Services.Data
             using (CRMContext context = new CRMContext())
             {
                 Show = context.TradeDeltaModels
-                    .Where(x => coin == "all" ? true : x.CurrencyName == coin)
+                    .Where(x => coin == null ? true : x.CurrencyName == coin)
                     .Where(x => x.TimeFrom >= startDate && x.TimeTo <= endDate)
-                    .Where(x => nulldelta == "all" ? true : x.Delta != 0)
+                    .Where(x => nulldelta == null ? true : x.Delta != 0)
                     .OrderByDescending(x => x.TimeFrom)
                     .ToList();
 

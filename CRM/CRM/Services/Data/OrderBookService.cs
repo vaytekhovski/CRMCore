@@ -23,8 +23,8 @@ namespace CRM.Services.Data
             {
                 Show = context.OrderBookModels
                     .Where(x => x.BookType == bookType)
-                    .Where(x => coin == "all" ? true : x.CurrencyName == coin)
-                    .Where(x => situation == "all" ? true : x.MarketSituation == situation)
+                    .Where(x => coin == null ? true : x.CurrencyName == coin)
+                    .Where(x => situation == null ? true : x.MarketSituation == situation)
                     .Where(x => x.Date >= startDate && x.Date <= endDate)
                     .OrderByDescending(x => x.Date)
                     .ToList();

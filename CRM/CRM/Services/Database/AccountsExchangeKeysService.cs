@@ -35,7 +35,6 @@ namespace CRM.Services.Database
                 {
                     lst = context.ExchangeKeys
                       .Where(x => user.RoleId != (int)UserModel.Roles.Boss ? x.UserId == user.Id : true)
-                      .Where(x => x.AccountId != "all")
                       .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
                       .ToList();
                 }
