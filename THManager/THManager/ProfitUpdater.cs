@@ -63,11 +63,11 @@ namespace THManager
         {
             foreach (var _coin in UncalculatedTradeHistories.Where(x => x.Pair != "all").Select(x => x.Pair).Distinct())
             {
-                foreach (var _acc in Changer.ExchangeKeys.Where(x => x.AccountId != "all"))
+                foreach (var AccountName in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
                 {
                     decimal buyAmount = 0;
 
-                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time).ToArray();
+                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time).ToArray();
 
                     for (int i = 0; i < TH.Count(); i++)
                     {
@@ -82,7 +82,7 @@ namespace THManager
                     }
 
                     int j = 0;
-                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time))
+                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time))
                     {
                         if (TH[j].DesiredQuantity != 0)
                         {
@@ -100,15 +100,15 @@ namespace THManager
 
         private List<AccountTradeHistory> CalculateProfit(List<AccountTradeHistory> UncalculatedTradeHistories)
         {
-            foreach (var _coin in UncalculatedTradeHistories.Where(x=>x.Pair != "all").Select(x => x.Pair).Distinct()) // TODO: [COMPLETE] select base + distinct
+            foreach (var _coin in UncalculatedTradeHistories.Select(x => x.Pair).Distinct())  // TODO: [COMPLETE] select base + distinct
             {
-                foreach (var _acc in Changer.ExchangeKeys.Where(x => x.AccountId != "all")) // TODO: select AccountId + distinct
+                foreach (var AccountName in UncalculatedTradeHistories.Select(x => x.Account).Distinct())  // TODO: [COMPLETE] select AccountId + distinct
                 {
                     decimal profit = 0;
                     decimal desiredProfit = 0;
                     decimal buyAmount = 0;
 
-                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time).ToArray();
+                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time).ToArray();
 
                     for (int i = 0; i < TH.Count(); i++)
                     {
@@ -139,7 +139,7 @@ namespace THManager
                     }
 
                     int j = 0;
-                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName(_acc.AccountId)).OrderBy(x => x.Time))
+                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time))
                     {
                         if (TH[j].Profit != 0)
                         {
@@ -158,14 +158,18 @@ namespace THManager
             return UncalculatedTradeHistories;
         }
 
-        private string AccountName(string accountId)
+        private string AccountId(string accountId)
         {
             return Changer.ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
         }
 
+        private string GetAccountId(string accountName)
+        {
+            return Changer.ExchangeKeys.FirstOrDefault(x => x.Name == accountName).AccountId;
+        }
+
         private void InitiateCoins()
         {
-            Coins.Add(new Field { Value = "all", Name = "Все валюты" });
             Coins.Add(new Field { Value = "BTC", Name = "USDT-BTC" });
             Coins.Add(new Field { Value = "BNB", Name = "USDT-BNB" });
             Coins.Add(new Field { Value = "EOS", Name = "USDT-EOS" });

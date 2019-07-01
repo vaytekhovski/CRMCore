@@ -39,15 +39,6 @@ namespace THManager
 
             using (CRMContext context = new CRMContext())
             {
-                //try
-                //{
-                //    LastId = context.AccountTradeHistories.FirstOrDefault(x => x.Time > Helper.FindTimeLastSell()).Id;
-                //}
-                //catch
-                //{
-                //    LastId = 1;
-                //}
-
                 LastId = regularCalculating ? context.AccountTradeHistories.FirstOrDefault(x => x.Time > Helper.FindTimeLastSell()).Id : 1;
 
             }
