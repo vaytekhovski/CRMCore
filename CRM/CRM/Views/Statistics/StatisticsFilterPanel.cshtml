@@ -4,16 +4,14 @@
     <div class="filter_panel container">
 
         <div class="filter_element">
-            @Html.DropDownListFor(m => m.Coin, CRM.Models.DropDownFields.GetCoins(), "Все валюты", new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
+            @Html.DropDownListFor(m => m.Coin,  (IEnumerable<SelectListItem>)ViewBag.Coins, "Все валюты", new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
         </div>
 
         <div class="filter_element">
-            @Html.DropDownListFor(m => m.Account, CRM.Models.DropDownFields.GetAccounts(Context), "Все аккаунты", new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
+            @Html.DropDownListFor(m => m.Account, (IEnumerable<SelectListItem>)ViewBag.Accounts, "Все аккаунты", new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
             @*TODO: [COMPLETE] use optionLabel parameter for default list value adding *@
             @*TODO: call GetAccounts and similar dropdown methods in controller, pass through ViewBag*@
         </div>
-
-
 
         <div class="filter_element">
             <input type="date" class="form-control filter_input" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />

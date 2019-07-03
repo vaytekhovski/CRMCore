@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CRM.Helpers;
+using CRM.Models;
 using CRM.Models.Filters;
 using CRM.Models.Statistics;
 using CRM.Services.Pagination;
@@ -35,6 +36,9 @@ namespace CRM.Controllers.Statistics
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
             };
+
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 
@@ -44,7 +48,6 @@ namespace CRM.Controllers.Statistics
             var Model = new StatisticsModel();
 
             //TODO: [COMPLETE] remove string check, like "All", "Все", "Все аккаунты" etc. Use null check for default list value
-            //viewModel.Account = viewModel.Account == "Все" ? "Все аккаунты" : viewModel.Account; 
 
             var filter = new StatisticsFilter
             {
