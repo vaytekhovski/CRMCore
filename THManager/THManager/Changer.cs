@@ -56,6 +56,7 @@ namespace THManager
 
         private List<Orders> ChangeAmounts(List<Orders> orders)
         {
+            //TODO: use database table
             try
             {
                 orders.FirstOrDefault(x => x.Id == 1942).ClosedAmount = orders.FirstOrDefault(x => x.Id == 1940).ClosedAmount;
@@ -120,6 +121,7 @@ namespace THManager
 
         private void InitializeIgnoreList()
         {
+            //TODO: use database table
             IgnoreIds.Add(265);
             IgnoreIds.Add(266);
             IgnoreIds.Add(267);
@@ -155,7 +157,7 @@ namespace THManager
         {
             AccountTradeHistories.Clear();
             int counter = LastId;
-            foreach (var item in orders.OrderBy(x => x.TimeEnded))
+            foreach (var item in orders.OrderBy(x => x.TimeEnded)) //TODO: use contains instead of first or default in loop
             {
                 if (item.ClosedAmount == 0) continue;
 

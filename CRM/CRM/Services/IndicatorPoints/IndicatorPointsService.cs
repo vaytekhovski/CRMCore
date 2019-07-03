@@ -13,7 +13,7 @@ namespace CRM.Services.IndicatorPoints
     {
         public IndicatorPointsViewModel Load(IndicatorPointsFilter filter)
         {
-            var model = new IndicatorPointsViewModel();
+            var model = new IndicatorPointsViewModel(); //TODO: rename
 
             using(masterContext context = new masterContext())
             {
@@ -28,7 +28,7 @@ namespace CRM.Services.IndicatorPoints
 
                 model.Dates = query.Select(x => x.Time).Select(x => x.ToJavascriptTicks()).ToList();
 
-                model.MACDValues = query.Select(x => x.MACD.ToString().Replace(',','.')).ToList();
+                model.MACDValues = query.Select(x => x.MACD.ToString().Replace(',','.')).ToList();//TODO: to view
                 model.SIGValues = query.Select(x => x.SIG.ToString().Replace(',', '.')).ToList();
 
 

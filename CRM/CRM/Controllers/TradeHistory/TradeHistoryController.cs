@@ -14,7 +14,7 @@ namespace CRM.Controllers
     [Authorize]
     public class TradeHistoryController : Controller
     {
-        private readonly TradeHistoryService TradeHistoryService; // TODO: [COMPLETE] убрать сокращения в именах бизнес сущностей и сервисов
+        private readonly TradeHistoryService TradeHistoryService; //TODO: _tradeHistoryService (underscore camel case) - везде
         private readonly PaginationService paginationService;
 
         public TradeHistoryController()

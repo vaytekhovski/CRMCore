@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CRM.Helpers;
 using CRM.Services;
 using CRM.Services.Balances;
@@ -34,9 +35,9 @@ namespace CRM.Controllers.Balances
         }
 
         [HttpPost]
-        public ActionResult Balances(BalancesModel model)
+        public async Task<ActionResult> Balances(BalancesModel model)
         {
-            model = balancesService.LoadBalancesAsync(model.Account).Result;
+            model = await balancesService.LoadBalancesAsync(model.Account); //TODO: !!! use async/await where possible
             return View(model);
         }
     }

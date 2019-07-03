@@ -32,7 +32,7 @@ namespace CRM.Services.Charts
                     .Where(x => x.Date >= startDate && x.Date <= endDate)
                     .OrderBy(x => x.Date).ToList();
             }
-
+            //TODO: use DateTime as result of service method, convert in controller/view
             DatesAsks = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Date.DateTime).ToList();
             AsksValues = AsksBids.Where(x => x.BookType == "ask").Select(x => x.Volume).ToList();
 
