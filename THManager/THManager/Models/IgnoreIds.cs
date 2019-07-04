@@ -4,7 +4,7 @@ using System.Text;
 
 namespace THManager.Models
 {
-    class IgnoreIds
+   public class IgnoreIds
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
