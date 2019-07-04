@@ -115,43 +115,75 @@
     font-size: 16px;
 }
 
-
-#toTopButton {
-    display: inline-block;
-    background-color: #a76be3;
-    width: 110px;
-    height: 40px;
-    text-align: center;
-    position: fixed;
-    bottom: 100px;
-    right: 100px;
-    transition: background-color .3s, opacity .5s, visibility .5s;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 1000;
-    color: white;
-    padding-top: 5px;
-}
-
-    #toTopButton::after {
-        font-family: FontAwesome;
-        font-weight: normal;
-        font-style: normal;
-        font-size: 1em;
-        line-height: 25px;
-        color: #fff;
+@media only screen and (max-width: 600px) 
+{
+    #toTopButton {
+        display: inline-block;
+        background-color: #a76be3;
+        opacity: 0.7 !important;
+        font-size:30px;
+        width: 100%;
+        height: 80px;
+        text-align: center;
+        position: fixed;
+        bottom: 0px;
+        transition: background-color .3s, opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+        color: white;
+        padding-top: 5px;
     }
 
-    #toTopButton:hover {
-        cursor: pointer;
-        background-color: #333;
-    }
-
-    #toTopButton:active {
-        background-color: #555;
-    }
 
     #toTopButton.show {
         opacity: 1;
         visibility: visible;
     }
+}
+
+
+@media only screen and (min-width: 600px)
+{
+    #toTopButton {
+        display: inline-block;
+        background-color: #a76be3;
+        width: 110px;
+        height: 40px;
+        text-align: center;
+        position: fixed;
+        bottom: 100px;
+        right: 100px;
+        transition: background-color .3s, opacity .5s, visibility .5s;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+        color: white;
+        padding-top: 5px;
+    }
+
+        #toTopButton::after {
+            font-family: FontAwesome;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 1em;
+            line-height: 25px;
+            color: #fff;
+        }
+
+        #toTopButton:hover {
+            cursor: pointer;
+            background-color: #333;
+        }
+
+        #toTopButton:active {
+            background-color: #555;
+        }
+
+        #toTopButton.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+}
+
