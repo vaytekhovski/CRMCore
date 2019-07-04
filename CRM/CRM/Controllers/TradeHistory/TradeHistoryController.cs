@@ -30,8 +30,8 @@ namespace CRM.Controllers
             {
                 Account = "/",
                 Coin = "all",
-                StartDate = DatesHelper.MinDateStr,
-                EndDate = DatesHelper.CurrentDateStr
+                StartDate = DatesHelper.MinDateTimeStr,
+                EndDate = DatesHelper.CurrentDateTimeStr
             };
 
             AccountExchangeKeys.InitializeExchangeKeys();
