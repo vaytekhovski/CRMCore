@@ -30,8 +30,6 @@ namespace CRM.Controllers
             {
                 Account = "/",
                 Coin = "all",
-                StartTime = "00:00",
-                EndTime = "23:59",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
             };
@@ -54,8 +52,8 @@ namespace CRM.Controllers
             {
                 Account = viewModel.Account,
                 Coin = viewModel.Coin,
-                StartDate = DateTime.Parse(viewModel.StartDate).Add(TimeSpan.Parse(viewModel.StartTime)),
-                EndDate = DateTime.Parse(viewModel.EndDate).Add(TimeSpan.Parse(viewModel.EndTime)),
+                StartDate = DateTime.Parse(viewModel.StartDate),
+                EndDate = DateTime.Parse(viewModel.EndDate),
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 

@@ -14,20 +14,13 @@
 
 
         <div class="filter_element">
-            <input type="date" class="form-control filter_input" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />
+            <input type="datetime-local" style="width:180px !important" class="form-control filter_input" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05T00:00" />
         </div>
 
         <div class="filter_element">
-            <input required type="time" style="width: 100px !important" class="form-control filter_input" id="startTime" name="startTime" value=@Model.StartTime />
+            <input type="datetime-local" style="width:180px !important" class="form-control filter_input" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-01T23:59" />
         </div>
 
-        <div class="filter_element">
-            <input type="date" class="form-control filter_input" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-01" />
-        </div>
-
-        <div class="filter_element">
-            <input required type="time" style="width: 100px !important" class="form-control filter_input" id="endTime" name="endTime" value=@Model.EndTime />
-        </div>
 
         <div class="filter_element">
             <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../TradeHistory/TradeHistory" formmethod="post">
