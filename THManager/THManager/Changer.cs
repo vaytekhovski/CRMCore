@@ -54,28 +54,7 @@ namespace THManager
             return AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
         }
 
-        private List<Orders> ChangeAmounts(List<Orders> orders)
-        {
-            try
-            {
-                orders.FirstOrDefault(x => x.Id == 1942).ClosedAmount = orders.FirstOrDefault(x => x.Id == 1940).ClosedAmount;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            try
-            {
-                orders.FirstOrDefault(x => x.Id == 2282).ClosedAmount = 12.805860M;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return orders;
-        }
+        
 
         private void AddSignals(List<SignalsPrivate> signals)
         {
@@ -116,6 +95,29 @@ namespace THManager
             {
                 ExchangeKeys = context.ExchangeKeys.ToList();
             }
+        }
+
+        private List<Orders> ChangeAmounts(List<Orders> orders)
+        {
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 1942).ClosedAmount = orders.FirstOrDefault(x => x.Id == 1940).ClosedAmount;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                orders.FirstOrDefault(x => x.Id == 2282).ClosedAmount = 12.805860M;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return orders;
         }
 
         private void InitializeIgnoreList()
