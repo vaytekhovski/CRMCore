@@ -42,7 +42,15 @@ namespace CRM.Services
                 if (triggerTime < TimeSpan.Zero)
                     triggerTime = triggerTime.Add(new TimeSpan(24, 0, 0));
                 await Task.Delay(triggerTime);
-                OnTimeTriggered?.Invoke();
+                try
+                {
+                    OnTimeTriggered?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                
             }
         }
 
