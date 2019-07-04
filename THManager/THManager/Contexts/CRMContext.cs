@@ -6,7 +6,8 @@ namespace Contexts
 {
     public class CRMContext : DbContext 
     {
-
+        public DbSet<WrongOrders> WrongOrders { get; set; }
+        public DbSet<IgnoreIds> IgnoreIds { get; set; }
         public DbSet<ExchangeKey> ExchangeKeys { get; set; }
 
         public DbSet<AccountTradeHistory> AccountTradeHistories { get; set; }
@@ -31,6 +32,7 @@ namespace Contexts
                 property.Relational().ColumnType = "decimal(18, 6)";
             }
         }
+
 
         public CRMContext()
         {

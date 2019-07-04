@@ -54,29 +54,7 @@ namespace THManager
             return AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
         }
 
-        private List<Orders> ChangeAmounts(List<Orders> orders)
-        {
-            //TODO: use database table
-            try
-            {
-                orders.FirstOrDefault(x => x.Id == 1942).ClosedAmount = orders.FirstOrDefault(x => x.Id == 1940).ClosedAmount;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            try
-            {
-                orders.FirstOrDefault(x => x.Id == 2282).ClosedAmount = 12.805860M;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return orders;
-        }
+        
 
         private void AddSignals(List<SignalsPrivate> signals)
         {
@@ -119,33 +97,39 @@ namespace THManager
             }
         }
 
+        private List<Orders> ChangeAmounts(List<Orders> orders)
+        {
+            using(CRMContext db = new CRMContext())
+            {
+                //db.WrongOrders.Add(new WrongOrders { OrderId = 1942, Amount = 0.07899000M });
+                //db.WrongOrders.Add(new WrongOrders { OrderId = 2282, Amount = 12.805860M });
+                //db.SaveChanges();
+
+                foreach (var item in db.WrongOrders.ToList())
+                {
+                    try
+                    {
+                        orders.FirstOrDefault(x => x.Id == item.OrderId).ClosedAmount = item.Amount;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    
+                }
+            }
+
+            
+            return orders;
+        }
+
         private void InitializeIgnoreList()
         {
-            //TODO: use database table
-            IgnoreIds.Add(265);
-            IgnoreIds.Add(266);
-            IgnoreIds.Add(267);
-            IgnoreIds.Add(268);
-            IgnoreIds.Add(272);
-            IgnoreIds.Add(273);
-            IgnoreIds.Add(274);
-            IgnoreIds.Add(275);
-            IgnoreIds.Add(312);
-            IgnoreIds.Add(383);
-            IgnoreIds.Add(1910);
-            IgnoreIds.Add(1911);
-            IgnoreIds.Add(1912);
-            IgnoreIds.Add(1913);
-            IgnoreIds.Add(1914);
-            IgnoreIds.Add(1915);
-            IgnoreIds.Add(1916);
-            IgnoreIds.Add(1917);
-            IgnoreIds.Add(1951);
-            IgnoreIds.Add(1952);
-            IgnoreIds.Add(1953);
-            IgnoreIds.Add(1950);
-            IgnoreIds.Add(1949);
-            IgnoreIds.Add(1948);
+            using (CRMContext db = new CRMContext())
+            {
+                IgnoreIds.AddRange(db.IgnoreIds.Select(x => x.OrderId));
+            }
+
         }
 
         private string AccountName(string accountId)
@@ -157,7 +141,7 @@ namespace THManager
         {
             AccountTradeHistories.Clear();
             int counter = LastId;
-            foreach (var item in orders.OrderBy(x => x.TimeEnded)) //TODO: use contains instead of first or default in loop
+            foreach (var item in orders.OrderBy(x => x.TimeEnded))
             {
                 if (item.ClosedAmount == 0) continue;
 
@@ -166,7 +150,7 @@ namespace THManager
                 if (ignore == 0) AccountTradeHistories.Add(new AccountTradeHistory
                 {
                     Id = counter++,
-                    Account = AccountName(item.AccountId),
+                    Account = item.AccountId,
                     Time = item.TimeEnded.AddHours(3),
                     Side = item.Side,
                     Pair = item.Base,

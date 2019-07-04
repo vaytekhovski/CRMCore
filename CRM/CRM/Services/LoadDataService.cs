@@ -25,7 +25,15 @@ namespace CRM.Services
         {
             foreach (var coin in DropDownFields.Coins)
             {
-                Loading(coin.Value, DateTime.Now, DateTime.Now.AddDays(1));
+                try
+                {
+                    Loading(coin.Value, DateTime.Now, DateTime.Now.AddDays(1));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                
             }
         }
 
@@ -71,7 +79,15 @@ namespace CRM.Services
             // и только после этого добавляем их в саму БД
 
             Debug.WriteLine($"{coin} download json");
-            DownloadJson(url, path);
+            try
+            {
+                DownloadJson(url, path);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
             var ticker = Ticker.FromJson(JsonFile(path));
 
             Debug.WriteLine($"{coin} add ticker to list");
@@ -95,7 +111,15 @@ namespace CRM.Services
                 Encoding = Encoding.UTF8
             };
             StreamWriter sw = new StreamWriter(fullnamelocation, false, Encoding.UTF8);
-            sw.WriteLine(webClient.DownloadString("http://" + url));
+            try
+            {
+                sw.WriteLine(webClient.DownloadString("http://" + url));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
             sw.Close();
         }
 

@@ -37,8 +37,8 @@ namespace CRM.Controllers.Statistics
                 EndDate = DatesHelper.CurrentDateStr
             };
 
-            ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            //ViewBag.Coins = DropDownFields.GetCoins();
+            //ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 

@@ -1,6 +1,7 @@
 ﻿using CRM.Master;
 using CRM.Models;
 using CRM.Models.Filters;
+using CRM.Services.Charts;
 using CRM.ViewModels.Charts;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace CRM.Services.IndicatorPoints
 {
     public class IndicatorPointsService
     {
-        public IndicatorPointsViewModel Load(IndicatorPointsFilter filter)
+        public IndicatorPointsModel Load(ChartsFilter filter)
         {
-            var model = new IndicatorPointsViewModel(); //TODO: rename
+            var model = new IndicatorPointsModel();
 
             using(masterContext context = new masterContext())
             {
@@ -26,10 +27,10 @@ namespace CRM.Services.IndicatorPoints
                 if (filter.Exchange != null)
                     query = query.Where(x => x.Exchange == filter.Exchange);
 
-                model.Dates = query.Select(x => x.Time).Select(x => x.ToJavascriptTicks()).ToList();
+                model.Dates = query.Select(x => x.Time).ToList();
 
-                model.MACDValues = query.Select(x => x.MACD.ToString().Replace(',','.')).ToList();//TODO: to view
-                model.SIGValues = query.Select(x => x.SIG.ToString().Replace(',', '.')).ToList();
+                model.MACDValues = query.Select(x => Convert.ToDouble(x.MACD)).ToList();
+                model.SIGValues = query.Select(x => Convert.ToDouble(x.SIG)).ToList();
 
 
             };

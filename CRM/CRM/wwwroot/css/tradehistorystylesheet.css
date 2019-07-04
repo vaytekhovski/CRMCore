@@ -1,6 +1,5 @@
 ﻿@media only screen and (max-width: 600px) {
-    .table-font
-
+.table-font
 {
     table-layout: auto;
     font-size: 7px !important;

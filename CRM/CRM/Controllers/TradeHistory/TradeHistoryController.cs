@@ -30,12 +30,11 @@ namespace CRM.Controllers
             {
                 Account = "/",
                 Coin = "all",
-                StartTime = "00:00",
-                EndTime = "23:59",
-                StartDate = DatesHelper.MinDateStr,
-                EndDate = DatesHelper.CurrentDateStr
+                StartDate = DatesHelper.MinDateTimeStr,
+                EndDate = DatesHelper.CurrentDateTimeStr
             };
 
+            AccountExchangeKeys.InitializeExchangeKeys();
 
             return View(viewModel);
         }
@@ -53,8 +52,8 @@ namespace CRM.Controllers
             {
                 Account = viewModel.Account,
                 Coin = viewModel.Coin,
-                StartDate = DateTime.Parse(viewModel.StartDate).Add(TimeSpan.Parse(viewModel.StartTime)),
-                EndDate = DateTime.Parse(viewModel.EndDate).AddDays(1).Add(TimeSpan.Parse(viewModel.EndTime)),
+                StartDate = DateTime.Parse(viewModel.StartDate),
+                EndDate = DateTime.Parse(viewModel.EndDate),
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
@@ -74,7 +73,7 @@ namespace CRM.Controllers
 
         private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryModel Model, TradeHistoryFilterModel viewModel)
         {
-            viewModel.Orders = Model.AccountTradeHistories;
+            viewModel.Orders = Model.AccountTradeHistories.Select(x => { x.Account = AccountExchangeKeys.AccountName(x.Account); return x; }).ToList();
 
             viewModel.TotalProfit = Model.TotalProfit;
             viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
