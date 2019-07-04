@@ -55,12 +55,21 @@ namespace CRM.Controllers.Charts
         [HttpPost]
         public ActionResult AsksOnBids(AskOnBidViewModel ViewModel)
         {
-            var model = asksOnBids.Load(ViewModel.Coin, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
+            ChartsFilter filter = new ChartsFilter
+            {
+                Coin = ViewModel.Coin,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
+            };
 
-            ViewModel.DatesAsks = model.DatesAsks;
-            ViewModel.AsksValues = model.AsksValues;
-            ViewModel.DatesBids = model.DatesBids;
-            ViewModel.BidsValues = model.BidsValues;
+            var model = asksOnBids.Load(filter);
+
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
+
+            ViewModel.DatesAsks = model.DatesAsks.Select(x => x.ToJavascriptTicks()).ToList();
+            ViewModel.AsksValues = model.AsksValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.DatesBids = model.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
+            ViewModel.BidsValues = model.BidsValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
 
             return View(ViewModel);
         }
@@ -85,18 +94,27 @@ namespace CRM.Controllers.Charts
         [HttpPost]
         public ActionResult DeltaOnTradeHistory(DeltaOnTradeHistoryViewModel ViewModel)
         {
-            var model = deltaOnTradeHistory.Load(ViewModel.Coin, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
+            ChartsFilter filter = new ChartsFilter
+            {
+                Coin = ViewModel.Coin,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
+            };
 
-            ViewModel.DatesDelta = model.DatesDelta;
-            ViewModel.DeltaValues = model.DeltaValues;
+            var model = deltaOnTradeHistory.Load(filter);
 
-            ViewModel.DatesTHBuy = model.DatesTHBuy;
-            ViewModel.THBuyValues = model.THBuyValues;
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            ViewModel.DatesTHSell = model.DatesTHSell;
-            ViewModel.THSellValues = model.THSellValues;
+            ViewModel.DatesDelta = model.DatesDelta.Select(x => x.ToJavascriptTicks()).ToList();
+            ViewModel.DeltaValues = model.DeltaValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
 
-            return View(model);
+            ViewModel.DatesTHBuy = model.DatesTHBuy.Select(x => x.ToJavascriptTicks()).ToList();
+            ViewModel.THBuyValues = model.THBuyValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+
+            ViewModel.DatesTHSell = model.DatesTHSell.Select(x => x.ToJavascriptTicks()).ToList();
+            ViewModel.THSellValues = model.THSellValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+
+            return View(ViewModel);
         }
 
         [HttpGet]
@@ -111,23 +129,25 @@ namespace CRM.Controllers.Charts
         }
 
         [HttpPost]
-        public ActionResult IndicatorPoints(IndicatorPointsViewModel viewModel)
+        public ActionResult IndicatorPoints(IndicatorPointsViewModel ViewModel)
         {
-            IndicatorPointsFilter filter = new IndicatorPointsFilter
+            ChartsFilter filter = new ChartsFilter
             {
-                Coin = viewModel.Base,
-                Exchange = viewModel.Exchange,
-                StartDate = DateTime.Parse(viewModel.StartDate),
-                EndDate = DateTime.Parse(viewModel.EndDate),
+                Coin = ViewModel.Base,
+                Exchange = ViewModel.Exchange,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
             };
+
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
             var model = indicatorPointsService.Load(filter);
 
-            viewModel.Dates = model.Dates;
-            viewModel.MACDValues = model.MACDValues;
-            viewModel.SIGValues = model.SIGValues;
+            ViewModel.Dates = model.Dates.Select(x => x.ToJavascriptTicks()).ToList();
+            ViewModel.MACDValues = model.MACDValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.SIGValues = model.SIGValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
 
-            return View(viewModel);
+            return View(ViewModel);
         }
     }
 }

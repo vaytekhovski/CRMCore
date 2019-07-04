@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CRM.Models.Filters
 {
-    public class IndicatorPointsFilter
+    public class ChartsFilter
     {
         public string Exchange { get; set; }
         public string Coin { get; set; }

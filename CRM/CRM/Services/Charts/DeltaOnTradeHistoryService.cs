@@ -1,6 +1,8 @@
 ﻿using CRM.Helpers;
 using CRM.Models;
+using CRM.Models.Charts;
 using CRM.Models.Database;
+using CRM.Models.Filters;
 using CRM.ViewModels.Charts;
 using System;
 using System.Collections.Generic;
@@ -26,50 +28,35 @@ namespace CRM.Services.Charts
 
         public DeltaOnTradeHistoryService() { }
 
-        public DeltaOnTradeHistoryViewModel Load(string coin, DateTime startDate, DateTime endDate)
+        public DeltaOnTradeHistoryModel Load(ChartsFilter filter)
         {
-            if (startDate == null && endDate == null)
-                return null;
-
-            SeparateHelper.Separator.NumberDecimalSeparator = ".";
-
             using (CRMContext context = new CRMContext())
             {
                 Deltas = context.TradeDeltaModels
-                    .Where(x => x.CurrencyName == coin)
-                    .Where(x => x.TimeTo >= startDate && x.TimeTo <= endDate)
+                    .Where(x => x.CurrencyName == filter.Coin)
+                    .Where(x => x.TimeTo >= filter.StartDate && x.TimeTo <= filter.EndDate)
                     .Where(x => x.Delta > 0 || x.Delta < 0)
                     .OrderBy(x => x.TimeFrom).ToList();
 
                 TH = context.TradeHistoryModels
-                    .Where(x => x.CurrencyName == coin)
-                    .Where(x => x.Date >= startDate && x.Date <= endDate)
+                    .Where(x => x.CurrencyName == filter.Coin)
+                    .Where(x => x.Date >= filter.StartDate && x.Date <= filter.EndDate)
                     .OrderBy(x => x.Date).ToList();
             }
 
-            //DatesDelta = Deltas.Select(x => x.TimeTo.Date).ToList();
-            //DeltaValues = Deltas.Select(x => x.Delta).ToList();
-
-            //DatesTHBuy = TH.Where(x => x.Side == "Buy").Select(x => x.Date.Date).ToList();
-            //THBuyValues = TH.Where(x => x.Side == "Buy").Select(x => x.Volume).ToList();
-
-            //DatesTHSell = TH.Where(x => x.Side == "Sell").Select(x => x.Date.Date).ToList();
-            //THSellValues = TH.Where(x => x.Side == "Sell").Select(x => x.Volume).ToList();
-
-
-            DeltaOnTradeHistoryViewModel deltaOnTradeHistoryViewModel = new DeltaOnTradeHistoryViewModel
+            DeltaOnTradeHistoryModel deltaOnTradeHistoryModel = new DeltaOnTradeHistoryModel
             {
-                DatesDelta = Deltas.Select(x => x.TimeTo.DateTime).Select(x => x.ToJavascriptTicks()).ToList(),
-                DeltaValues = Deltas.Select(x => x.Delta).Select(x => x.ToString(SeparateHelper.Separator)).ToList(),
+                DatesDelta = Deltas.Select(x => x.TimeTo.DateTime).ToList(),
+                DeltaValues = Deltas.Select(x => x.Delta).ToList(),
 
-                DatesTHBuy = TH.Where(x => x.Side == "Buy").Select(x => x.Date.DateTime).Select(x => x.ToJavascriptTicks()).ToList(),
-                THBuyValues = TH.Where(x => x.Side == "Buy").Select(x => x.Volume).Select(x => x.ToString(SeparateHelper.Separator)).ToList(),
+                DatesTHBuy = TH.Where(x => x.Side == "Buy").Select(x => x.Date.DateTime).ToList(),
+                THBuyValues = TH.Where(x => x.Side == "Buy").Select(x => x.Volume).ToList(),
 
-                DatesTHSell = TH.Where(x => x.Side == "Sell").Select(x => x.Date.DateTime).Select(x => x.ToJavascriptTicks()).ToList(),
-                THSellValues = TH.Where(x => x.Side == "Sell").Select(x => x.Volume).Select(x => x.ToString(SeparateHelper.Separator)).ToList()
+                DatesTHSell = TH.Where(x => x.Side == "Sell").Select(x => x.Date.DateTime).ToList(),
+                THSellValues = TH.Where(x => x.Side == "Sell").Select(x => x.Volume).ToList()
             };
 
-            return deltaOnTradeHistoryViewModel;
+            return deltaOnTradeHistoryModel;
         }
     }
 }

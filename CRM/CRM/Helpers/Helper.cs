@@ -17,8 +17,5 @@ namespace CRM.Helpers
     public static class SeparateHelper
     {
        public static NumberFormatInfo Separator = new NumberFormatInfo();
-
-       
-       
     }
 }
