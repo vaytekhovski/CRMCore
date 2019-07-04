@@ -150,7 +150,7 @@ namespace THManager
                 if (ignore == 0) AccountTradeHistories.Add(new AccountTradeHistory
                 {
                     Id = counter++,
-                    Account = AccountName(item.AccountId),
+                    Account = item.AccountId,
                     Time = item.TimeEnded.AddHours(3),
                     Side = item.Side,
                     Pair = item.Base,

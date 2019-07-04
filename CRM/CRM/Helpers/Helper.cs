@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CRM.Models.Database;
+using CRM.Services;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -17,5 +19,26 @@ namespace CRM.Helpers
     public static class SeparateHelper
     {
        public static NumberFormatInfo Separator = new NumberFormatInfo();
+    }
+
+    public static class AccountExchangeKeys
+    {
+        public static List<ExchangeKey> ExchangeKeys;
+
+        public static void InitializeExchangeKeys()
+        {
+            using(UserContext db =new UserContext())
+            {
+                ExchangeKeys = db.ExchangeKeys.ToList();
+            }
+        }
+
+        public static string AccountName(string accountId)
+        {
+            using (UserContext db = new UserContext())
+            {
+                return ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
+            }
+        }
     }
 }

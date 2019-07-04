@@ -36,6 +36,7 @@ namespace CRM.Controllers
                 EndDate = DatesHelper.CurrentDateStr
             };
 
+            AccountExchangeKeys.InitializeExchangeKeys();
 
             return View(viewModel);
         }
@@ -74,7 +75,7 @@ namespace CRM.Controllers
 
         private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryModel Model, TradeHistoryFilterModel viewModel)
         {
-            viewModel.Orders = Model.AccountTradeHistories;
+            viewModel.Orders = Model.AccountTradeHistories.Select(x => { x.Account = AccountExchangeKeys.AccountName(x.Account); return x; }).ToList();
 
             viewModel.TotalProfit = Model.TotalProfit;
             viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
