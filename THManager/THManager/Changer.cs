@@ -99,53 +99,29 @@ namespace THManager
 
         private List<Orders> ChangeAmounts(List<Orders> orders)
         {
-            try
+            using(CRMContext db = new CRMContext())
             {
-                orders.FirstOrDefault(x => x.Id == 1942).ClosedAmount = orders.FirstOrDefault(x => x.Id == 1940).ClosedAmount;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                //db.WrongOrders.Add(new WrongOrders { OrderId = 1942, Amount = 0.07899000M });
+                //db.WrongOrders.Add(new WrongOrders { OrderId = 2282, Amount = 12.805860M });
+                //db.SaveChanges();
+
+                foreach (var item in db.WrongOrders)
+                {
+                    orders.FirstOrDefault(x => x.Id == item.OrderId).ClosedAmount = item.Amount;
+                }
             }
 
-            try
-            {
-                orders.FirstOrDefault(x => x.Id == 2282).ClosedAmount = 12.805860M;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
+            
             return orders;
         }
 
         private void InitializeIgnoreList()
         {
-            IgnoreIds.Add(265);
-            IgnoreIds.Add(266);
-            IgnoreIds.Add(267);
-            IgnoreIds.Add(268);
-            IgnoreIds.Add(272);
-            IgnoreIds.Add(273);
-            IgnoreIds.Add(274);
-            IgnoreIds.Add(275);
-            IgnoreIds.Add(312);
-            IgnoreIds.Add(383);
-            IgnoreIds.Add(1910);
-            IgnoreIds.Add(1911);
-            IgnoreIds.Add(1912);
-            IgnoreIds.Add(1913);
-            IgnoreIds.Add(1914);
-            IgnoreIds.Add(1915);
-            IgnoreIds.Add(1916);
-            IgnoreIds.Add(1917);
-            IgnoreIds.Add(1951);
-            IgnoreIds.Add(1952);
-            IgnoreIds.Add(1953);
-            IgnoreIds.Add(1950);
-            IgnoreIds.Add(1949);
-            IgnoreIds.Add(1948);
+            using (CRMContext db = new CRMContext())
+            {
+                IgnoreIds.AddRange(db.IgnoreIds.Select(x => x.OrderId));
+            }
+
         }
 
         private string AccountName(string accountId)
