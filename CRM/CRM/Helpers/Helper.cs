@@ -13,7 +13,7 @@ namespace CRM.Helpers
         public static DateTime MinDate = new DateTime(2019, 4, 5, 0, 0, 0);
         public static string MinDateStr = MinDate.ToString("yyyy-MM-ddTHH:mm");
 
-        public static string CurrentDateStr => DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+        public static string CurrentDateStr => DateTime.Now.AddHours(3).ToString("yyyy-MM-ddTHH:mm");
     }
 
     public static class SeparateHelper
