@@ -105,9 +105,17 @@ namespace THManager
                 //db.WrongOrders.Add(new WrongOrders { OrderId = 2282, Amount = 12.805860M });
                 //db.SaveChanges();
 
-                foreach (var item in db.WrongOrders)
+                foreach (var item in db.WrongOrders.ToList())
                 {
-                    orders.FirstOrDefault(x => x.Id == item.OrderId).ClosedAmount = item.Amount;
+                    try
+                    {
+                        orders.FirstOrDefault(x => x.Id == item.OrderId).ClosedAmount = item.Amount;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    
                 }
             }
 
