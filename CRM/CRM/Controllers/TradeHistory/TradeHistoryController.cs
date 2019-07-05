@@ -73,8 +73,8 @@ namespace CRM.Controllers
 
         private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryModel Model, TradeHistoryFilterModel viewModel)
         {
-            //viewModel.Orders = Model.AccountTradeHistories.Select(x => { x.Account = AccountExchangeKeys.AccountName(x.Account); return x; }).ToList();
-            viewModel.Orders = Model.AccountTradeHistories;
+            viewModel.Orders = Model.AccountTradeHistories.Select(x => { x.Account = AccountExchangeKeys.AccountName(x.Account); return x; }).ToList();
+            //viewModel.Orders = Model.AccountTradeHistories;
             viewModel.TotalProfit = Model.TotalProfit;
             viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
 
