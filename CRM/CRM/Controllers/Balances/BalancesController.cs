@@ -15,11 +15,11 @@ namespace CRM.Controllers.Balances
     [Authorize]
     public class BalancesController : Controller
     {
-        private readonly BalancesService balancesService;
+        private readonly BalancesService _balancesService;
 
         public BalancesController()
         {
-            balancesService = new BalancesService();
+            _balancesService = new BalancesService();
         }
 
         [HttpGet]
@@ -37,7 +37,7 @@ namespace CRM.Controllers.Balances
         [HttpPost]
         public async Task<ActionResult> Balances(BalancesModel model)
         {
-            model = await balancesService.LoadBalancesAsync(model.Account); //TODO: !!! use async/await where possible
+            model = await _balancesService.LoadBalancesAsync(model.Account); //TODO: !!! use async/await where possible
             return View(model);
         }
     }

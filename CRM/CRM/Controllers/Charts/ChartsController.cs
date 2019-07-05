@@ -17,17 +17,17 @@ namespace CRM.Controllers.Charts
     [Authorize]
     public class ChartsController : Controller
     {
-        private readonly AsksOnBidsService asksOnBids;
+        private readonly AsksOnBidsService _asksOnBids;
 
-        private readonly DeltaOnTradeHistoryService deltaOnTradeHistory;
+        private readonly DeltaOnTradeHistoryService _deltaOnTradeHistory;
 
-        private readonly IndicatorPointsService indicatorPointsService;
+        private readonly IndicatorPointsService _indicatorPointsService;
 
         public ChartsController()
         {
-            asksOnBids = new AsksOnBidsService();
-            deltaOnTradeHistory = new DeltaOnTradeHistoryService();
-            indicatorPointsService = new IndicatorPointsService();
+            _asksOnBids = new AsksOnBidsService();
+            _deltaOnTradeHistory = new DeltaOnTradeHistoryService();
+            _indicatorPointsService = new IndicatorPointsService();
         }
 
         [HttpGet]
@@ -62,7 +62,7 @@ namespace CRM.Controllers.Charts
                 EndDate = DateTime.Parse(ViewModel.EndDate),
             };
 
-            var model = asksOnBids.Load(filter);
+            var model = _asksOnBids.Load(filter);
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
@@ -101,7 +101,7 @@ namespace CRM.Controllers.Charts
                 EndDate = DateTime.Parse(ViewModel.EndDate),
             };
 
-            var model = deltaOnTradeHistory.Load(filter);
+            var model = _deltaOnTradeHistory.Load(filter);
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
@@ -141,7 +141,7 @@ namespace CRM.Controllers.Charts
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            var model = indicatorPointsService.Load(filter);
+            var model = _indicatorPointsService.Load(filter);
 
             ViewModel.Dates = model.Dates.Select(x => x.ToJavascriptTicks()).ToList();
             ViewModel.MACDValues = model.MACDValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();

@@ -14,10 +14,10 @@ namespace AuthApp.Controllers
 {
     public class AccountController : Controller
     {
-        private UserContext db;
+        private UserContext _db;
         public AccountController(UserContext context)
         {
-            db = context;
+            _db = context;
         }
 
         [HttpGet]
@@ -35,7 +35,7 @@ namespace AuthApp.Controllers
                 return View(model);
             }
 
-            UserModel user = await db.UserModels
+            UserModel user = await _db.UserModels
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
 
@@ -67,18 +67,18 @@ namespace AuthApp.Controllers
                 return View(model);
             }
 
-            UserModel user = await db.UserModels.FirstOrDefaultAsync(u => u.Login == model.Login);
+            UserModel user = await _db.UserModels.FirstOrDefaultAsync(u => u.Login == model.Login);
 
             if (user == null)
             {
                 // добавляем пользователя в бд
                 user = new UserModel { Login = model.Login, Password = model.Password, RegistrationDate = DateTime.Now};
-                Role userRole = await db.Roles.FirstOrDefaultAsync(r => r.Name == "user");
+                Role userRole = await _db.Roles.FirstOrDefaultAsync(r => r.Name == "user");
                 if (userRole != null)
                     user.Role = userRole;
 
-                db.UserModels.Add(user);
-                await db.SaveChangesAsync();
+                _db.UserModels.Add(user);
+                await _db.SaveChangesAsync();
 
                 await Authenticate(user); // аутентификация
 

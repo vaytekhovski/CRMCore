@@ -17,13 +17,13 @@ namespace CRM.Controllers.Statistics
     [Authorize]
     public class StatisticsController : Controller
     {
-        private readonly StatisticsService statisticsService;
-        private readonly PaginationService paginationService;
+        private readonly StatisticsService _statisticsService;
+        private readonly PaginationService _paginationService;
 
         public StatisticsController()
         {
-            statisticsService = new StatisticsService();
-            paginationService = new PaginationService();
+            _statisticsService = new StatisticsService();
+            _paginationService = new PaginationService();
         }
 
         [HttpGet]
@@ -58,11 +58,11 @@ namespace CRM.Controllers.Statistics
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
-            Model = statisticsService.Load(filter);
+            Model = _statisticsService.Load(filter);
 
             viewModel.Statistics = Model.Statistics;
 
-            var pagination = paginationService.GetPaginationModel(filter.CurrentPage, Model.Statistics.Count());
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.Statistics.Count());
             viewModel.CurrentPage = filter.CurrentPage;
             viewModel.FirstVisiblePage = pagination.FirstVisiblePage;
             viewModel.LastVisiblePage = pagination.LastVisiblePage;
