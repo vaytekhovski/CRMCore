@@ -23,7 +23,8 @@ namespace CRM.Models.Database
         {
             Admin = 1,
             User = 2,
-            Boss = 3
+            Boss = 3,
+            Spectator = 4
         }
 
     }
