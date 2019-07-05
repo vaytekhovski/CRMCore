@@ -14,13 +14,13 @@ namespace CRM.Controllers.SignalsAnalytics
     [Authorize]
     public class SignalsAnalyticsController : Controller
     {
-        private readonly SignalsAnalyticsService signalsAnalyticsService;
-        private readonly PaginationService paginationService;
+        private readonly SignalsAnalyticsService _signalsAnalyticsService;
+        private readonly PaginationService _paginationService;
 
         public SignalsAnalyticsController()
         {
-            signalsAnalyticsService = new SignalsAnalyticsService();
-            paginationService = new PaginationService();
+            _signalsAnalyticsService = new SignalsAnalyticsService();
+            _paginationService = new PaginationService();
         }
 
 
@@ -48,11 +48,11 @@ namespace CRM.Controllers.SignalsAnalytics
         {
             int PageNumber = Convert.ToInt32(PageButton);
 
-            var model = signalsAnalyticsService.LoadSignalsPrivate(ViewModel);
+            var model = _signalsAnalyticsService.LoadSignalsPrivate(ViewModel);
 
             ViewModel.SignalsPrivates = model.SignalsPrivates.Skip((PageNumber - 1) * 100).Take(100).ToList();
             
-            var pagination = paginationService.GetPaginationModel(PageNumber, model.SignalsPrivates.Count);
+            var pagination = _paginationService.GetPaginationModel(PageNumber, model.SignalsPrivates.Count);
             ViewModel.CurrentPage = PageNumber;
             ViewModel.FirstVisiblePage = pagination.FirstVisiblePage;
             ViewModel.LastVisiblePage = pagination.LastVisiblePage;
@@ -84,11 +84,11 @@ namespace CRM.Controllers.SignalsAnalytics
         {
             int PageNumber = Convert.ToInt32(PageButton);
 
-            var model = signalsAnalyticsService.LoadTradeHistoryDelta(ViewModel);
+            var model = _signalsAnalyticsService.LoadTradeHistoryDelta(ViewModel);
 
             ViewModel.TradeHistoryDeltas = model.TradeHistoryDeltas.Skip((PageNumber - 1) * 100).Take(100).ToList();
 
-            var pagination = paginationService.GetPaginationModel(PageNumber, model.TradeHistoryDeltas.Count);
+            var pagination = _paginationService.GetPaginationModel(PageNumber, model.TradeHistoryDeltas.Count);
             ViewModel.CurrentPage = PageNumber;
             ViewModel.FirstVisiblePage = pagination.FirstVisiblePage;
             ViewModel.LastVisiblePage = pagination.LastVisiblePage;

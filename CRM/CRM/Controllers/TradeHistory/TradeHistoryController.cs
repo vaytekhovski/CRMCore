@@ -14,13 +14,13 @@ namespace CRM.Controllers
     [Authorize]
     public class TradeHistoryController : Controller
     {
-        private readonly TradeHistoryService TradeHistoryService; //TODO: _tradeHistoryService (underscore camel case) - везде
-        private readonly PaginationService paginationService;
+        private readonly TradeHistoryService _tradeHistoryService; //TODO: _tradeHistoryService (underscore camel case) - везде
+        private readonly PaginationService _paginationService;
 
         public TradeHistoryController()
         {
-            TradeHistoryService = new TradeHistoryService();
-            paginationService = new PaginationService();
+            _tradeHistoryService = new TradeHistoryService();
+            _paginationService = new PaginationService();
         }
         
         [HttpGet]
@@ -57,12 +57,12 @@ namespace CRM.Controllers
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
-            TradeHistoryModel Model = TradeHistoryService.Load(filter);
+            TradeHistoryModel Model = _tradeHistoryService.Load(filter);
 
             viewModel = MoveDataFromModelToViewModel(Model, viewModel);
 
 
-            var pagination = paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
             viewModel.CurrentPage = filter.CurrentPage;
             viewModel.FirstVisiblePage = pagination.FirstVisiblePage;
             viewModel.LastVisiblePage = pagination.LastVisiblePage;
