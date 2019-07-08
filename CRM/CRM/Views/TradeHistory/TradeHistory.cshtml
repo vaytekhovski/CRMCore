@@ -147,7 +147,7 @@
                     }
 
                     string itemDesiredProfitStr = "";
-                    if (item.DesiredProfit != 0)
+                    if (item.Side == "sell" && item.Profit != 0)
                     {
                         itemDesiredProfitStr = item.DesiredProfit > 0 ? "+" : "";
                         itemDesiredProfitStr += String.Format("{0:0.##}", item.DesiredProfit);
@@ -183,28 +183,7 @@
             </tbody>
         </table>
 
-        @*<div style="display: @(Model.CountOfPages == 0 ? "none" : "table");; margin:auto; padding-bottom:30px;">
-            <form action="../TradeHistory/TradeHistory" method="post">
-                @{
-                    var nextPage = Model.CurrentPage < Model.CountOfPages ? Model.CurrentPage + 1 : Model.CurrentPage;
-                    var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
-                }
-
-                <input style="display:none" type="datetime-local" name="startDate" value=@Model.StartDate />
-                <input style="display:none" type="datetime-local" name="endDate" value=@Model.EndDate />
-
-                <input style="display:none" type="text" name="account" value=@Model.Account />
-                <input style="display:none" type="text" name="coin" value=@Model.Coin />
-
-                <button class="page_button" type="submit" value="@previusPage" name="PageButton" formaction="../TradeHistory/TradeHistory" formmethod="post"><</button>
-                @for (int i = Model.FirstVisiblePage; i <= Model.LastVisiblePage; i++)
-                {
-                    <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../TradeHistory/TradeHistory" formmethod="post">@i</button>
-                }
-                <button class="page_button" type="submit" value="@nextPage" name="PageButton" formaction="../TradeHistory/TradeHistory" formmethod="post">></button>
-
-            </form>
-        </div>*@
+        
 
         @Html.Partial("Pagination")
     </div>
