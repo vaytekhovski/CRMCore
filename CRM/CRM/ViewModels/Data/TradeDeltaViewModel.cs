@@ -26,5 +26,7 @@ namespace CRM.ViewModels.Data
         public int CurrentPage { get; set; }
         public string TypeOfDate { get; set; }
         public string Action { get; set; }
+        public string Id { get; set; }
+        public int CountOfElements { get; set; }
     }
 }

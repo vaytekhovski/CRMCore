@@ -17,29 +17,28 @@ namespace CRM.Services.Data
 
         public TradeDeltaViewModel Load(DataFilter filter)
         {
+            int CountOfElements = 0;
             using (CRMContext context = new CRMContext())
             {
-                //Show = context.TradeDeltaModels
-                //    .Where(x => coin == null ? true : x.CurrencyName == coin)
-                //    .Where(x => x.TimeFrom >= startDate && x.TimeTo <= endDate)
-                //    .Where(x => nulldelta == null ? true : x.Delta != 0)
-                //    .OrderByDescending(x => x.TimeFrom)
-                //    .ToList();
 
                 Show = context.TradeDeltaModels
-                    .Where(x => x.CurrencyName == null ? true : x.CurrencyName == filter.Coin)
+                    .Where(x => filter.Coin == null ? true : x.CurrencyName == filter.Coin)
                     .Where(x => x.TimeFrom >= filter.StartDate && x.TimeTo <= filter.EndDate)
                     .Where(x => filter.nulldelta == null ? true : x.Delta != 0)
                     .OrderByDescending(x => x.TimeFrom)
                     .ToList();
 
+                CountOfElements = Show.Count();
+                
                 SummDelta = Show.Sum(item => item.Delta);
+                Show = Show.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
             }
 
             TradeDeltaViewModel model = new TradeDeltaViewModel
             {
                 Show = Show,
-                SummDelta = SummDelta
+                SummDelta = SummDelta,
+                CountOfElements = CountOfElements
             };
 
             return model;

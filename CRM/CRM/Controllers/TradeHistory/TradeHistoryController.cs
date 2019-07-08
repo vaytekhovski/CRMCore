@@ -14,7 +14,7 @@ namespace CRM.Controllers
     [Authorize]
     public class TradeHistoryController : Controller
     {
-        private readonly TradeHistoryService _tradeHistoryService; //TODO: _tradeHistoryService (underscore camel case) - везде
+        private readonly TradeHistoryService _tradeHistoryService; //TODO: [COMPLETE] _tradeHistoryService (underscore camel case) - везде
         private readonly PaginationService _paginationService;
 
         public TradeHistoryController()

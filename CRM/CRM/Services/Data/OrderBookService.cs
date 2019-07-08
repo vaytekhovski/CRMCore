@@ -17,25 +17,27 @@ namespace CRM.Services.Data
 
         public OrderBookViewModel Load(DataFilter filter)
         {
+            int countOfElements = 0;
             using (CRMContext context = new CRMContext())
             {
                 Show = context.OrderBookModels
                     .Where(x => x.BookType == filter.BookType)
-                    .Where(x => x.CurrencyName == null ? true : x.CurrencyName == filter.Coin)
-                    .Where(x => x.MarketSituation == null ? true : x.MarketSituation == filter.Situation)
+                    .Where(x => filter.Coin == null ? true : x.CurrencyName == filter.Coin)
+                    .Where(x => filter.Situation == null ? true : x.MarketSituation == filter.Situation)
                     .Where(x => x.Date >= filter.StartDate && x.Date <= filter.EndDate)
                     .OrderByDescending(x => x.Date)
                     .ToList();
 
                 SummVolume = Show.Sum(item => item.Volume);
-
+                countOfElements = Show.Count();
                 Show = Show.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
             }
 
             OrderBookViewModel model = new OrderBookViewModel
             {
                 Show = Show,
-                SummVolume = SummVolume
+                SummVolume = SummVolume,
+                CountOfElements = countOfElements
             };
 
             return model;

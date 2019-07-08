@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CRM.Helpers;
-using CRM.Models;
 using CRM.Models.Filters;
 using CRM.Models.Statistics;
 using CRM.Services.Pagination;
@@ -38,6 +35,7 @@ namespace CRM.Controllers.Statistics
                 EndDate = DatesHelper.CurrentDateStr
             };
 
+            //TODO: call GetAccounts and similar dropdown methods in controller, pass through ViewBag
             //ViewBag.Coins = DropDownFields.GetCoins();
             //ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);

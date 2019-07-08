@@ -25,6 +25,7 @@ namespace CRM.Controllers.Data
             _orderBook = new OrderBookService();
             _tradeHistory = new Services.Data.TradeHistoryService();
             _tradeDelta = new TradeDeltaService();
+            _paginationService = new PaginationService();
         }
 
 
@@ -46,6 +47,7 @@ namespace CRM.Controllers.Data
         {
             var model = new OrderBookViewModel
             {
+                Id = "OrderBook",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.OrderBookModel>()
@@ -71,10 +73,10 @@ namespace CRM.Controllers.Data
 
             ViewModel.Show = model.Show;
             ViewModel.SummVolume = model.SummVolume;
-            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.Show.Count());
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.CountOfElements);
             ViewModel.CurrentPage = filter.CurrentPage;
             ViewModel.CountOfPages = pagination.CountOfPages;
-            ViewModel.Action = "Statistics/Statistics";
+            ViewModel.Action = "Data/ShowOrderBookAsks";
             ViewModel.TypeOfDate = "date";
 
             return View(ViewModel);
@@ -112,7 +114,7 @@ namespace CRM.Controllers.Data
             var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.Show.Count());
             ViewModel.CurrentPage = filter.CurrentPage;
             ViewModel.CountOfPages = pagination.CountOfPages;
-            ViewModel.Action = "Statistics/Statistics";
+            ViewModel.Action = "Data/ShowOrderBookBids";
             ViewModel.TypeOfDate = "date";
             return View(ViewModel);
         }
@@ -122,6 +124,7 @@ namespace CRM.Controllers.Data
         {
             var model = new TradeHistoryViewModel
             {
+                Id = "TradeHistoryDatas",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.TradeHistoryModel>()
@@ -146,10 +149,10 @@ namespace CRM.Controllers.Data
 
             ViewModel.Show = model.Show;
             ViewModel.SummVolume = model.SummVolume;
-            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.Show.Count());
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.CountOfElements);
             ViewModel.CurrentPage = filter.CurrentPage;
             ViewModel.CountOfPages = pagination.CountOfPages;
-            ViewModel.Action = "Statistics/Statistics";
+            ViewModel.Action = "Data/ShowTradeHistory";
             ViewModel.TypeOfDate = "date";
 
             return View(ViewModel);
@@ -160,6 +163,7 @@ namespace CRM.Controllers.Data
         {
             var model = new TradeDeltaViewModel
             {
+                Id = "Delta",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.TradeDeltaModel>()
@@ -184,10 +188,10 @@ namespace CRM.Controllers.Data
             ViewModel.Show = model.Show;
             ViewModel.SummDelta = model.SummDelta;
 
-            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.Show.Count());
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.CountOfElements);
             ViewModel.CurrentPage = filter.CurrentPage;
             ViewModel.CountOfPages = pagination.CountOfPages;
-            ViewModel.Action = "Statistics/Statistics";
+            ViewModel.Action = "Data/ShowTradeDelta";
             ViewModel.TypeOfDate = "date";
 
             return View(ViewModel);

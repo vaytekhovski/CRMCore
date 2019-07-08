@@ -12,3 +12,18 @@
 {
     <input style="display:none" type="text" name="exchange" value=@Model.Exchange />
 }
+
+@if (Model.Id == "OrderBook" || Model.Id == "TradeHistoryDatas")
+{
+    <input style="display:none" type="text" name="situation" value=@Model.situation />
+}
+
+@if (Model.Id == "TradeHistoryDatas")
+{
+    <input style="display:none" type="text" name="OrderType" value=@Model.OrderType />
+}
+
+@if (Model.Id == "Delta")
+{
+    <input style="display:none" type="text" name="NullDelta" value=@Model.NullDelta />
+}
