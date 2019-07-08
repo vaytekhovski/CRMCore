@@ -33,9 +33,9 @@ namespace Contexts
             }
         }
 
-
         public CRMContext()
         {
+            Database.SetCommandTimeout(150000);
         }
 
     }
