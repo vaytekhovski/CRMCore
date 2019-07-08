@@ -29,12 +29,11 @@ namespace CRM.Controllers.SignalsAnalytics
         {
             var model = new SignalsAnalyticsViewModel
             {
+                Id = "Signals",
                 Exchange = "",
                 Coin = "",
-                StartDate = DatesHelper.MinDateStr,
-                EndDate = DatesHelper.CurrentDateStr,
-                StartTime = "00:00",
-                EndTime = "23:59",
+                StartDate = DatesHelper.MinDateTimeStr,
+                EndDate = DatesHelper.CurrentDateTimeStr,
                 TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
                 SignalsPrivates = new List<Models.Master.SignalsPrivate>()
             };
@@ -57,6 +56,8 @@ namespace CRM.Controllers.SignalsAnalytics
             ViewModel.FirstVisiblePage = pagination.FirstVisiblePage;
             ViewModel.LastVisiblePage = pagination.LastVisiblePage;
             ViewModel.CountOfPages = pagination.CountOfPages;
+            ViewModel.Action = "SignalsAnalytics/SignalsPrivate";
+            ViewModel.TypeOfDate = "datetime-local";
             return View(ViewModel);
         }
 
@@ -65,12 +66,11 @@ namespace CRM.Controllers.SignalsAnalytics
         {
             var model = new SignalsAnalyticsViewModel
             {
+                Id = "Signals",
                 Exchange = "",
                 Coin = "",
-                StartDate = DatesHelper.MinDateStr,
-                EndDate = DatesHelper.CurrentDateStr,
-                StartTime = "00:00",
-                EndTime = "23:59",
+                StartDate = DatesHelper.MinDateTimeStr,
+                EndDate = DatesHelper.CurrentDateTimeStr,
                 TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
                 SignalsPrivates = new List<Models.Master.SignalsPrivate>()
             };
@@ -90,9 +90,9 @@ namespace CRM.Controllers.SignalsAnalytics
 
             var pagination = _paginationService.GetPaginationModel(PageNumber, model.TradeHistoryDeltas.Count);
             ViewModel.CurrentPage = PageNumber;
-            ViewModel.FirstVisiblePage = pagination.FirstVisiblePage;
-            ViewModel.LastVisiblePage = pagination.LastVisiblePage;
             ViewModel.CountOfPages = pagination.CountOfPages;
+            ViewModel.Action = "SignalsAnalytics/TradeHistoryDeltas";
+            ViewModel.TypeOfDate = "datetime-local";
             return View(ViewModel);
         }
 

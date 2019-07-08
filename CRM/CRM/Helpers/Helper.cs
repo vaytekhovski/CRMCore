@@ -40,7 +40,11 @@ namespace CRM.Helpers
         {
             using (UserContext db = new UserContext())
             {
-                return ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
+                var acc = ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId);
+                if (acc != null)
+                    return acc.Name;
+
+                return "unknown";
             }
         }
     }

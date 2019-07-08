@@ -190,8 +190,8 @@
                     var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
                 }
 
-                <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
-                <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
+                <input style="display:none" type="datetime-local" name="startDate" value=@Model.StartDate />
+                <input style="display:none" type="datetime-local" name="endDate" value=@Model.EndDate />
 
                 <input style="display:none" type="text" name="account" value=@Model.Account />
                 <input style="display:none" type="text" name="coin" value=@Model.Coin />

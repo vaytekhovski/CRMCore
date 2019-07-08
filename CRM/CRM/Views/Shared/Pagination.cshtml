@@ -1,23 +1,21 @@
 ﻿
 <div style="display: @(Model.CountOfPages == 0 ? "none" : "table");; margin:auto; padding-bottom:30px;">
-    <form action="../TradeHistory/TradeHistory" method="post">
+    <form action="../@Model.Action" method="post">
         @{
             var nextPage = Model.CurrentPage < Model.CountOfPages ? Model.CurrentPage + 1 : Model.CurrentPage;
             var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
+            int FirstVisiblePage = Model.CurrentPage - 5 >= 1 ? Model.CurrentPage - 3 : 1;
+            int LastVisiblePage = Model.CurrentPage + 5 <= Model.CountOfPages ? Model.CurrentPage + 5 : Model.CountOfPages;
         }
 
-        <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
-        <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
+        @Html.Partial("FormDatas")
 
-        <input style="display:none" type="text" name="account" value=@Model.Account />
-        <input style="display:none" type="text" name="coin" value=@Model.Coin />
-
-        <button class="page_button" type="submit" value="@previusPage" name="PageButton" formaction="../TradeHistory/TradeHistory" formmethod="post"><</button>
-        @for (int i = Model.FirstVisiblePage; i <= Model.LastVisiblePage; i++)
+        <button class="page_button" type="submit" value="@previusPage" name="PageButton" formaction="../@Model.Action" formmethod="post"><</button>
+        @for (int i = FirstVisiblePage; i <= LastVisiblePage; i++)
         {
-            <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../TradeHistory/TradeHistory" formmethod="post">@i</button>
+            <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../@Model.Action" formmethod="post">@i</button>
         }
-        <button class="page_button" type="submit" value="@nextPage" name="PageButton" formaction="../TradeHistory/TradeHistory" formmethod="post">></button>
+        <button class="page_button" type="submit" value="@nextPage" name="PageButton" formaction="../@Model.Action" formmethod="post">></button>
 
     </form>
 </div>

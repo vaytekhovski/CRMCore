@@ -48,11 +48,25 @@
     padding-top: 10px;
 }
 
-.filter_input {
+.filter_input_datetime {
+    border: 2px solid #a76be3 !important;
+    background-color: transparent;
+    height: 50px !important;
+    width: 180px !important;
+}
+
+.filter_input_date {
     border: 2px solid #a76be3 !important;
     background-color: transparent;
     height: 50px !important;
     width: 150px !important;
+}
+
+.filter_input {
+    border: 2px solid #a76be3 !important;
+    background-color: transparent;
+    height: 50px !important;
+    width: 125px !important;
 }
 
 .filter_button {

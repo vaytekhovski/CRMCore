@@ -31,6 +31,7 @@ namespace CRM.Controllers.Statistics
         {
             var viewModel = new StatisticsViewModel
             {
+                Id = "Statistics",
                 Account = "/",
                 Coin = "all",
                 StartDate = DatesHelper.MinDateStr,
@@ -64,11 +65,9 @@ namespace CRM.Controllers.Statistics
 
             var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.Statistics.Count());
             viewModel.CurrentPage = filter.CurrentPage;
-            viewModel.FirstVisiblePage = pagination.FirstVisiblePage;
-            viewModel.LastVisiblePage = pagination.LastVisiblePage;
             viewModel.CountOfPages = pagination.CountOfPages;
-
-
+            viewModel.Action = "Statistics/Statistics";
+            viewModel.TypeOfDate = "date";
             return View(viewModel);
         }
     }

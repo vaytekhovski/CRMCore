@@ -43,43 +43,22 @@
                 {
                     string itemProfitStr = "";
                     itemProfitStr = item.ProfitOfDay > 0 ? "+" : "";
-                        itemProfitStr += String.Format("{0:0.##}", item.ProfitOfDay);
-                        itemProfitStr += "$";
+                    itemProfitStr += String.Format("{0:0.##}", item.ProfitOfDay);
+                    itemProfitStr += "$";
 
                     string itemTotalProfitStr = "";
                     itemTotalProfitStr = item.TotalProfit > 0 ? "+" : "";
-                        itemTotalProfitStr += String.Format("{0:0.##}", item.TotalProfit);
-                        itemTotalProfitStr += "$";
-                <tr>
-                    <td>@item.Date.ToString("dd.MM.yy")</td>
-                    <td class="profit" style="color: @(item.ProfitOfDay < 0 ? "red" : (item.ProfitOfDay > 0 ? "green" : "black"));">@itemProfitStr</td>
-                    <td class="profit" style="color: @(item.TotalProfit < 0 ? "red" : "green");">@itemTotalProfitStr</td>
-                </tr>
+                    itemTotalProfitStr += String.Format("{0:0.##}", item.TotalProfit);
+                    itemTotalProfitStr += "$";
+                    <tr>
+                        <td>@item.Date.ToString("dd.MM.yy")</td>
+                        <td class="profit" style="color: @(item.ProfitOfDay < 0 ? "red" : (item.ProfitOfDay > 0 ? "green" : "black"));">@itemProfitStr</td>
+                        <td class="profit" style="color: @(item.TotalProfit < 0 ? "red" : "green");">@itemTotalProfitStr</td>
+                    </tr>
                 }
             </tbody>
         </table>
 
-        <div style="display: @(Model.CountOfPages == 0 ? "none" : "table");; margin:auto; padding-bottom:30px;">
-            <form action="../Statistics/Statistics" method="post">
-                @{
-                    var nextPage = Model.CurrentPage < Model.CountOfPages ? Model.CurrentPage + 1 : Model.CurrentPage;
-                    var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
-                }
-
-                <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
-                <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
-
-                <input style="display:none" type="text" name="account" value=@Model.Account />
-                <input style="display:none" type="text" name="coin" value=@Model.Coin />
-
-                <button class="page_button" type="submit" value="@previusPage" name="PageButton" formaction="../Statistics/Statistics" formmethod="post"><</button>
-                @for (int i = Model.FirstVisiblePage; i <= Model.LastVisiblePage; i++)
-                {
-                    <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../Statistics/Statistics" formmethod="post">@i</button>
-                }
-                <button class="page_button" type="submit" value="@nextPage" name="PageButton" formaction="../Statistics/Statistics" formmethod="post">></button>
-
-            </form>
-        </div>
+        @Html.Partial("Pagination")
     </div>
 </div>

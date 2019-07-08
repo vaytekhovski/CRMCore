@@ -28,6 +28,7 @@ namespace CRM.Controllers
         {
             var viewModel = new TradeHistoryFilterModel
             {
+                Id = "TradeHistory",
                 Account = "/",
                 Coin = "all",
                 StartDate = DatesHelper.MinDateTimeStr,
@@ -64,9 +65,9 @@ namespace CRM.Controllers
 
             var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
             viewModel.CurrentPage = filter.CurrentPage;
-            viewModel.FirstVisiblePage = pagination.FirstVisiblePage;
-            viewModel.LastVisiblePage = pagination.LastVisiblePage;
             viewModel.CountOfPages = pagination.CountOfPages;
+            viewModel.Action = "TradeHistory/TradeHistory";
+            viewModel.TypeOfDate = "datetime-local";
 
             return View(viewModel);
         }

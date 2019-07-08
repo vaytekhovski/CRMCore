@@ -13,6 +13,8 @@ namespace CRM.ViewModels.Statistics
             Statistics = new List<StatisticsElement>();
         }
 
+        public string Id { get; set; }
+        public string Action { get; set; }
         public List<StatisticsElement> Statistics { get; set; }
         public int CountOfPages { get; set; }
         public int FirstVisiblePage { get; set; }
@@ -22,5 +24,6 @@ namespace CRM.ViewModels.Statistics
         public string Account { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public string TypeOfDate { get; set; }
     }
 }

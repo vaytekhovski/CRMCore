@@ -6,6 +6,7 @@ using CRM.Services;
 using System.Collections.Generic;
 using CRM.Helpers;
 using System;
+using CRM.Services.Pagination;
 
 namespace CRM.Controllers.Data
 {
@@ -57,6 +58,7 @@ namespace CRM.Controllers.Data
 
             ViewModel.Show = model.Show;
             ViewModel.SummVolume = model.SummVolume;
+
 
             return View(ViewModel);
         }

@@ -8,13 +8,14 @@ namespace CRM.ViewModels.SignalsAnalytics
 {
     public class SignalsAnalyticsViewModel
     {
+        public string Id { get; set; }
+        public string Action { get; set; }
         public string Exchange { get; set; }
         public string Coin { get; set; }
         public string Nullable { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
+        public string TypeOfDate { get; set; }
         public int CountOfPages { get; set; }
         public int FirstVisiblePage { get; set; }
         public int LastVisiblePage { get; set; }

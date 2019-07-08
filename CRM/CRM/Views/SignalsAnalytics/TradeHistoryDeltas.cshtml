@@ -4,97 +4,42 @@
 }
 @Html.Partial("_TradeHistoryDeltasFilterPanel")
 
-<div class="content" style="min-height: 400px">
-    @Html.ValidationSummary()
+    <div class="content" style="min-height: 400px">
+        @Html.ValidationSummary()
 
-    @if (Model.TradeHistoryDeltas.Count > 0)
-    {
-        <div style="display:table; margin:auto; padding-bottom:30px;">
-            <form action="../SignalsAnalytics/TradeHistoryDeltas" method="post">
+        @Html.Partial("Pagination")
 
-                @{
-                    var nextPage = Model.CurrentPage < Model.CountOfPages ? Model.CurrentPage + 1 : Model.CurrentPage;
-                    var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
-                }
-
-
-                <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
-                <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
-                <input style="display:none" type="time" name="startTime" value=@Model.StartTime />
-                <input style="display:none" type="time" name="endTime" value=@Model.EndTime />
-                <input style="display:none" type="text" name="coin" value=@Model.Coin />
-                <input style="display:none" type="text" name="exchange" value=@Model.Exchange />
-
-                <button class="page_button" type="submit" value="@previusPage" name="PageButton" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post"><</button>
-                @for (int i = Model.FirstVisiblePage; i <= Model.LastVisiblePage; i++)
-                {
-                    <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">@i</button>
-                }
-                <button class="page_button" type="submit" value="@nextPage" name="PageButton" formaction=".../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">></button>
-
-            </form>
-        </div>
-    }
-
-
-    <div class="container table_block" style="display: @(Model.TradeHistoryDeltas.Count != 0 ? "display" : "none")">
-        <table style="font-size:12px" class="sortable table table-bordered table-font">
-            <thead>
-                <tr>
-                    <th>Base</th>
-                    <th id="time">TimeFrom</th>
-                    <th id="time">TimeTo</th>
-                    <th class="sorttable_nosort">Situation</th>
-                    <th class="sorttable_nosort">Value</th>
-                    <th class="sorttable_nosort">MinLongDiff</th>
-                    <th class="sorttable_nosort">MaxLongDiff</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.TradeHistoryDeltas)
-                {
+        <div class="container table_block" style="display: @(Model.TradeHistoryDeltas.Count != 0 ? "display" : "none")">
+            <table style="font-size:12px" class="sortable table table-bordered table-font">
+                <thead>
                     <tr>
-                        <td>@item.Base</td>
-                        <td>@item.TimeFrom</td>
-                        <td>@item.TimeTo</td>
-                        <td>@item.Situation</td>
-                        <td>@item.Value</td>
-                        <td>@item.MinLongDiff</td>
-                        <td>@item.MaxLongDiff</td>
-
+                        <th>Base</th>
+                        <th id="time">TimeFrom</th>
+                        <th id="time">TimeTo</th>
+                        <th class="sorttable_nosort">Situation</th>
+                        <th class="sorttable_nosort">Value</th>
+                        <th class="sorttable_nosort">MinLongDiff</th>
+                        <th class="sorttable_nosort">MaxLongDiff</th>
                     </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.TradeHistoryDeltas)
+                    {
+                        <tr>
+                            <td>@item.Base</td>
+                            <td>@item.TimeFrom</td>
+                            <td>@item.TimeTo</td>
+                            <td>@item.Situation</td>
+                            <td>@item.Value</td>
+                            <td>@item.MinLongDiff</td>
+                            <td>@item.MaxLongDiff</td>
 
-                }
-            </tbody>
-        </table>
-    </div>
+                        </tr>
 
-    @if (Model.TradeHistoryDeltas.Count > 0)
-    {
-        <div style="display:table; margin:auto; padding-bottom:30px;">
-            <form action="../SignalsAnalytics/TradeHistoryDeltas" method="post">
-
-                @{
-                    var nextPage = Model.CurrentPage < Model.CountOfPages ? Model.CurrentPage + 1 : Model.CurrentPage;
-                    var previusPage = Model.CurrentPage > 1 ? Model.CurrentPage - 1 : 1;
-                }
-
-
-                <input style="display:none" type="date" name="startDate" value=@Model.StartDate />
-                <input style="display:none" type="date" name="endDate" value=@Model.EndDate />
-                <input style="display:none" type="time" name="startTime" value=@Model.StartTime />
-                <input style="display:none" type="time" name="endTime" value=@Model.EndTime />
-                <input style="display:none" type="text" name="coin" value=@Model.Coin />
-                <input style="display:none" type="text" name="exchange" value=@Model.Exchange />
-
-                <button class="page_button" type="submit" value="@previusPage" name="PageButton" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post"><</button>
-                @for (int i = Model.FirstVisiblePage; i <= Model.LastVisiblePage; i++)
-                {
-                    <button style="background-color: @(Model.CurrentPage == i ? "#b5abea" : "#403577");" class="page_button" type="submit" value="@i" name="PageButton" formaction="../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">@i</button>
-                }
-                <button class="page_button" type="submit" value="@nextPage" name="PageButton" formaction=".../SignalsAnalytics/TradeHistoryDeltas" formmethod="post">></button>
-
-            </form>
+                    }
+                </tbody>
+            </table>
         </div>
-    }
-</div>
+
+        @Html.Partial("Pagination")
+    </div>

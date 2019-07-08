@@ -25,9 +25,7 @@ namespace CRM.Services.SignalsAnalytics
             {
                 SignalsPrivates = context.SignalsPrivate
                     .Where(x => x.SourceTime >= DateTime.Parse(ViewModel.StartDate))
-                    .Where(x => x.SourceTime <= DateTime.Parse(ViewModel.EndDate).AddDays(1))
-                    .Where(x => x.SourceTime.TimeOfDay >= TimeSpan.Parse(ViewModel.StartTime))
-                    .Where(x => x.SourceTime.TimeOfDay <= TimeSpan.Parse(ViewModel.EndTime))
+                    .Where(x => x.SourceTime <= DateTime.Parse(ViewModel.EndDate))
                     .OrderByDescending(x => x.SourceTime)
                     .ToList();
 
@@ -55,9 +53,7 @@ namespace CRM.Services.SignalsAnalytics
             {
                 TradeHistoryDeltas = context.TradeHistoryDelta
                     .Where(x => x.TimeFrom >= DateTime.Parse(ViewModel.StartDate))
-                    .Where(x => x.TimeTo <= DateTime.Parse(ViewModel.EndDate).AddDays(1))
-                    .Where(x => x.TimeFrom.TimeOfDay >= TimeSpan.Parse(ViewModel.StartTime))
-                    .Where(x => x.TimeTo.TimeOfDay <= TimeSpan.Parse(ViewModel.EndTime))
+                    .Where(x => x.TimeTo <= DateTime.Parse(ViewModel.EndDate))
                     .OrderByDescending(x => x.TimeFrom)
                     .ToList();
 
