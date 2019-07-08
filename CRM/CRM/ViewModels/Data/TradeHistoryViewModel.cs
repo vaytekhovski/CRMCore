@@ -20,5 +20,11 @@ namespace CRM.ViewModels.Data
         public List<Models.Database.TradeHistoryModel> Show { get; set; }
 
         public double SummVolume { get; set; }
+        public int CountOfPages { get; set; }
+        public int FirstVisiblePage { get; set; }
+        public int LastVisiblePage { get; set; }
+        public int CurrentPage { get; set; }
+        public string TypeOfDate { get; set; }
+        public string Action { get; set; }
     }
 }

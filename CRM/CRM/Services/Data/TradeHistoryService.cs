@@ -1,5 +1,6 @@
 ﻿using CRM.Models;
 using CRM.Models.Database;
+using CRM.Models.Filters;
 using CRM.ViewModels.Data;
 using System;
 using System.Collections.Generic;
@@ -14,20 +15,20 @@ namespace CRM.Services.Data
 
         public TradeHistoryService() { }
 
-        public TradeHistoryViewModel Load(string coin, string situation, string orderType, DateTime startDate, DateTime endDate)
+        public TradeHistoryViewModel Load(DataFilter filter)
         {
-            if (startDate == null && endDate == null)
-                return null;
-
             using (CRMContext context = new CRMContext())
             {
-                Show = context.TradeHistoryModels
-                    .Where(x => x.Date >= startDate && x.Date <= endDate)
-                    .Where(x => coin == null ? true : x.CurrencyName == coin)
-                    .Where(x => situation == null ? true : x.MarketSituation == situation)
-                    .Where(x => orderType == null ? true : x.Side == orderType)
-                    .OrderByDescending(x => x.Date)
-                    .ToList();
+                    Show = context.TradeHistoryModels
+                        .Where(x => x.Side == filter.OrderType)
+                        .Where(x => x.CurrencyName == null ? true : x.CurrencyName == filter.Coin)
+                        .Where(x => x.MarketSituation == null ? true : x.MarketSituation == filter.Situation)
+                        .Where(x => x.Date >= filter.StartDate && x.Date <= filter.EndDate)
+                        .OrderByDescending(x => x.Date)
+                        .ToList();
+
+                    Show = Show.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
+           
 
                 SummVolume = Show.Sum(item => item.Volume);
             }

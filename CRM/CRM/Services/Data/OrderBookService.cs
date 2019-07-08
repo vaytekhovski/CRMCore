@@ -1,5 +1,6 @@
 ﻿using CRM.Models;
 using CRM.Models.Database;
+using CRM.Models.Filters;
 using CRM.ViewModels.Data;
 using System;
 using System.Collections.Generic;
@@ -14,22 +15,21 @@ namespace CRM.Services.Data
 
         public OrderBookService() { }
 
-        public OrderBookViewModel Load(string bookType, string coin, string situation, DateTime startDate, DateTime endDate)
+        public OrderBookViewModel Load(DataFilter filter)
         {
-            if (startDate == null && endDate == null)
-                return null;
-
             using (CRMContext context = new CRMContext())
             {
                 Show = context.OrderBookModels
-                    .Where(x => x.BookType == bookType)
-                    .Where(x => coin == null ? true : x.CurrencyName == coin)
-                    .Where(x => situation == null ? true : x.MarketSituation == situation)
-                    .Where(x => x.Date >= startDate && x.Date <= endDate)
+                    .Where(x => x.BookType == filter.BookType)
+                    .Where(x => x.CurrencyName == null ? true : x.CurrencyName == filter.Coin)
+                    .Where(x => x.MarketSituation == null ? true : x.MarketSituation == filter.Situation)
+                    .Where(x => x.Date >= filter.StartDate && x.Date <= filter.EndDate)
                     .OrderByDescending(x => x.Date)
                     .ToList();
 
                 SummVolume = Show.Sum(item => item.Volume);
+
+                Show = Show.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
             }
 
             OrderBookViewModel model = new OrderBookViewModel

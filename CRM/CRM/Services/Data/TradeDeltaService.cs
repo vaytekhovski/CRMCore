@@ -1,5 +1,6 @@
 ﻿using CRM.Models;
 using CRM.Models.Database;
+using CRM.Models.Filters;
 using CRM.ViewModels.Data;
 using System;
 using System.Collections.Generic;
@@ -14,20 +15,23 @@ namespace CRM.Services.Data
 
         public TradeDeltaService() { }
 
-        public TradeDeltaViewModel Load(string coin, DateTime startDate, DateTime endDate, string nulldelta = "all")
+        public TradeDeltaViewModel Load(DataFilter filter)
         {
-            if (startDate == null && endDate == null)
-                return null;
-
             using (CRMContext context = new CRMContext())
             {
+                //Show = context.TradeDeltaModels
+                //    .Where(x => coin == null ? true : x.CurrencyName == coin)
+                //    .Where(x => x.TimeFrom >= startDate && x.TimeTo <= endDate)
+                //    .Where(x => nulldelta == null ? true : x.Delta != 0)
+                //    .OrderByDescending(x => x.TimeFrom)
+                //    .ToList();
+
                 Show = context.TradeDeltaModels
-                    .Where(x => coin == null ? true : x.CurrencyName == coin)
-                    .Where(x => x.TimeFrom >= startDate && x.TimeTo <= endDate)
-                    .Where(x => nulldelta == null ? true : x.Delta != 0)
+                    .Where(x => x.CurrencyName == null ? true : x.CurrencyName == filter.Coin)
+                    .Where(x => x.TimeFrom >= filter.StartDate && x.TimeTo <= filter.EndDate)
+                    .Where(x => filter.nulldelta == null ? true : x.Delta != 0)
                     .OrderByDescending(x => x.TimeFrom)
                     .ToList();
-
 
                 SummDelta = Show.Sum(item => item.Delta);
             }

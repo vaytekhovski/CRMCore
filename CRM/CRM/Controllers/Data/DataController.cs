@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using CRM.Helpers;
 using System;
 using CRM.Services.Pagination;
+using CRM.Models.Filters;
+using System.Linq;
 
 namespace CRM.Controllers.Data
 {
@@ -16,6 +18,7 @@ namespace CRM.Controllers.Data
         private readonly OrderBookService _orderBook;
         private readonly Services.Data.TradeHistoryService _tradeHistory;
         private readonly TradeDeltaService _tradeDelta;
+        private readonly PaginationService _paginationService;
 
         public DataController()
         {
@@ -52,13 +55,27 @@ namespace CRM.Controllers.Data
         }
 
         [HttpPost]
-        public ActionResult ShowOrderBookAsks(OrderBookViewModel ViewModel)
+        public ActionResult ShowOrderBookAsks(OrderBookViewModel ViewModel, string PageButton = "1")
         {
-            var model = _orderBook.Load("ask", ViewModel.Coin, ViewModel.Situation, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
+            var filter = new DataFilter
+            {
+                BookType = "ask",
+                Situation = ViewModel.Situation,
+                Coin = ViewModel.Coin,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
+                CurrentPage = Convert.ToInt32(PageButton)
+            };
+
+            var model = _orderBook.Load(filter);
 
             ViewModel.Show = model.Show;
             ViewModel.SummVolume = model.SummVolume;
-
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.Show.Count());
+            ViewModel.CurrentPage = filter.CurrentPage;
+            ViewModel.CountOfPages = pagination.CountOfPages;
+            ViewModel.Action = "Statistics/Statistics";
+            ViewModel.TypeOfDate = "date";
 
             return View(ViewModel);
         }
@@ -77,13 +94,26 @@ namespace CRM.Controllers.Data
         }
 
         [HttpPost]
-        public ActionResult ShowOrderBookBids(OrderBookViewModel ViewModel)
+        public ActionResult ShowOrderBookBids(OrderBookViewModel ViewModel, string PageButton = "1")
         {
-            var model = _orderBook.Load("bid", ViewModel.Coin, ViewModel.Situation, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
+            var filter = new DataFilter
+            {
+                BookType = "bid",
+                Situation = ViewModel.Situation,
+                Coin = ViewModel.Coin,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
+                CurrentPage = Convert.ToInt32(PageButton)
+            };
+            var model = _orderBook.Load(filter);
 
             ViewModel.Show = model.Show;
             ViewModel.SummVolume = model.SummVolume;
-
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.Show.Count());
+            ViewModel.CurrentPage = filter.CurrentPage;
+            ViewModel.CountOfPages = pagination.CountOfPages;
+            ViewModel.Action = "Statistics/Statistics";
+            ViewModel.TypeOfDate = "date";
             return View(ViewModel);
         }
 
@@ -101,12 +131,26 @@ namespace CRM.Controllers.Data
         }
 
         [HttpPost]
-        public ActionResult ShowTradeHistory(TradeHistoryViewModel ViewModel)
+        public ActionResult ShowTradeHistory(TradeHistoryViewModel ViewModel, string PageButton = "1")
         {
-            var model = _tradeHistory.Load(ViewModel.Coin, ViewModel.Situation, ViewModel.OrderType, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate));
+            var filter = new DataFilter
+            {
+                OrderType = ViewModel.OrderType,
+                Situation = ViewModel.Situation,
+                Coin = ViewModel.Coin,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
+                CurrentPage = Convert.ToInt32(PageButton)
+            };
+            var model = _tradeHistory.Load(filter);
 
             ViewModel.Show = model.Show;
             ViewModel.SummVolume = model.SummVolume;
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.Show.Count());
+            ViewModel.CurrentPage = filter.CurrentPage;
+            ViewModel.CountOfPages = pagination.CountOfPages;
+            ViewModel.Action = "Statistics/Statistics";
+            ViewModel.TypeOfDate = "date";
 
             return View(ViewModel);
         }
@@ -125,12 +169,26 @@ namespace CRM.Controllers.Data
         }
 
         [HttpPost]
-        public ActionResult ShowTradeDelta(TradeDeltaViewModel ViewModel)
+        public ActionResult ShowTradeDelta(TradeDeltaViewModel ViewModel, string PageButton = "1")
         {
-            var model = _tradeDelta.Load(ViewModel.Coin, DateTime.Parse(ViewModel.StartDate), DateTime.Parse(ViewModel.EndDate), ViewModel.NullDelta);
+            var filter = new DataFilter
+            {
+                nulldelta = ViewModel.NullDelta,
+                Coin = ViewModel.Coin,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
+                CurrentPage = Convert.ToInt32(PageButton)
+            };
+            var model = _tradeDelta.Load(filter);
 
             ViewModel.Show = model.Show;
             ViewModel.SummDelta = model.SummDelta;
+
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, model.Show.Count());
+            ViewModel.CurrentPage = filter.CurrentPage;
+            ViewModel.CountOfPages = pagination.CountOfPages;
+            ViewModel.Action = "Statistics/Statistics";
+            ViewModel.TypeOfDate = "date";
 
             return View(ViewModel);
         }
