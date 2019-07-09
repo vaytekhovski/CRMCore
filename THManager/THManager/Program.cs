@@ -2,7 +2,7 @@
 
 namespace THManager
 {
-    class Program
+    public class Program
     {
 
         private static bool isDailyLoadEnded;
@@ -88,6 +88,11 @@ namespace THManager
         {
             var starStr = new string('*', 80);
             Console.Write('\n' + starStr);
+        }
+
+        public static void Restart()
+        {
+            DailyCalculate();
         }
     }
 }

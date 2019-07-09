@@ -66,12 +66,20 @@ namespace CRM.Controllers.User
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
-        
+
         [HttpGet]
         public ActionResult LoadData(string startDate, string endDate)
         {
             ViewBag.status = "Загрузка данных завершена";
             LoadDataService loadData = new LoadDataService(DateTime.Parse(startDate), DateTime.Parse(endDate));
+            return RedirectToAction("UserPanel");
+        }
+
+        [HttpGet]
+        public ActionResult RestartTHManager(string startDate, string endDate)
+        {
+            //restart
+            THManager.Program.Restart();
             return RedirectToAction("UserPanel");
         }
     }
