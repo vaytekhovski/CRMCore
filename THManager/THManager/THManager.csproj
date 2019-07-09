@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -15,18 +15,6 @@
     <PackageReference Include="MySql.Data" Version="8.0.16" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.16" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore.Design" Version="8.0.16" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Hosting">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.hosting\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Hosting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.Mvc.ViewFeatures">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.viewfeatures\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.ViewFeatures.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Hosting">
-      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.hosting\2.2.0\lib\netstandard2.0\Microsoft.Extensions.Hosting.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
