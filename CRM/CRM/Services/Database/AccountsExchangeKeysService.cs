@@ -34,7 +34,7 @@ namespace CRM.Services.Database
                 if (user.RoleId != 1)
                 {
                     lst = context.ExchangeKeys
-                      .Where(x => (user.RoleId != (int)UserModel.Roles.Boss || user.RoleId != (int)UserModel.Roles.Spectator) ? x.UserId == user.Id : true)
+                      .Where(x => user.RoleId != (int)UserModel.Roles.Boss ? x.UserId == user.Id : true)
                       .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
                       .ToList();
                 }
