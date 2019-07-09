@@ -74,5 +74,13 @@ namespace CRM.Controllers.User
             LoadDataService loadData = new LoadDataService(DateTime.Parse(startDate), DateTime.Parse(endDate));
             return RedirectToAction("UserPanel");
         }
+
+        [HttpGet]
+        public ActionResult RestartTHManager(string startDate, string endDate)
+        {
+            //restart
+            THManager.Program.Restart();
+            return RedirectToAction("UserPanel");
+        }
     }
 }

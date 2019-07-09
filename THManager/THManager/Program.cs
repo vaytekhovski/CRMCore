@@ -1,8 +1,19 @@
-﻿using System;
+﻿
+using System;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace THManager
 {
-    class Program
+    public class Program
     {
 
         private static bool isDailyLoadEnded;
@@ -88,6 +99,12 @@ namespace THManager
         {
             var starStr = new string('*', 80);
             Console.Write('\n' + starStr);
+        }
+
+
+        public static void Restart()
+        {
+            DailyCalculate();
         }
     }
 }

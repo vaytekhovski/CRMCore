@@ -46,26 +46,33 @@
 
                     @if (!ViewBag.isUser)
                     {
-                        <div>
+                    <div>
 
-                            <div class="user_block">
-                                <label>Обновление данных ежедневно в: </label><br />
-                                <div class="user_row">
-                                    <input type="text" class="form-control user_input" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
-                                    <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
-                                </div>
+                        <div class="user_block">
+                            <label>Перезапуск обновления статистики: </label><br />
+                            <div class="user_row">
+                                <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/RestartTHManager" formmethod="get">Перезапустить</button>
                             </div>
-
-                            <div class="user_block">
-                                <label>Ручная загрузка данных: </label><br />
-                                <div class="user_row">
-                                    <input type="date" class="form-control user_input" name="startDate" value="" />
-                                    <input type="date" class="form-control user_input" name="endDate" value="" />
-                                    <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
-                                </div>
-                            </div>
-
                         </div>
+
+                        <div class="user_block">
+                            <label>Обновление данных ежедневно в: </label><br />
+                            <div class="user_row">
+                                <input type="text" class="form-control user_input" name="updateData" placeholder="@CRM.Services.DailyTriggerService.TriggerHour">
+                                <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeDailyTrigger" formmethod="get">Изменить</button>
+                            </div>
+                        </div>
+
+                        <div class="user_block">
+                            <label>Ручная загрузка данных: </label><br />
+                            <div class="user_row">
+                                <input type="date" class="form-control user_input" name="startDate" value="" />
+                                <input type="date" class="form-control user_input" name="endDate" value="" />
+                                <button class="btn filter_button btn-primary" id="loadData" type="submit" formaction="/UserPanel/LoadData" formmethod="get">Загрузить</button>
+                            </div>
+                        </div>
+
+                     </div>
                     }
 
 
