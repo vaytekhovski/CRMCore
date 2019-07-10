@@ -36,7 +36,7 @@ namespace CRM.Controllers.Statistics
                 EndDate = DatesHelper.CurrentDateStr
             };
 
-            //TODO: call GetAccounts and similar dropdown methods in controller, pass through ViewBag
+            //TODO: [COMPLETE] call GetAccounts and similar dropdown methods in controller, pass through ViewBag
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
@@ -65,6 +65,8 @@ namespace CRM.Controllers.Statistics
             viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "Statistics/Statistics";
             viewModel.TypeOfDate = "date";
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
     }

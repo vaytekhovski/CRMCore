@@ -5,7 +5,7 @@
 
 
         <div class="filter_element">
-            @Html.DropDownListFor(m => m.Account, CRM.Models.DropDownFields.GetAccountsForBalance(Context), new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
+            @Html.DropDownListFor(m => m.Account, (IEnumerable<SelectListItem>)ViewBag.Accounts, new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
         </div>
         
         <div class="filter_element">

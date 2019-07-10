@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CRM.Helpers;
+using CRM.Models;
 using CRM.Models.Filters;
 using CRM.Models.TradeHistory;
 using CRM.Services;
@@ -36,7 +37,8 @@ namespace CRM.Controllers
             };
 
             AccountExchangeKeys.InitializeExchangeKeys();
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 
@@ -68,7 +70,8 @@ namespace CRM.Controllers
             viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 

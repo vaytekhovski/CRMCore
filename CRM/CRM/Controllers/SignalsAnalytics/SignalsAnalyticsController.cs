@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CRM.Helpers;
+using CRM.Models;
 using CRM.Services.Pagination;
 using CRM.Services.SignalsAnalytics;
 using CRM.ViewModels.SignalsAnalytics;
@@ -37,7 +38,9 @@ namespace CRM.Controllers.SignalsAnalytics
                 TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
                 SignalsPrivates = new List<Models.Master.SignalsPrivate>()
             };
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Exchanges = DropDownFields.GetExchanges();
+            ViewBag.Nulls = DropDownFields.GetNulls();
             model.CurrentPage = 0;
             return View(model);
         }
@@ -58,6 +61,9 @@ namespace CRM.Controllers.SignalsAnalytics
             ViewModel.CountOfPages = pagination.CountOfPages;
             ViewModel.Action = "SignalsAnalytics/SignalsPrivate";
             ViewModel.TypeOfDate = "datetime-local";
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Exchanges = DropDownFields.GetExchanges();
+            ViewBag.Nulls = DropDownFields.GetNulls();
             return View(ViewModel);
         }
 
@@ -74,7 +80,9 @@ namespace CRM.Controllers.SignalsAnalytics
                 TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
                 SignalsPrivates = new List<Models.Master.SignalsPrivate>()
             };
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Exchanges = DropDownFields.GetExchanges();
+            ViewBag.Nulls = DropDownFields.GetNulls();
             model.CurrentPage = 0;
             return View(model);
         }
@@ -93,6 +101,10 @@ namespace CRM.Controllers.SignalsAnalytics
             ViewModel.CountOfPages = pagination.CountOfPages;
             ViewModel.Action = "SignalsAnalytics/TradeHistoryDeltas";
             ViewModel.TypeOfDate = "datetime-local";
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Exchanges = DropDownFields.GetExchanges();
+            ViewBag.Nulls = DropDownFields.GetNulls();
+            ViewBag.Situations = DropDownFields.GetSituations();
             return View(ViewModel);
         }
 

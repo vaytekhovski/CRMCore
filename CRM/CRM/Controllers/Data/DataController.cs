@@ -9,6 +9,7 @@ using System;
 using CRM.Services.Pagination;
 using CRM.Models.Filters;
 using System.Linq;
+using CRM.Models;
 
 namespace CRM.Controllers.Data
 {
@@ -38,7 +39,8 @@ namespace CRM.Controllers.Data
                 EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.OrderBookModel>()
             };
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Situations = DropDownFields.GetSituations();
             return View(model);
         }
 
@@ -52,7 +54,8 @@ namespace CRM.Controllers.Data
                 EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.OrderBookModel>()
             };
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Situations = DropDownFields.GetSituations();
             return View(model);
         }
 
@@ -78,7 +81,8 @@ namespace CRM.Controllers.Data
             ViewModel.CountOfPages = pagination.CountOfPages;
             ViewModel.Action = "Data/ShowOrderBookAsks";
             ViewModel.TypeOfDate = "date";
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Situations = DropDownFields.GetSituations();
             return View(ViewModel);
         }
 
@@ -91,7 +95,8 @@ namespace CRM.Controllers.Data
                 EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.OrderBookModel>()
             };
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Situations = DropDownFields.GetSituations();
             return View(model);
         }
 
@@ -116,6 +121,8 @@ namespace CRM.Controllers.Data
             ViewModel.CountOfPages = pagination.CountOfPages;
             ViewModel.Action = "Data/ShowOrderBookBids";
             ViewModel.TypeOfDate = "date";
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Situations = DropDownFields.GetSituations();
             return View(ViewModel);
         }
 
@@ -129,7 +136,9 @@ namespace CRM.Controllers.Data
                 EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.TradeHistoryModel>()
             };
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.OrderTypes = DropDownFields.GetOrderTypes();
+            ViewBag.Situations = DropDownFields.GetSituations();
             return View(model);
         }
 
@@ -154,7 +163,9 @@ namespace CRM.Controllers.Data
             ViewModel.CountOfPages = pagination.CountOfPages;
             ViewModel.Action = "Data/ShowTradeHistory";
             ViewModel.TypeOfDate = "date";
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.OrderTypes = DropDownFields.GetOrderTypes();
+            ViewBag.Situations = DropDownFields.GetSituations();
             return View(ViewModel);
         }
 
@@ -168,7 +179,8 @@ namespace CRM.Controllers.Data
                 EndDate = DatesHelper.CurrentDateStr,
                 Show = new List<Models.Database.TradeDeltaModel>()
             };
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Nulls = DropDownFields.GetNulls();
             return View(model);
         }
 
@@ -193,7 +205,8 @@ namespace CRM.Controllers.Data
             ViewModel.CountOfPages = pagination.CountOfPages;
             ViewModel.Action = "Data/ShowTradeDelta";
             ViewModel.TypeOfDate = "date";
-
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Nulls = DropDownFields.GetNulls();
             return View(ViewModel);
         }
     }

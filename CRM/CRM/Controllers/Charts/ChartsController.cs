@@ -38,6 +38,7 @@ namespace CRM.Controllers.Charts
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
             };
+            ViewBag.Coins = DropDownFields.GetCoins();
             return View(model);
         }
 
@@ -49,6 +50,7 @@ namespace CRM.Controllers.Charts
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
             };
+            ViewBag.Coins = DropDownFields.GetCoins();
             return View(model);
         }
 
@@ -70,7 +72,7 @@ namespace CRM.Controllers.Charts
             ViewModel.AsksValues = model.AsksValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewModel.DatesBids = model.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
             ViewModel.BidsValues = model.BidsValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
-
+            ViewBag.Coins = DropDownFields.GetCoins();
             return View(ViewModel);
         }
 
@@ -88,6 +90,7 @@ namespace CRM.Controllers.Charts
                 DatesTHSell = new List<long>(),
                 THSellValues = new List<string>()
             };
+            ViewBag.Coins = DropDownFields.GetCoins();
             return View(model);
         }
 
@@ -113,7 +116,7 @@ namespace CRM.Controllers.Charts
 
             ViewModel.DatesTHSell = model.DatesTHSell.Select(x => x.ToJavascriptTicks()).ToList();
             ViewModel.THSellValues = model.THSellValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
-
+            ViewBag.Coins = DropDownFields.GetCoins();
             return View(ViewModel);
         }
 
@@ -125,6 +128,7 @@ namespace CRM.Controllers.Charts
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
             };
+            ViewBag.Coins = DropDownFields.GetCoins();
             return View(viewModel);
         }
 
@@ -146,7 +150,7 @@ namespace CRM.Controllers.Charts
             ViewModel.Dates = model.Dates.Select(x => x.ToJavascriptTicks()).ToList();
             ViewModel.MACDValues = model.MACDValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewModel.SIGValues = model.SIGValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
-
+            ViewBag.Coins = DropDownFields.GetCoins();
             return View(ViewModel);
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CRM.Helpers;
+using CRM.Models;
 using CRM.Services;
 using CRM.Services.Balances;
 using CRM.ViewModels;
@@ -30,7 +31,7 @@ namespace CRM.Controllers.Balances
                 Account = "/",
                 AccountBalances = new List<Balance>()
             };
-
+            ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             return View(model);
         }
 
@@ -38,6 +39,7 @@ namespace CRM.Controllers.Balances
         public async Task<ActionResult> Balances(BalancesModel model)
         {
             model = await _balancesService.LoadBalancesAsync(model.Account); //TODO: !!! use async/await where possible
+            ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             return View(model);
         }
     }
