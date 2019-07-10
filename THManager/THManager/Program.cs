@@ -10,7 +10,7 @@ namespace THManager
         static void Main(string[] args)
         {
             var startTimeSpan = TimeSpan.Zero;
-
+            // TODO: schedule with cron, rename project to jobs
             var DailyPeriodTimeSpan = TimeSpan.FromHours(24);
             var DailyTimer = new System.Threading.Timer((e) =>
             {

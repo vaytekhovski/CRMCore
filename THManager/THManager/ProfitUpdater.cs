@@ -100,15 +100,15 @@ namespace THManager
 
         private List<AccountTradeHistory> CalculateProfit(List<AccountTradeHistory> UncalculatedTradeHistories)
         {
-            foreach (var _coin in UncalculatedTradeHistories.Select(x => x.Pair).Distinct())  // TODO: [COMPLETE] select base + distinct
+            foreach (var _coin in UncalculatedTradeHistories.Select(x => x.Pair).Distinct())
             {
-                foreach (var AccountName in UncalculatedTradeHistories.Select(x => x.Account).Distinct())  // TODO: [COMPLETE] select AccountId + distinct
+                foreach (var Account in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
                 {
                     decimal profit = 0;
                     decimal desiredProfit = 0;
                     decimal buyAmount = 0;
 
-                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time).ToArray();
+                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == Account).OrderBy(x => x.Time).ToArray();
 
                     for (int i = 0; i < TH.Count(); i++)
                     {
@@ -139,7 +139,7 @@ namespace THManager
                     }
 
                     int j = 0;
-                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time))
+                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == Account).OrderBy(x => x.Time))
                     {
                         if (TH[j].Profit != 0)
                         {

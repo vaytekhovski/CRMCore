@@ -8,7 +8,7 @@
         </div>
 
         <div class="filter_element">
-            @Html.DropDownListFor(m => m.Account, DropDownFields.GetAccounts(Context), "Все аккаунты", new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
+            @Html.DropDownListFor(m => m.Account, (IEnumerable<SelectListItem>)ViewBag.Accounts, "Все аккаунты", new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
             @*TODO: [COMPLETE] use optionLabel parameter for default list value adding *@
             @*TODO: call GetAccounts and similar dropdown methods in controller, pass through ViewBag*@
         </div>

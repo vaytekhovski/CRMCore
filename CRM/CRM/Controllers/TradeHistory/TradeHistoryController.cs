@@ -14,7 +14,7 @@ namespace CRM.Controllers
     [Authorize]
     public class TradeHistoryController : Controller
     {
-        private readonly TradeHistoryService _tradeHistoryService; //TODO: [COMPLETE] _tradeHistoryService (underscore camel case) - везде
+        private readonly TradeHistoryService _tradeHistoryService;
         private readonly PaginationService _paginationService;
 
         public TradeHistoryController()
@@ -74,6 +74,7 @@ namespace CRM.Controllers
 
         private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryModel Model, TradeHistoryFilterModel viewModel)
         {
+            //TODO: make single query for all distinct accounts, set names
             viewModel.Orders = Model.AccountTradeHistories.Select(x => { x.Account = AccountExchangeKeys.AccountName(x.Account); return x; }).ToList();
             //viewModel.Orders = Model.AccountTradeHistories;
             viewModel.TotalProfit = Model.TotalProfit;

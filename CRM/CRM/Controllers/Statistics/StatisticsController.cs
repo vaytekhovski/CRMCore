@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CRM.Helpers;
+using CRM.Models;
 using CRM.Models.Filters;
 using CRM.Models.Statistics;
 using CRM.Services.Pagination;
@@ -29,15 +30,15 @@ namespace CRM.Controllers.Statistics
             var viewModel = new StatisticsViewModel
             {
                 Id = "Statistics",
-                Account = "/",
+                Account = null,
                 Coin = "all",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
             };
 
             //TODO: call GetAccounts and similar dropdown methods in controller, pass through ViewBag
-            //ViewBag.Coins = DropDownFields.GetCoins();
-            //ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 
@@ -45,8 +46,6 @@ namespace CRM.Controllers.Statistics
         public IActionResult Statistics(StatisticsViewModel viewModel, string PageButton = "1")
         {
             var Model = new StatisticsModel();
-
-            //TODO: [COMPLETE] remove string check, like "All", "Все", "Все аккаунты" etc. Use null check for default list value
 
             var filter = new StatisticsFilter
             {

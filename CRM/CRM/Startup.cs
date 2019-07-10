@@ -54,7 +54,7 @@ namespace CRM
             }
 
 
-            DropDownFields.InitiateFields();
+            DropDownFields.InitiateFields(); // TODO: use static ctor instead of this call
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -68,7 +68,7 @@ namespace CRM
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            DailyTriggerService.StartDeilyTrigger();
+            DailyTriggerService.StartDeilyTrigger(); // TODO: move to jobs !!!ASAP!!!
 
             DailyTriggerService.OnTimeTriggered += () =>
             {
