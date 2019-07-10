@@ -23,7 +23,7 @@ namespace CRM.Models
         public static List<Field> Situation = new List<Field>();
         public static List<Field> Nulls = new List<Field>();
 
-        public static void InitiateFields()
+        static DropDownFields()
         {
             InitiateExchanges();
             InitiateCoins();
@@ -31,6 +31,7 @@ namespace CRM.Models
             InitiateSituations();
             InitiateNulls();
         }
+        
 
         private static void InitiateExchanges()
         {

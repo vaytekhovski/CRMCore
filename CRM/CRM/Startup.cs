@@ -53,8 +53,8 @@ namespace CRM
                 app.UseHsts();
             }
 
-
-            DropDownFields.InitiateFields(); // TODO: use static ctor instead of this call
+            // TODO: [COMPLETE] use static ctor instead of this call
+            //DropDownFields.InitiateFields(); 
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
