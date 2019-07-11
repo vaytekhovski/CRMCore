@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Jobs.Migrations
+namespace THManager.Migrations
 {
     [DbContext(typeof(CRMContext))]
     partial class CRMContextModelSnapshot : ModelSnapshot

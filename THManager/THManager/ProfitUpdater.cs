@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Jobs.Models;
+using THManager.Models;
 
-namespace Jobs
+namespace THManager
 {
     class ProfitUpdater
     {

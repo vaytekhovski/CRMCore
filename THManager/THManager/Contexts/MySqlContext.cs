@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Jobs.Models;
+using THManager.Models;
 
-namespace Jobs
+namespace THManager
 {
     public class MySqlContext : DbContext
     {
