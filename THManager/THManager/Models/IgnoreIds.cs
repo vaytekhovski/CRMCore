@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jobs.Models
+namespace THManager.Models
 {
    public class IgnoreIds
     {

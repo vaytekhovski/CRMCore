@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Jobs
+namespace THManager
 {
     public class Program
     {
@@ -53,7 +53,7 @@ namespace Jobs
             DrowLine();
         }
 
-        public static void DailyCalculate()
+        static void DailyCalculate()
         {
             DrowStars();
 
@@ -90,5 +90,9 @@ namespace Jobs
             Console.Write('\n' + starStr);
         }
 
+        public static void Restart()
+        {
+            DailyCalculate();
+        }
     }
 }
