@@ -173,10 +173,16 @@ namespace CRM.Controllers.Charts
         [HttpPost]
         public ActionResult TradeHistoryOnTradeHistoryDelta(TradeHistoryOnTradeHistoryDeltaViewModel ViewModel)
         {
+            DateTime dateValue;
+            if (DateTime.TryParse(ViewModel.CalculatingStartDate, out dateValue))
+                dateValue = dateValue;
+            else
+                dateValue = DateTime.Parse(ViewModel.StartDate);
+
             ChartsFilter filter = new ChartsFilter
             {
                 Coin = ViewModel.Base,
-                CalculatingStartDate = DateTime.Parse(ViewModel.CalculatingStartDate),
+                CalculatingStartDate = dateValue,
                 StartDate = DateTime.Parse(ViewModel.StartDate),
                 EndDate = DateTime.Parse(ViewModel.EndDate),
             };

@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Charts";
+
+}
+
+@section Scripts
+{
+    <script src="~/js/plotly-latest.min.js"></script> @*TODO [COMPLETE]: использовать для скриптов секцию scripts*@
+    <script type="text/javascript">
+
+        CHART = document.getElementById('Chart');
+
+        var DatesTH = [];
+        var DatesTHD = [];
+
+        var THValues = [];
+        var THDValues = [];
+
+        console.log('helo')
+
+
+        @foreach (var item in Model.DatesTH)
+        {
+            <text>
+            datesAsks.push(new Date(@item));
+            </text>
+
+        }
+
+        @foreach (var item in Model.DatesTHD)
+        {
+            <text>
+        asksValues.push(new Date(@item));
+            </text>
+
+        }
+
+        @foreach (var item in Model.THValues)
+        {
+            <text>
+            datesBids.push(parseFloat(@item));
+            </text>
+
+        }
+
+        @foreach (var item in Model.THDValues)
+        {
+            <text>
+            bidsValues.push(parseFloat(@item));
+            </text>
+
+        }
+
+
+        var tradehistory = {
+            x: DatesTH,
+            y: THValues,
+            mode: 'lines',
+            line: {
+                color: 'rgb(128, 0, 128)',
+                width: 2
+            },
+            name: 'OrderBookAsks'
+        };
+
+        var tradehistorydelta = {
+            x: DatesTHD,
+            y: THDValues,
+            mode: 'lines',
+            line: {
+                color: 'rgb(241, 79, 42)',
+                width: 2
+            },
+            name: 'OrderBookBids'
+            };
+
+
+        var data = [tradehistory, tradehistorydelta];
+
+        Plotly.plot(CHART, data);
+
+    </script>
+}
+
+@model CRM.ViewModels.Charts.TradeHistoryOnTradeHistoryDeltaViewModel
+
+
+@Html.Partial("_TradeHistoryOnTradeHistoryDeltaFilterPanel");
+<head>
+
+</head>
+<div class="content">
+
+    <div id="Chart">
+
+    </div>
+
+
+
+</div>

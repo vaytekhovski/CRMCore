@@ -1,4 +1,4 @@
-﻿@model CRM.ViewModels.Charts.AskOnBidViewModel
+﻿@model CRM.ViewModels.Charts.TradeHistoryOnTradeHistoryDeltaViewModel
 
 <form action="/" method="post">
 
@@ -11,9 +11,12 @@
         </div>
 
         <div class="filter_element">
-            @Html.DropDownListFor(m => m.Coin, (IEnumerable<SelectListItem>)ViewBag.Coins, new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
+            @Html.DropDownListFor(m => m.Base, (IEnumerable<SelectListItem>)ViewBag.Coins, new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
         </div>
 
+        <div class="filter_element">
+            <input type="date" class="form-control filter_input_date" id="startDate" name="calulatingStartDate" value=@Model.CalculatingStartDate min="2019-04-05" />
+        </div>
         <div class="filter_element">
             <input type="date" class="form-control filter_input_date" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />
         </div>
