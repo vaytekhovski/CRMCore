@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace THManager.Models
+namespace Jobs.Models
 {
     public class SignalsPrivate
     {

@@ -45,12 +45,6 @@ namespace CRM.Controllers
         [HttpPost]
         public ActionResult TradeHistory(TradeHistoryFilterModel viewModel, string PageButton = "1")
         {
-            // TODO: использовать такой паттерн везде
-            //var model = service.Load(parameter1, parameter2, ...); 
-            //var viewModel = new ViewModel();
-            //viewModel.Items = model.Items.Select(x => ...);
-
-
             var filter = new TradeHistoryFilter
             {
                 Account = viewModel.Account,

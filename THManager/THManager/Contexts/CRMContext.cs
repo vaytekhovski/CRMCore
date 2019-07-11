@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using THManager.Models;
+using Jobs.Models;
 
 namespace Contexts
 {
