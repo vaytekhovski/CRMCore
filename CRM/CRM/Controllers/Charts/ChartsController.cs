@@ -23,11 +23,14 @@ namespace CRM.Controllers.Charts
 
         private readonly IndicatorPointsService _indicatorPointsService;
 
+        private readonly TradeHistoryOnTradeHistoryDeltaService _tradeHistoryOnTradeHistoryDeltaService;
+
         public ChartsController()
         {
             _asksOnBids = new AsksOnBidsService();
             _deltaOnTradeHistory = new DeltaOnTradeHistoryService();
             _indicatorPointsService = new IndicatorPointsService();
+            _tradeHistoryOnTradeHistoryDeltaService = new TradeHistoryOnTradeHistoryDeltaService();
         }
 
         [HttpGet]
@@ -150,6 +153,42 @@ namespace CRM.Controllers.Charts
             ViewModel.Dates = model.Dates.Select(x => x.ToJavascriptTicks()).ToList();
             ViewModel.MACDValues = model.MACDValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewModel.SIGValues = model.SIGValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewBag.Coins = DropDownFields.GetCoins();
+            return View(ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult TradeHistoryOnTradeHistoryDelta()
+        {
+            var viewModel = new TradeHistoryOnTradeHistoryDeltaViewModel
+            {
+                CalculatingStartDate = DatesHelper.MinDateStr,
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr
+            };
+            ViewBag.Coins = DropDownFields.GetCoins();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult TradeHistoryOnTradeHistoryDelta(TradeHistoryOnTradeHistoryDeltaViewModel ViewModel)
+        {
+            ChartsFilter filter = new ChartsFilter
+            {
+                Coin = ViewModel.Base,
+                CalculatingStartDate = DateTime.Parse(ViewModel.CalculatingStartDate),
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
+            };
+
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
+
+            var model = _tradeHistoryOnTradeHistoryDeltaService.Load(filter);
+
+            ViewModel.DatesTH = model.DatesTH.Select(x => x.ToJavascriptTicks()).ToList();
+            ViewModel.DatesTHD = model.DatesTHD.Select(x => x.ToJavascriptTicks()).ToList();
+            ViewModel.THValues = model.THValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.THDValues = model.THDValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewBag.Coins = DropDownFields.GetCoins();
             return View(ViewModel);
         }

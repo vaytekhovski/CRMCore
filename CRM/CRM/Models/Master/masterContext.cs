@@ -24,6 +24,8 @@ namespace CRM.Master
 
         public virtual DbSet<TradeHistoryDelta> TradeHistoryDelta { get; set; }
 
+        public virtual DbSet<TradeHistory> TradeHistory { get; set; }
+
         public virtual DbSet<IndicatorPoints> IndicatorPoints { get; set; }
 
 
@@ -38,6 +40,7 @@ namespace CRM.Master
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IndicatorPoints>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
+            modelBuilder.Entity<TradeHistory>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
         }
 
     }

@@ -17,6 +17,7 @@ namespace CRM.Models.Master
         public DateTime TimeTo { get; set; }
         public string Situation { get; set; }
         public decimal Value { get; set; }
+        public decimal TickerAsk { get; set; }
         public decimal? MinLongDiff { get; set; }
         public decimal? MaxLongDiff { get; set; }
 

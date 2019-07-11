@@ -9,6 +9,7 @@ namespace CRM.Models.Filters
     {
         public string Exchange { get; set; }
         public string Coin { get; set; }
+        public DateTime? CalculatingStartDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 

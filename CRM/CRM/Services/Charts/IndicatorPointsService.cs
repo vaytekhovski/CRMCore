@@ -1,5 +1,6 @@
 ﻿using CRM.Master;
 using CRM.Models;
+using CRM.Models.Charts;
 using CRM.Models.Filters;
 using CRM.Services.Charts;
 using CRM.ViewModels.Charts;
