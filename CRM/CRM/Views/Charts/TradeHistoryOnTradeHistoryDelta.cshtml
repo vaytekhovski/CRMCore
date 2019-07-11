@@ -10,19 +10,19 @@
 
         CHART = document.getElementById('Chart');
 
+        SECONDCHART = document.getElementById('SecondChart');
+
         var DatesTH = [];
         var DatesTHD = [];
 
         var THValues = [];
         var THDValues = [];
 
-        console.log('helo')
-
 
         @foreach (var item in Model.DatesTH)
         {
             <text>
-            datesAsks.push(new Date(@item));
+            DatesTH.push(new Date(@item));
             </text>
 
         }
@@ -30,7 +30,7 @@
         @foreach (var item in Model.DatesTHD)
         {
             <text>
-        asksValues.push(new Date(@item));
+            DatesTHD.push(new Date(@item));
             </text>
 
         }
@@ -38,7 +38,7 @@
         @foreach (var item in Model.THValues)
         {
             <text>
-            datesBids.push(parseFloat(@item));
+            THValues.push(parseFloat(@item));
             </text>
 
         }
@@ -46,13 +46,13 @@
         @foreach (var item in Model.THDValues)
         {
             <text>
-            bidsValues.push(parseFloat(@item));
+            THDValues.push(parseFloat(@item));
             </text>
 
         }
 
 
-        var tradehistory = {
+        var Volumes = {
             x: DatesTH,
             y: THValues,
             mode: 'lines',
@@ -60,10 +60,10 @@
                 color: 'rgb(128, 0, 128)',
                 width: 2
             },
-            name: 'OrderBookAsks'
+            name: 'Volume'
         };
 
-        var tradehistorydelta = {
+        var TickerAsks = {
             x: DatesTHD,
             y: THDValues,
             mode: 'lines',
@@ -71,13 +71,17 @@
                 color: 'rgb(241, 79, 42)',
                 width: 2
             },
-            name: 'OrderBookBids'
+            name: 'Ticker Ask'
             };
 
 
-        var data = [tradehistory, tradehistorydelta];
+        var data = [Volumes];
 
         Plotly.plot(CHART, data);
+
+        data = [TickerAsks]
+
+        Plotly.plot(SECONDCHART, data);
 
     </script>
 }
@@ -92,6 +96,10 @@
 <div class="content">
 
     <div id="Chart">
+
+    </div>
+
+    <div id="SecondChart">
 
     </div>
 

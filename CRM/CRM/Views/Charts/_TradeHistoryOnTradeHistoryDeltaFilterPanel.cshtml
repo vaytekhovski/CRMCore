@@ -15,14 +15,15 @@
         </div>
 
         <div class="filter_element">
-            <input type="date" class="form-control filter_input_date" id="startDate" name="calulatingStartDate" value=@Model.CalculatingStartDate min="2019-04-05" />
-        </div>
-        <div class="filter_element">
-            <input type="date" class="form-control filter_input_date" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />
+            <input type="datetime-local" style="width:180px !important" class="form-control filter_input_datetime" id="startDate" name="calulatingStartDate" value=@Model.CalculatingStartDate min="2019-04-05T00:00" />
         </div>
 
         <div class="filter_element">
-            <input type="date" class="form-control filter_input_date" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-01" />
+            <input type="datetime-local" style="width:180px !important" class="form-control filter_input_datetime" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05T00:00" />
+        </div>
+
+        <div class="filter_element">
+            <input type="datetime-local" style="width:180px !important" class="form-control filter_input_datetime" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-05T00:00" />
         </div>
         @Html.Partial("_ChartButtons")
 

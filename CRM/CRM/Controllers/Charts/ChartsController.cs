@@ -162,9 +162,9 @@ namespace CRM.Controllers.Charts
         {
             var viewModel = new TradeHistoryOnTradeHistoryDeltaViewModel
             {
-                CalculatingStartDate = DatesHelper.MinDateStr,
-                StartDate = DatesHelper.MinDateStr,
-                EndDate = DatesHelper.CurrentDateStr
+                CalculatingStartDate = DatesHelper.MinDateTimeStr,
+                StartDate = DatesHelper.MinDateTimeStr,
+                EndDate = DatesHelper.CurrentDateTimeStr
             };
             ViewBag.Coins = DropDownFields.GetCoins();
             return View(viewModel);
@@ -173,6 +173,17 @@ namespace CRM.Controllers.Charts
         [HttpPost]
         public ActionResult TradeHistoryOnTradeHistoryDelta(TradeHistoryOnTradeHistoryDeltaViewModel ViewModel)
         {
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewModel.CalculatingStartDate = ViewModel.CalculatingStartDate == null ? DatesHelper.MinDateTimeStr : ViewModel.CalculatingStartDate;
+            ViewModel.StartDate = ViewModel.StartDate == null ? DatesHelper.MinDateTimeStr : ViewModel.StartDate;
+            ViewModel.EndDate = ViewModel.EndDate == null ? DatesHelper.CurrentDateTimeStr : ViewModel.EndDate;
+
+            ViewModel.StartDate = DateTime.Parse(ViewModel.StartDate).ToString("yyyy-MM-ddTHH:mm");
+            ViewModel.EndDate = DateTime.Parse(ViewModel.EndDate).ToString("yyyy-MM-ddTHH:mm");
+
+
+            if (ViewModel.Base == null) return View(ViewModel);
+
             DateTime dateValue;
             if (DateTime.TryParse(ViewModel.CalculatingStartDate, out dateValue))
                 dateValue = dateValue;
@@ -181,8 +192,8 @@ namespace CRM.Controllers.Charts
 
             ChartsFilter filter = new ChartsFilter
             {
-                Coin = ViewModel.Base,
-                CalculatingStartDate = dateValue,
+                Coin = ViewModel.Base ?? "BTC",
+                CalculatingStartDate = DateTime.Parse(ViewModel.CalculatingStartDate),
                 StartDate = DateTime.Parse(ViewModel.StartDate),
                 EndDate = DateTime.Parse(ViewModel.EndDate),
             };
@@ -195,7 +206,8 @@ namespace CRM.Controllers.Charts
             ViewModel.DatesTHD = model.DatesTHD.Select(x => x.ToJavascriptTicks()).ToList();
             ViewModel.THValues = model.THValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewModel.THDValues = model.THDValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
-            ViewBag.Coins = DropDownFields.GetCoins();
+            
+            
             return View(ViewModel);
         }
     }
