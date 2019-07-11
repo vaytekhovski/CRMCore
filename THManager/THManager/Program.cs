@@ -53,7 +53,7 @@ namespace THManager
             DrowLine();
         }
 
-        static void DailyCalculate()
+        public static void DailyCalculate()
         {
             DrowStars();
 
@@ -90,9 +90,5 @@ namespace THManager
             Console.Write('\n' + starStr);
         }
 
-        public static void Restart()
-        {
-            DailyCalculate();
-        }
     }
 }
