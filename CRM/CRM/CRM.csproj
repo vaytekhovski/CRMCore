@@ -248,6 +248,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\THManager\THManager\THManager.csproj" />
+    <ProjectReference Include="..\..\THManager\THManager\Jobs.csproj" />
   </ItemGroup>
 </Project>
