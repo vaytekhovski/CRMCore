@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace THManager.Migrations
+namespace Jobs.Migrations
 {
     public partial class ignoreIdandWrongOrders : Migration
     {

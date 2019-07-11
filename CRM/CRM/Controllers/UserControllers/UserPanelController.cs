@@ -76,10 +76,9 @@ namespace CRM.Controllers.User
         }
 
         [HttpGet]
-        public ActionResult RestartTHManager(string startDate, string endDate)
+        public ActionResult RestartDailyCalculate(string startDate, string endDate)
         {
-            //restart
-            THManager.Program.Restart();
+            Jobs.Program.DailyCalculate();
             return RedirectToAction("UserPanel");
         }
     }

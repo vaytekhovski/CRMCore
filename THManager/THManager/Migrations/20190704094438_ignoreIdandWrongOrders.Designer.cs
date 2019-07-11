@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace THManager.Migrations
+namespace Jobs.Migrations
 {
     [DbContext(typeof(CRMContext))]
     [Migration("20190704094438_ignoreIdandWrongOrders")]

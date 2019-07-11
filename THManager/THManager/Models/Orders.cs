@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace THManager
+namespace Jobs
 {
     public partial class Orders
     {
