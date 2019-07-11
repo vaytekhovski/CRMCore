@@ -162,7 +162,7 @@ namespace CRM.Controllers.Charts
         {
             var viewModel = new TradeHistoryOnTradeHistoryDeltaViewModel
             {
-                CalculatingStartDate = DatesHelper.MinDateTimeStr,
+                FirstDate = DatesHelper.MinDateTimeStr,
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr
             };
@@ -174,7 +174,7 @@ namespace CRM.Controllers.Charts
         public ActionResult TradeHistoryOnTradeHistoryDelta(TradeHistoryOnTradeHistoryDeltaViewModel ViewModel)
         {
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewModel.CalculatingStartDate = ViewModel.CalculatingStartDate == null ? DatesHelper.MinDateTimeStr : ViewModel.CalculatingStartDate;
+            ViewModel.FirstDate = ViewModel.FirstDate == null ? DatesHelper.MinDateTimeStr : ViewModel.FirstDate;
             ViewModel.StartDate = ViewModel.StartDate == null ? DatesHelper.MinDateTimeStr : ViewModel.StartDate;
             ViewModel.EndDate = ViewModel.EndDate == null ? DatesHelper.CurrentDateTimeStr : ViewModel.EndDate;
 
@@ -185,7 +185,7 @@ namespace CRM.Controllers.Charts
             if (ViewModel.Base == null) return View(ViewModel);
 
             DateTime dateValue;
-            if (DateTime.TryParse(ViewModel.CalculatingStartDate, out dateValue))
+            if (DateTime.TryParse(ViewModel.FirstDate, out dateValue))
                 dateValue = dateValue;
             else
                 dateValue = DateTime.Parse(ViewModel.StartDate);
@@ -193,7 +193,7 @@ namespace CRM.Controllers.Charts
             ChartsFilter filter = new ChartsFilter
             {
                 Coin = ViewModel.Base ?? "BTC",
-                CalculatingStartDate = DateTime.Parse(ViewModel.CalculatingStartDate),
+                CalculatingStartDate = DateTime.Parse(ViewModel.FirstDate),
                 StartDate = DateTime.Parse(ViewModel.StartDate),
                 EndDate = DateTime.Parse(ViewModel.EndDate),
             };

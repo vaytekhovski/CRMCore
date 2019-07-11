@@ -14,7 +14,7 @@ namespace CRM.ViewModels.Charts
             THValues = new List<string>();
             THDValues = new List<string>();
         }
-        public string CalculatingStartDate { get; set; }
+        public string FirstDate { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string Base { get; set; }
