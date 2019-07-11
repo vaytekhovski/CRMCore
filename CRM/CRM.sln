@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRM", "CRM\CRM.csproj", "{84030EAF-CA0E-4603-95D9-1E46C8C4DDF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jobs", "..\THManager\THManager\Jobs.csproj", "{523A906F-F56F-4292-8E4C-9D999F5AC09E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "THManager", "..\THManager\THManager\THManager.csproj", "{523A906F-F56F-4292-8E4C-9D999F5AC09E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
