@@ -72,7 +72,16 @@ namespace CRM.Services.Charts
             foreach (var item in TH.Where(x => x.Side == "buy").Where(x => x.Time > filter.StartDate))
             {
                 BuyVolme += item.Amount;
-                point = (SellVolume - BuyVolme) / SellVolume;
+
+                try
+                {
+                    point = (SellVolume - BuyVolme) / SellVolume;
+                }
+                catch
+                {
+                    point = 0;
+                }
+
                 model.THValues.Add(point);
                 model.DatesTH.Add(item.Time);
             }
