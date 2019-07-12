@@ -67,13 +67,13 @@ namespace CRM
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
+            /*
             DailyTriggerService.StartDeilyTrigger(); // TODO: move to jobs !!!ASAP!!!
 
             DailyTriggerService.OnTimeTriggered += () =>
             {
                 LoadDataService loadData = new LoadDataService();
-            };
+            };*/
         }
     }
 }
