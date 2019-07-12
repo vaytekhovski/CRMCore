@@ -190,12 +190,14 @@ namespace CRM.Controllers.Charts
             else
                 dateValue = DateTime.Parse(ViewModel.StartDate);
 
+           
+
             ChartsFilter filter = new ChartsFilter
             {
                 Coin = ViewModel.Base ?? "BTC",
-                CalculatingStartDate = DateTime.Parse(ViewModel.FirstDate),
-                StartDate = DateTime.Parse(ViewModel.StartDate),
-                EndDate = DateTime.Parse(ViewModel.EndDate),
+                CalculatingStartDate = DateTime.Parse(ViewModel.FirstDate).AddHours(3),
+                StartDate = DateTime.Parse(ViewModel.StartDate).AddHours(3),
+                EndDate = DateTime.Parse(ViewModel.EndDate).AddHours(3),
             };
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
