@@ -4,6 +4,8 @@
 
     <div class="filter_panel container">
 
+        @Html.Partial("_ChartButtons")
+
         <div class="filter_element">
             <select name="Exchange" class="form-control filter_input">
                 <option value="binance">Binance</option>
@@ -21,6 +23,10 @@
         <div class="filter_element">
             <input type="date" class="form-control filter_input_date" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-01" />
         </div>
-        @Html.Partial("_ChartButtons")
+
+        <div class="filter_element">
+            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/IndicatorPoints" formmethod="post">Показать</button>
+
+        </div>
     </div>
 </form>

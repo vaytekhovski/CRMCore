@@ -7,6 +7,7 @@ namespace CRM.ViewModels.Charts
 {
     public class IndicatorPointsViewModel
     {
+        public string PageName { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
 

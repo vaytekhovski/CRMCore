@@ -4,11 +4,18 @@
 
 @model CRM.ViewModels.Charts.AskOnBidViewModel
 
-@Html.Partial("_AsksOnBidsFilterPanel");
 
     <head>
         <script src="~/js/plotly-latest.min.js"></script>
     </head>
-<div class="content">
-    
-</div>
+    <div class="filter_panel">
+        <form action="/" method="post">
+            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/AsksOnBids" formmethod="get">Asks on Bids</button>
+            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/DeltaOnTradeHistory" formmethod="get">Delta on Trade History</button>
+            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/IndicatorPoints" formmethod="get">IndicatorPoints</button>
+            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/TradeHistoryOnTradeHistoryDelta" formmethod="get">Volumes and Asks</button>
+        </form>
+    </div>
+    <div class="content">
+       
+    </div>

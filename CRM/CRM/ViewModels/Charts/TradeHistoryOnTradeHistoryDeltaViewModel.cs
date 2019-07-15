@@ -7,6 +7,7 @@ namespace CRM.ViewModels.Charts
 {
     public class TradeHistoryOnTradeHistoryDeltaViewModel
     {
+        public string PageName { get; set; }
         public TradeHistoryOnTradeHistoryDeltaViewModel()
         {
             DatesTH = new List<long>();

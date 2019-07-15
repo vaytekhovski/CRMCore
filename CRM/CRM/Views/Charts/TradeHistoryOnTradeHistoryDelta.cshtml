@@ -20,36 +20,36 @@
 
 
         @foreach (var item in Model.DatesTH)
-        {
+{
             <text>
             DatesTH.push(new Date(@item));
             </text>
 
-        }
+}
 
         @foreach (var item in Model.DatesTHD)
-        {
+{
             <text>
             DatesTHD.push(new Date(@item));
             </text>
 
-        }
+}
 
         @foreach (var item in Model.THValues)
-        {
+{
             <text>
             THValues.push(parseFloat(@item));
             </text>
 
-        }
+}
 
         @foreach (var item in Model.THDValues)
-        {
+{
             <text>
             THDValues.push(parseFloat(@item));
             </text>
 
-        }
+}
 
 
         var Volumes = {
@@ -100,11 +100,11 @@
 </head>
 <div class="content">
 
-    <div id="Chart">
+    <div id="Chart" style="display: @(Model.DatesTH.Count != 0 ? "block" : "none")">
 
     </div>
 
-    <div id="SecondChart">
+    <div id="SecondChart" style="display: @(Model.DatesTHD.Count != 0 ? "block" : "none")">
 
     </div>
 
