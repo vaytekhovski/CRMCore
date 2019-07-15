@@ -22,52 +22,52 @@
 
 
             @foreach (var item in Model.DatesDelta)
-            {
+{
                 <text>
                     datesDelta.push(new Date(@item));
                 </text>
 
-            }
+}
 
             @foreach (var item in Model.DeltaValues)
-            {
+{
                 <text>
                     deltaValues.push(parseFloat(@item));
                 </text>
 
-            }
+}
 
             @foreach (var item in Model.DatesTHBuy)
-            {
+{
                 <text>
                     datesTHBuy.push(new Date(@item));
                 </text>
 
-            }
+}
 
             @foreach (var item in Model.THBuyValues)
-            {
+{
                 <text>
                     THBuyValues.push(parseFloat(@item));
                 </text>
 
-            }
+}
 
             @foreach (var item in Model.DatesTHSell)
-            {
+{
                 <text>
                     datesTHSell.push(new Date(@item));
                 </text>
 
-            }
+}
 
             @foreach (var item in Model.THSellValues)
-            {
+{
                 <text>
                     THSellValues.push(parseFloat(@item));
                 </text>
 
-            }
+}
 
 
             var Delta = {
@@ -104,7 +104,7 @@
             };
 
             var data = [Delta, TradeHistoryBuy, TradeHistorySell];
-
+            
             Plotly.plot(CHART, data);
 
     </script>
@@ -119,10 +119,8 @@
 </head>
 <div class="content">
         
-            <div id="Chart">
+        <div id="Chart" style="display: @(Model.DatesDelta.Count != 0 ? "block" : "none")">
 
-            </div>
+        </div>
 
-
-    
 </div>

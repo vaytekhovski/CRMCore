@@ -4,6 +4,8 @@
 
     <div class="filter_panel container">
 
+        @Html.Partial("_ChartButtons")
+
         <div class="filter_element">
             <select class="form-control filter_input">
                 <option value="binance">Binance</option>
@@ -25,7 +27,9 @@
         <div class="filter_element">
             <input type="datetime-local" style="width:180px !important" class="form-control filter_input_datetime" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-05T00:00" />
         </div>
-        @Html.Partial("_ChartButtons")
+        <div class="filter_element">
+            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/TradeHistoryOnTradeHistoryDelta" formmethod="post">Показать</button>
 
+        </div>
     </div>
 </form>

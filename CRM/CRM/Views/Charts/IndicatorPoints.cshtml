@@ -75,7 +75,7 @@
 
     @Html.ValidationSummary()
 
-    <div id="Chart">
+    <div id="Chart" style="display: @(Model.Dates.Count != 0 ? "block" : "none")">
     </div>
 
 </div>

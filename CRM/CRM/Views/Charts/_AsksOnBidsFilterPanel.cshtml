@@ -1,8 +1,13 @@
 ﻿@model CRM.ViewModels.Charts.AskOnBidViewModel
 
+
+
+
 <form action="/" method="post">
 
     <div class="filter_panel container">
+
+        @Html.Partial("_ChartButtons")
 
         <div class="filter_element">
             <select class="form-control filter_input">
@@ -21,8 +26,8 @@
         <div class="filter_element">
             <input type="date" class="form-control filter_input_date" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-01" />
         </div>
-
-
-        @Html.Partial("_ChartButtons")
+        <div class="filter_element">
+            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/AsksOnBids" formmethod="post">Показать</button>
+        </div>
     </div>
 </form>

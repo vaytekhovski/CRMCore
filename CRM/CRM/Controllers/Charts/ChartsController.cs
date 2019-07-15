@@ -50,6 +50,7 @@ namespace CRM.Controllers.Charts
         {
             var model = new AskOnBidViewModel
             {
+                PageName = "Asks on Bids",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
             };
@@ -76,6 +77,7 @@ namespace CRM.Controllers.Charts
             ViewModel.DatesBids = model.DatesBids.Select(x => x.ToJavascriptTicks()).ToList();
             ViewModel.BidsValues = model.BidsValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewBag.Coins = DropDownFields.GetCoins();
+            ViewModel.PageName = "Asks on Bids";
             return View(ViewModel);
         }
 
@@ -84,6 +86,7 @@ namespace CRM.Controllers.Charts
         {
             var model = new DeltaOnTradeHistoryViewModel
             {
+                PageName = "Delta on TradeHistory",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
                 DatesDelta = new List<long>(),
@@ -120,6 +123,7 @@ namespace CRM.Controllers.Charts
             ViewModel.DatesTHSell = model.DatesTHSell.Select(x => x.ToJavascriptTicks()).ToList();
             ViewModel.THSellValues = model.THSellValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewBag.Coins = DropDownFields.GetCoins();
+            ViewModel.PageName = "Delta on TradeHistory";
             return View(ViewModel);
         }
 
@@ -128,6 +132,7 @@ namespace CRM.Controllers.Charts
         {
             var viewModel = new IndicatorPointsViewModel
             {
+                PageName = "Indicator Points",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
             };
@@ -154,6 +159,7 @@ namespace CRM.Controllers.Charts
             ViewModel.MACDValues = model.MACDValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewModel.SIGValues = model.SIGValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewBag.Coins = DropDownFields.GetCoins();
+            ViewModel.PageName = "Indicator Points";
             return View(ViewModel);
         }
 
@@ -162,6 +168,7 @@ namespace CRM.Controllers.Charts
         {
             var viewModel = new TradeHistoryOnTradeHistoryDeltaViewModel
             {
+                PageName = "Volumes and Asks",
                 FirstDate = DatesHelper.MinDateTimeStr,
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr
@@ -173,25 +180,24 @@ namespace CRM.Controllers.Charts
         [HttpPost]
         public ActionResult TradeHistoryOnTradeHistoryDelta(TradeHistoryOnTradeHistoryDeltaViewModel ViewModel)
         {
-            ViewBag.Coins = DropDownFields.GetCoins();
-            ViewModel.FirstDate = ViewModel.FirstDate == null ? DatesHelper.MinDateTimeStr : ViewModel.FirstDate;
-            ViewModel.StartDate = ViewModel.StartDate == null ? DatesHelper.MinDateTimeStr : ViewModel.StartDate;
-            ViewModel.EndDate = ViewModel.EndDate == null ? DatesHelper.CurrentDateTimeStr : ViewModel.EndDate;
+            //ViewBag.Coins = DropDownFields.GetCoins();
+            //ViewModel.FirstDate = ViewModel.FirstDate == null ? DatesHelper.MinDateTimeStr : ViewModel.FirstDate;
+            //ViewModel.StartDate = ViewModel.StartDate == null ? DatesHelper.MinDateTimeStr : ViewModel.StartDate;
+            //ViewModel.EndDate = ViewModel.EndDate == null ? DatesHelper.CurrentDateTimeStr : ViewModel.EndDate;
 
-            ViewModel.StartDate = DateTime.Parse(ViewModel.StartDate).ToString("yyyy-MM-ddTHH:mm");
-            ViewModel.EndDate = DateTime.Parse(ViewModel.EndDate).ToString("yyyy-MM-ddTHH:mm");
+            //ViewModel.StartDate = DateTime.Parse(ViewModel.StartDate).ToString("yyyy-MM-ddTHH:mm");
+            //ViewModel.EndDate = DateTime.Parse(ViewModel.EndDate).ToString("yyyy-MM-ddTHH:mm");
 
 
-            if (ViewModel.Base == null) return View(ViewModel);
+            //if (ViewModel.Base == null) return View(ViewModel);
 
-            DateTime dateValue;
-            if (DateTime.TryParse(ViewModel.FirstDate, out dateValue))
-                dateValue = dateValue;
-            else
-                dateValue = DateTime.Parse(ViewModel.StartDate);
+            //DateTime dateValue;
+            //if (DateTime.TryParse(ViewModel.FirstDate, out dateValue))
+            //    dateValue = dateValue;
+            //else
+            //    dateValue = DateTime.Parse(ViewModel.StartDate);
 
            
-
             ChartsFilter filter = new ChartsFilter
             {
                 Coin = ViewModel.Base ?? "BTC",
@@ -208,8 +214,8 @@ namespace CRM.Controllers.Charts
             ViewModel.DatesTHD = model.DatesTHD.Select(x => x.ToJavascriptTicks()).ToList();
             ViewModel.THValues = model.THValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewModel.THDValues = model.THDValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
-            
-            
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewModel.PageName = "Volumes and Asks";
             return View(ViewModel);
         }
     }

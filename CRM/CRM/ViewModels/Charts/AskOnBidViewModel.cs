@@ -7,6 +7,7 @@ namespace CRM.ViewModels.Charts
 {
     public class AskOnBidViewModel
     {
+        public string PageName { get; set; }
         public string Coin { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }

@@ -1,6 +1,24 @@
-﻿<div class="filter_element">
-    <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/AsksOnBids" formmethod="post">Asks on Bids</button>
-    <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/DeltaOnTradeHistory" formmethod="post">Delta on Trade History</button>
-    <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/IndicatorPoints" formmethod="post">IndicatorPoints</button>
-    <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/TradeHistoryOnTradeHistoryDelta" formmethod="post">Volume and Asks</button>
-</div>
+﻿
+    <div class="filter_element">
+        <div class="dropdown">
+            <button class="dropbtn btn short_filter_button btn-primary">@Model.PageName</button>
+            <div class="dropdown-content">
+                @if (Model.PageName != "Asks on Bids")
+                {
+                    <a href="../Charts/AsksOnBids">Asks on Bids</a>
+                }
+                @if (Model.PageName != "Delta on TradeHistory")
+                {
+                    <a href="../Charts/DeltaOnTradeHistory">Delta on TradeHistory</a>
+                }
+                @if (Model.PageName != "Indicator Points")
+                {
+                    <a href="../Charts/IndicatorPoints">Indicator Points</a>
+                }
+                @if (Model.PageName != "Volumes and Asks")
+                {
+                    <a href="../Charts/TradeHistoryOnTradeHistoryDelta">Volumes and Asks</a>
+                }
+            </div>
+        </div>
+    </div>
