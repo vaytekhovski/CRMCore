@@ -1,0 +1,1267 @@
+﻿
+@model CRM.ViewModels.LoginModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="dZY5MLyVTSoCCabzGSGGzDasnZl5UoNStpbgILJR">
+
+    <title>Datavisio</title>
+
+    <!-- Styles -->
+    <link href="~/css/app.css" rel="stylesheet">
+
+    <link href="~/css/mod.css?1537940317" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/glide.core.min.css">
+
+
+    <!-- Scripts -->
+
+
+
+    <script src="~/js/app.js"></script>
+    <script>
+    function autoPlayYouTubeModal() {
+            var trigger = $("body").find('[data-target="#video-modal"]');
+            trigger.click(function () {
+                var theModal = $(this).data("target"),
+                    videoSRC = $(this).attr("data-youtube-link"),
+                    videoSRCauto = videoSRC + "?autoplay=1";
+                $(theModal + ' iframe').attr('src', videoSRCauto);
+                $(theModal).on('hidden.bs.modal', function () {
+                    $(theModal + ' iframe').attr('src', videoSRC);
+                })
+            });
+        }
+
+
+        $(function () {
+
+            autoPlayYouTubeModal();
+
+            function format(v) {
+                return v.toString().length == 1 ? '0' + v : v;
+            }
+
+            var now = new Date();
+
+            var currentDate = Date.now();
+            now.setTime(now.getTime() + 86400000);
+            //var endDateString = now.toISOString();
+            //console.log(endDateString);
+            //var endDateTime = Date.parse(endDateString);
+            //console.log(endDateTime);
+            //var endDate = new Date(endDateTime);
+            var endDate = new Date(2018, 11, 1);
+
+            var $days = $('.days');
+            var $hours = $('.hours');
+            var $mins = $('.minutes');
+            var $secs = $('.seconds');
+
+            setInterval(function () {
+
+                currentDate = Date.now();
+                if (currentDate < endDate) {
+
+                    var time = endDate - currentDate;
+
+                    var seconds = Math.floor(time / 1000 % 60);
+                    var minutes = Math.floor(time / 60000 % 60);
+                    var hours = Math.floor(time / 3600000 % 24);
+                    var days = Math.floor(time / 86400000);
+
+                    $secs.text(format(seconds));
+                    $mins.text(format(minutes));
+                    $hours.text(format(hours));
+                    $days.text(format(days));
+
+                }
+
+            }, 100);
+
+
+
+
+
+
+            // возвращает cookie с именем name, если есть, если нет, то undefined
+            function getCookie(name) {
+                var matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                ));
+                return matches ? decodeURIComponent(matches[1]) : undefined;
+            }
+
+            // устанавливает cookie с именем name и значением value
+            // options - объект с свойствами cookie (expires, path, domain, secure)
+            function setCookie(name, value, options) {
+                options = options || {};
+
+                var expires = options.expires;
+
+                if (typeof expires == "number" && expires) {
+                    var d = new Date();
+                    d.setTime(d.getTime() + expires * 1000);
+                    expires = options.expires = d;
+                }
+                if (expires && expires.toUTCString) {
+                    options.expires = expires.toUTCString();
+                }
+
+                value = encodeURIComponent(value);
+
+                var updatedCookie = name + "=" + value;
+
+                for (var propName in options) {
+                    updatedCookie += "; " + propName;
+                    var propValue = options[propName];
+                    if (propValue !== true) {
+                        updatedCookie += "=" + propValue;
+                    }
+                }
+
+                document.cookie = updatedCookie;
+            }
+
+            // удаляет cookie с именем name
+            function deleteCookie(name) {
+                setCookie(name, "", {
+                    expires: -1
+                })
+            }
+
+
+            var cookieAgreed = getCookie('cookieAgreed')
+
+            //console.log(cookieAgreed);
+
+            if (cookieAgreed !== 'true') {
+                $('.cookies-alert').show();
+            } else {
+                setCookie('cookieAgreed', true, { path: '/', expires: 60 * 60 * 24 * 14 });
+            }
+
+            $('.cookie-agree-btn').click(function () {
+                setCookie('cookieAgreed', true, { path: '/', expires: 60 * 60 * 24 * 14 });
+                $('.cookies-alert').hide();
+            })
+
+
+
+
+            //Смена изображения во всплывающей инфографике
+            $('#infographic-modal').on('show.bs.modal', function (event) {
+                var tag = $(event.relatedTarget)
+                var link = tag.data('image-src')
+                var modal = $(this)
+                modal.find('.infographic-modal-image').attr('src', link)
+            })
+
+
+        });</script>
+
+
+
+    <script>
+    $(function () {
+
+            /*** Фиксирование шапки ***/
+
+            var navbar = $('.navbar');
+            var fixedHeight = navbar.height();
+
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > fixedHeight) {
+
+                    navbar.removeClass('navbar-static-top').addClass('navbar-fixed-top');
+                    $('body').css('padding-top', fixedHeight);
+                } else {
+                    navbar.removeClass('navbar-fixed-top').addClass('navbar-static-top');
+                    $('body').css('padding-top', 0);
+                }
+            });
+
+
+            function scrollToAnchor(aid) {
+                var aTag = $(".anchor-point[id='" + aid + "']");
+                $('html,body').animate({ scrollTop: aTag.offset().top }, 'slow');
+            }
+
+            $('.anchor-link').click(function () {
+                var href = $(this).attr('href');
+                var anchorId = href.replace('/#', '');
+                scrollToAnchor(anchorId);
+            })
+
+
+
+
+
+        });</script>
+
+
+</head>
+<body class="">
+    <div id="app">
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="top-promo-line">
+                <div class="container">
+
+                    <span>Public pre-sale</span>
+                    <span class="top-promo-line-discount-btn" data-toggle="modal" data-target="#sign-up-1-modal">25% discount</span>
+
+                    <a href="#" class="sign-link hidden-xs pull-right" data-toggle="modal" data-target="#sign-in-modal">Sign in</a>
+
+                </div>
+            </div>
+            <div class="container">
+                <div class="navbar-header">
+
+
+
+                    <!-- Branding Image -->
+                    <a class="navbar-brand" href="http://datavisio.trade">
+                        <img class="navbar-brand-logo white-logo" src="~/images/svg/logo-whitetext-horizontal.svg" alt="logo">
+                        <img class="navbar-brand-logo dark-logo" src="~/images/svg/logo-darktext-horizontal.svg" alt="logo">
+                    </a>
+
+                    <div class="navbar-header-bottom-line col-xs-12 no-padding">
+                        <!-- Collapsed Hamburger -->
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <div class="navbar-non-collapse visible-xs">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#" class="sign-link" data-toggle="modal" data-target="#sign-in-modal">SIGN UP</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        <li><a class="anchor-link" href="/#how">How it works</a></li>
+                        <li><a class="anchor-link" href="/#why">Why DataVisio</a></li>
+                        <li><a class="anchor-link" href="/#partners">Partners</a></li>
+                        <li><a class="anchor-link" href="/#team">Our Team</a></li>
+                        <li><a class="anchor-link" href="/#faq">FAQ</a></li>
+                        <li><a href="/en/contact">Contact</a></li>
+                        <li><a href="/en/blog">Blog</a></li>
+
+                    </ul>
+
+                </div>
+
+
+            </div>
+        </nav>
+
+        <section id="title-block" class="clearfix">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>DataVisio - A Revolution in Cryptocurrency Exchange</h1>
+
+                        <span>
+                            DataVisio is an artificial-intelligence-based automated trading system for cryptocurrency exchange with algorithms
+                            that secure investments and ensure risk-free trade.
+                        </span>
+
+                        <ul>
+                            <li><span>It is more efficient than technical analysis in cryptocurrency exchange rate predictions.</span></li>
+                            <li><span>It offers a more accurate prognosis with its Big Data, neural networks and proprietary algorithms.</span></li>
+                            <li><span>Agile architecture enables the system to scale and cater to Big Data analysis in various domains.</span></li>
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+
+
+        <section id="how-it-work-block" class="clearfix">
+            <span class="anchor-point" id="how"></span>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h2>The Story of DataVisio</h2>
+
+                        <span class="text-op-80">
+                            DataVisio started as research into an alternative to traditional technical analysis in cryptocurrency exchange rate predictions.
+                            We wanted to create a system that could provide more accurate predictions to secure cryptotraders’ investments. Today
+                            DataVisio is an AI-based automated crypto trading system with proprietary, elaborate algorithms to ensure secure trade.
+                        </span>
+
+                        <ul id="how-it-work-block-tabs" class="nav nav-tabs">
+                            <li role="presentation" class="active"><a href="#version1">Version 1</a></li>
+                            <li role="presentation"><a href="#version2">Version 2</a></li>
+                            <li role="presentation"><a href="#version3">Version 3</a></li>
+                        </ul>
+
+                        <div class="tab-content clearfix" id="myTabContent">
+                            <div class="tab-pane fade active in" role="tabpanel" id="version1" aria-labelledby="home-tab">
+                                <div class="col-md-4 how-it-work-tab-left-column">
+                                    <h3>Versions progress</h3>
+
+                                    <p class="text-op-80">
+                                        The first version of DataVisio was created in October 2017. It was based on differential entropy mathematical method, and it predicted cryptocurrencies’ rates for two hours with an accuracy of 40 percent.
+
+                                    </p>
+
+                                    <a href="#" class="visible-xs-inline-block" data-toggle="modal" data-target="#infographic-modal" data-image-src="~/images/how-it-work/v1.png">Infographics</a>
+
+                                    <a href="#">Learn more</a>
+
+                                    <span class="btn btn-primary btn-block" data-toggle="modal" data-target="#video-modal" data-youtube-link="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                                        <span class="btn-text">Watch How it Works</span>
+                                    </span>
+                                </div>
+                                <div class="col-md-8 no-padding how-it-work-tab-right-column">
+                                    <img class="img-responsive" src="~/images/how-it-work/v1.png" data-toggle="modal" data-target="#infographic-modal" data-image-src="~/images/how-it-work/v1.png">
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" role="tabpanel" id="version2" aria-labelledby="profile-tab">
+                                <div class="col-md-4 how-it-work-tab-left-column">
+                                    <h3>Versions progress</h3>
+
+                                    <p class="text-op-80">
+                                        The second version of DataVisio was created in June 2018. This version is based on a neural network and has AI based on it. It uses statistical information from 130 exchanges to predict cryptocurrency rates for 12 hours.
+
+                                    </p>
+
+                                    <a href="#" class="visible-xs-inline-block" data-toggle="modal" data-target="#infographic-modal" data-image-src="~/images/how-it-work/v2.png">Infographics</a>
+
+                                    <a href="#">Learn more</a>
+                                </div>
+                                <div class="col-md-8 no-padding how-it-work-tab-right-column">
+                                    <img class="img-responsive" src="~/images/how-it-work/v2.png" data-toggle="modal" data-target="#infographic-modal" data-image-src="~/images/how-it-work/v2.png">
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" role="tabpanel" id="version3" aria-labelledby="profile-tab">
+                                <div class="col-md-4 how-it-work-tab-left-column">
+                                    <h3>Versions progress</h3>
+
+                                    <p class="text-op-80">
+                                        The third version of DataVisio is slated for release in 2019. In addition to using neural networks that process stock information, this version will take into account the news and behavior of cryptotraders; we have an aim to create a symbiotic AI.
+
+                                    </p>
+
+                                    <a href="#" class="visible-xs-inline-block" data-toggle="modal" data-target="#infographic-modal" data-image-src="~/images/how-it-work/v3.png">Infographics</a>
+
+                                    <a href="#">Learn more</a>
+                                </div>
+                                <div class="col-md-8 no-padding how-it-work-tab-right-column">
+                                    <img class="img-responsive" src="~/images/how-it-work/v3.png" data-toggle="modal" data-target="#infographic-modal" data-image-src="~/images/how-it-work/v3.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+
+
+        <section id="partners-block" class="clearfix">
+            <span class="anchor-point" id="partners"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>DataVisio Partners</h2>
+                    </div>
+
+                    <div class="col-md-12 carousel-block">
+                        <div class="glide">
+                            <div class="glide__track" data-glide-el="track">
+                                <ul class="glide__slides">
+                                    <li class="glide__slide">
+                                        <div class="image-block">
+                                            <img src="~/images/brands/zodiaq.png" class="img-responsive">
+                                        </div>
+
+                                    </li>
+                                    <li class="glide__slide">
+                                        <div class="image-block">
+                                            <img src="~/images/brands/cybintex.png" class="img-responsive">
+                                        </div>
+                                    </li>
+                                    <li class="glide__slide">
+                                        <div class="image-block">
+                                            <img src="~/images/brands/crypstyx.png" class="img-responsive">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="glide__arrows" data-glide-el="controls">
+                                <span class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                                    &#8249;
+                                </span>
+                                <span class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                                    &#8250;
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </section>
+
+
+
+
+        <section id="datavisio-token-block" class="clearfix">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h2>DataVisio Token</h2>
+
+                        <span class="text-op-80">
+                            DataVisio Token is based on Ethereum ERC20 protocol and is compliable with any exchanges<br>
+                            and wallets supporting ERC20. Emission of tokens will comprise 10,000,000,000 items.
+                        </span>
+
+                    </div>
+
+                    <div class="col-md-12 datavisio-token-columns hidden-xs">
+
+                        <div class="datavisio-token-column col-md-4">
+                            <h3>Why this standart</h3>
+                            <span class="text-op-80">
+                                Token emissioned by Ethereum are comliable with new projects and services planned by DataVisio. Moreover ERC20 enables voting,
+                                therefore investors will be able to influence the future of the project.
+                            </span>
+                        </div>
+
+                        <div class="datavisio-token-column col-md-4 hidden-xs">
+                            <h3>Ways of usage</h3>
+                            <span class="text-op-80">
+                                Payments for DataVisio services by exchanges; payment for DataVisio services by traders,
+                                payments to DataVisio users for correct prognoses. Token owners will be in full
+                                control of their assets.
+                            </span>
+                        </div>
+
+                        <div class="datavisio-token-column col-md-4 hidden-xs">
+                            <h3>High ROI Guarantees</h3>
+                            <span class="text-op-80">
+                                Since demand for AI-based data processing
+                                is raising worldwide and Big Data market
+                                is only getting bigger all over the world
+                                we can guarantee high ROI
+                                for DataVision token.
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="why-datavisio-header-block" class="clearfix hidden-xs">
+            <span class="anchor-point" id="why"></span>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h2>Why DataVisio?</h2>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <section id="why-datavisio-tabs-block" class="clearfix hidden-xs">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <ul id="why-datavisio-tabs" class="nav nav-tabs hidden-xs">
+                            <li role="presentation" class="active"><a href="#why1">Echange clients</a></li>
+                            <li role="presentation"><a href="#why2">Exchanges</a></li>
+                        </ul>
+
+                        <div class="tab-content clearfix hidden-xs" id="myTabContent">
+                            <div class="tab-pane fade active in" role="tabpanel" id="why1" aria-labelledby="home-tab">
+                                <div class="row">
+                                    <div class="col-md-4">
+
+
+                                        <img class="datavisio-values-image" src="~/images/svg/efficiency.svg">
+
+                                        <h3>Efficiency</h3>
+
+                                        <span class="text-op-80">
+                                            It's based on a better alternative
+                                            to technical analysis which only
+                                            shows a current market situation
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="~/images/svg/accuracy.svg">
+                                        <h3>Accuracy</h3>
+                                        <span class="text-op-80">
+                                            Our system uses AI to provide the
+                                            most accurate prognosys for
+                                            crypto currency exchange rates
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="~/images/svg/lock.svg">
+
+                                        <h3>Secureness</h3>
+                                        <span class="text-op-80">
+                                            With more accurate data traders
+                                            are secured from investments
+                                            loss
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+
+
+                                        <img class="datavisio-values-image" src="~/images/svg/analytics.svg">
+
+                                        <h3>Through Analytics</h3>
+
+                                        <span class="text-op-80">
+                                            Our system uses Big Data and neural
+                                            networks enabling trully thorough
+                                            analysis for accurate predicitons.
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="~/images/svg/automations.svg">
+
+                                        <h3>Clever Automation</h3>
+                                        <span class="text-op-80">
+                                            Our system uses Big Data and neural
+                                            networks enabling trully thorough
+                                            analysis for accurate predicitons.
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="~/images/svg/enchantment.svg">
+
+                                        <h3>Constant enchantment</h3>
+                                        <span class="text-op-80">
+                                            Based on scientific method we started
+                                            with hypothesis and developed a system
+                                            with a plan for constant improvement.
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+                            <div class="tab-pane fade" role="tabpanel" id="why2" aria-labelledby="profile-tab">
+
+
+                                <div class="row">
+                                    <div class="col-md-4">
+
+
+                                        <img class="datavisio-values-image" src="~/images/svg/efficiency.svg">
+
+                                        <h3>Thorough Analytics</h3>
+
+                                        <span class="text-op-80">
+                                            Our system uses Big Data and neural networks, enabling truly thorough analysis
+                                            for accurate predictions.
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/star.svg">
+
+                                        <h3>Trust Management</h3>
+                                        <span class="text-op-80">
+                                            DataVisio users can position their funds
+                                            for automatic trading by our system.
+
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/reports.svg">
+
+                                        <h3>Forecasts and Reports</h3>
+                                        <span class="text-op-80">
+                                            Use DataVisio to get fresh crypto market forecasts and analytical historical data
+                                            from the biggest crypto exchanges.
+
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+
+
+                                        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/algorithm.svg">
+
+                                        <h3>Creation of Algorithms for Trading</h3>
+
+                                        <span class="text-op-80">
+                                            We can create internal, self-learning trading systems for cryptoexchanges and test them in real circumstances.
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/execution.svg">
+
+                                        <h3>Trade Systems Checking</h3>
+                                        <span class="text-op-80">
+                                            If your exchange has its own crypto trading robots, we can check their efficiency using our emulator and provide you an efficiency report.
+                                        </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/jigsaw.svg">
+
+                                        <h3>Unique Solutions</h3>
+                                        <span class="text-op-80">
+                                            We can create unique functionalities in your exchange — for example, algorithms that do not allow trading on cross-rates within theexchange.
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <section id="datavisio-team-block" class="clearfix">
+            <span class="anchor-point" id="team"></span>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h2>DataVisio Team</h2>
+                    </div>
+
+
+                    <div class="col-md-3 col-xs-12 datavisio-team-block-description-text">
+                        Meet the revolutioners and visionaries behind DataVisio.
+                    </div>
+
+                    <div class="col-md-2 col-xs-12">
+                        <span class="datavisio-team-numbers">10</span>
+                        Dedicated<br>
+                        experts
+                    </div>
+
+                    <div class="col-md-4 col-xs-12">
+                        <span class="datavisio-team-numbers">100</span>
+                        Years of AI &amp; blockchain experience combined
+                    </div>
+
+                    <div class="col-md-3 col-xs-12">
+                        <span class="datavisio-team-numbers">1200</span>
+                        Cups of coffee
+                        consumed
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section id="datavisio-photos-block" class="clearfix">
+
+            <div class="col-md-12 no-padding clearfix visible-xs">
+                <div class="datavisio-photos-block datavisio-photos-wide-block">
+                    <img src="~/images/photos/w2.jpg" class="img-responsive datavisio-photo">
+                    <div class="photo-label  hidden-xs">
+                        <span class="photo-label-name">
+                            DataVisio Team
+                        </span>
+                        <span class="photo-label-text text-op-80">
+                            10 dedicated experts
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 no-padding clearfix hidden-xs">
+
+                <div class="datavisio-photos-block datavisio-photos-wide-block">
+                    <img src="~/images/photos/w1.jpg" class="img-responsive datavisio-photo">
+                </div>
+
+                <div class="datavisio-photos-block datavisio-photos-standart-block">
+                    <img src="~/images/photos/s1.jpg" class="img-responsive datavisio-photo">
+                    <div class="photo-label">
+                        <span class="photo-label-name">
+                            Ilya<br>Herasimovich
+                        </span>
+                        <span class="photo-label-text text-op-80">
+                            CEO, co-founder
+                        </span>
+                    </div>
+                </div>
+
+                <div class="datavisio-photos-block datavisio-photos-standart-block">
+                    <img src="~/images/photos/s2.jpg" class="img-responsive datavisio-photo">
+                    <div class="photo-label">
+                        <span class="photo-label-name">
+                            Evgenij<br>
+                            Levin
+                        </span>
+                        <span class="photo-label-text text-op-80">
+                            CTO, co-founder, AI development
+                        </span>
+                    </div>
+                </div>
+
+                <div class="datavisio-photos-block datavisio-photos-standart-block">
+                    <img src="~/images/photos/s3.jpg" class="img-responsive datavisio-photo">
+                    <div class="photo-label">
+                        <span class="photo-label-name">
+                            Konstantin<br>
+                            Lyapin
+                        </span>
+                        <span class="photo-label-text text-op-80">
+                            Blockchain program
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12 no-padding hidden-xs">
+
+                <div class="datavisio-photos-block datavisio-photos-wide-block">
+                    <img src="~/images/photos/w2.jpg" class="img-responsive datavisio-photo">
+                    <div class="photo-label">
+                        <span class="photo-label-name">
+                            DataVisio Team
+                        </span>
+                        <span class="photo-label-text text-op-80">
+                            10 dedicated experts
+                        </span>
+                    </div>
+                </div>
+
+                <div class="datavisio-photos-block datavisio-photos-standart-block">
+                    <img src="~/images/photos/s4.jpg" class="img-responsive datavisio-photo">
+                    <div class="photo-label">
+                        <span class="photo-label-name">
+                            Anna<br>
+                            Sakadynets
+                        </span>
+                        <span class="photo-label-text text-op-80">
+                            Head of Marketing
+                        </span>
+                    </div>
+                </div>
+
+                <div class="datavisio-photos-block datavisio-photos-standart-block">
+                    <img src="~/images/photos/s5.jpg" class="img-responsive datavisio-photo">
+                    <div class="photo-label">
+                        <span class="photo-label-name">
+                            Maria<br>
+                            Shestakova
+                        </span>
+                        <span class="photo-label-text text-op-80">
+                            Data research
+                        </span>
+                    </div>
+                </div>
+
+                <div class="datavisio-photos-block datavisio-photos-standart-block">
+                    <img src="~/images/photos/s6.jpg" class="img-responsive datavisio-photo">
+                    <div class="photo-label">
+                        <span class="photo-label-name">
+                            Ivan<br>
+                            Zhukov
+                        </span>
+                        <span class="photo-label-text text-op-80">
+                            Art-director
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <section id="datavisio-values" class="clearfix hidden-xs">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12 h2-block">
+                        <h2>DataVisio Values</h2>
+                    </div>
+
+                    <div class="col-md-4">
+
+
+                        <img class="datavisio-values-image" src="~/images/svg/solar.svg">
+
+                        <h3>Scientific Method</h3>
+
+                        <span class="text-op-80">
+                            Our R&D dept. takes the best of science - start with hypotheses, deriver predictions, carry out experiments - to release
+                            business solutions.
+                        </span>
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <img class="datavisio-values-image" src="~/images/svg/lock.svg">
+
+                        <h3>Secureness</h3>
+                        <span class="text-op-80">
+                            Key goal of DataVisio is to secure traders
+                            from risks of loosing investments
+                            via elaborate propriatory algorithms
+                            which we keep enhancing.
+                        </span>
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <img class="datavisio-values-image" src="~/images/svg/innovation.svg">
+
+                        <h3>Transparent innovation</h3>
+                        <span class="text-op-80">
+                            We want to make crypto currency exchange safer for traders constantly improving our technology and system. And we want
+                            to share this journey with you.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+
+        <section id="faq-block" class="clearfix" role="tablist" aria-multiselectable="true">
+            <span class="anchor-point" id="faq"></span>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h2>FAQ</h2>
+                    </div>
+
+                    <div class="col-md-12 faq-block-all-tabs">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading faq-question-title" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <h4 class="panel-title">
+                                        <span role="button">
+                                            Are You a Trading Robot?
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <span class="text-op-80">
+                                            DataVisio is a data analysis system which predicts crypto markets; we don’t use classic technical analysis methods for crypto trading, only math.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading faq-question-title  collapsed" role="tab" id="headingTwo" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                    <h4 class="panel-title">
+                                        <span class="">
+                                            Can I Trade Using Your System Directly?
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        <span class="text-op-80">
+                                            You can use our system only on our partners’ exchanges; we are working in B2B format.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading faq-question-title collapsed" role="tab" id="headingThree" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                    <h4 class="panel-title">
+                                        <span class="">
+                                            Buy Our Solution Now
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                    <div class="panel-body">
+                                        <span class="text-op-80">
+                                            The end of ICO is coming soon, so be in a hurry to buy DataVisio!
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+        <script src="~/js/glide.min.js"></script>
+
+        <script>
+    $(function () {
+
+                /*** slider ***/
+                var perView = 1
+
+                if ($(window).width() > 768) {
+                    perView = 3
+                }
+
+                new Glide('.glide', {
+                    type: 'carousel',
+                    perView: perView
+                }).mount();
+
+
+                /*** tabs ***/
+                $('#how-it-work-block-tabs a').click(function (e) {
+                    e.preventDefault()
+                    $(this).tab('show')
+                });
+
+                $('#why-datavisio-tabs a').click(function (e) {
+                    e.preventDefault()
+                    $(this).tab('show')
+                });
+
+                /*** roadmap ***/
+
+                $('.roadmap-scheme-point').click(function () {
+                    $('.roadmap-scheme-point').removeClass('active');
+                    $(this).addClass('active');
+                    var needSlideHeight = $('.roadmap-scheme-point-body', this).height() + 50;
+                    $('.roadmap-scheme-point-body-slide-block').height(0);
+                    $('.roadmap-scheme-point-body-slide-block', this).height(needSlideHeight);
+                });
+
+
+
+            });</script>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <section id="footer" class="clearfix ">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <h2>Contact DataVisio</h2>
+
+                    <span class="text-op-80">Subscribe to our email list to recieve all news and updates</span>
+
+
+                </div>
+
+                <div class="col-md-6 no-padding">
+
+                    <form class="col-md-12 with-thanks">
+
+                        <div class="col-md-6 no-padding">
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" placeholder="E-mail adress" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 no-padding">
+
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <span class="btn-text">Subscribe</span>
+                            </button>
+
+                        </div>
+                    </form>
+
+
+
+                    <div class="col-md-12 social-links">
+                        <a class='social-link' href="//www.facebook.com/datavisio/" target="_blank">
+                            <img class="social-link-img img-responsive" src="~/images/social/facebook.svg">
+                        </a>
+
+                        <a class='social-link' href="//twitter.com/data_visio" target="_blank">
+                            <img class="social-link-img img-responsive" src="~/images/social/twitter.svg">
+                        </a>
+
+                        <a class='social-link' href="//t.me/datavisioofficial" target="_blank">
+                            <img class="social-link-img img-responsive" src="~/images/social/telegram.svg">
+                        </a>
+
+                        <a class='social-link' href="" target="_blank">
+                            <img class="social-link-img img-responsive" src="~/images/social/slack.svg">
+                        </a>
+
+                        <a class='social-link' href="//www.reddit.com/user/DataVisio" target="_blank">
+                            <img class="social-link-img img-responsive" src="~/images/social/reddit.svg">
+                        </a>
+
+                        <a class='social-link' href="//www.quora.com/profile/DataVisio" target="_blank">
+                            <img class="social-link-img img-responsive" src="~/images/social/quora.svg">
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-md-6 footer-links-block no-padding">
+
+
+
+                    <div class="col-sm-4 col-xs-12">
+                        <h3>DataVisio</h3>
+                        <a href="#">About Us</a>
+                        <a href="#">Privacy policy</a>
+                        <a href="#">User agreement</a>
+                        <a href="#">Contact US</a>
+                    </div>
+                    <div class="col-sm-4 col-xs-12">
+                        <h3>Collaboration</h3>
+                        <a href="#">How to become our partner?</a>
+                        <a href="#">How to connect our system to your exchange?</a>
+                        <a href="#">DataVisio versions</a>
+                        <a href="#">DataVisio open API</a>
+                    </div>
+                    <div class="col-sm-4 col-xs-12">
+                        <h3>Information</h3>
+                        <a href="#">Our blog</a>
+                        <a href="#">Articles</a>
+                        <a href="#">For news companies</a>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- Modal -->
+    <div class="modal" id="download-whitepaper-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="btn btn-primary" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>Get our whitepaper</h3>
+                    <span class="modal-description-text text-op-80">
+                        To download whitepaper,<br>
+                        please enter e-mail
+                    </span>
+
+
+                    <form class="with-thanks">
+
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="E-mail adress" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <span class="btn-text">Buy now</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div>
+                        <iframe allowfullscreen="allowfullscreen"
+                                mozallowfullscreen="mozallowfullscreen"
+                                msallowfullscreen="msallowfullscreen"
+                                oallowfullscreen="oallowfullscreen"
+                                webkitallowfullscreen="webkitallowfullscreen"
+                                src=""></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="thank-you-modal" tabindex="-1" role="dialog" aria-labelledby="thankYouModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="btn btn-primary" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>Thank you!</h3>
+                    <span class="modal-description-text text-op-80">
+                        Your data is recieved,<br>
+                        Our manager will contact you soon
+                    </span>
+
+                    <button type="submit" class="btn btn-primary btn-block" data-dismiss="modal">
+                        <span class="btn-text">Home</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Sign In -->
+    <div class="modal" id="sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="signInLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="btn btn-primary" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span class="sign-menu">
+                        <span class="active">
+                            Log in
+                        </span>
+                    </span>
+                    <h3>Sign in</h3>
+                    <span class="modal-description-text text-op-80">
+                        Security blocks<br>
+                        two lines of text
+                    </span>
+
+
+                    <form method="post">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Логин" type="text" asp-for="Login" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Пароль" asp-for="Password" />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" formmethod="post" formaction="../Account/Login">Sign in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal" id="infographic-modal" tabindex="-1" role="dialog" aria-labelledby="infographicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="btn btn-primary" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <img class="infographic-modal-image img-responsive" src="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="cookies-alert">
+        <div class="container">
+            This website uses cookies. By continuing to browse the site, you are agreeing to our use of cookies.
+            <span class="btn btn-primary cookie-agree-btn">Agree</span>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
