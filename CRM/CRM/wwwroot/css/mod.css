@@ -325,7 +325,6 @@ section{
 /*** Title block ***/
 
 #title-block {
-    min-height: 800px;
     padding: 30px 0;
 
     background: url(../images/star.svg) calc(100% + 365px) 0 no-repeat, #322352;

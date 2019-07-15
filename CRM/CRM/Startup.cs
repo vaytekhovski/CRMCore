@@ -33,8 +33,8 @@ namespace CRM
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
-                    options.LoginPath = new PathString("/Account/Login");
-                    options.AccessDeniedPath = new PathString("/Account/Login");
+                    options.LoginPath = new PathString("/Home/Home");
+                    options.AccessDeniedPath = new PathString("/Home/Home");
                 });
             
 
@@ -67,8 +67,9 @@ namespace CRM
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            // TODO: move to jobs !!!ASAP!!!
             /*
-            DailyTriggerService.StartDeilyTrigger(); // TODO: move to jobs !!!ASAP!!!
+            DailyTriggerService.StartDeilyTrigger(); 
 
             DailyTriggerService.OnTimeTriggered += () =>
             {

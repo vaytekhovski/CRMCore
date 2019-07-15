@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CRM.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         [HttpGet]
@@ -12,7 +11,12 @@ namespace CRM.Controllers
         {
             return View();
         }
-        
+
+        public ActionResult Home()
+        {
+            return View();
+        }
+
 
     }
 }

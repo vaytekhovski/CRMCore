@@ -64,7 +64,7 @@ namespace CRM.Controllers.User
         public async Task<IActionResult> ExitFromAccount()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Home", "Home");
         }
 
         [HttpGet]

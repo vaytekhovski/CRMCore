@@ -1,5 +1,5 @@
-﻿
-@model CRM.ViewModels.LoginModel
+﻿@model CRM.ViewModels.LoginModel
+@{ Layout = null;}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1222,10 +1222,10 @@
 
                     <form method="post">
                         <div class="form-group">
-                            <input class="form-control" placeholder="Логин" type="text" asp-for="Login" />
+                            <input class="form-control" placeholder="Login" type="text" asp-for="Login" />
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Пароль" asp-for="Password" />
+                            <input class="form-control" placeholder="Password" asp-for="Password" />
                         </div>
                         <button type="submit" class="btn btn-primary btn-block" formmethod="post" formaction="../Account/Login">Sign in</button>
                     </form>
