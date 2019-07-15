@@ -28,24 +28,23 @@ namespace CRM.Helpers
     {
         public static List<ExchangeKey> ExchangeKeys;
 
-        public static void InitializeExchangeKeys()
+
+        static AccountExchangeKeys()
         {
-            using(UserContext db =new UserContext())
+            using (UserContext db = new UserContext())
             {
                 ExchangeKeys = db.ExchangeKeys.ToList();
             }
         }
+        
 
         public static string AccountName(string accountId)
         {
-            using (UserContext db = new UserContext())
-            {
-                var acc = ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId);
-                if (acc != null)
-                    return acc.Name;
+            var acc = ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId);
+            if (acc != null)
+                return acc.Name;
 
-                return "unknown";
-            }
+            return "unknown";
         }
     }
 }

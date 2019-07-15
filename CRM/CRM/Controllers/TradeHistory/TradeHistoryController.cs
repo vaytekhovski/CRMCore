@@ -36,7 +36,6 @@ namespace CRM.Controllers
                 EndDate = DatesHelper.CurrentDateTimeStr
             };
 
-            AccountExchangeKeys.InitializeExchangeKeys();
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
@@ -77,9 +76,15 @@ namespace CRM.Controllers
 
         private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryModel Model, TradeHistoryFilterModel viewModel)
         {
-            //TODO: make single query for all distinct accounts, set names
-            viewModel.Orders = Model.AccountTradeHistories.Select(x => { x.Account = AccountExchangeKeys.AccountName(x.Account); return x; }).ToList();
-            //viewModel.Orders = Model.AccountTradeHistories;
+            //TODO: [COMPLETE] make single query for all distinct accounts, set names
+            
+            foreach (var item in Model.AccountTradeHistories)
+            {
+                item.Account = AccountExchangeKeys.ExchangeKeys.FirstOrDefault(x => x.AccountId == item.Account).Name;
+            }
+
+            viewModel.Orders = Model.AccountTradeHistories;
+
             viewModel.TotalProfit = Model.TotalProfit;
             viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
 
