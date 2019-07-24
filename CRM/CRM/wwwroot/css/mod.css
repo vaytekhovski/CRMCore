@@ -1060,6 +1060,7 @@ section{
     padding: 50px 0 120px;
     background: #403577;
     color: #ffffff;
+    z-index: 1000;
 }
 
 .blog-page #footer{
