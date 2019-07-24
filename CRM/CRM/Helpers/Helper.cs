@@ -37,14 +37,5 @@ namespace CRM.Helpers
             }
         }
         
-
-        public static string AccountName(string accountId)
-        {
-            var acc = ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId);
-            if (acc != null)
-                return acc.Name;
-
-            return "unknown";
-        }
     }
 }
