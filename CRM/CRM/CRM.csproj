@@ -125,6 +125,7 @@
 
   <ItemGroup>
     <PackageReference Include="Binance" Version="0.2.0-beta901" />
+    <PackageReference Include="KK.DotNet.BackgroundTasks.Scheduled" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">

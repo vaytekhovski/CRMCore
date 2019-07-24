@@ -68,7 +68,6 @@
       'summernote.init': function(we, e) {
         // update existing containers
         $('data.ext-databasic', e.editable).each(function() { self.setContent($(this)); });
-        // TODO: make this an undo snapshot...
       },
       'summernote.keyup summernote.mouseup summernote.change summernote.scroll': function() {
         self.update();
