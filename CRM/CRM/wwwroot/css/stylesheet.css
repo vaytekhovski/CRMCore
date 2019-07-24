@@ -161,19 +161,20 @@
 {
     #toTopButton {
         display: inline-block;
-        background-color: #a76be3;
-        width: 110px;
-        height: 40px;
+        background-color: #636b6f;
+        width: 200px;
+        height: 100%;
         text-align: center;
         position: fixed;
-        bottom: 100px;
-        right: 100px;
+        bottom: 0px;
+        /* right: 100px; */
         transition: background-color .3s, opacity .5s, visibility .5s;
-        opacity: 0;
+        opacity: 0.3 !important;
         visibility: hidden;
-        z-index: 1000;
+        z-index: 300;
         color: white;
-        padding-top: 5px;
+        padding-top: 150px;
+        font-size: 30px;
     }
 
         #toTopButton::after {
