@@ -10,7 +10,7 @@ namespace CRM.Helpers
 {
     public static class DatesHelper
     {
-        public static DateTime MinDate = DateTime.Now.AddMonths(-1);
+        public static DateTime MinDate = DateTime.Now.AddMonths(-1).AddHours(3);
 
         public static string MinDateTimeStr = MinDate.ToString("yyyy-MM-ddTHH:mm");
         public static string MinDateStr = MinDate.ToString("yyyy-MM-dd");
