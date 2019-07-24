@@ -18,7 +18,42 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
     <script src="~/js/sorttable.js"></script>
+    <script>
+        $(function () {
 
+            /*** Фиксирование шапки ***/
+
+            var navbar = $('.navbar');
+            var fixedHeight = navbar.height();
+
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > fixedHeight) {
+
+                    navbar.removeClass('navbar-static-top').addClass('navbar-fixed-top');
+                    $('body').css('padding-top', fixedHeight);
+                } else {
+                    navbar.removeClass('navbar-fixed-top').addClass('navbar-static-top');
+                    $('body').css('padding-top', 0);
+                }
+            });
+
+
+            function scrollToAnchor(aid) {
+                var aTag = $(".anchor-point[id='" + aid + "']");
+                $('html,body').animate({ scrollTop: aTag.offset().top }, 'slow');
+            }
+
+            $('.anchor-link').click(function () {
+                var href = $(this).attr('href');
+                var anchorId = href.replace('/#', '');
+                scrollToAnchor(anchorId);
+            })
+
+
+
+
+
+        });</script>
 
 </head>
 <body class="body_of_layout">
