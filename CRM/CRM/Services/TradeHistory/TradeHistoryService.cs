@@ -14,6 +14,32 @@ namespace CRM.Services
 
         }
 
+        public Models.TradeHistory.TradeHistoryModel LoadDataToChart(TradeHistoryFilter filter)
+        {
+            var model = new TradeHistoryModel();
+
+            using(CRMContext db = new CRMContext())
+            {
+                var query = db.AccountTradeHistories
+                    .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
+                    .Where(x => x.Profit != 0)
+                    .AsNoTracking();
+
+                if (filter.Coin != null)
+                    query = query.Where(x => x.Pair == filter.Coin);
+
+                if (filter.Account != null)
+                    query = query.Where(x => x.Account == filter.Account);
+
+                UpdateSummOfLossAndProfitOrders(model, query);
+                query = query.OrderByDescending(x => x.Time);
+
+                model.AccountTradeHistories = query.ToList();
+            }
+
+            return model;
+        }
+
         public Models.TradeHistory.TradeHistoryModel Load(TradeHistoryFilter filter)
         {
             var model = new TradeHistoryModel();

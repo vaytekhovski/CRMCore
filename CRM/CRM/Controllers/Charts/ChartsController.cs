@@ -25,12 +25,15 @@ namespace CRM.Controllers.Charts
 
         private readonly TradeHistoryOnTradeHistoryDeltaService _tradeHistoryOnTradeHistoryDeltaService;
 
+        private readonly TradeHistoryService _tradeHistoryService;
+
         public ChartsController()
         {
             _asksOnBids = new AsksOnBidsService();
             _deltaOnTradeHistory = new DeltaOnTradeHistoryService();
             _indicatorPointsService = new IndicatorPointsService();
             _tradeHistoryOnTradeHistoryDeltaService = new TradeHistoryOnTradeHistoryDeltaService();
+            _tradeHistoryService = new TradeHistoryService();
         }
 
         [HttpGet]
@@ -180,24 +183,7 @@ namespace CRM.Controllers.Charts
         [HttpPost]
         public ActionResult TradeHistoryOnTradeHistoryDelta(TradeHistoryOnTradeHistoryDeltaViewModel ViewModel)
         {
-            //ViewBag.Coins = DropDownFields.GetCoins();
-            //ViewModel.FirstDate = ViewModel.FirstDate == null ? DatesHelper.MinDateTimeStr : ViewModel.FirstDate;
-            //ViewModel.StartDate = ViewModel.StartDate == null ? DatesHelper.MinDateTimeStr : ViewModel.StartDate;
-            //ViewModel.EndDate = ViewModel.EndDate == null ? DatesHelper.CurrentDateTimeStr : ViewModel.EndDate;
-
-            //ViewModel.StartDate = DateTime.Parse(ViewModel.StartDate).ToString("yyyy-MM-ddTHH:mm");
-            //ViewModel.EndDate = DateTime.Parse(ViewModel.EndDate).ToString("yyyy-MM-ddTHH:mm");
-
-
-            //if (ViewModel.Base == null) return View(ViewModel);
-
-            //DateTime dateValue;
-            //if (DateTime.TryParse(ViewModel.FirstDate, out dateValue))
-            //    dateValue = dateValue;
-            //else
-            //    dateValue = DateTime.Parse(ViewModel.StartDate);
-
-           
+            
             ChartsFilter filter = new ChartsFilter
             {
                 Coin = ViewModel.Base ?? "BTC",
@@ -216,6 +202,51 @@ namespace CRM.Controllers.Charts
             ViewModel.THDValues = model.THDValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewModel.PageName = "Volumes and Asks";
+            return View(ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ProfitChart()
+        {
+            var viewModel = new ProfitViewModel
+            {
+                PageName = "Profit",
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr
+            };
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ProfitChart(ProfitViewModel ViewModel)
+        {
+            TradeHistoryFilter filter = new TradeHistoryFilter
+            {
+                Coin = ViewModel.Coin,
+                Account = ViewModel.Account,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
+            };
+
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
+
+            var model = _tradeHistoryService.LoadDataToChart(filter);
+
+            ViewModel.Dates = model.AccountTradeHistories.Select(x => x.Time.ToJavascriptTicks()).ToList();
+            ViewModel.Values = model.AccountTradeHistories.Select(x => x.Profit.ToString(SeparateHelper.Separator)).ToList();
+
+            ViewModel.CountOfZero = model.AccountTradeHistories.Where(x => x.Profit == 0).Count();
+            ViewModel.CountOfMore = model.AccountTradeHistories.Where(x => x.Profit > 0).Count();
+            ViewModel.CountOfLess = model.AccountTradeHistories.Where(x => x.Profit < 0).Count();
+
+            ViewModel.VolumeOfMore = model.ProfitOrdersSumm.ToString(SeparateHelper.Separator);
+            ViewModel.VolumeOfLess = (model.LossOrdersSumm * -1).ToString(SeparateHelper.Separator);
+
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            ViewModel.PageName = "Profit";
             return View(ViewModel);
         }
     }

@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Charts";
+
+}
+
+@section Scripts
+{
+    <script src="~/js/plotly-latest.min.js"></script>
+    <script type="text/javascript">
+
+        CHART = document.getElementById('Chart');
+        SCHART = document.getElementById('SecondChart');
+
+        var dates = [];
+
+        var values = [];
+        var dValues = [];
+
+
+
+        @foreach (var item in Model.Dates)
+        {
+            <text>
+            dates.push(new Date(@item));
+            </text>
+        }
+
+        @foreach (var item in Model.Values)
+        {
+            <text>
+            values.push(parseFloat(@item));
+            </text>
+
+            }
+
+
+
+            var profit = {
+            x: dates,
+            y: values,
+            mode: 'lines+markers',
+            marker: {
+            color: 'rgb(128, 0, 128)',
+                size: 4
+            },
+            line: {
+            color: 'rgb(128, 0, 128)',
+            width: 2
+            },
+            name: 'Profit'
+        };
+
+
+        var data = [profit];
+
+
+        var statisticsData = [{
+          values: [@Model.CountOfZero, @Model.CountOfMore, @Model.CountOfLess],
+          labels: ['Non-profit orders', 'Profit orders', 'Loss orders'],
+          domain: {column: 0},
+          name: 'Counts',
+          hoverinfo: 'label+percent+name',
+          hole: .4,
+          type: 'pie'
+        },{
+          values: [@Model.VolumeOfMore, @Model.VolumeOfLess],
+          labels: ['Volume of Profit orders', 'Volume of Loss orders'],
+          text: 'CO2',
+          textposition: 'inside',
+          domain: {column: 1},
+          name: 'Volumes',
+          hoverinfo: 'label+percent+name',
+          hole: .4,
+          type: 'pie'
+            }];
+
+        var layout = {
+          title: 'Statistics',
+          annotations: [
+            {
+              font: {
+                size: 20
+              },
+              showarrow: false,
+              text: 'Counts',
+              x: 0.21,
+              y: 0.5
+            },
+            {
+              font: {
+                size: 20
+              },
+              showarrow: false,
+              text: 'Volumes',
+              x: 0.79,
+              y: 0.5
+            }
+          ],
+          showlegend: false,
+          grid: {rows: 1, columns: 2}
+        };
+
+
+        
+        Plotly.plot(CHART, data);
+        Plotly.plot(SCHART, statisticsData, layout);
+
+
+    </script>
+}
+
+@model CRM.ViewModels.Charts.ProfitViewModel
+
+@Html.Partial("_ProfitFilterPanel");
+
+<div class="content">
+
+    @Html.ValidationSummary()
+
+    <div id="Chart" style="display: @(Model.Dates.Count != 0 ? "block" : "none")">
+    </div>
+
+    <div id="SecondChart" style="display: @(Model.Dates.Count != 0 ? "block" : "none")">
+
+    </div>
+
+</div>
