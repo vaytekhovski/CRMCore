@@ -227,7 +227,7 @@ namespace CRM.Controllers.Charts
                 Coin = ViewModel.Coin,
                 Account = ViewModel.Account,
                 StartDate = DateTime.Parse(ViewModel.StartDate),
-                EndDate = DateTime.Parse(ViewModel.EndDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate).AddDays(1),
             };
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
