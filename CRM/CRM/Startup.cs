@@ -67,7 +67,7 @@ namespace CRM
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            // TODO: move to jobs !!!ASAP!!!
+            // TODO: [COMEPLETE] move to jobs !!!ASAP!!!
             /*
             DailyTriggerService.StartDeilyTrigger(); 
 
