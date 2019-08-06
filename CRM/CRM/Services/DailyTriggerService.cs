@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Linq;
+using Business.Contexts;
 
 namespace CRM.Services
 {
@@ -22,7 +23,7 @@ namespace CRM.Services
 
         private static void UpdateDailyTrigger()
         {
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 foreach (var item in context.DailyUpdates)
                 {
@@ -58,7 +59,7 @@ namespace CRM.Services
 
         public static void ChangeDailyTrigger(TimeSpan newDailyTrigger)
         {
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 context.DailyUpdates.FirstOrDefault(x => x.Id == 1).dailyTrigger = newDailyTrigger;
                 context.SaveChanges();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Business.Data;
+using System.Collections.Generic;
 
 namespace CRM.ViewModels.Data
 {
@@ -12,7 +13,7 @@ namespace CRM.ViewModels.Data
 
         public string EndDate { get; set; }
 
-        public List<Models.Database.OrderBookModel> Show { get; set; }
+        public List<OrderBookModel> Show { get; set; }
 
         public double SummVolume { get; set; }
         public int CountOfElements { get; set; }

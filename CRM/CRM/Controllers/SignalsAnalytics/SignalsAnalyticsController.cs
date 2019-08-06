@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Business;
 using CRM.Helpers;
 using CRM.Models;
 using CRM.Services.Pagination;
@@ -35,8 +36,8 @@ namespace CRM.Controllers.SignalsAnalytics
                 Coin = "",
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr,
-                TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
-                SignalsPrivates = new List<Models.Master.SignalsPrivate>()
+                TradeHistoryDeltas = new List<TradeHistoryDelta>(),
+                SignalsPrivates = new List<SignalsPrivate>()
             };
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Exchanges = DropDownFields.GetExchanges();
@@ -77,8 +78,8 @@ namespace CRM.Controllers.SignalsAnalytics
                 Coin = "",
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr,
-                TradeHistoryDeltas = new List<Models.Master.TradeHistoryDelta>(),
-                SignalsPrivates = new List<Models.Master.SignalsPrivate>()
+                TradeHistoryDeltas = new List<TradeHistoryDelta>(),
+                SignalsPrivates = new List<SignalsPrivate>()
             };
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Exchanges = DropDownFields.GetExchanges();

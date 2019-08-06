@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using CRM.Models.Binance;
-using CRM.Models.Filters;
-using CRM.Models.TradeHistory;
+using Business;
+using Business.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Services
@@ -14,11 +13,11 @@ namespace CRM.Services
 
         }
 
-        public Models.TradeHistory.TradeHistoryModel LoadDataToChart(TradeHistoryFilter filter)
+        public TradeHistoryModel LoadDataToChart(TradeHistoryFilter filter)
         {
             var model = new TradeHistoryModel();
 
-            using(CRMContext db = new CRMContext())
+            using(BasicContext db = new BasicContext())
             {
                 var query = db.AccountTradeHistories
                     .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
@@ -40,11 +39,11 @@ namespace CRM.Services
             return model;
         }
 
-        public Models.TradeHistory.TradeHistoryModel Load(TradeHistoryFilter filter)
+        public TradeHistoryModel Load(TradeHistoryFilter filter)
         {
             var model = new TradeHistoryModel();
 
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 var query = context.AccountTradeHistories
                     .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)

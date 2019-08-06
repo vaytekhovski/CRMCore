@@ -1,8 +1,6 @@
-﻿using CRM.Models;
-using CRM.Models.Database;
-using CRM.Models.Filters;
+﻿using Business;
+using Business.Contexts;
 using CRM.ViewModels.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,14 +9,14 @@ namespace CRM.Services.Data
     public class TradeHistoryService
     {
         public double SummVolume { get; private set; }
-        public List<TradeHistoryModel> Show { get; private set; }
+        public List<Business.Data.TradeHistoryModel> Show { get; private set; }
 
         public TradeHistoryService() { }
 
         public TradeHistoryViewModel Load(DataFilter filter)
         {
             int countOfElements = 0;
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 Show = context.TradeHistoryModels
                     .Where(x => filter.OrderType == null ? true : x.Side == filter.OrderType)

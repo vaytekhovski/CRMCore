@@ -3,19 +3,19 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using CRM.ViewModels; 
+using CRM.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using CRM.Models.Database;
-using CRM.Services;
 using System;
+using Business.Contexts;
+using Business;
 
 namespace AuthApp.Controllers
 {
     public class AccountController : Controller
     {
-        private UserContext _db;
-        public AccountController(UserContext context)
+        private BasicContext _db;
+        public AccountController(BasicContext context)
         {
             _db = context;
         }

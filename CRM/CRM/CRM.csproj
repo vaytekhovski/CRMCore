@@ -6,13 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\SignalsAnalytics\**" />
     <Compile Remove="Services\Binance\**" />
-    <Content Remove="Models\SignalsAnalytics\**" />
     <Content Remove="Services\Binance\**" />
-    <EmbeddedResource Remove="Models\SignalsAnalytics\**" />
     <EmbeddedResource Remove="Services\Binance\**" />
-    <None Remove="Models\SignalsAnalytics\**" />
     <None Remove="Services\Binance\**" />
     <Content Remove="wwwroot\js\app.js" />
     <Content Remove="wwwroot\images\checked.svg" />

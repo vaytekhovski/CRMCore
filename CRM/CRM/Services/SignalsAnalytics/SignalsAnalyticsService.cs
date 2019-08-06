@@ -1,5 +1,5 @@
-﻿using CRM.Master;
-using CRM.Models.Master;
+﻿using Business;
+using Business.Contexts;
 using CRM.ViewModels.SignalsAnalytics;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace CRM.Services.SignalsAnalytics
 
         public SignalsAnalyticsViewModel LoadSignalsPrivate(SignalsAnalyticsViewModel ViewModel)
         {
-            using (masterContext context = new masterContext())
+            using (BasicContext context = new BasicContext())
             {
                 SignalsPrivates = context.SignalsPrivate
                     .Where(x => x.SourceTime >= DateTime.Parse(ViewModel.StartDate))

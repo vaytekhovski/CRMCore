@@ -1,11 +1,8 @@
-﻿using CRM.Models.Binance;
-using CRM.Models.Filters;
-using CRM.Models.Statistics;
+﻿using Business;
+using Business.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CRM.Services.Statistics
 {
@@ -20,7 +17,7 @@ namespace CRM.Services.Statistics
         {
             var model = new StatisticsModel();
 
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 var query = context.AccountTradeHistories
                     .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate.AddDays(1))

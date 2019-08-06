@@ -1,6 +1,6 @@
-﻿using CRM.Helpers;
+﻿using Business;
+using CRM.Helpers;
 using CRM.Models;
-using CRM.Models.Filters;
 using CRM.Services;
 using CRM.Services.Charts;
 using CRM.Services.IndicatorPoints;

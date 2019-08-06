@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using CRM.Models.Database;
 using Microsoft.AspNetCore.Authentication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CRM.ViewModels;
+using Business.Contexts;
+using Business;
 
 namespace CRM.Controllers.User
 {
@@ -17,9 +18,9 @@ namespace CRM.Controllers.User
     public class UserPanelController : Controller
     {
         private readonly ChangeUserDataService _changeUserDataService;
-        private UserContext db;
+        private BasicContext db;
 
-        public UserPanelController(UserContext context)
+        public UserPanelController(BasicContext context)
         {
             db = context;
 

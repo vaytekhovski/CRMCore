@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Business;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CRM.ViewModels.Data
 {
@@ -17,7 +15,7 @@ namespace CRM.ViewModels.Data
 
         public string EndDate { get; set; }
 
-        public List<Models.Database.TradeHistoryModel> Show { get; set; }
+        public List<Business.Data.TradeHistoryModel> Show { get; set; }
 
         public double SummVolume { get; set; }
         public int CountOfPages { get; set; }

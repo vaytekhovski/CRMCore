@@ -1,7 +1,6 @@
-﻿using CRM.Models.Database;
-using Microsoft.AspNetCore.Http;
+﻿using Business;
+using Business.Contexts;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +11,7 @@ namespace CRM.Services.Database
         public static IEnumerable<SelectListItem> GetExchangeKeys(int UserId)
         {
             List<SelectListItem> lst = new List<SelectListItem>();
-            using (UserContext context = new UserContext())
+            using (BasicContext context = new BasicContext())
             {
                 UserModel user = context.UserModels.FirstOrDefault(x => x.Id == UserId);
 
@@ -28,7 +27,7 @@ namespace CRM.Services.Database
         public static IEnumerable<SelectListItem> GetExchangeKeysForBalances(int UserId)
         {
             List<SelectListItem> lst = new List<SelectListItem>();
-            using (UserContext context = new UserContext())
+            using (BasicContext context = new BasicContext())
             {
                 UserModel user = context.UserModels.FirstOrDefault(x => x.Id == UserId);
                 if (user.RoleId != 1)

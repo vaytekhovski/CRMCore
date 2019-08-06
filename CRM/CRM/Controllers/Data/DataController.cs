@@ -2,14 +2,14 @@
 using CRM.Services.Data;
 using Microsoft.AspNetCore.Authorization;
 using CRM.ViewModels.Data;
-using CRM.Services;
 using System.Collections.Generic;
 using CRM.Helpers;
 using System;
 using CRM.Services.Pagination;
-using CRM.Models.Filters;
 using System.Linq;
 using CRM.Models;
+using Business.Data;
+using Business;
 
 namespace CRM.Controllers.Data
 {
@@ -37,7 +37,7 @@ namespace CRM.Controllers.Data
             {
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
-                Show = new List<Models.Database.OrderBookModel>()
+                Show = new List<OrderBookModel>()
             };
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Situations = DropDownFields.GetSituations();
@@ -52,7 +52,7 @@ namespace CRM.Controllers.Data
                 Id = "OrderBook",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
-                Show = new List<Models.Database.OrderBookModel>()
+                Show = new List<OrderBookModel>()
             };
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Situations = DropDownFields.GetSituations();
@@ -93,7 +93,7 @@ namespace CRM.Controllers.Data
             {
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
-                Show = new List<Models.Database.OrderBookModel>()
+                Show = new List<OrderBookModel>()
             };
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Situations = DropDownFields.GetSituations();
@@ -134,7 +134,7 @@ namespace CRM.Controllers.Data
                 Id = "TradeHistoryDatas",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
-                Show = new List<Models.Database.TradeHistoryModel>()
+                Show = new List<Business.Data.TradeHistoryModel>()
             };
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.OrderTypes = DropDownFields.GetOrderTypes();
@@ -177,7 +177,7 @@ namespace CRM.Controllers.Data
                 Id = "Delta",
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr,
-                Show = new List<Models.Database.TradeDeltaModel>()
+                Show = new List<TradeDeltaModel>()
             };
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Nulls = DropDownFields.GetNulls();

@@ -1,6 +1,5 @@
 ﻿using CRM.DTO;
 using CRM.Models;
-using CRM.Models.Database;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,6 +7,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Linq;
+using Business.Data;
+using Business.Contexts;
 
 namespace CRM.Services
 {
@@ -183,7 +184,7 @@ namespace CRM.Services
             // Проходим по базе данных и проверяем,
             // существуют ли в ней такие элементы,
             // если да, то удаляем их из list'a
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 foreach (var DBItem in context.OrderBookModels.Where(x => x.BookType == "ask"))
                 {
@@ -243,7 +244,7 @@ namespace CRM.Services
         private static void AddListToDataBase(List<OrderBookModel> orderBook, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas)
         {
             // Добавляем данные из list'a в БД
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 context.OrderBookModels.AddRange(orderBook);
                 Debug.WriteLine("items to OrderBook added");

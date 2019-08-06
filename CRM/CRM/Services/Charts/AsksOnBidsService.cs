@@ -1,9 +1,6 @@
-﻿using CRM.Helpers;
-using CRM.Models;
-using CRM.Models.Charts;
-using CRM.Models.Database;
-using CRM.Models.Filters;
-using CRM.ViewModels.Charts;
+﻿using Business;
+using Business.Contexts;
+using Business.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +19,7 @@ namespace CRM.Services.Charts
 
         public AskOnBidModel Load(ChartsFilter filter)
         {
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 AsksBids = context.OrderBookModels
                     .Where(x => x.CurrencyName == filter.Coin)

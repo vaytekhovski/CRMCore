@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Business;
 using CRM.Helpers;
 using CRM.Models;
-using CRM.Models.Filters;
-using CRM.Models.TradeHistory;
 using CRM.Services;
 using CRM.Services.Pagination;
 using CRM.ViewModels;

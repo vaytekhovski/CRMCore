@@ -1,10 +1,9 @@
-﻿using CRM.Models.Database;
-using CRM.Services;
+﻿using Business;
+using Business.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CRM.Helpers
 {
@@ -31,7 +30,7 @@ namespace CRM.Helpers
 
         static AccountExchangeKeys()
         {
-            using (UserContext db = new UserContext())
+            using (BasicContext db = new BasicContext())
             {
                 ExchangeKeys = db.ExchangeKeys.ToList();
             }

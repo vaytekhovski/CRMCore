@@ -1,15 +1,8 @@
-﻿using CRM.Models.Database;
-using CRM.Models.DropDown;
-using CRM.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using CRM.Models.DropDown;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;
-using System.Security;
 using CRM.Services.Database;
 using System;
 

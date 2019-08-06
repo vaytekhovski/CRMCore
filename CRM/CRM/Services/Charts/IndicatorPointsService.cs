@@ -1,13 +1,7 @@
-﻿using CRM.Master;
-using CRM.Models;
-using CRM.Models.Charts;
-using CRM.Models.Filters;
-using CRM.Services.Charts;
-using CRM.ViewModels.Charts;
+﻿using Business;
+using Business.Contexts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CRM.Services.IndicatorPoints
 {
@@ -17,7 +11,7 @@ namespace CRM.Services.IndicatorPoints
         {
             var model = new IndicatorPointsModel();
 
-            using(masterContext context = new masterContext())
+            using(MySQLContext context = new MySQLContext())
             {
                 var query = context.IndicatorPoints
                     .Where(x => x.Time > filter.StartDate && x.Time < filter.EndDate);

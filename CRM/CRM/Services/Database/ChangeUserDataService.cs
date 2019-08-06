@@ -1,23 +1,25 @@
-﻿using System.Linq;
+﻿using Business.Contexts;
+using System;
+using System.Linq;
 
 namespace CRM.Services.Database
 {
     public class ChangeUserDataService
     {
-        public void ChangeUserLogin(string lastUserLogin, string newUserLogin)
+        public void ChangeUserLogin(string userId, string newUserLogin)
         {
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
-                context.UserModels.FirstOrDefault(x => x.Login == lastUserLogin).Login = newUserLogin;
+                context.UserModels.FirstOrDefault(x => x.Id == Convert.ToInt32(userId)).Login = newUserLogin;
                 context.SaveChanges();
             }
         }
 
-        public void ChangeUserPassword(string lastUserLogin, string newUserPassword)
+        public void ChangeUserPassword(string userId, string newUserPassword)
         {
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
-                context.UserModels.FirstOrDefault(x => x.Login == lastUserLogin).Password = newUserPassword;
+                context.UserModels.FirstOrDefault(x => x.Id == Convert.ToInt32(userId)).Password = newUserPassword;
                 context.SaveChanges();
             }
         }

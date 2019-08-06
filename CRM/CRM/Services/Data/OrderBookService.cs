@@ -1,8 +1,7 @@
-﻿using CRM.Models;
-using CRM.Models.Database;
-using CRM.Models.Filters;
+﻿using Business;
+using Business.Contexts;
+using Business.Data;
 using CRM.ViewModels.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +17,7 @@ namespace CRM.Services.Data
         public OrderBookViewModel Load(DataFilter filter)
         {
             int countOfElements = 0;
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 Show = context.OrderBookModels
                     .Where(x => x.BookType == filter.BookType)

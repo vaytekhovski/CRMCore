@@ -1,9 +1,6 @@
-﻿using CRM.Helpers;
-using CRM.Models;
-using CRM.Models.Charts;
-using CRM.Models.Database;
-using CRM.Models.Filters;
-using CRM.ViewModels.Charts;
+﻿using Business;
+using Business.Contexts;
+using Business.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +21,13 @@ namespace CRM.Services.Charts
 
 
         private List<TradeDeltaModel> _deltas = new List<TradeDeltaModel>();
-        private List<TradeHistoryModel> _tradeHistory = new List<TradeHistoryModel>();
+        private List<Business.Data.TradeHistoryModel> _tradeHistory = new List<Business.Data.TradeHistoryModel>();
 
         public DeltaOnTradeHistoryService() { }
 
         public DeltaOnTradeHistoryModel Load(ChartsFilter filter)
         {
-            using (CRMContext context = new CRMContext())
+            using (BasicContext context = new BasicContext())
             {
                 _deltas = context.TradeDeltaModels
                     .Where(x => x.CurrencyName == filter.Coin)

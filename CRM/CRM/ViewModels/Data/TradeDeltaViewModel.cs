@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace CRM.ViewModels.Data
 
         public string NullDelta { get; set; }
 
-        public List<Models.Database.TradeDeltaModel> Show { get; set; }
+        public List<TradeDeltaModel> Show { get; set; }
 
         public double SummDelta { get; set; }
         public int CountOfPages { get; set; }
