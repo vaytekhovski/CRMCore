@@ -1,4 +1,5 @@
 ﻿using Business;
+using Business.Contexts;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace CRM.Services.Charts
             List<TradeHistory> TH;
             List<TradeHistoryDelta> THD;
 
-            using (masterContext db = new masterContext())
+            using (MySQLContext db = new MySQLContext())
             {
                 TH = db.TradeHistory.Where(x => x.Time > filter.CalculatingStartDate && x.Time < filter.EndDate).Where(x => x.Base == filter.Coin).ToList();
                 THD = db.TradeHistoryDelta.Where(x => x.TimeTo > filter.StartDate && x.TimeTo < filter.EndDate).Where(x => x.Base == filter.Coin).ToList();

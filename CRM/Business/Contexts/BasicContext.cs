@@ -17,7 +17,7 @@ namespace Business.Contexts
         public DbSet<OrderBookModel> OrderBookModels { get; set; }
         public DbSet<TradeDeltaModel> TradeDeltaModels { get; set; }
         public DbSet<Business.Data.TradeHistoryModel> TradeHistoryModels { get; set; }
-        public virtual DbSet<SignalsPrivate> SignalsPrivate { get; set; }
+        
         public DbSet<UserModel> UserModels { get; set; }
         public DbSet<DailyUpdate> DailyUpdates { get; set; }
         public DbSet<AccountTradeHistory> AccountTradeHistories { get; set; }

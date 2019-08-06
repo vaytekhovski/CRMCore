@@ -55,12 +55,6 @@ namespace CRM.Controllers.User
             return RedirectToAction("UserPanel");
         }
         
-        [HttpGet]
-        public ActionResult ChangeDailyTrigger(string updateData)
-        {
-            DailyTriggerService.ChangeDailyTrigger(TimeSpan.Parse(updateData));
-            return RedirectToAction("UserPanel");
-        }
         
         [HttpGet]
         public async Task<IActionResult> ExitFromAccount()
@@ -69,13 +63,6 @@ namespace CRM.Controllers.User
             return RedirectToAction("Home", "Home");
         }
 
-        [HttpGet]
-        public ActionResult LoadData(string startDate, string endDate)
-        {
-            ViewBag.status = "Загрузка данных завершена";
-            LoadDataService loadData = new LoadDataService(DateTime.Parse(startDate), DateTime.Parse(endDate));
-            return RedirectToAction("UserPanel");
-        }
 
         [HttpGet]
         public ActionResult RestartDailyCalculate(string startDate, string endDate)

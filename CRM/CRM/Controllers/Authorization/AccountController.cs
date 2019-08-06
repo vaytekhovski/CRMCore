@@ -43,6 +43,8 @@ namespace AuthApp.Controllers
             {
                 await Authenticate(user); // аутентификация
 
+                _db.UserModels.FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password).Result.LastAuthorizationDate = DateTime.Now;
+
                 return RedirectToAction("Index", "Home");
             }
 

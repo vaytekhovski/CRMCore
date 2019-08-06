@@ -63,7 +63,7 @@ namespace QuartzSampleApp
                 ITrigger APITrigger = TriggerBuilder.Create()
                     .WithIdentity("trigger3", "group3")
                     .StartNow()
-                    .WithSchedule(CronScheduleBuilder.CronSchedule("0 31 12 ? * *"))
+                    .WithSchedule(CronScheduleBuilder.CronSchedule("25 56 13 ? * *"))
                     .Build();
 
                 await scheduler.ScheduleJob(everyTwoMinLoading, everyTwoMinTrigger);

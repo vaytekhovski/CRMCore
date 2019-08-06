@@ -21,7 +21,7 @@ namespace CRM.Services.SignalsAnalytics
 
         public SignalsAnalyticsViewModel LoadSignalsPrivate(SignalsAnalyticsViewModel ViewModel)
         {
-            using (BasicContext context = new BasicContext())
+            using (MySQLContext context = new MySQLContext())
             {
                 SignalsPrivates = context.SignalsPrivate
                     .Where(x => x.SourceTime >= DateTime.Parse(ViewModel.StartDate))
@@ -49,7 +49,7 @@ namespace CRM.Services.SignalsAnalytics
 
         public SignalsAnalyticsViewModel LoadTradeHistoryDelta(SignalsAnalyticsViewModel ViewModel)
         {
-            using (masterContext context = new masterContext())
+            using (MySQLContext context = new MySQLContext())
             {
                 TradeHistoryDeltas = context.TradeHistoryDelta
                     .Where(x => x.TimeFrom >= DateTime.Parse(ViewModel.StartDate))
