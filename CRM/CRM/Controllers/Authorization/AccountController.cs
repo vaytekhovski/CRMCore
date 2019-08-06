@@ -43,7 +43,6 @@ namespace AuthApp.Controllers
             {
                 await Authenticate(user); // аутентификация
 
-                _db.UserModels.FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password).Result.LastAuthorizationDate = DateTime.Now;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -106,6 +105,13 @@ namespace AuthApp.Controllers
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+
+
+            using (BasicContext db = new BasicContext())
+            {
+                db.UserModels.FirstOrDefaultAsync(u => u.Login == user.Login && u.Password == user.Password).Result.LastAuthorizationDate = DateTime.Now;
+                db.SaveChanges();
+            }
         }
 
         [HttpPost]
