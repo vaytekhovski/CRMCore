@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Jobs
 {
-    class LoadingAndCalculatingTradeHistory
+    public class LoadingAndCalculatingTradeHistory
     {
         public static void EveryTwoMinCalculate()
         {

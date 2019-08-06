@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
-    <ProjectReference Include="..\CRM\CRM.csproj" />
   </ItemGroup>
 
   <ItemGroup>

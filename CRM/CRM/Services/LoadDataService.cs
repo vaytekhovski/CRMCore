@@ -9,6 +9,7 @@ using System.Text;
 using System.Linq;
 using Business.Data;
 using Business.Contexts;
+using Business;
 
 namespace CRM.Services
 {
@@ -19,7 +20,7 @@ namespace CRM.Services
         int index = 1;
 
         public List<OrderBookModel> OrderBook { get; private set; } = new List<OrderBookModel>();
-        public List<TradeHistoryModel> TradeHistories { get; private set; } = new List<TradeHistoryModel>();
+        public List<Business.Data.TradeHistoryModel> TradeHistories { get; private set; } = new List<Business.Data.TradeHistoryModel>();
         public List<TradeDeltaModel> TradeDeltas { get; private set; } = new List<TradeDeltaModel>();
 
         public LoadDataService()
@@ -129,7 +130,7 @@ namespace CRM.Services
             return File.ReadAllText(path);
         }
 
-        private static void AddTickerToLists(List<OrderBookModel> orderBook, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas, Ticker ticker, string Pair)
+        private static void AddTickerToLists(List<OrderBookModel> orderBook, List<Business.Data.TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas, Ticker ticker, string Pair)
         {
             // Проходим по каждому list'у в Ticker'e 
             // и заносим из него данные в наш лист
@@ -158,7 +159,7 @@ namespace CRM.Services
                 });
 
             foreach (var item in ticker.TradeHistory)
-                tradeHistories.Add(new TradeHistoryModel
+                tradeHistories.Add(new Business.Data.TradeHistoryModel
                 {
                     CurrencyName = Pair,
                     Date = item.Time.Date + item.Time.TimeOfDay,
@@ -179,7 +180,7 @@ namespace CRM.Services
                 });
         }
 
-        private static void CheckExistValues(List<OrderBookModel> orderBook, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas)
+        private static void CheckExistValues(List<OrderBookModel> orderBook, List<Business.Data.TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas)
         {
             // Проходим по базе данных и проверяем,
             // существуют ли в ней такие элементы,
@@ -241,7 +242,7 @@ namespace CRM.Services
             }
         }
 
-        private static void AddListToDataBase(List<OrderBookModel> orderBook, List<TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas)
+        private static void AddListToDataBase(List<OrderBookModel> orderBook, List<Business.Data.TradeHistoryModel> tradeHistories, List<TradeDeltaModel> tradeDeltas)
         {
             // Добавляем данные из list'a в БД
             using (BasicContext context = new BasicContext())
