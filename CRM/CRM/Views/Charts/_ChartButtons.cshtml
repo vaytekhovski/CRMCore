@@ -1,7 +1,7 @@
 ﻿
     <div class="filter_element">
         <div class="dropdown">
-            <button class="dropbtn btn short_filter_button btn-primary">@Model.PageName</button>
+            <a class="dropbtn btn short_filter_button btn-primary dropdown_btn" href="">@Model.PageName</a>
             <div class="dropdown-content">
                 @if (Model.PageName != "Asks on Bids")
                 {
@@ -15,6 +15,7 @@
                 {
                     <a href="../Charts/IndicatorPoints">Indicator Points</a>
                 }
+
                 @if (Model.PageName != "Volumes and Asks")
                 {
                     <a href="../Charts/TradeHistoryOnTradeHistoryDelta">Volumes and Asks</a>

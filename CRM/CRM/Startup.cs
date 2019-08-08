@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Contexts;
-using CRM.Models;
-using CRM.Services;
+﻿using Business.Contexts;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -68,6 +60,7 @@ namespace CRM
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
             // TODO: [COMEPLETE] move to jobs !!!ASAP!!!
             /*
             DailyTriggerService.StartDeilyTrigger(); 

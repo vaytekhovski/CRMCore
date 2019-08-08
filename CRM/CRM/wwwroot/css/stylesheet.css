@@ -248,3 +248,8 @@
     /*background-color: #3e8e41;*/
 }
 
+.dropdown_btn {
+    padding-top: 10px !important;
+    font-size: 18px; 
+}
+

@@ -16,8 +16,6 @@
         var asksValues = [];
         var bidsValues = [];
 
-        console.log('helo')
-
 
         @foreach (var item in Model.DatesAsks)
 {
@@ -84,7 +82,7 @@
 
 @model CRM.ViewModels.Charts.AskOnBidViewModel
 
-@Html.Partial("_AsksOnBidsFilterPanel");
+@Html.Partial("_AsksOnBidsFilterPanel")
 
 <div class="content">
 
