@@ -109,7 +109,7 @@ namespace AuthApp.Controllers
 
             using (BasicContext db = new BasicContext())
             {
-                db.UserModels.FirstOrDefaultAsync(u => u.Login == user.Login && u.Password == user.Password).Result.LastAuthorizationDate = DateTime.Now;
+                db.UserModels.FirstOrDefaultAsync(u => u.Login == user.Login && u.Password == user.Password).Result.LastAuthorizationDate = DateTime.Now.AddHours(3);
                 db.SaveChanges();
             }
         }
