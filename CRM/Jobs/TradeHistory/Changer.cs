@@ -40,7 +40,6 @@ namespace Jobs
             using (BasicContext context = new BasicContext())
             {
                 LastId = regularCalculating ? context.AccountTradeHistories.FirstOrDefault(x => x.Time > Helper.FindTimeLastSell()).Id : 1;
-
             }
 
 
