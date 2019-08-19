@@ -51,19 +51,19 @@ namespace QuartzSampleApp
                 ITrigger everyTwoMinTrigger = TriggerBuilder.Create()
                    .WithIdentity("trigger1", "group1")
                    .StartNow()
-                   .WithSchedule(CronScheduleBuilder.CronSchedule("0 1/2 * * *"))
+                   .WithSchedule(CronScheduleBuilder.CronSchedule("0 1/1 * ? * *"))
                    .Build();
 
                 ITrigger dailyTrigger = TriggerBuilder.Create()
                     .WithIdentity("trigger2", "group2")
                     .StartNow()
-                    .WithSchedule(CronScheduleBuilder.CronSchedule("0 01 15 * *"))
+                    .WithSchedule(CronScheduleBuilder.CronSchedule("0 01 15 ? * *"))
                     .Build();
 
                 ITrigger APITrigger = TriggerBuilder.Create()
                     .WithIdentity("trigger3", "group3")
                     .StartNow()
-                    .WithSchedule(CronScheduleBuilder.CronSchedule("25 56 13 * *"))
+                    .WithSchedule(CronScheduleBuilder.CronSchedule("25 56 13 ? * *"))
                     .Build();
 
                 await scheduler.ScheduleJob(everyTwoMinLoading, everyTwoMinTrigger);
