@@ -54,6 +54,7 @@ namespace QuartzSampleApp
                    .WithSchedule(CronScheduleBuilder.CronSchedule("0 1/1 * ? * *"))
                    .Build();
 
+
                 ITrigger dailyTrigger = TriggerBuilder.Create()
                     .WithIdentity("trigger2", "group2")
                     .StartNow()
