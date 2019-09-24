@@ -58,7 +58,8 @@ namespace QuartzSampleApp
                 ITrigger dailyTrigger = TriggerBuilder.Create()
                     .WithIdentity("trigger2", "group2")
                     .StartNow()
-                    .WithSchedule(CronScheduleBuilder.CronSchedule("0 01 15 ? * *"))
+                    .WithSchedule(CronScheduleBuilder.CronSchedule("0 1/1 * ? * *"))
+                    //.WithSchedule(CronScheduleBuilder.CronSchedule("0 01 15 ? * *"))
                     .Build();
 
                 ITrigger APITrigger = TriggerBuilder.Create()
@@ -67,7 +68,7 @@ namespace QuartzSampleApp
                     .WithSchedule(CronScheduleBuilder.CronSchedule("25 56 13 ? * *"))
                     .Build();
 
-                await scheduler.ScheduleJob(everyTwoMinLoading, everyTwoMinTrigger);
+                //await scheduler.ScheduleJob(everyTwoMinLoading, everyTwoMinTrigger);
                 await scheduler.ScheduleJob(dailyLoading, dailyTrigger);
                 //await scheduler.ScheduleJob(APILoading, APITrigger);
 
