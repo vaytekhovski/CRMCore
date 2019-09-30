@@ -1,7 +1,98 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "OrdersOnTimeHistory";
+
 }
+
+@section Scripts{ 
+
+<script src="~/js/plotly-latest.min.js"></script>
+<script type="text/javascript">
+
+        CHART = document.getElementById('Chart');
+
+        var Dates = [];
+        var Values = [];
+
+    var Green = [];
+    var gValues = [];
+    var Red = [];
+    var rValues = [];
+
+
+        @foreach (var item in Model.Indicators)
+        {
+            <text>
+            Dates.push(new Date(@item.Time));
+            </text>
+
+            }
+
+        @foreach (var item in Model.Indicators)
+        {
+            <text>
+            Values.push(parseFloat(@item.RSI));
+            </text>
+
+            }
+
+        @foreach (var item in Model.GreenTimes)
+                {
+            <text>
+    Green.push(new Date(@item));
+    gValues.push(parseFloat(100));
+            </text>
+
+            }
+
+        @foreach (var item in Model.RedTimes)
+                {
+            <text>
+    Red.push(new Date(@item));
+    rValues.push(parseFloat(100));
+            </text>
+
+            }
+
+
+
+        var RSI = {
+            x: Dates,
+            y: Values,
+            type: 'scatter',
+            name: 'Course'
+        };
+
+        var green = {
+            x: Green,
+            y: gValues,
+            type: 'bar',
+	marker: {
+        color: 'rgb(31, 133, 0)',
+        size: 22
+	},
+        };
+
+        var red = {
+            x: Red,
+            y: rValues,
+         type: 'bar',
+	marker: {
+        color: 'rgb(255, 20, 20)',
+        size: 22
+	},
+            
+        };
+
+
+
+        var data = [RSI,green,red];
+
+        Plotly.plot(CHART, data);
+
+
+</script>
+    }
+
 
 @model CRM.ViewModels.Charts.OrdersOnTimeHistoryViewModel
 
@@ -11,7 +102,7 @@
 
     @Html.ValidationSummary()
 
-    <div id="Chart" style="display: @(Model.Dates.Count != 0 ? "block" : "none")">
+    <div id="Chart" style="display: @(Model.Indicators.Count != 0 ? "block" : "none")">
     </div>
 
 </div>

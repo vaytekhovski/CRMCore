@@ -253,7 +253,22 @@ namespace CRM.Controllers.Charts
             return View(ViewModel);
         }
 
-        public ActionResult OrdersOnTimeHistory(ProfitOnTimeHistoryViewModel ViewModel)
+        [HttpGet]
+        public ActionResult OrdersOnTimeHistory()
+        {
+            var viewModel = new OrdersOnTimeHistoryViewModel
+            {
+                PageName = "OrdersOnTimeHistory",
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr
+            };
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult OrdersOnTimeHistory(OrdersOnTimeHistoryViewModel ViewModel)
         {
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
@@ -271,19 +286,33 @@ namespace CRM.Controllers.Charts
                     .Where(x => x.Pair == filter.Coin)
                     .Where(x => x.Account == filter.Account).ToList();
 
-                List<OrderModel> Orders = new List<OrderModel>();
 
                 for (int i = 0; i < BufOrders.ToArray().Length - 1; i++)
                 {
-                    Orders.Add(new OrderModel
+                    if (BufOrders[i].Side == "buy" && BufOrders[i + 1].Side == "sell")
                     {
-                        StartTime = BufOrders[i].Time,
-                        EndTime = BufOrders[i + 1].Time,
-                        Color = BufOrders[i + 1].Profit > 0 ? true : false
-                    });
-                    i++;
+                        if (BufOrders[i + 1].Profit > 0)
+                        {
+
+                            for (DateTime time = BufOrders[i].Time;time < BufOrders[i + 1].Time;time = time.AddMinutes(1) )
+                            {
+                                ViewModel.GreenTimes.Add(time.ToJavascriptTicks());
+                            }
+                        }
+                        else if (BufOrders[i + 1].Profit < 0)
+                        {
+
+                            for (DateTime time = BufOrders[i].Time; time < BufOrders[i + 1].Time; time = time.AddMinutes(1))
+                            {
+                                ViewModel.RedTimes.Add(time.ToJavascriptTicks());
+                            }
+                        }
+                    }
                 }
+
             }
+
+            List<IndicatorValuesModel> Indicators = new List<IndicatorValuesModel>();
 
             using (MySQLContext context1 = new MySQLContext())
             {
@@ -293,19 +322,23 @@ namespace CRM.Controllers.Charts
                     .Where(x => x.Base == filter.Coin)
                     .ToList();
 
-                List<IndicatorValuesModel> Indicators = new List<IndicatorValuesModel>();
+                
 
                 foreach (var item in BufIndicators)
                 {
                     Indicators.Add(new IndicatorValuesModel
                     {
-                        Time = item.Time,
-                        RSI = item.RSI
+                        Time = item.Time.AddHours(3).ToJavascriptTicks(),
+                        RSI = item.RSI.ToString()
                     });
                 }
             }
-            
 
+            ViewModel.Indicators = Indicators;
+
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            ViewModel.PageName = "Orders On TimeHistory";
 
 
             return View(ViewModel);

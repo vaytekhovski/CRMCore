@@ -6,7 +6,7 @@ namespace Business.Models.Charts.ProfitOnTimeHistory
 {
     public class IndicatorValuesModel
     {
-        public DateTime Time;
-        public decimal RSI;
+        public long Time;
+        public string RSI;
     }
 }

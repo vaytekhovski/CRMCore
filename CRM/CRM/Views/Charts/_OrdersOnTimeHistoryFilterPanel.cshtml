@@ -6,18 +6,13 @@
 
         @Html.Partial("_ChartButtons")
 
+
         <div class="filter_element">
-            <select name="Exchange" class="form-control filter_input">
-                <option value="binance">Binance</option>
-            </select>
+            @Html.DropDownListFor(m => m.Coin, (IEnumerable<SelectListItem>)ViewBag.Coins, new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
         </div>
 
         <div class="filter_element">
-            @Html.DropDownListFor(m => m.Base, (IEnumerable<SelectListItem>)ViewBag.Coins, new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
-        </div>
-
-        <div class="filter_element">
-            @Html.DropDownListFor(m => m.Account, (IEnumerable<SelectListItem>)ViewBag.Accounts, "Все аккаунты", new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
+            @Html.DropDownListFor(m => m.Account, (IEnumerable<SelectListItem>)ViewBag.Accounts, new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
         </div>
 
         <div class="filter_element">

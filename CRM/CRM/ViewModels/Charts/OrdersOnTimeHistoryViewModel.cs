@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Business.Models.Charts.ProfitOnTimeHistory;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,16 +14,18 @@ namespace CRM.ViewModels.Charts
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string Exchange { get; set; }
-        public string Base { get; set; }
+        public string Coin { get; set; }
 
-        public List<long> Dates { get; set; }
-        public List<string> RSIValues { get; set; }
+        public List<IndicatorValuesModel> Indicators { get; set; }
 
+        public List<long> GreenTimes { get; set; }
+        public List<long> RedTimes { get; set; }
 
         public OrdersOnTimeHistoryViewModel()
         {
-            RSIValues = new List<string>();
-            Dates = new List<long>();
+            Indicators = new List<IndicatorValuesModel>();
+            GreenTimes = new List<long>();
+            RedTimes = new List<long>();
         }
     }
 }

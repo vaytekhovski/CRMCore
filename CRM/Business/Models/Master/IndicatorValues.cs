@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Business.Models.Master
 {
     public class IndicatorValues
     {
-        public string Exchange;
-        public string Base;
-        public string Quote;
-        public DateTime Time;
-        public decimal RSI;
+        [Key]
+        public string Exchange { get; set; }
+        [Key]
+        public string Base { get; set; }
+        [Key]
+        public string Quote { get; set; }
+        [Key]
+        public DateTime Time { get; set; }
+        public decimal? RSI { get; set; }
 
     }
 }
