@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Business.Models.Master;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +25,8 @@ namespace Business.Contexts
         public virtual DbSet<TradeHistory> TradeHistory { get; set; }
 
         public virtual DbSet<IndicatorPoints> IndicatorPoints { get; set; }
+
+        public virtual DbSet<IndicatorValues> IndicatorValues { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -11,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using Business.Models.Charts.ProfitOnTimeHistory;
+using Business.Contexts;
+using Business.Models.Master;
 
 namespace CRM.Controllers.Charts
 {
@@ -247,6 +250,64 @@ namespace CRM.Controllers.Charts
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             ViewModel.PageName = "Profit";
+            return View(ViewModel);
+        }
+
+        public ActionResult OrdersOnTimeHistory(ProfitOnTimeHistoryViewModel ViewModel)
+        {
+            TradeHistoryFilter filter = new TradeHistoryFilter
+            {
+                Coin = ViewModel.Coin,
+                Account = ViewModel.Account,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate).AddDays(1),
+            };
+
+            using (BasicContext context = new BasicContext())
+            {
+                List<AccountTradeHistory> BufOrders = context.AccountTradeHistories
+                    .Where(x => x.Time >= filter.StartDate)
+                    .Where(x => x.Time <= filter.EndDate)
+                    .Where(x => x.Pair == filter.Coin)
+                    .Where(x => x.Account == filter.Account).ToList();
+
+                List<OrderModel> Orders = new List<OrderModel>();
+
+                for (int i = 0; i < BufOrders.ToArray().Length - 1; i++)
+                {
+                    Orders.Add(new OrderModel
+                    {
+                        StartTime = BufOrders[i].Time,
+                        EndTime = BufOrders[i + 1].Time,
+                        Color = BufOrders[i + 1].Profit > 0 ? true : false
+                    });
+                    i++;
+                }
+            }
+
+            using (MySQLContext context1 = new MySQLContext())
+            {
+                List<IndicatorValues> BufIndicators = context1.IndicatorValues
+                    .Where(x => x.Time >= filter.StartDate)
+                    .Where(x => x.Time <= filter.EndDate)
+                    .Where(x => x.Base == filter.Coin)
+                    .ToList();
+
+                List<IndicatorValuesModel> Indicators = new List<IndicatorValuesModel>();
+
+                foreach (var item in BufIndicators)
+                {
+                    Indicators.Add(new IndicatorValuesModel
+                    {
+                        Time = item.Time,
+                        RSI = item.RSI
+                    });
+                }
+            }
+            
+
+
+
             return View(ViewModel);
         }
     }
