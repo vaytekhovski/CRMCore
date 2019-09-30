@@ -41,6 +41,7 @@ namespace Business.Contexts
         {
             modelBuilder.Entity<IndicatorPoints>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
             modelBuilder.Entity<TradeHistory>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
+            modelBuilder.Entity<IndicatorValues>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
         }
     }
 }
