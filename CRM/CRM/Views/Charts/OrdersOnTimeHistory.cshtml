@@ -1,0 +1,17 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model CRM.ViewModels.Charts.OrdersOnTimeHistoryViewModel
+
+@Html.Partial("_OrdersOnTimeHistoryFilterPanel")
+
+<div class="content">
+
+    @Html.ValidationSummary()
+
+    <div id="Chart" style="display: @(Model.Dates.Count != 0 ? "block" : "none")">
+    </div>
+
+</div>
