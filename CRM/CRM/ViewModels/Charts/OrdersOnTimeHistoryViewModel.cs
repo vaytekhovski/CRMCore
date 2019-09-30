@@ -8,9 +8,9 @@ namespace CRM.ViewModels.Charts
     public class OrdersOnTimeHistoryViewModel
     {
         public string PageName { get; set; }
+        public string Account { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
-
         public string Exchange { get; set; }
         public string Base { get; set; }
 
