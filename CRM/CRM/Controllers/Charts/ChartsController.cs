@@ -293,7 +293,6 @@ namespace CRM.Controllers.Charts
                     {
                         if (BufOrders[i + 1].Profit > 0)
                         {
-
                             for (DateTime time = BufOrders[i].Time;time < BufOrders[i + 1].Time;time = time.AddMinutes(1) )
                             {
                                 ViewModel.GreenTimes.Add(time.ToJavascriptTicks());
@@ -320,7 +319,7 @@ namespace CRM.Controllers.Charts
                     .Where(x => x.Time >= filter.StartDate)
                     .Where(x => x.Time <= filter.EndDate)
                     .Where(x => x.Base == filter.Coin)
-                    .ToList();
+                    .OrderBy(x => x.Time).ToList();
 
                 
 
@@ -343,5 +342,7 @@ namespace CRM.Controllers.Charts
 
             return View(ViewModel);
         }
+
+        
     }
 }

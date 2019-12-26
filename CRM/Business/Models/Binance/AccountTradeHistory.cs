@@ -19,5 +19,6 @@ namespace Business
         public decimal PercentProfit { get; set; }
         public decimal DesiredPercentProfit { get; set; }
         public string SignalStr { get; set; }
+        public string Algorithm { get; set; }
     }
 }

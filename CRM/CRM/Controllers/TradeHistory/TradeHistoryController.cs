@@ -32,11 +32,12 @@ namespace CRM.Controllers
                 Account = "/",
                 Coin = "all",
                 StartDate = DatesHelper.MinDateTimeStr,
-                EndDate = DatesHelper.CurrentDateTimeStr
+                EndDate = DatesHelper.CurrentDateTimeStr,
             };
 
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            ViewBag.Algorithms = DropDownFields.GetAlgorithms();
             return View(viewModel);
         }
 
@@ -70,6 +71,7 @@ namespace CRM.Controllers
             viewModel.TypeOfDate = "datetime-local";
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            ViewBag.Algorithms = DropDownFields.GetAlgorithms();
             return View(viewModel);
         }
 
@@ -98,6 +100,7 @@ namespace CRM.Controllers
 
             viewModel.DesiredProfitOrdersCount = Model.DesiredProfitOrdersCount;
             viewModel.DesiredProfitOrdersSumm = Model.DesiredProfitOrdersSumm;
+            
 
             return viewModel;
         }

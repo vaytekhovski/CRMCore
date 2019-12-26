@@ -69,7 +69,8 @@
 	marker: {
         color: 'rgb(31, 133, 0)',
         size: 22
-	},
+            },
+    name: 'Profit orders'
         };
 
         var red = {
@@ -80,14 +81,18 @@
         color: 'rgb(255, 20, 20)',
         size: 22
 	},
-            
-        };
+            name: 'Loss orders'
+    };
 
+
+    var layout = {
+      height: 800
+    };
 
 
         var data = [RSI,green,red];
 
-        Plotly.plot(CHART, data);
+        Plotly.plot(CHART, data, layout);
 
 
 </script>

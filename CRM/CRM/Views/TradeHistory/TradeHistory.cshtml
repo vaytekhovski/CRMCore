@@ -125,6 +125,7 @@
                     <th class="sorttable_nosort">Расч. кол-во</th>
                     <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Прибыль</th>
                     <th class="sorttable_nosort">Расч. прибыль</th>
+                    <th class="sorttable_nosort">Алгоритм</th>
                 </tr>
             </thead>
             <tbody>
@@ -164,20 +165,21 @@
 
                     if ((Context.User.Identity.Name != "1" && item.DesiredQuantity != 0) || Context.User.Identity.Name == "1")
                     {
-                        <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
-                            <td>@item.Id</td>
-                            <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
-                            <td>@item.Account</td>
-                            <td>@item.Side</td>
-                            <td>@item.Pair</td>
-                            <td>$@String.Format("{0:0.########}", item.Price)</td>
-                            <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">@item.Quantity</td>
-                            <td>@item.DesiredQuantity</td>
-                            <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">$@String.Format("{0:0.##}", item.DollarQuantity)</td>
-                            <td>$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
-                            <td class="profit" style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell"); color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                            <td class="profit" style="color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
-                        </tr>
+                <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
+                    <td>@item.Id</td>
+                    <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.Account</td>
+                    <td>@item.Side</td>
+                    <td>@item.Pair</td>
+                    <td>$@String.Format("{0:0.########}", item.Price)</td>
+                    <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">@item.Quantity</td>
+                    <td>@item.DesiredQuantity</td>
+                    <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">$@String.Format("{0:0.##}", item.DollarQuantity)</td>
+                    <td>$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
+                    <td class="profit" style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell"); color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
+                    <td class="profit" style="color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
+                    <td>@item.Algorithm</td>
+                </tr>
                     }
                 }
             </tbody>

@@ -46,9 +46,6 @@ namespace CRM
                 app.UseHsts();
             }
 
-            // TODO: [COMPLETE] use static ctor instead of this call
-            //DropDownFields.InitiateFields(); 
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -61,14 +58,6 @@ namespace CRM
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // TODO: [COMEPLETE] move to jobs !!!ASAP!!!
-            /*
-            DailyTriggerService.StartDeilyTrigger(); 
-
-            DailyTriggerService.OnTimeTriggered += () =>
-            {
-                LoadDataService loadData = new LoadDataService();
-            };*/
         }
     }
 }
