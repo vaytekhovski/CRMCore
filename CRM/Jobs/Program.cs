@@ -68,8 +68,8 @@ namespace QuartzSampleApp
                     .WithSchedule(CronScheduleBuilder.CronSchedule("25 56 13 ? * *"))
                     .Build();
 
-                //await scheduler.ScheduleJob(everyTwoMinLoading, everyTwoMinTrigger);
-                await scheduler.ScheduleJob(dailyLoading, dailyTrigger);
+                await scheduler.ScheduleJob(everyTwoMinLoading, everyTwoMinTrigger);
+                //await scheduler.ScheduleJob(dailyLoading, dailyTrigger);
                 //await scheduler.ScheduleJob(APILoading, APITrigger);
 
 
