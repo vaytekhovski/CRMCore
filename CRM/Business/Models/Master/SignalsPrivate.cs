@@ -12,5 +12,7 @@ namespace Business
         public decimal Value { get; set; }
         public string Side { get; set; }
         public string ErrorMessages { get; set; }
+        
+        public decimal? TotalToDecide { get; set; }
     }
 }

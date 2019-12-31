@@ -126,6 +126,7 @@
                     <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Прибыль</th>
                     <th class="sorttable_nosort">Расч. прибыль</th>
                     <th class="sorttable_nosort">Алгоритм</th>
+                    <th class="sorttable_nosort"> Вероятность</th>
                 </tr>
             </thead>
             <tbody>
@@ -163,6 +164,10 @@
                         itemDesiredProfitStr = null;
                     }
 
+                    string itemDecidePercentStr = "";
+
+                    itemDecidePercentStr = item.DecidePercent != null ? item.DecidePercent + "%" : "";
+
                     if ((Context.User.Identity.Name != "1" && item.DesiredQuantity != 0) || Context.User.Identity.Name == "1")
                     {
                 <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
@@ -179,6 +184,7 @@
                     <td class="profit" style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell"); color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
                     <td class="profit" style="color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
                     <td>@item.Algorithm</td>
+                    <td>@itemDecidePercentStr</td>
                 </tr>
                     }
                 }
