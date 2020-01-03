@@ -39,7 +39,8 @@ namespace Jobs
                 }
                 else
                 {
-                    context.AccountTradeHistories.RemoveRange(context.AccountTradeHistories.ToList());
+                    //context.AccountTradeHistories.RemoveRange(context.AccountTradeHistories.ToList());
+                    context.Database.ExecuteSqlCommand("TRUNCATE TABLE [AccountTradeHistories]");
                 }
 
                 context.AccountTradeHistories.AddRange(CalculatedTradeHistories);
@@ -153,6 +154,7 @@ namespace Jobs
                             item.PercentProfit = TH[j].PercentProfit;
                             item.DesiredPercentProfit = TH[j].DesiredPercentProfit;
                         }
+                        item.EnterTax = TH[j].EnterTax;
                         j++;
                     }
                     
