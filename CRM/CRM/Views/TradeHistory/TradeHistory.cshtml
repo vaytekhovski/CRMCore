@@ -79,13 +79,13 @@
     <div>
 
         @{
-            string DesiredProfitStr = Model.DesiredTotalProfit > 0 ? "Прибыль: +" : "Убыток: ";
-            DesiredProfitStr += String.Format("{0:0.##}", Model.DesiredTotalProfit);
-            DesiredProfitStr += "$";
+            string TotalProfitStr = Model.TotalProfit > 0 ? "Прибыль: +" : "Убыток: ";
+            TotalProfitStr += String.Format("{0:0.##}", Model.TotalProfit);
+            TotalProfitStr += "$";
 
         }
 
-        <table style="margin: 0 auto; width: 400px; font-size: 14px; display: @(Model.DesiredTotalProfit == 0 ? "none" : "block"); ">
+        <table style="margin: 0 auto; width: 400px; font-size: 14px; display: @(Model.TotalProfit == 0 ? "none" : "block"); ">
             <tr>
                 <th colspan="2" style="padding-right: 15px">Убыточные сделки</th>
                 <th colspan="2">Прибыльные сделки</th>
@@ -103,7 +103,7 @@
                 <td>$@Model.DesiredProfitOrdersSumm.ToString("#.##")</td>
             </tr>
             <tr>
-                <td colspan="4" style="text-align:center; color: @(Model.DesiredTotalProfit > 0 ? "green" : "red")">@DesiredProfitStr</td>
+                <td colspan="4" style="text-align:center; color: @(Model.DesiredTotalProfit > 0 ? "green" : "red")">@TotalProfitStr</td>
             </tr>
         </table>
     </div>
