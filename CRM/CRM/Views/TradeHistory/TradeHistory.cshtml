@@ -189,9 +189,9 @@
                     <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
                     <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
                     <td class="profit" style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell"); color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
-                    <td>@item.EnterTax</td>
-                    <td>@item.Algorithm</td>
                     <td>@enterTaxStr</td>
+                    <td>@item.Algorithm</td>
+                    <td>@itemDecidePercentStr</td>
                 </tr>
                     }
                 }
