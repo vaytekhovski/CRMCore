@@ -88,7 +88,7 @@ namespace CRM.Services
                 foreach (var item in model.AccountTradeHistories)
                 {
                     item.Time = item.Time.AddSeconds(-item.Time.Second).AddMilliseconds(-item.Time.Millisecond);
-                    var signal = signals.FirstOrDefault(x => x.SourceTime == item.Time);
+                    var signal = signals.FirstOrDefault(x => x.SourceTime == item.Time.AddHours(-3));
                     // 30 12 20:47
                     if (signal != null)
                     {
