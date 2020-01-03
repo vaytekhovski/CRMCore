@@ -95,7 +95,7 @@ namespace CRM.Services
                     {
                         var percent = signal.TotalToDecide * 100;
                         percent = (int)percent;
-                        item.DecidePercent = percent.ToString();
+                        item.DecidePercent = percent < 100 ? percent.ToString() : null;
                     }
                 }
 
