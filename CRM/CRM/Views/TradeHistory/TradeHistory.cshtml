@@ -174,7 +174,7 @@
 
                     string itemDecidePercentStr = "";
 
-                    itemDecidePercentStr = item.DecidePercent != null ? item.DecidePercent + "%" : "";
+                    itemDecidePercentStr = item.DecidePercent != null && item.DecidePercent < 100 ? item.DecidePercent + "%" : "";
 
                     if ((Context.User.Identity.Name != "1" && item.DesiredQuantity != 0) || Context.User.Identity.Name == "1")
                     {
