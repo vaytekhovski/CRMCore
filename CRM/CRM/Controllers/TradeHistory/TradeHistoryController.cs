@@ -100,6 +100,8 @@ namespace CRM.Controllers
 
             viewModel.DesiredProfitOrdersCount = Model.DesiredProfitOrdersCount;
             viewModel.DesiredProfitOrdersSumm = Model.DesiredProfitOrdersSumm;
+
+            viewModel.TotalEnterTax = Model.TotalEnterTax;
             
 
             return viewModel;

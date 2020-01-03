@@ -60,6 +60,7 @@ namespace CRM.Services
                 UpdateTotalProfit(model, query);
                 UpdateCountOfLossAndProfitOrders(model, query);
                 UpdateSummOfLossAndProfitOrders(model, query);
+                UpdateTotalEnterTax(model, query);
 
 
                 query = query.OrderByDescending(x => x.Time);
@@ -103,6 +104,11 @@ namespace CRM.Services
 
 
             return model;
+        }
+
+        private void UpdateTotalEnterTax(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
+        {
+            model.TotalEnterTax = query.Where(x => x.EnterTax != 0).Sum(x => x.EnterTax);
         }
 
         private void UpdateTotalProfit(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)

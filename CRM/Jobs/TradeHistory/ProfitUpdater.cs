@@ -106,6 +106,7 @@ namespace Jobs
                 foreach (var Account in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
                 {
                     decimal profit = 0;
+                    decimal enterTax = 0;
                     decimal desiredProfit = 0;
                     decimal buyAmount = 0;
 
@@ -114,8 +115,10 @@ namespace Jobs
                     for (int i = 0; i < TH.Count(); i++)
                     {
                         buyAmount += TH[i].Side == "buy" ? TH[i].DollarQuantity : 0;
+                        enterTax = TH[i].Side == "buy" ? TH[i].DollarQuantity * (decimal)0.001 : 0;
+                        TH[i].EnterTax = TH[i].Side == "buy" ? enterTax : 0;
 
-                        profit += TH[i].Side == "buy" ? ((TH[i].DollarQuantity * (decimal)0.001) + TH[i].DollarQuantity) * -1 : (TH[i].DollarQuantity * (decimal)0.001) + TH[i].DollarQuantity;
+                        profit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity;
                         desiredProfit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DesiredDollarQuantity;
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))

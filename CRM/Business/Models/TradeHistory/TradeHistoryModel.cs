@@ -26,5 +26,7 @@ namespace Business
         public decimal DesiredLossOrdersSumm { get; set; }
         public decimal DesiredProfitOrdersSumm { get; set; }
 
+        public decimal TotalEnterTax { get; set; }
+
     }
 }

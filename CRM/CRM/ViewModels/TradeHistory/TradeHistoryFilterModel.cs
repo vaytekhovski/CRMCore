@@ -33,6 +33,7 @@ namespace CRM.ViewModels
         public decimal DesiredLossOrdersSumm { get; set; }
         public decimal DesiredProfitOrdersSumm { get; set; }
         public string Algorithm { get; set; }
+        public decimal TotalEnterTax { get; set; }
 
 
 
