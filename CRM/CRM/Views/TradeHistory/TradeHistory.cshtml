@@ -83,7 +83,7 @@
             TotalProfitStr += String.Format("{0:0.##}", Model.TotalProfit);
             TotalProfitStr += "$";
 
-            string TotalEnterTaxStr = "Вход. комиссия: " + Model.TotalEnterTax.ToString();
+            string TotalEnterTaxStr = "Вход. комиссия: " + String.Format("{0:0.##}", Model.TotalEnterTax);
 
         }
 
@@ -170,7 +170,7 @@
                         itemDesiredProfitStr = null;
                     }
 
-                    string enterTaxStr = item.EnterTax != 0 ? String.Format("{0:0.##}" + "$", item.EnterTax) : "";
+                    string enterTaxStr = item.EnterTax != 0 ? String.Format("{0:0.###}" + "$", item.EnterTax) : "";
 
                     string itemDecidePercentStr = "";
 
