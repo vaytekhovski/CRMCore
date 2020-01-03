@@ -115,7 +115,7 @@ namespace Jobs
                     {
                         buyAmount += TH[i].Side == "buy" ? TH[i].DollarQuantity : 0;
 
-                        profit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity;
+                        profit += TH[i].Side == "buy" ? ((TH[i].DollarQuantity * (decimal)0.001) + TH[i].DollarQuantity) * -1 : (TH[i].DollarQuantity * (decimal)0.001) + TH[i].DollarQuantity;
                         desiredProfit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DesiredDollarQuantity;
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
