@@ -80,7 +80,7 @@
 
         @{
             string TotalProfitStr = "С учетом комисии ";
-            TotalProfitStr += Model.TotalProfit > 0 ? "Прибыль: +" : "Убыток: ";
+            TotalProfitStr += Model.TotalProfit - Model.TotalEnterTax > 0 ? "Прибыль: +" : "Убыток: ";
             TotalProfitStr += String.Format("{0:0.##}", Model.TotalProfit - Model.TotalEnterTax);
             TotalProfitStr += "$";
 
@@ -109,7 +109,7 @@
                 <td colspan="4" style="text-align:center;">@TotalEnterTaxStr</td>
             </tr>
             <tr>
-                <td colspan="4" style="text-align:center; color: @(Model.TotalProfit > 0 ? "green" : "red")">@TotalProfitStr</td>
+                <td colspan="4" style="text-align:center; color: @(Model.TotalProfit - Model.TotalEnterTax > 0 ? "green" : "red")">@TotalProfitStr</td>
             </tr>
 
         </table>
