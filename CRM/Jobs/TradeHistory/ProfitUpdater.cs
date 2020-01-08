@@ -120,6 +120,7 @@ namespace Jobs
                         TH[i].EnterTax = TH[i].Side == "buy" ? enterTax : 0;
 
                         profit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity;
+                        profit -= TH[i].EnterTax;
                         desiredProfit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DesiredDollarQuantity;
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))

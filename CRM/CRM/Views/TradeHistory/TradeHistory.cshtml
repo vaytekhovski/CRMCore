@@ -79,8 +79,9 @@
     <div>
 
         @{
-            string TotalProfitStr = Model.TotalProfit > 0 ? "Прибыль: +" : "Убыток: ";
-            TotalProfitStr += String.Format("{0:0.##}", Model.TotalProfit);
+            string TotalProfitStr = "С учетом комисии ";
+            TotalProfitStr += Model.TotalProfit > 0 ? "Прибыль: +" : "Убыток: ";
+            TotalProfitStr += String.Format("{0:0.##}", Model.TotalProfit - Model.TotalEnterTax);
             TotalProfitStr += "$";
 
             string TotalEnterTaxStr = "Вход. комиссия: " + String.Format("{0:0.##}", Model.TotalEnterTax) + "$";
@@ -105,11 +106,12 @@
                 <td>$@Model.DesiredProfitOrdersSumm.ToString("#.##")</td>
             </tr>
             <tr>
-                <td colspan="4" style="text-align:center; color: @(Model.TotalProfit > 0 ? "green" : "red")">@TotalProfitStr</td>
-            </tr>
-            <tr>
                 <td colspan="4" style="text-align:center;">@TotalEnterTaxStr</td>
             </tr>
+            <tr>
+                <td colspan="4" style="text-align:center; color: @(Model.TotalProfit > 0 ? "green" : "red")">@TotalProfitStr</td>
+            </tr>
+
         </table>
     </div>
 
@@ -130,8 +132,8 @@
                     <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. кол-во</th>
                     <th class="sorttable_nosort">Прибыль</th>
                     <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. прибыль</th>
-                    <th class="sorttable_nosort">Вход. комиссия</th>
-                    <th class="sorttable_nosort">Алгоритм</th>
+                    @*<th class="sorttable_nosort">Вход. комиссия</th>
+                    <th class="sorttable_nosort">Алгоритм</th>*@
                     <th class="sorttable_nosort"> Вероятность</th>
                 </tr>
             </thead>
@@ -191,8 +193,8 @@
                     <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
                     <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
                     <td class="profit" style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell"); color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
-                    <td>@enterTaxStr</td>
-                    <td>@item.Algorithm</td>
+                    @*<td>@enterTaxStr</td>
+                    <td>@item.Algorithm</td>*@
                     <td>@itemDecidePercentStr</td>
                 </tr>
                     }
