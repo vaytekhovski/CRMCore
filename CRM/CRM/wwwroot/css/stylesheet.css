@@ -253,3 +253,7 @@
     font-size: 18px; 
 }
 
+tr th{
+    text-align:center;
+}
+
