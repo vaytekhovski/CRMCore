@@ -43,8 +43,6 @@ namespace CRM.Services
         {
             var model = new TradeHistoryModel();
 
-            
-
             using (BasicContext context = new BasicContext())
             {
                 var query = context.AccountTradeHistories
@@ -73,29 +71,25 @@ namespace CRM.Services
 
             using (MySQLContext sQLContext = new MySQLContext())
             {
-                var lst = sQLContext.SignalsPrivate.ToList();
 
-
-                var signals = sQLContext.SignalsPrivate
-                    .Where(x => x.SourceTime >= filter.StartDate && x.SourceTime <= filter.EndDate)
-                    .OrderBy(x => x.SourceTime)
+                var signals = sQLContext.NeuralSignals
+                    .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
+                    .OrderBy(x => x.Time)
                     .ToList();
 
                 foreach (var item in signals)
                 {
-                    item.SourceTime = item.SourceTime.AddSeconds(-item.SourceTime.Second).AddMilliseconds(-item.SourceTime.Millisecond);
+                    item.Time = item.Time.AddSeconds(-item.Time.Second).AddMilliseconds(-item.Time.Millisecond);
                 }
 
                 foreach (var item in model.AccountTradeHistories)
                 {
                     item.Time = item.Time.AddSeconds(-item.Time.Second).AddMilliseconds(-item.Time.Millisecond);
-                    var signal = signals.FirstOrDefault(x => x.SourceTime == item.Time.AddHours(-3) && x.Type == "predict");
-                    // 30 12 20:47
+                    var signal = signals.FirstOrDefault(x => x.Time == item.Time.AddHours(-3));
+
                     if (signal != null)
                     {
-                        var percent = signal.TotalToDecide * 100;
-                        percent = (int)percent;
-                        item.DecidePercent = percent < 100 ? percent.ToString() : null;
+                        item.LowerBand = signal.BBL;
                     }
                 }
 

@@ -15,7 +15,6 @@ namespace Business
         public static List<Field> OrderType = new List<Field>();
         public static List<Field> Situation = new List<Field>();
         public static List<Field> Nulls = new List<Field>();
-        public static List<Field> Algorithms = new List<Field>();
 
         static DropDownFields()
         {
@@ -24,25 +23,8 @@ namespace Business
             InitiateOrderType();
             InitiateSituations();
             InitiateNulls();
-            InitiateAlgorithms();
         }
 
-        private static void InitiateAlgorithms()
-        {
-            //using (BasicContext context = new BasicContext()) 
-            //{
-            //    var Algs = context.AccountTradeHistories.Select(x => x.Algorithm).ToList();
-
-            //    foreach (var item in Algs)
-            //    {
-            //        Algorithms.Add(new Field { Value = item, Name = item });
-            //    }
-            //}
-
-            Algorithms.Add(new Field { Value = "Alg1", Name = "Алгоритм 1" });
-            Algorithms.Add(new Field { Value = "Alg2", Name = "Алгоритм 2" });
-            Algorithms.Add(new Field { Value = "Alg3", Name = "Алгоритм 3" });
-        }
 
         private static void InitiateExchanges()
         {
@@ -154,9 +136,5 @@ namespace Business
             return OrderType.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
         }
 
-        public static IEnumerable<SelectListItem> GetAlgorithms()
-        {
-            return Algorithms.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
-        }
     }
 }

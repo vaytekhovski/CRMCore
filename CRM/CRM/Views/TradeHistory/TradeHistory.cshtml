@@ -132,9 +132,7 @@
                     <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. кол-во</th>
                     <th class="sorttable_nosort">Прибыль + ком.</th>
                     <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. прибыль</th>
-                    @*<th class="sorttable_nosort">Вход. комиссия</th>
-                    <th class="sorttable_nosort">Алгоритм</th>*@
-                    <th class="sorttable_nosort"> Вероятность</th>
+                    <th class="sorttable_nosort"> Lower band</th>
                 </tr>
             </thead>
             <tbody>
@@ -176,7 +174,6 @@
 
                     string itemDecidePercentStr = "";
 
-                    itemDecidePercentStr = item.DecidePercent != null ? item.DecidePercent + "%" : "";
 
                     if ((Context.User.Identity.Name != "1" && item.DesiredQuantity != 0) || Context.User.Identity.Name == "1")
                     {
@@ -193,9 +190,7 @@
                     <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
                     <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
                     <td class="profit" style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell"); color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
-                    @*<td>@enterTaxStr</td>
-                    <td>@item.Algorithm</td>*@
-                    <td>@itemDecidePercentStr</td>
+                    <td>@item.LowerBand</td>
                 </tr>
                     }
                 }

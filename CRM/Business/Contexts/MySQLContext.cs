@@ -27,6 +27,7 @@ namespace Business.Contexts
         public virtual DbSet<IndicatorPoints> IndicatorPoints { get; set; }
 
         public virtual DbSet<IndicatorValues> IndicatorValues { get; set; }
+        public virtual DbSet<NeuralSignal> NeuralSignals { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

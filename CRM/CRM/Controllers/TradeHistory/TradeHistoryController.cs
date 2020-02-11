@@ -37,7 +37,6 @@ namespace CRM.Controllers
 
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
-            ViewBag.Algorithms = DropDownFields.GetAlgorithms();
             return View(viewModel);
         }
 
@@ -71,7 +70,6 @@ namespace CRM.Controllers
             viewModel.TypeOfDate = "datetime-local";
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
-            ViewBag.Algorithms = DropDownFields.GetAlgorithms();
             return View(viewModel);
         }
 

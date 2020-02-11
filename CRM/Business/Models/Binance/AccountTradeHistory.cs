@@ -20,8 +20,7 @@ namespace Business
         public decimal DesiredPercentProfit { get; set; }
         public decimal EnterTax { get; set; }
         public string SignalStr { get; set; }
-        public string Algorithm { get; set; }
-        public string DecidePercent { get; set; }
+        public decimal LowerBand { get; set; }
         
     }
 }

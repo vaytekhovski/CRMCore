@@ -158,7 +158,7 @@ namespace Jobs
                     DesiredQuantity = item.Side == "buy" ? item.ClosedAmount : 0,
                     DollarQuantity = item.Rate * item.ClosedAmount,
                     DesiredDollarQuantity = item.Side == "buy" ? item.Rate * item.ClosedAmount : 0,
-                    Algorithm = null
+                    LowerBand = 0M
                 });
             }
         }
