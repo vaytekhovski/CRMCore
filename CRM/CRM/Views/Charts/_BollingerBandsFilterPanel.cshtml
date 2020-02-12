@@ -1,0 +1,30 @@
+﻿@model CRM.ViewModels.Charts.BollingerBandsViewModel
+
+
+
+
+<form action="/" method="post">
+
+    <div class="filter_panel container">
+
+        @Html.Partial("_ChartButtons")
+
+        <div class="filter_element">
+            <select class="form-control filter_input">
+                <option value="binance">Binance</option>
+            </select>
+        </div>
+
+
+        <div class="filter_element">
+            <input type="date" class="form-control filter_input_date" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />
+        </div>
+
+        <div class="filter_element">
+            <input type="date" class="form-control filter_input_date" id="endDate" name="endDate" value=@Model.EndDate min="2019-04-01" />
+        </div>
+        <div class="filter_element">
+            <button type="submit" id="BollingerBands" class="btn short_filter_button btn-primary" formaction="../Charts/BollingerBands" formmethod="post">Показать</button>
+        </div>
+    </div>
+</form>

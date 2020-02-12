@@ -127,7 +127,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
     <PackageReference Include="MySql.Data" Version="8.0.17" />
     <PackageReference Include="MySql.Data.EntityFramework" Version="8.0.17" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.17" />

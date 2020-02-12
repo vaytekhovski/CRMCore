@@ -30,6 +30,8 @@ namespace CRM.Controllers.Charts
 
         private readonly TradeHistoryService _tradeHistoryService;
 
+        private readonly BollingerBandsService _bollingerBandsService;
+
         public ChartsController()
         {
             _asksOnBids = new AsksOnBidsService();
@@ -37,6 +39,7 @@ namespace CRM.Controllers.Charts
             _indicatorPointsService = new IndicatorPointsService();
             _tradeHistoryOnTradeHistoryDeltaService = new TradeHistoryOnTradeHistoryDeltaService();
             _tradeHistoryService = new TradeHistoryService();
+            _bollingerBandsService = new BollingerBandsService();
         }
 
         [HttpGet]
@@ -343,6 +346,41 @@ namespace CRM.Controllers.Charts
             return View(ViewModel);
         }
 
-        
+
+        [HttpGet]
+        public ActionResult BollingerBands()
+        {
+            var viewModel = new BollingerBandsViewModel
+            {
+                PageName = "Bollinger Bands",
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr
+            };
+            ViewBag.Coins = DropDownFields.GetCoins();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult BollingerBands(BollingerBandsViewModel ViewModel)
+        {
+            ChartsFilter filter = new ChartsFilter
+            {
+                StartDate = DateTime.Parse(ViewModel.StartDate).AddHours(-3),
+                EndDate = DateTime.Parse(ViewModel.EndDate).AddHours(-3),
+            };
+
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
+
+            var model = _bollingerBandsService.Load(filter);
+
+            ViewModel.Dates = model.Dates.Select(x => x.ToJavascriptTicks()).ToList();
+            ViewModel.ProbaSellValues = model.ProbaSellValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.ProbaBuyValues = model.ProbaBuyValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.BBLValues = model.BBLValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.PageName = "Bollinger Bands";
+            return View(ViewModel);
+        }
+
+
     }
 }

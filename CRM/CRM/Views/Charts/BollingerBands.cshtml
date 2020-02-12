@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = Model.PageName;
+
+}
+
+@section Scripts
+{
+    <script src="~/js/plotly-latest.min.js"></script> @*TODO [COMPLETE]: использовать для скриптов секцию scripts*@
+<script type="text/javascript">
+
+        CHART = document.getElementById('Chart');
+
+        var dates = [];
+
+        var ProbaBuyValues = [];
+        var ProbaSellValues = [];
+        var BBLValues = [];
+
+
+        @foreach (var item in Model.Dates)
+{
+            <text>
+            dates.push(new Date(@item));
+            </text>
+
+}
+
+        @foreach (var item in Model.ProbaBuyValues)
+{
+            <text>
+        ProbaBuyValues.push(parseFloat(@item));
+            </text>
+
+}
+
+        @foreach (var item in Model.ProbaSellValues)
+{
+            <text>
+        ProbaSellValues.push(parseFloat(@item));
+            </text>
+
+}        @foreach (var item in Model.BBLValues)
+{
+            <text>
+        BBLValues.push(parseFloat(@item));
+            </text>
+
+}
+
+
+        var ProbaBuy = {
+            x: dates,
+            y: ProbaBuyValues,
+            mode: 'lines',
+            line: {
+                color: 'rgb(110, 77, 219)',
+                width: 2
+            },
+            name: 'ProbaBuy'
+        };
+
+    var ProbaSell = {
+            x: dates,
+        y: ProbaSellValues,
+            mode: 'lines',
+            line: {
+                color: 'rgb(219, 77, 120)',
+                width: 2
+            },
+        name: 'ProbaSell'
+        };
+
+        var BBL = {
+            x: dates,
+            y: BBLValues,
+            mode: 'lines',
+            line: {
+                color: 'rgb(77, 219, 101)',
+                width: 2
+            },
+            name: 'BBL'
+    };
+
+
+    var data = [ProbaBuy, ProbaSell, BBL, layout];
+
+        Plotly.plot(CHART, data);
+
+</script>
+}
+
+@model CRM.ViewModels.Charts.BollingerBandsViewModel
+
+@Html.Partial("_BollingerBandsFilterPanel")
+
+<div class="content">
+
+    @Html.ValidationSummary()
+
+    <div id="Chart" style="display: @(Model.Dates.Count != 0 ? "block" : "none")">
+    </div>
+
+</div>

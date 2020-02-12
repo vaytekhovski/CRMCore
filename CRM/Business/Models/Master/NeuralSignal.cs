@@ -11,6 +11,8 @@ namespace Business.Models.Master
         public string Base { get; set; }
         public DateTime Time { get; set; }
         public string Quote { get; set; }
+        public decimal ProbaSell { get; set; }
+        public decimal ProbaBuy { get; set; }
         public decimal BBL { get; set; }
     }
 }
