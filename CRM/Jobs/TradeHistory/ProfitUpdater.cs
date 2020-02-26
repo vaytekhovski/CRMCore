@@ -126,7 +126,7 @@ namespace Jobs
                         }
 
                         profit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity;
-                        profitWithoutFee = profit;
+                        profitWithoutFee += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity; ;
 
                         profit -= TH[i].Fee;
 
