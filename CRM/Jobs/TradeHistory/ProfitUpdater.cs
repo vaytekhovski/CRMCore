@@ -107,7 +107,7 @@ namespace Jobs
                 foreach (var Account in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
                 {
                     decimal profit = 0;
-                    decimal enterTax = 0;
+                    decimal Fee = 0;
                     decimal desiredProfit = 0;
                     decimal buyAmount = 0;
 
@@ -116,11 +116,13 @@ namespace Jobs
                     for (int i = 0; i < TH.Count(); i++)
                     {
                         buyAmount += TH[i].Side == "buy" ? TH[i].DollarQuantity : 0;
-                        enterTax = TH[i].Side == "buy" ? TH[i].DollarQuantity * (decimal)0.001 : 0;
-                        TH[i].EnterTax = TH[i].Side == "buy" ? enterTax : 0;
+                        Fee = TH[i].DollarQuantity * (decimal)0.001;
+                        TH[i].Fee = Fee;
+                        //enterTax = TH[i].Side == "buy" ? TH[i].DollarQuantity * (decimal)0.001 : 0;
+                        //TH[i].EnterTax = TH[i].Side == "buy" ? enterTax : 0;
 
                         profit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity;
-                        profit -= TH[i].EnterTax;
+                        profit -= TH[i].Fee;
                         desiredProfit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DesiredDollarQuantity;
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
@@ -144,20 +146,20 @@ namespace Jobs
                         }
                     }
 
-                    int j = 0;
-                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == Account).OrderBy(x => x.Time))
-                    {
-                        if (TH[j].Profit != 0)
-                        {
-                            item.Profit = TH[j].Profit;
-                            item.DesiredProfit = TH[j].DesiredProfit;
+                    //int j = 0;
+                    //foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == Account).OrderBy(x => x.Time))
+                    //{
+                    //    if (TH[j].Profit != 0)
+                    //    {
+                    //        item.Profit = TH[j].Profit;
+                    //        item.DesiredProfit = TH[j].DesiredProfit;
 
-                            item.PercentProfit = TH[j].PercentProfit;
-                            item.DesiredPercentProfit = TH[j].DesiredPercentProfit;
-                        }
-                        item.EnterTax = TH[j].EnterTax;
-                        j++;
-                    }
+                    //        item.PercentProfit = TH[j].PercentProfit;
+                    //        item.DesiredPercentProfit = TH[j].DesiredPercentProfit;
+                    //    }
+                    //    item.EnterTax = TH[j].EnterTax;
+                    //    j++;
+                    //}
                     
                 }
             }

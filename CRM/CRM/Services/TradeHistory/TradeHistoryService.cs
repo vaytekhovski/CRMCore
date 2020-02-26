@@ -102,7 +102,7 @@ namespace CRM.Services
 
         private void UpdateTotalEnterTax(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
         {
-            model.TotalEnterTax = query.Where(x => x.EnterTax != 0).Sum(x => x.EnterTax);
+            model.TotalEnterTax = query.Where(x => x.Fee != 0).Sum(x => x.Fee);
         }
 
         private void UpdateTotalProfit(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)

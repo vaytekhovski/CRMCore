@@ -18,7 +18,7 @@ namespace Business
         public decimal DesiredProfit { get; set; }
         public decimal PercentProfit { get; set; }
         public decimal DesiredPercentProfit { get; set; }
-        public decimal EnterTax { get; set; }
+        public decimal Fee { get; set; }
         public string SignalStr { get; set; }
         public decimal LowerBand { get; set; }
         
