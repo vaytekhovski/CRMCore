@@ -241,14 +241,14 @@ namespace CRM.Controllers.Charts
             var model = _tradeHistoryService.LoadDataToChart(filter);
 
             ViewModel.Dates = model.AccountTradeHistories.Select(x => x.Time.ToJavascriptTicks()).ToList();
-            ViewModel.Values = model.AccountTradeHistories.Select(x => x.DesiredProfit.ToString(SeparateHelper.Separator)).ToList();
+            ViewModel.Values = model.AccountTradeHistories.Select(x => x.Profit.ToString(SeparateHelper.Separator)).ToList();
 
-            ViewModel.CountOfZero = model.AccountTradeHistories.Where(x => x.DesiredProfit == 0).Count();
-            ViewModel.CountOfMore = model.AccountTradeHistories.Where(x => x.DesiredProfit > 0).Count();
-            ViewModel.CountOfLess = model.AccountTradeHistories.Where(x => x.DesiredProfit < 0).Count();
+            ViewModel.CountOfZero = model.AccountTradeHistories.Where(x => x.Profit == 0).Count();
+            ViewModel.CountOfMore = model.AccountTradeHistories.Where(x => x.Profit > 0).Count();
+            ViewModel.CountOfLess = model.AccountTradeHistories.Where(x => x.Profit < 0).Count();
 
-            ViewModel.VolumeOfMore = model.DesiredProfitOrdersSumm.ToString(SeparateHelper.Separator);
-            ViewModel.VolumeOfLess = (model.DesiredLossOrdersSumm * -1).ToString(SeparateHelper.Separator);
+            ViewModel.VolumeOfMore = model.ProfitOrdersSumm.ToString(SeparateHelper.Separator);
+            ViewModel.VolumeOfLess = (model.LossOrdersSumm * -1).ToString(SeparateHelper.Separator);
 
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);

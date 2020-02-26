@@ -108,7 +108,7 @@ namespace CRM.Services
         private void UpdateTotalProfit(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
         {
             model.TotalProfit = query.Where(x => x.Profit != 0).Sum(x => x.Profit);
-            model.DesiredTotalProfit = query.Where(x => x.DesiredProfit != 0).Sum(x => x.DesiredProfit);
+            model.TotalProfitWithoutFee = query.Where(x => x.ProfitWithoutFee != 0).Sum(x => x.ProfitWithoutFee);
         }
 
         private void UpdateCountOfLossAndProfitOrders(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
@@ -116,8 +116,8 @@ namespace CRM.Services
             model.LossOrdersCount = query.Where(x => x.Profit < 0).Count();
             model.ProfitOrdersCount = query.Where(x => x.Profit > 0).Count();
 
-            model.DesiredLossOrdersCount = query.Where(x => x.DesiredProfit < 0).Count();
-            model.DesiredProfitOrdersCount = query.Where(x => x.DesiredProfit > 0).Count();
+            model.LossOrdersCountWithoutFee = query.Where(x => x.ProfitWithoutFee < 0).Count();
+            model.ProfitOrdersCountWithoutFee = query.Where(x => x.ProfitWithoutFee > 0).Count();
         }
 
         private void UpdateSummOfLossAndProfitOrders(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
@@ -125,8 +125,8 @@ namespace CRM.Services
             model.LossOrdersSumm = query.Where(x => x.Profit < 0).Sum(x => x.Profit);
             model.ProfitOrdersSumm = query.Where(x => x.Profit > 0).Sum(x => x.Profit);
 
-            model.DesiredLossOrdersSumm = query.Where(x => x.DesiredProfit < 0).Sum(x => x.DesiredProfit);
-            model.DesiredProfitOrdersSumm = query.Where(x => x.DesiredProfit > 0).Sum(x => x.DesiredProfit);
+            model.LossOrdersSummWithoutFee = query.Where(x => x.ProfitWithoutFee < 0).Sum(x => x.ProfitWithoutFee);
+            model.ProfitOrdersSummWithoutFee = query.Where(x => x.ProfitWithoutFee > 0).Sum(x => x.ProfitWithoutFee);
         }
 
     }

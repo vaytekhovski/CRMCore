@@ -29,7 +29,7 @@ namespace Jobs
 
             using (BasicContext context = new BasicContext())
             {
-                AccountTradeHistories = UpdateDesiredAmounts(AccountTradeHistories);
+                //AccountTradeHistories = UpdateDesiredAmounts(AccountTradeHistories);
                 List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories.ToList());
 
                 if (regularCalculating)
@@ -61,43 +61,43 @@ namespace Jobs
         }
 
         
-        private List<AccountTradeHistory> UpdateDesiredAmounts(List<AccountTradeHistory> UncalculatedTradeHistories)
-        {
-            foreach (var _coin in UncalculatedTradeHistories.Where(x => x.Pair != "all").Select(x => x.Pair).Distinct())
-            {
-                foreach (var AccountName in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
-                {
-                    decimal buyAmount = 0;
+        //private List<AccountTradeHistory> UpdateDesiredAmounts(List<AccountTradeHistory> UncalculatedTradeHistories)
+        //{
+        //    foreach (var _coin in UncalculatedTradeHistories.Where(x => x.Pair != "all").Select(x => x.Pair).Distinct())
+        //    {
+        //        foreach (var AccountName in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
+        //        {
+        //            decimal buyAmount = 0;
 
-                    var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time).ToArray();
+        //            var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time).ToArray();
 
-                    for (int i = 0; i < TH.Count(); i++)
-                    {
-                        buyAmount += TH[i].Side == "buy" ? TH[i].Quantity : 0;
+        //            for (int i = 0; i < TH.Count(); i++)
+        //            {
+        //                buyAmount += TH[i].Side == "buy" ? TH[i].Quantity : 0;
 
-                        if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
-                        {
-                            TH[i].DesiredQuantity = buyAmount;
-                            TH[i].DesiredDollarQuantity = buyAmount * TH[i].Price;
-                            buyAmount = 0;
-                        }
-                    }
+        //                if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
+        //                {
+        //                    TH[i].DesiredQuantity = buyAmount;
+        //                    TH[i].DesiredDollarQuantity = buyAmount * TH[i].Price;
+        //                    buyAmount = 0;
+        //                }
+        //            }
 
-                    int j = 0;
-                    foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time))
-                    {
-                        if (TH[j].DesiredQuantity != 0)
-                        {
-                            item.DesiredQuantity = TH[j].DesiredQuantity;
-                            item.DesiredDollarQuantity = TH[j].DesiredDollarQuantity;
-                        }
-                        j++;
-                    }
-                }
-            }
+        //            int j = 0;
+        //            foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time))
+        //            {
+        //                if (TH[j].DesiredQuantity != 0)
+        //                {
+        //                    item.DesiredQuantity = TH[j].DesiredQuantity;
+        //                    item.DesiredDollarQuantity = TH[j].DesiredDollarQuantity;
+        //                }
+        //                j++;
+        //            }
+        //        }
+        //    }
 
-            return UncalculatedTradeHistories;
-        }
+        //    return UncalculatedTradeHistories;
+        //}
 
 
         private List<AccountTradeHistory> CalculateProfit(List<AccountTradeHistory> UncalculatedTradeHistories)
@@ -107,33 +107,38 @@ namespace Jobs
                 foreach (var Account in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
                 {
                     decimal profit = 0;
+                    decimal profitWithoutFee = 0;
                     decimal Fee = 0;
-                    decimal desiredProfit = 0;
                     decimal buyAmount = 0;
+                    decimal buyAmountWithoutFee = 0;
 
                     var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == Account).OrderBy(x => x.Time).ToArray();
 
                     for (int i = 0; i < TH.Count(); i++)
                     {
-                        buyAmount += TH[i].Side == "buy" ? TH[i].DollarQuantity : 0;
                         Fee = TH[i].DollarQuantity * (decimal)0.001;
                         TH[i].Fee = Fee;
-                        //enterTax = TH[i].Side == "buy" ? TH[i].DollarQuantity * (decimal)0.001 : 0;
-                        //TH[i].EnterTax = TH[i].Side == "buy" ? enterTax : 0;
+
+                        if (TH[i].Side == "buy") 
+                        {
+                            buyAmount += TH[i].DollarQuantity + Fee;
+                            buyAmountWithoutFee += TH[i].DollarQuantity;
+                        }
 
                         profit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity;
+                        profitWithoutFee = profit;
+
                         profit -= TH[i].Fee;
-                        desiredProfit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DesiredDollarQuantity;
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
                         {
                             TH[i].Profit = profit;
-                            TH[i].DesiredProfit = desiredProfit;
+                            TH[i].ProfitWithoutFee = profitWithoutFee;
 
                             try
                             {
-                                TH[i].PercentProfit = profit / ((buyAmount + (buyAmount + profit)) / 2) * 100;
-                                TH[i].DesiredPercentProfit = desiredProfit / ((buyAmount + (buyAmount + desiredProfit)) / 2) * 100;
+                                TH[i].PercentProfit = (buyAmount / (TH[i].DollarQuantity + Fee) - 1) * -100;
+                                TH[i].PercentProfitWithoutFee = (buyAmountWithoutFee / TH[i].DollarQuantity - 1) * -100;
                             }
                             catch (Exception ex)
                             {
@@ -141,8 +146,9 @@ namespace Jobs
                             }
 
                             profit = 0;
-                            desiredProfit = 0;
+                            profitWithoutFee = 0;
                             buyAmount = 0;
+                            buyAmountWithoutFee = 0;
                         }
                     }
 

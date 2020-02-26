@@ -65,6 +65,16 @@ table
 
 
 
-.ProfitTableSell{
-    width:100px;
+
+.ProfitInfo th, .ProfitInfo td {
+    border: 1px solid black;
+    width: 300px;
+}
+
+
+.ProfitInfo {
+    margin: 20px auto;
+    width: 400px;
+    font-size: 14px;
+    text-align: center;
 }

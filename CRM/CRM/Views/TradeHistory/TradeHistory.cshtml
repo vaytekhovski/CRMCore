@@ -88,7 +88,37 @@
 
         }
 
-        <table style="margin: 0 auto; width: 400px; font-size: 14px; display: @(Model.TotalProfit == 0 ? "none" : "block"); ">
+        <table class="ProfitInfo" style="display: @(Model.TotalProfit == 0 ? "none" : "block"); ">
+            <tr>
+                <th colspan="2">С уч. ком.</th>
+                <th colspan="2">Без уч. ком.</th>
+            </tr>
+            <tr>
+                <td>Прибыльные</td>
+                <td>Убыточные</td>
+                <td>Прибыльные</td>
+                <td>Убыточные</td>
+            </tr>
+            <tr>
+                <td>@Model.ProfitOrdersCount шт.</td>
+                <td>@Model.LossOrdersCount шт.</td>
+                <td>@Model.ProfitOrdersCountWithoutFee шт.</td>
+                <td>@Model.LossOrdersCountWithoutFee шт.</td>
+            </tr>
+            <tr>
+                <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSumm)</td>
+                <td>$ @String.Format("{0:0.##}", Model.LossOrdersSumm)</td>
+                <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSummWithoutFee)</td>
+                <td>$ @String.Format("{0:0.##}", Model.LossOrdersSummWithoutFee)</td>
+            </tr>
+            <tr>
+                <td colspan="2">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
+                <td colspan="2">$ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)</td>
+            </tr>
+
+        </table>
+
+        @*<table style="margin: 0 auto; width: 400px; font-size: 14px; display: @(Model.TotalProfit == 0 ? "none" : "block"); ">
             <tr>
                 <th colspan="2" style="padding-right: 15px">Убыточные сделки</th>
                 <th colspan="2">Прибыльные сделки</th>
@@ -112,7 +142,7 @@
                 <td colspan="4" style="text-align:center; color: @(Model.TotalProfit - Model.TotalEnterTax > 0 ? "green" : "red")">@TotalProfitStr</td>
             </tr>
 
-        </table>
+        </table>*@
     </div>
 
 
@@ -127,11 +157,9 @@
                     <th class="sorttable_nosort">Пара</th>
                     <th class="sorttable_nosort">Цена</th>
                     <th class="sorttable_nosort">Кол-во</th>
-                    <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. кол-во</th>
                     <th class="sorttable_nosort">Кол-во</th>
-                    <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. кол-во</th>
-                    <th class="sorttable_nosort">Прибыль + ком.</th>
-                    <th style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");" class="sorttable_nosort">Расч. прибыль</th>
+                    <th class="sorttable_nosort">Прибыль.</th>
+                    <th style="display: @(Context.User.Identity.Name != "5" ? "none" : "table-cell");" class="sorttable_nosort">Прибыль без ком.</th>
                     <th class="sorttable_nosort"> Lower band</th>
                 </tr>
             </thead>
@@ -154,29 +182,23 @@
                         itemProfitStr = null;
                     }
 
-                    string itemDesiredProfitStr = "";
-                    if (item.Side == "sell" && item.Profit != 0)
+                    string itemProfitWithoutFeeStr = "";
+                    if (item.ProfitWithoutFee != 0)
                     {
-                        itemDesiredProfitStr = item.DesiredProfit > 0 ? "+" : "";
-                        itemDesiredProfitStr += String.Format("{0:0.##}", item.DesiredProfit);
-                        itemDesiredProfitStr += "$";
-                        itemDesiredProfitStr += " | ";
-                        itemDesiredProfitStr += item.DesiredProfit > 0 ? "+" : "";
-                        itemDesiredProfitStr += String.Format("{0:0.##}", item.DesiredPercentProfit);
-                        itemDesiredProfitStr += "%";
+                        itemProfitWithoutFeeStr = item.ProfitWithoutFee > 0 ? "+" : "";
+                        itemProfitWithoutFeeStr += String.Format("{0:0.##}", item.ProfitWithoutFee);
+                        itemProfitWithoutFeeStr += "$";
+                        itemProfitWithoutFeeStr += " | ";
+                        itemProfitWithoutFeeStr += item.ProfitWithoutFee > 0 ? "+" : "";
+                        itemProfitWithoutFeeStr += String.Format("{0:0.##}", item.PercentProfitWithoutFee);
+                        itemProfitWithoutFeeStr += "%";
                     }
                     else
                     {
-                        itemDesiredProfitStr = null;
+                        itemProfitStr = null;
                     }
 
-                    string enterTaxStr = item.Fee != 0 ? String.Format("{0:0.##}" + "$", item.Fee) : "";
 
-                    string itemDecidePercentStr = "";
-
-
-                    if ((Context.User.Identity.Name != "1" && item.DesiredQuantity != 0) || Context.User.Identity.Name == "1")
-                    {
                 <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
                     <td>@item.Id</td>
                     <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
@@ -185,14 +207,11 @@
                     <td>@item.Pair</td>
                     <td>$@String.Format("{0:0.########}", item.Price)</td>
                     <td>@item.Quantity</td>
-                    <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">@item.DesiredQuantity</td>
                     <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
-                    <td style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell");">$@String.Format("{0:0.##}", item.DesiredDollarQuantity)</td>
                     <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                    <td class="profit" style="display: @(Context.User.Identity.Name != "1" ? "none" : "table-cell"); color: @(item.DesiredProfit > 0 ? "green" : "red");">@itemDesiredProfitStr</td>
+                    <td class="profit" style="display: @(Context.User.Identity.Name != "5" ? "none" : "table-cell"); color: @(item.ProfitWithoutFee > 0 ? "green" : "red");">@itemProfitWithoutFeeStr</td>
                     <td>@item.LowerBand</td>
                 </tr>
-                    }
                 }
             </tbody>
         </table>

@@ -51,7 +51,7 @@ namespace CRM.Services.Statistics
                 statistics.Add(new StatisticsElement
                 {
                     Date = date,
-                    ProfitOfDay = query.Where(x => x.Time.Date == date).Sum(x => x.DesiredProfit),
+                    ProfitOfDay = query.Where(x => x.Time.Date == date).Sum(x => x.Profit),
                     TotalProfit = 0
                 });
             }

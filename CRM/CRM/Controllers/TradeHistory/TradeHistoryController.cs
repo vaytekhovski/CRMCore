@@ -85,7 +85,7 @@ namespace CRM.Controllers
             viewModel.Orders = Model.AccountTradeHistories;
 
             viewModel.TotalProfit = Model.TotalProfit;
-            viewModel.DesiredTotalProfit = Model.DesiredTotalProfit;
+            viewModel.TotalProfitWithoutFee = Model.TotalProfitWithoutFee;
 
             viewModel.LossOrdersCount = Model.LossOrdersCount;
             viewModel.LossOrdersSumm = Model.LossOrdersSumm;
@@ -93,11 +93,11 @@ namespace CRM.Controllers
             viewModel.ProfitOrdersCount = Model.ProfitOrdersCount;
             viewModel.ProfitOrdersSumm = Model.ProfitOrdersSumm;
 
-            viewModel.DesiredLossOrdersCount = Model.DesiredLossOrdersCount;
-            viewModel.DesiredLossOrdersSumm = Model.DesiredLossOrdersSumm;
+            viewModel.ProfitOrdersCountWithoutFee = Model.ProfitOrdersCountWithoutFee;
+            viewModel.LossOrdersCountWithoutFee = Model.LossOrdersCountWithoutFee;
 
-            viewModel.DesiredProfitOrdersCount = Model.DesiredProfitOrdersCount;
-            viewModel.DesiredProfitOrdersSumm = Model.DesiredProfitOrdersSumm;
+            viewModel.ProfitOrdersSummWithoutFee = Model.ProfitOrdersSummWithoutFee;
+            viewModel.LossOrdersSummWithoutFee = Model.LossOrdersSummWithoutFee;
 
             viewModel.TotalEnterTax = Model.TotalEnterTax;
             
