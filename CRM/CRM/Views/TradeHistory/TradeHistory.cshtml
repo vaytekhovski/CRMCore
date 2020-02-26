@@ -112,37 +112,12 @@
                 <td>$ @String.Format("{0:0.##}", Model.LossOrdersSummWithoutFee)</td>
             </tr>
             <tr>
-                <td colspan="2">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
-                <td colspan="2">$ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)</td>
+                <td colspan="2" style="color: @(Model.TotalProfit > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
+                <td colspan="2" style="color: @(Model.TotalProfitWithoutFee > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)</td>
             </tr>
 
         </table>
 
-        @*<table style="margin: 0 auto; width: 400px; font-size: 14px; display: @(Model.TotalProfit == 0 ? "none" : "block"); ">
-            <tr>
-                <th colspan="2" style="padding-right: 15px">Убыточные сделки</th>
-                <th colspan="2">Прибыльные сделки</th>
-            </tr>
-            <tr>
-                <th class="ProfitTableSell">Кол-во</th>
-                <th class="ProfitTableSell">Сумма</th>
-                <th class="ProfitTableSell">Кол-во</th>
-                <th class="ProfitTableSell">Сумма</th>
-            </tr>
-            <tr>
-                <td>@Model.DesiredLossOrdersCount</td>
-                <td>$@Model.DesiredLossOrdersSumm.ToString("#.##")</td>
-                <td>@Model.DesiredProfitOrdersCount</td>
-                <td>$@Model.DesiredProfitOrdersSumm.ToString("#.##")</td>
-            </tr>
-            <tr>
-                <td colspan="4" style="text-align:center;">@TotalEnterTaxStr</td>
-            </tr>
-            <tr>
-                <td colspan="4" style="text-align:center; color: @(Model.TotalProfit - Model.TotalEnterTax > 0 ? "green" : "red")">@TotalProfitStr</td>
-            </tr>
-
-        </table>*@
     </div>
 
 
@@ -158,7 +133,7 @@
                     <th class="sorttable_nosort">Цена</th>
                     <th class="sorttable_nosort">Кол-во</th>
                     <th class="sorttable_nosort">Кол-во</th>
-                    <th class="sorttable_nosort">Прибыль.</th>
+                    <th class="sorttable_nosort">Прибыль с ком.</th>
                     <th style="display: @(Context.User.Identity.Name != "5" ? "none" : "table-cell");" class="sorttable_nosort">Прибыль без ком.</th>
                     <th class="sorttable_nosort"> Lower band</th>
                 </tr>

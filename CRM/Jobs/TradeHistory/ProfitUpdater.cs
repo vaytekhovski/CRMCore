@@ -137,8 +137,9 @@ namespace Jobs
 
                             try
                             {
-                                TH[i].PercentProfit = (buyAmount / (TH[i].DollarQuantity + Fee) - 1) * -100;
-                                TH[i].PercentProfitWithoutFee = (buyAmountWithoutFee / TH[i].DollarQuantity - 1) * -100;
+                                TH[i].PercentProfit = ((TH[i].DollarQuantity + Fee) - buyAmount) / buyAmount * 100;
+                                TH[i].PercentProfitWithoutFee = (TH[i].DollarQuantity - buyAmountWithoutFee) / buyAmountWithoutFee * 100;
+
                             }
                             catch (Exception ex)
                             {
