@@ -82,9 +82,9 @@
             <tr>
                 <th colspan="2">С учетом комиссии</th>
                 <th colspan="2">Без учета комисси</th>
-                <th>Общая прибыль (TP):</th>
+                <th>Общая приб. (TP):</th>
                 <th>Общий убыток (TL):</th>
-                <th>Итоговый результат (TR):</th>
+                <th>Итоговый рез. (TR):</th>
             </tr>
             <tr>
                 <th>Прибыльные</th>
@@ -100,9 +100,9 @@
                 <td>@Model.LossOrdersCount шт.</td>
                 <td>@Model.ProfitOrdersCountWithoutFee шт.</td>
                 <td>@Model.LossOrdersCountWithoutFee шт.</td>
-                <th>Кол-во прибыльных (NP): </th>
-                <th>Кол-во убыточных (NL): </th>
-                <th>Итоговое кол-во (N): </th>
+                <th>Кол-во приб. (NP): </th>
+                <th>Кол-во уб. (NL): </th>
+                <th>Итог. кол-во (N): </th>
             </tr>
             <tr>
                 <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSumm)</td>
@@ -117,8 +117,8 @@
                 <td colspan="2" style="color: @(Model.TotalProfit > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
                 <td colspan="2" style="color: @(Model.TotalProfitWithoutFee > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)</td>
                 <th>Отношение (P/L): </th>
-                <th>Средняя прибыльная (AP): </th>
-                <th>Средняя убыточная (AL): </th>
+                <th>Ср. прибыльная (AP): </th>
+                <th>Ср. убыточная (AL): </th>
             </tr>
             <tr>
                 <th colspan="4"></th>
@@ -128,8 +128,8 @@
             </tr>
             <tr>
 
-                <th>Средний результат (AR): </th>
-                <th>Отношение ср. прибыли к ср. убытку (AP/AL): </th>
+                <th>Средний рез. (AR): </th>
+                <th>Отн. ср. пр. к ср. уб. (AP/AL): </th>
                 <th>Макс. нарастающий убыток (MIDD): </th>
                 <th>Мин. депоз. (Dmin): </th>
                 <th>Отдача (R): </th>
