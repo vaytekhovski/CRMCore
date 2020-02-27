@@ -81,8 +81,8 @@ table
 
 .Indicators {
     margin: 20px auto;
-    width: 100%;
-    font-size: 14px;
+    width: 80% !important;
+    font-size: 12px;
     text-align: center;
 }
 
