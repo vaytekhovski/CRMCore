@@ -74,7 +74,19 @@ table
 
 .ProfitInfo {
     margin: 20px auto;
-    width: 400px;
+    width: 400px !important;
     font-size: 14px;
     text-align: center;
+}
+
+.Indicators {
+    margin: 20px auto;
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+}
+
+.Indicators th, .Indicators td {
+    border: 1px solid black;
+    width: 300px;
 }

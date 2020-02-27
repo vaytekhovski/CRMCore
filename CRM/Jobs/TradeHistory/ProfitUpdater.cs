@@ -122,7 +122,12 @@ namespace Jobs
                         if (TH[i].Side == "buy") 
                         {
                             buyAmount += TH[i].DollarQuantity + Fee;
-                            buyAmountWithoutFee += TH[i].DollarQuantity;
+                            buyAmountWithoutFee = TH[i].DollarQuantity;
+                        }
+
+                        if(TH[i].Id == 4366)
+                        {
+                            var a = "";
                         }
 
                         profit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity;
@@ -132,6 +137,7 @@ namespace Jobs
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
                         {
+
                             TH[i].Profit = profit;
                             TH[i].ProfitWithoutFee = profitWithoutFee;
 
@@ -139,7 +145,6 @@ namespace Jobs
                             {
                                 TH[i].PercentProfit = ((TH[i].DollarQuantity + Fee) - buyAmount) / buyAmount * 100;
                                 TH[i].PercentProfitWithoutFee = (TH[i].DollarQuantity - buyAmountWithoutFee) / buyAmountWithoutFee * 100;
-
                             }
                             catch (Exception ex)
                             {
@@ -152,21 +157,6 @@ namespace Jobs
                             buyAmountWithoutFee = 0;
                         }
                     }
-
-                    //int j = 0;
-                    //foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == Account).OrderBy(x => x.Time))
-                    //{
-                    //    if (TH[j].Profit != 0)
-                    //    {
-                    //        item.Profit = TH[j].Profit;
-                    //        item.DesiredProfit = TH[j].DesiredProfit;
-
-                    //        item.PercentProfit = TH[j].PercentProfit;
-                    //        item.DesiredPercentProfit = TH[j].DesiredPercentProfit;
-                    //    }
-                    //    item.EnterTax = TH[j].EnterTax;
-                    //    j++;
-                    //}
                     
                 }
             }

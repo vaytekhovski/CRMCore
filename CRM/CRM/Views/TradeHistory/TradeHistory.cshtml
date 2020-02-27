@@ -78,17 +78,7 @@
 
     <div>
 
-        @{
-            string TotalProfitStr = "С учетом комисии ";
-            TotalProfitStr += Model.TotalProfit - Model.TotalEnterTax > 0 ? "Прибыль: +" : "Убыток: ";
-            TotalProfitStr += String.Format("{0:0.##}", Model.TotalProfit - Model.TotalEnterTax);
-            TotalProfitStr += "$";
-
-            string TotalEnterTaxStr = "Вход. комиссия: " + String.Format("{0:0.##}", Model.TotalEnterTax) + "$";
-
-        }
-
-        <table class="ProfitInfo" style="display: @(Model.TotalProfit == 0 ? "none" : "block"); ">
+        <table class="table table-bordered table-font ProfitInfo" style="display: @(Model.TotalProfit == 0 ? "none" : "block"); ">
             <tr>
                 <th colspan="2">С уч. ком.</th>
                 <th colspan="2">Без уч. ком.</th>
@@ -117,11 +107,62 @@
             </tr>
 
         </table>
-
     </div>
 
 
     <div class="container table_block">
+        <table class="table table-bordered table-font Indicators" style="display: @(Model.TotalProfit == 0 ? "none" : "block");">
+            <tr>
+                <td>Общая прибыль (TP): </td>
+                <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSumm)</td>
+                <td>Общий убыток (TL): </td>
+                <td>$ @String.Format("{0:0.##}", Model.LossOrdersSumm)</td>
+                <td>Итоговый результат (TR): </td>
+                <td style="color: @(Model.TotalProfit > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
+            </tr>
+            <tr>
+                <td>Кол-во прибыльных (NP): </td>
+                <td>@Model.ProfitOrdersCount</td>
+                <td>Кол-во убыточных (NL): </td>
+                <td>@Model.LossOrdersCount</td>
+                <td>Итоговое кол-во (N): </td>
+                <td>@{var N = Model.ProfitOrdersCount + Model.LossOrdersCount;} @N</td>
+            </tr>
+            <tr>
+                <td>Отношение (P/L): </td>
+                <td>@String.Format("{0:0.##}", Model.RPL)</td>
+                <td>Средняя прибыльная (AP): </td>
+                <td>@String.Format("{0:0.##}", Model.AP)</td>
+                <td>Средняя убыточная (AL): </td>
+                <td>@String.Format("{0:0.##}", Model.AL)</td>
+            </tr>
+
+            <tr>
+                <td>Средний результат (AR): </td>
+                <td>@String.Format("{0:0.##}", Model.AR)</td>
+                <td>Отношение ср. прибыли к ср. убытку (AP/AL): </td>
+                <td>@String.Format("{0:0.##}", Model.RAPAL)</td>
+                <td>Макс. нарастающий убыток (MIDD): </td>
+                <td>@String.Format("{0:0.##}", Model.MIDD)</td>
+            </tr>
+            <tr>
+                <td>Мин. депоз. (Dmin): </td>
+                <td>@String.Format("{0:0.##}", Model.Dmin)</td>
+                <td>Отдача (R): </td>
+                <td>@String.Format("{0:0.##}", Model.R)</td>
+                <td>Фактор восстановления (RF): </td>
+                <td>@String.Format("{0:0.##}", Model.RF)</td>
+            </tr>
+            <tr>
+                <td>Профит-фактор (PF): </td>
+                <td>@String.Format("{0:0.##}", Model.PF)</td>
+                <td>Достоверный профит-фактор (PF): </td>
+                <td>@String.Format("{0:0.##}", Model.APF)</td>
+                <td>Коэфф. Шапра: </td>
+                <td>@String.Format("{0:0.##}", Model.SharpeRatio)</td>
+            </tr>
+        </table>
+
         <table class="sortable table table-bordered table-font" style=" display: @(Model.TotalProfit == 0 ? "none" : "table");">
             <thead>
                 <tr>
@@ -174,24 +215,24 @@
                     }
 
 
-                <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
-                    <td>@item.Id</td>
-                    <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
-                    <td>@item.Account</td>
-                    <td>@item.Side</td>
-                    <td>@item.Pair</td>
-                    <td>$@String.Format("{0:0.########}", item.Price)</td>
-                    <td>@item.Quantity</td>
-                    <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
-                    <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                    <td class="profit" style="display: @(Context.User.Identity.Name != "5" ? "none" : "table-cell"); color: @(item.ProfitWithoutFee > 0 ? "green" : "red");">@itemProfitWithoutFeeStr</td>
-                    <td>@item.LowerBand</td>
-                </tr>
+                    <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
+                        <td>@item.Id</td>
+                        <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
+                        <td>@item.Account</td>
+                        <td>@item.Side</td>
+                        <td>@item.Pair</td>
+                        <td>$@String.Format("{0:0.########}", item.Price)</td>
+                        <td>@item.Quantity</td>
+                        <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
+                        <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
+                        <td class="profit" style="display: @(Context.User.Identity.Name != "5" ? "none" : "table-cell"); color: @(item.ProfitWithoutFee > 0 ? "green" : "red");">@itemProfitWithoutFeeStr</td>
+                        <td>@item.LowerBand</td>
+                    </tr>
                 }
             </tbody>
         </table>
 
-        
+
 
         @Html.Partial("Pagination")
     </div>
