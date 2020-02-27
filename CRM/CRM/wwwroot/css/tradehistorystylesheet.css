@@ -15,6 +15,10 @@
     padding: 0 !important;
 }
 
+    .Indicators{
+        display:none !important;
+    }
+
 }
 
 table
@@ -25,6 +29,8 @@ table
 .table-font td, th {
     text-align: center;
 }
+
+
 
 /* Popup box  */
 .hover_bkgr_fricc {
