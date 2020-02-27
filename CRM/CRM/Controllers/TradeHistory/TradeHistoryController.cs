@@ -76,7 +76,7 @@ namespace CRM.Controllers
         private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryModel Model, TradeHistoryFilterModel viewModel)
         {
             //TODO: [COMPLETE] make single query for all distinct accounts, set names
-            
+
             foreach (var item in Model.AccountTradeHistories)
             {
                 item.Account = AccountExchangeKeys.ExchangeKeys.FirstOrDefault(x => x.AccountId == item.Account).Name;
@@ -101,37 +101,38 @@ namespace CRM.Controllers
 
             viewModel.TotalEnterTax = Model.TotalEnterTax;
 
-
-            viewModel.RPL = (decimal)Model.ProfitOrdersCount / (decimal)Model.LossOrdersCount;
-            viewModel.AP = Model.ProfitOrdersCount > 0 ? Model.ProfitOrdersSumm / Model.ProfitOrdersCount : 0;
-            viewModel.AL = Model.LossOrdersSumm / Model.LossOrdersCount;
-            viewModel.AR = Model.TotalProfit / (Model.ProfitOrdersCount + Model.LossOrdersCount);
-            viewModel.RAPAL = viewModel.AP / Math.Abs(viewModel.AL);
-
-            var TroughValue = Model.AccountTradeHistories.Min(x => x.DollarQuantity);
-            var PeakValue = Model.AccountTradeHistories.Max(x => x.DollarQuantity);
-            viewModel.MIDD = TroughValue - PeakValue / PeakValue;
-            viewModel.Dmin = viewModel.MIDD + 100;
-
-            viewModel.R = Model.TotalProfit / viewModel.Dmin;
-            viewModel.RF = Model.TotalProfit / viewModel.MIDD;
-            viewModel.PF = Model.ProfitOrdersSumm / Math.Abs(Model.LossOrdersSumm);
-            viewModel.APF = (Model.ProfitOrdersSumm - Model.AccountTradeHistories.Max(x => x.Profit) / Math.Abs(Model.LossOrdersSumm));
-
-
-            var MidPercentProfit = Model.AccountTradeHistories.Sum(x => x.PercentProfit) / Model.AccountTradeHistories.Count;
-
-            double StandardDeviation = 0;
-            foreach (var item in Model.AccountTradeHistories.Select(x => x.PercentProfit).ToList())
+            if (Model.AccountTradeHistories.Count > 0)
             {
-                StandardDeviation += Math.Pow((double)item - (double)MidPercentProfit, 2);
+                viewModel.RPL = (decimal)Model.ProfitOrdersCount / (decimal)Model.LossOrdersCount;
+                viewModel.AP = Model.ProfitOrdersCount > 0 ? Model.ProfitOrdersSumm / Model.ProfitOrdersCount : 0;
+                viewModel.AL = Model.LossOrdersSumm / Model.LossOrdersCount;
+                viewModel.AR = Model.TotalProfit / (Model.ProfitOrdersCount + Model.LossOrdersCount);
+                viewModel.RAPAL = viewModel.AP / Math.Abs(viewModel.AL);
+
+                var TroughValue = Model.AccountTradeHistories.Min(x => x.DollarQuantity);
+                var PeakValue = Model.AccountTradeHistories.Max(x => x.DollarQuantity);
+                viewModel.MIDD = TroughValue - PeakValue / PeakValue;
+                viewModel.Dmin = viewModel.MIDD + 100;
+
+                viewModel.R = Model.TotalProfit / viewModel.Dmin;
+                viewModel.RF = Model.TotalProfit / viewModel.MIDD;
+                viewModel.PF = Model.ProfitOrdersSumm / Math.Abs(Model.LossOrdersSumm);
+                viewModel.APF = (Model.ProfitOrdersSumm - Model.AccountTradeHistories.Max(x => x.Profit) / Math.Abs(Model.LossOrdersSumm));
+
+
+                var MidPercentProfit = Model.AccountTradeHistories.Sum(x => x.PercentProfit) / Model.AccountTradeHistories.Count;
+
+                double StandardDeviation = 0;
+                foreach (var item in Model.AccountTradeHistories.Select(x => x.PercentProfit).ToList())
+                {
+                    StandardDeviation += Math.Pow((double)item - (double)MidPercentProfit, 2);
+                }
+
+                StandardDeviation /= Model.AccountTradeHistories.Count;
+                StandardDeviation = Math.Sqrt(StandardDeviation);
+
+                viewModel.SharpeRatio = (MidPercentProfit - 0.05m) / (decimal)StandardDeviation;
             }
-
-            StandardDeviation /= Model.AccountTradeHistories.Count;
-            StandardDeviation = Math.Sqrt(StandardDeviation);
-
-            viewModel.SharpeRatio = (MidPercentProfit - 0.05m) / (decimal)StandardDeviation;
-
 
             return viewModel;
         }
