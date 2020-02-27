@@ -76,7 +76,7 @@
 
 
 
-    <div>
+    @*<div>
 
         <table class="table table-bordered table-font ProfitInfo" style="display: @(Model.TotalProfit == 0 ? "none" : "block"); ">
             <tr>
@@ -107,12 +107,14 @@
             </tr>
 
         </table>
-    </div>
+    </div>*@
 
 
     <div class="container table_block">
         <table class="table table-bordered table-font Indicators" style="display: @(Model.TotalProfit == 0 ? "none" : "block");">
             <tr>
+                <td colspan="2">С уч. ком.</td>
+                <td colspan="2">Без уч. ком.</td>
                 <td>Общая прибыль (TP): </td>
                 <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSumm)</td>
                 <td>Общий убыток (TL): </td>
@@ -121,6 +123,10 @@
                 <td style="color: @(Model.TotalProfit > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
             </tr>
             <tr>
+                <td>Прибыльные</td>
+                <td>Убыточные</td>
+                <td>Прибыльные</td>
+                <td>Убыточные</td>
                 <td>Кол-во прибыльных (NP): </td>
                 <td>@Model.ProfitOrdersCount</td>
                 <td>Кол-во убыточных (NL): </td>
@@ -129,6 +135,10 @@
                 <td>@{var N = Model.ProfitOrdersCount + Model.LossOrdersCount;} @N</td>
             </tr>
             <tr>
+                <td>@Model.ProfitOrdersCount шт.</td>
+                <td>@Model.LossOrdersCount шт.</td>
+                <td>@Model.ProfitOrdersCountWithoutFee шт.</td>
+                <td>@Model.LossOrdersCountWithoutFee шт.</td>
                 <td>Отношение (P/L): </td>
                 <td>@String.Format("{0:0.##}", Model.RPL)</td>
                 <td>Средняя прибыльная (AP): </td>
@@ -138,6 +148,10 @@
             </tr>
 
             <tr>
+                <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSumm)</td>
+                <td>$ @String.Format("{0:0.##}", Model.LossOrdersSumm)</td>
+                <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSummWithoutFee)</td>
+                <td>$ @String.Format("{0:0.##}", Model.LossOrdersSummWithoutFee)</td>
                 <td>Средний результат (AR): </td>
                 <td>@String.Format("{0:0.##}", Model.AR)</td>
                 <td>Отношение ср. прибыли к ср. убытку (AP/AL): </td>
@@ -146,6 +160,8 @@
                 <td>@String.Format("{0:0.##}", Model.MIDD)</td>
             </tr>
             <tr>
+                <td colspan="2" style="color: @(Model.TotalProfit > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
+                <td colspan="2" style="color: @(Model.TotalProfitWithoutFee > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)</td>
                 <td>Мин. депоз. (Dmin): </td>
                 <td>@String.Format("{0:0.##}", Model.Dmin)</td>
                 <td>Отдача (R): </td>
@@ -154,6 +170,7 @@
                 <td>@String.Format("{0:0.##}", Model.RF)</td>
             </tr>
             <tr>
+                <td colspan="4" ></td>
                 <td>Профит-фактор (PF): </td>
                 <td>@String.Format("{0:0.##}", Model.PF)</td>
                 <td>Достоверный профит-фактор (PF): </td>
