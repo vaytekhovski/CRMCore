@@ -15,9 +15,9 @@
     padding: 0 !important;
 }
 
-    .Indicators{
-        display:none !important;
-    }
+.Indicators{
+    display:none !important;
+}
 
 }
 
@@ -85,6 +85,8 @@ table
     text-align: center;
 }
 
+
+
 .Indicators {
     margin: 20px auto;
     width: 100% !important;
@@ -92,7 +94,30 @@ table
     text-align: center;
 }
 
-.Indicators th, .Indicators td {
-    border: 1px solid black;
-    width: 300px;
+.Indicators th {
+    background-color: #333334;
+    width:200px;
+    color: white;
 }
+
+.Indicators td {
+    background-color: white;
+    color: black;
+}
+
+.Indicators tr:first-child th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.Indicators tr:first-child th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.Indicators tr:last-child th:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+.Indicators tr:last-child th:last-child {
+    border-bottom-right-radius: 8px;
+}
+

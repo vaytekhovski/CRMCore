@@ -32,6 +32,8 @@ namespace CRM.Controllers.Charts
 
         private readonly BollingerBandsService _bollingerBandsService;
 
+        private readonly TradeHistoryIndicatorsService _tradeHistoryIndicatorsService;
+
         public ChartsController()
         {
             _asksOnBids = new AsksOnBidsService();
@@ -40,6 +42,7 @@ namespace CRM.Controllers.Charts
             _tradeHistoryOnTradeHistoryDeltaService = new TradeHistoryOnTradeHistoryDeltaService();
             _tradeHistoryService = new TradeHistoryService();
             _bollingerBandsService = new BollingerBandsService();
+            _tradeHistoryIndicatorsService = new TradeHistoryIndicatorsService();
         }
 
         [HttpGet]
@@ -381,6 +384,68 @@ namespace CRM.Controllers.Charts
             return View(ViewModel);
         }
 
+        [HttpGet]
+        public ActionResult TradeHistoryIndicators()
+        {
+            var ViewModel = new TradeHistoryIndicatorsViewModel
+            {
+                PageName = "TH Indicators",
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr
+            };
+
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+
+
+            return View(ViewModel);
+        }
+        
+        [HttpPost]
+        public ActionResult TradeHistoryIndicators(TradeHistoryIndicatorsViewModel ViewModel)
+        {
+            ChartsFilter filter = new ChartsFilter
+            {
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate),
+            };
+
+            var model = _tradeHistoryIndicatorsService.Load(filter);
+
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
+            foreach (var item in model.Indicators)
+            {
+                ViewModel.Indicators.Add(new ViewIndicator
+                {
+                    AL = item.AL.ToString(SeparateHelper.Separator),
+                     AP = item.AP.ToString(SeparateHelper.Separator),
+                     APF = item.APF.ToString(SeparateHelper.Separator),
+                     AR = item.AR.ToString(SeparateHelper.Separator),
+                     Date = item.Date.ToJavascriptTicks(),
+                     Dmin = item.Dmin.ToString(SeparateHelper.Separator),
+                     MIDD = item.MIDD.ToString(SeparateHelper.Separator),
+                     N = item.N.ToString(SeparateHelper.Separator),
+                     NL = item.NL.ToString(SeparateHelper.Separator),
+                     NP = item.NP.ToString(SeparateHelper.Separator),
+                     PF = item.PF.ToString(SeparateHelper.Separator),
+                     R = item.R.ToString(SeparateHelper.Separator),
+                     RAPAL = item.RAPAL.ToString(SeparateHelper.Separator),
+                     RF = item.RF.ToString(SeparateHelper.Separator),
+                     RPL = item.RPL.ToString(SeparateHelper.Separator),
+                     SharpeRatio = item.SharpeRatio.ToString(SeparateHelper.Separator),
+                     TL = item.TL.ToString(SeparateHelper.Separator),
+                     TP = item.TP.ToString(SeparateHelper.Separator),
+                     TR = item.TR.ToString(SeparateHelper.Separator)
+                });
+            }
+            
+
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+
+
+            return View(ViewModel);
+        }
 
     }
 }

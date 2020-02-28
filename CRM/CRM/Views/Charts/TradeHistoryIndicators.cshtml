@@ -1,0 +1,478 @@
+﻿@{
+    ViewBag.Title = "TH Indicators";
+
+}
+
+@section Scripts
+{
+    <script src="~/js/plotly-latest.min.js"></script>
+    <script type="text/javascript">
+
+        TP_CHART = document.getElementById('TP_Chart');
+        TL_CHART = document.getElementById('TL_Chart');
+        TR_CHART = document.getElementById('TR_Chart');
+        NP_CHART = document.getElementById('NP_Chart');
+        NL_CHART = document.getElementById('NL_Chart');
+        N_CHART = document.getElementById('N_Chart');
+        RPL_CHART = document.getElementById('RPL_Chart');
+        AP_CHART = document.getElementById('AP_Chart');
+        AL_CHART = document.getElementById('AL_Chart');
+        AR_CHART = document.getElementById('AR_Chart');
+        RAPAL_CHART = document.getElementById('RAPAL_Chart');
+        MIDD_CHART = document.getElementById('MIDD_Chart');
+        Dmin_CHART = document.getElementById('Dmin_Chart');
+        R_CHART = document.getElementById('R_Chart');
+        RF_CHART = document.getElementById('RF_Chart');
+        PF_CHART = document.getElementById('PF_Chart');
+        APF_CHART = document.getElementById('APF_Chart');
+        SharpeRatio_CHART = document.getElementById('SharpeRatio_Chart');
+
+        var dates = [];
+
+        var TPvalues = [];
+        var TLvalues = [];
+        var TRvalues = [];
+        var NPvalues = [];
+        var NLvalues = [];
+        var Nvalues = [];
+        var RPLvalues = [];
+        var APvalues = [];
+        var ALvalues = [];
+        var ARvalues = [];
+        var RAPALvalues = [];
+        var MIDDvalues = [];
+        var Dminvalues = [];
+        var Rvalues = [];
+        var RFvalues = [];
+        var PFvalues = [];
+        var APFvalues = [];
+        var SharpeRatiovalues = [];
+
+
+
+        @foreach (var item in Model.Indicators)
+        {
+            <text>
+        dates.push(new Date(@item.Date));
+        TPvalues.push(parseFloat(@item.TP));
+        TLvalues.push(parseFloat(@item.TL));
+        TRvalues.push(parseFloat(@item.TR));
+        NPvalues.push(parseFloat(@item.NP));
+        NLvalues.push(parseFloat(@item.NL));
+        Nvalues.push(parseFloat(@item.N));
+        RPLvalues.push(parseFloat(@item.RPL));
+        APvalues.push(parseFloat(@item.AP));
+        ALvalues.push(parseFloat(@item.AL));
+        ARvalues.push(parseFloat(@item.AR));
+        RAPALvalues.push(parseFloat(@item.RAPAL));
+        MIDDvalues.push(parseFloat(@item.MIDD));
+        Dminvalues.push(parseFloat(@item.Dmin));
+        Rvalues.push(parseFloat(@item.R));
+        RFvalues.push(parseFloat(@item.RF));
+        PFvalues.push(parseFloat(@item.PF));
+        APFvalues.push(parseFloat(@item.APF));
+        SharpeRatiovalues.push(parseFloat(@item.SharpeRatio));
+            </text>
+        }
+
+    var TP = {
+        x: dates,
+        y: TPvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+        name: 'TP'
+        };
+
+        var TL = {
+        x: dates,
+            y: TLvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'TL'
+        };
+
+        var TR = {
+        x: dates,
+            y: TRvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'TR'
+        };
+
+        var NP = {
+        x: dates,
+            y: NPvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'NP'
+        };
+
+        var NL = {
+        x: dates,
+            y: NLvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'NL'
+        };
+
+        var N = {
+        x: dates,
+            y: Nvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'N'
+        };
+
+        var RPL = {
+        x: dates,
+            y: RPLvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'RPL'
+        };
+
+        var AP = {
+        x: dates,
+            y: APvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'AP'
+        };
+
+        var AL = {
+        x: dates,
+            y: ALvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'AL'
+        };
+
+        var AR = {
+        x: dates,
+            y: ARvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'AR'
+        };
+
+        var RAPAL = {
+        x: dates,
+            y: RAPALvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'RAPAL'
+        };
+
+        var MIDD = {
+        x: dates,
+            y: MIDDvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'MIDD'
+        };
+
+        var Dmin = {
+        x: dates,
+            y: Dminvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'Dmin'
+        };
+
+        var R = {
+        x: dates,
+            y: Rvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'R'
+        };
+
+        var RF = {
+        x: dates,
+            y: RFvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'RF'
+        };
+
+        var PF = {
+        x: dates,
+            y: PFvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'PF'
+        };
+
+        var APF = {
+        x: dates,
+            y: APFvalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'APF'
+        };
+
+        var SharpeRatio = {
+        x: dates,
+            y: SharpeRatiovalues,
+        mode: 'lines+markers',
+        marker: {
+        color: 'rgb(128, 0, 128)',
+            size: 4
+        },
+        line: {
+        color: 'rgb(128, 0, 128)',
+        width: 2
+        },
+            name: 'SharpeRatio'
+        };
+
+
+
+        var TP_data = [TP];
+        var TL_data = [TL];
+        var TR_data = [TR];
+        var NP_data = [NP];
+        var NL_data = [NL];
+        var N_data = [N];
+        var RPL_data = [RPL];
+        var AP_data = [AP];
+        var AL_data = [AL];
+        var AR_data = [AR];
+        var RAPAL_data = [RAPAL];
+        var MIDD_data = [MIDD];
+        var Dmin_data = [Dmin];
+        var R_data = [R];
+        var RF_data = [RF];
+        var PF_data = [PF];
+        var APF_data = [APF];
+        var SharpeRatio_data = [SharpeRatio];
+
+
+
+        Plotly.plot(TP_CHART, TP_data);
+        Plotly.plot(TL_CHART, TL_data);
+        Plotly.plot(TR_CHART, TR_data);
+        Plotly.plot(NP_CHART, NP_data);
+        Plotly.plot(NL_CHART, NL_data);
+        Plotly.plot(N_CHART, N_data);
+        Plotly.plot(RPL_CHART, RPL_data);
+        Plotly.plot(AP_CHART, AP_data);
+        Plotly.plot(AL_CHART, AL_data);
+        Plotly.plot(AR_CHART, AR_data);
+        Plotly.plot(RAPAL_CHART, RAPAL_data);
+        Plotly.plot(Dmin_CHART, Dmin_data);
+        Plotly.plot(MIDD_CHART, MIDD_data);
+        Plotly.plot(R_CHART, R_data);
+        Plotly.plot(RF_CHART, RF_data); 
+        Plotly.plot(PF_CHART, PF_data); 
+        Plotly.plot(APF_CHART, APF_data);
+        Plotly.plot(SharpeRatio_CHART, SharpeRatio_data);
+
+
+    </script>
+}
+
+@model CRM.ViewModels.Charts.TradeHistoryIndicatorsViewModel
+
+@Html.Partial("_TradeHistoryIndicatorsFilterPanel")
+
+<div class="content">
+
+    @Html.ValidationSummary()
+    <div class="Charts" style="display: @(Model.Indicators.Count != 0 ? "block" : "none"); text-align:center">
+
+        <label>TP - Общая прибыль</label>
+        <div id="TP_Chart">
+        </div>
+
+        <label>TL - Общий убыток</label>
+        <div id="TL_Chart">
+        </div>
+
+        <label>TR - Итоговый результат</label>
+        <div id="TR_Chart">
+        </div>
+
+        <label>NP - Кол-во прибыльных</label>
+        <div id="NP_Chart">
+        </div>
+
+        <label>TL - Кол-во убыточных</label>
+        <div id="NL_Chart">
+        </div>
+
+        <label>N - Итоговое кол-во</label>
+        <div id="N_Chart">
+        </div>
+
+        <label>RPL - Отношение (P/L)</label>
+        <div id="RPL_Chart">
+        </div>
+
+        <label>AP - Средняя прибыльная</label>
+        <div id="AP_Chart">
+        </div>
+
+        <label>AL - Средняя убыточная</label>
+        <div id="AL_Chart">
+        </div>
+
+        <label>AR - Средний результат</label>
+        <div id="AR_Chart">
+        </div>
+
+        <label>RAPAL - Отношение ср. прибыльной к ср. убыточной</label>
+        <div id="RAPAL_Chart">
+        </div>
+
+        <label>MIDD - Макс. нарастающий убыток</label>
+        <div id="MIDD_Chart">
+        </div>
+
+        <label>Dmin - Минимальный депозит</label>
+        <div id="Dmin_Chart">
+        </div>
+
+        <label>R - Отдача</label>
+        <div id="R_Chart">
+        </div>
+
+        <label>RF - Фактор восстановления</label>
+        <div id="RF_Chart">
+        </div>
+
+        <label>PF - Профит-фактор</label>
+        <div id="PF_Chart">
+        </div>
+
+        <label>APF - Достоверный профит-фактор </label>
+        <div id="APF_Chart">
+        </div>
+
+        <label>SharpeRatio - Коэффициент Шарпа</label>
+        <div id="SharpeRatio_Chart">
+        </div>
+
+    </div>
+
+
+</div>
