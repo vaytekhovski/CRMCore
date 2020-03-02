@@ -128,8 +128,8 @@ namespace Jobs
 
                         if (TH[i].Side == "buy") 
                         {
-                            buyAmount += TH[i].DollarQuantity + Fee;
-                            buyAmountWithoutFee += TH[i].DollarQuantity;
+                            buyAmount += TH[i].DollarQuantity;
+                            buyAmountWithoutFee += TH[i].DollarQuantity - Fee;
                         }
                         else
                         {
