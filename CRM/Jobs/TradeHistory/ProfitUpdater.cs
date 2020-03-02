@@ -111,6 +111,8 @@ namespace Jobs
                     decimal Fee = 0;
                     decimal buyAmount = 0;
                     decimal buyAmountWithoutFee = 0;
+                    decimal sellAmount = 0;
+                    decimal sellAmountWithoutFee = 0;
 
                     var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == Account).OrderBy(x => x.Time).ToArray();
 
@@ -119,32 +121,35 @@ namespace Jobs
                         Fee = TH[i].DollarQuantity * (decimal)0.001;
                         TH[i].Fee = Fee;
 
+                        if(TH[i].Id == 4606)
+                        {
+                            var a = "a";
+                        }
+
                         if (TH[i].Side == "buy") 
                         {
-                            buyAmount += TH[i].DollarQuantity + Fee;
-                            buyAmountWithoutFee = TH[i].DollarQuantity;
+                            buyAmount += TH[i].DollarQuantity - Fee;
+                            buyAmountWithoutFee += TH[i].DollarQuantity;
                         }
-
-                        if(TH[i].Id == 4366)
+                        else
                         {
-                            var a = "";
+                            sellAmount += TH[i].DollarQuantity + Fee;
+                            sellAmountWithoutFee += TH[i].DollarQuantity;
                         }
-
-                        profit += TH[i].Side == "buy" ? TH[i].DollarQuantity * -1 : TH[i].DollarQuantity;
-                        profitWithoutFee += TH[i].Side == "buy" ? buyAmountWithoutFee * -1 : TH[i].DollarQuantity; ;
-
-                        profit -= TH[i].Fee;
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
                         {
 
-                            TH[i].Profit = profit;
-                            TH[i].ProfitWithoutFee = profitWithoutFee;
+                            //profit += TH[i].Side == "buy" ? buyAmount * -1 : sellAmount;
+                            //profitWithoutFee += TH[i].Side == "buy" ? buyAmountWithoutFee * -1 : sellAmountWithoutFee;
+
+                            TH[i].Profit = sellAmount - buyAmount;
+                            TH[i].ProfitWithoutFee = sellAmountWithoutFee - buyAmountWithoutFee;
 
                             try
                             {
-                                TH[i].PercentProfit = ((TH[i].DollarQuantity + Fee) - buyAmount) / buyAmount * 100;
-                                TH[i].PercentProfitWithoutFee = (TH[i].DollarQuantity - buyAmountWithoutFee) / buyAmountWithoutFee * 100;
+                                TH[i].PercentProfit = (sellAmount - buyAmount) / buyAmount * 100M;
+                                TH[i].PercentProfitWithoutFee = (sellAmountWithoutFee - buyAmountWithoutFee) / buyAmountWithoutFee * 100M;
                             }
                             catch (Exception ex)
                             {
@@ -155,6 +160,8 @@ namespace Jobs
                             profitWithoutFee = 0;
                             buyAmount = 0;
                             buyAmountWithoutFee = 0;
+                            sellAmount = 0;
+                            sellAmountWithoutFee = 0;
                         }
                     }
                     

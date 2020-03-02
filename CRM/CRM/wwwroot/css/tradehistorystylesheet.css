@@ -95,14 +95,11 @@ table
 }
 
 .Indicators th {
-    background-color: #333334;
     width:200px;
-    color: white;
 }
 
 .Indicators td {
-    background-color: white;
-    color: black;
+
 }
 
 .Indicators tr:first-child th:first-child {
