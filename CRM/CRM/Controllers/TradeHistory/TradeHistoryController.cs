@@ -124,41 +124,16 @@ namespace CRM.Controllers
                 var MidPercentProfit = Model.AccountTradeHistories.Sum(x => x.PercentProfit) / Model.AccountTradeHistories.Count;
 
                 double StandardDeviation = 0;
-                foreach (var percentProfit in Model.AccountTradeHistories.OrderBy(x=> x.Time).Select(x => x.PercentProfit).ToList())
-                        {
+                foreach (var percentProfit in Model.AccountTradeHistories.Where(x=>x.PercentProfit != 0).OrderBy(x=> x.Time).Select(x => x.PercentProfit).ToList())
+                {
                     StandardDeviation += Math.Pow((double)percentProfit - (double)MidPercentProfit, 2);
-                    //viewModel.CompoundInterest = percentProfit > 0 
-                    //    ? viewModel.CompoundInterest * (1 + percentProfit/100)
-                    //    : percentProfit < 0 
-                    //    ? viewModel.CompoundInterest / (1 - Math.Abs(percentProfit)/100)
-                    //    : viewModel.CompoundInterest;
 
-                    if(percentProfit > 0)
-                    {
-                        viewModel.CompoundInterest *= 1 + percentProfit / 100;
-                    }
-                    else
-                    {
-                        viewModel.CompoundInterest /= 1 - percentProfit / 100;
-                    }
+                    viewModel.CompoundInterest *= 1 + (percentProfit / 100);
                 }
 
-                foreach (var percentProfitWithoutFee in Model.AccountTradeHistories.OrderBy(x => x.Time).Select(x => x.PercentProfitWithoutFee).ToList())
+                foreach (var percentProfitWithoutFee in Model.AccountTradeHistories.Where(x => x.PercentProfitWithoutFee != 0).OrderBy(x => x.Time).Select(x => x.PercentProfitWithoutFee).ToList())
                 {
-                    //viewModel.CompoundInterestWithoutFee = percentProfitWithoutFee > 0 
-                    //    ? viewModel.CompoundInterestWithoutFee * (1 + percentProfitWithoutFee/100)
-                    //    : percentProfitWithoutFee < 0 
-                    //    ? viewModel.CompoundInterestWithoutFee / (1 - Math.Abs(percentProfitWithoutFee)/100)
-                    //    : viewModel.CompoundInterestWithoutFee;
-
-                    if (percentProfitWithoutFee > 0)
-                    {
-                        viewModel.CompoundInterestWithoutFee *= 1 + percentProfitWithoutFee / 100;
-                    }
-                    else
-                    {
-                        viewModel.CompoundInterestWithoutFee /= 1 - percentProfitWithoutFee / 100;
-                    }
+                    viewModel.CompoundInterestWithoutFee *= 1 + (percentProfitWithoutFee / 100);
                 }
 
                 viewModel.CompoundInterest = (viewModel.CompoundInterest - 1) * 100;
