@@ -155,9 +155,9 @@
             <tr>
                 <td colspan="2">@String.Format("{0:0.##}", Model.APF)</td>
                 <td colspan="2">@String.Format("{0:0.##}", Model.SharpeRatio)</td>
-                <td>@String.Format("{0:0.##}", Model.CompoundInterest)%</td>
+                <td style="color: @(Model.CompoundInterest > 0 ? "green" : "red")">@String.Format("{0:0.##}", Model.CompoundInterest)%</td>
                 <td></td>
-                <td>@String.Format("{0:0.##}", Model.CompoundInterestWithoutFee)%</td>
+                <td style="color: @(Model.CompoundInterestWithoutFee > 0 ? "green" : "red")">@String.Format("{0:0.##}", Model.CompoundInterestWithoutFee)%</td>
             </tr>
         </table>
 
