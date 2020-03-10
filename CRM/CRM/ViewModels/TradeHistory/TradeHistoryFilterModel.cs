@@ -48,6 +48,10 @@ namespace CRM.ViewModels
         public decimal APF { get; set; }
         public decimal SharpeRatio { get; set; }
 
+        public decimal CompoundInterest { get; set; }
+        public decimal CompoundInterestWithoutFee { get; set; }
+
+
 
     }
 }

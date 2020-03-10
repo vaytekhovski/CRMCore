@@ -146,14 +146,18 @@
                 <td>@String.Format("{0:0.##}", Model.PF)</td>
             </tr>
             <tr>
-                <th colspan="3">Достоверный профит-фактор (PF): </th>
-                <th colspan="3">Коэфф. Шарпа: </th>
+                <th colspan="2">Достоверный профит-фактор (PF): </th>
+                <th colspan="2">Коэфф. Шарпа: </th>
+                <th>Сложные %: </th>
                 <th></th>
+                <th>Сложные % без ком.: </th>
             </tr>
             <tr>
-                <td colspan="3">@String.Format("{0:0.##}", Model.APF)</td>
-                <td colspan="3">@String.Format("{0:0.##}", Model.SharpeRatio)</td>
+                <td colspan="2">@String.Format("{0:0.##}", Model.APF)</td>
+                <td colspan="2">@String.Format("{0:0.##}", Model.SharpeRatio)</td>
+                <td>@String.Format("{0:0.##}", Model.CompoundInterest)%</td>
                 <td></td>
+                <td>@String.Format("{0:0.##}", Model.CompoundInterestWithoutFee)%</td>
             </tr>
         </table>
 
