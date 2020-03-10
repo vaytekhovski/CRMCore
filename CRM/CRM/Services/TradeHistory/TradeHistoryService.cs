@@ -65,7 +65,7 @@ namespace CRM.Services
 
                 model.CountOfElements = query.Count();
 
-                model.AccountTradeHistories = query.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
+                model.AccountTradeHistories = query.ToList();
                 
             }
 
