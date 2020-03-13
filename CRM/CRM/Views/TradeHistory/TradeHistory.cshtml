@@ -219,7 +219,7 @@
                         <td>@item.Account</td>
                         <td>@item.Side</td>
                         <td>@item.Pair</td>
-                        <td>$@String.Format("{0:0.########}", item.Price)</td>
+                        <td>$@String.Format("{0:0.##}", item.Price)</td>
                         <td>@item.Quantity</td>
                         <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
                         <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
