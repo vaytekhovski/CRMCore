@@ -19,6 +19,10 @@
     display:none !important;
 }
 
+.ProbaBuy-progress-bar-block {
+    padding: 0px 25px;
+}
+
 }
 
 table
@@ -72,7 +76,7 @@ table
 
 
 .Indicators {
-    margin: 20px auto;
+    /*margin: 20px auto;*/
     width: 100% !important;
     font-size: 12px;
     text-align: center;
