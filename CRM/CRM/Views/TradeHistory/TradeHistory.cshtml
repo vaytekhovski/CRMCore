@@ -162,14 +162,17 @@
             </table>
 
             <div class="ProbaBuy-progress-bar-block">
+                <p>Вероятность тренда для BTC: </p>
                 <div class="progress" style="height: 20px;display: @(Model.ProbaBuyBTC == 0 ? "none" : "block");margin-bottom: 12px !important">
-                    <div id="progress-bar1" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyBTCstr%;background-color: #322352">Вероятность тренда для BTC: @Model.ProbaBuyBTCstr%</div>
+                    <div id="progress-bar1" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyBTCstr%;background-color: #322352">@Model.ProbaBuyBTCstr%</div>
                 </div>
+                <p>Вероятность тренда для ETH: </p>
                 <div class="progress" style="height: 20px;display: @(Model.ProbaBuyETH == 0 ? "none" : "block");margin-bottom: 12px !important">
-                    <div id="progress-bar2" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyETHstr%;background-color: #322352">Вероятность тренда для ETH: @Model.ProbaBuyETHstr%</div>
+                    <div id="progress-bar2" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyETHstr%;background-color: #322352">@Model.ProbaBuyETHstr%</div>
                 </div>
+                <p>Вероятность тренда для LTC: </p>
                 <div class="progress" style="height: 20px;display: @(Model.ProbaBuyLTC == 0 ? "none" : "block");margin-bottom: 12px !important">
-                    <div id="progress-bar3" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyLTCstr%;background-color: #322352">Вероятность тренда для LTC: @Model.ProbaBuyLTCstr%</div>
+                    <div id="progress-bar3" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyLTCstr%;background-color: #322352">@Model.ProbaBuyLTCstr%</div>
                 </div>
             </div>
         </div>
