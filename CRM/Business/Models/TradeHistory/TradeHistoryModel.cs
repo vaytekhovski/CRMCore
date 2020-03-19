@@ -26,6 +26,10 @@ namespace Business
         public decimal LossOrdersSummWithoutFee { get; set; }
         public decimal ProfitOrdersSummWithoutFee { get; set; }
 
+        public decimal ProbaBuyBTC { get; set; }
+        public decimal ProbaBuyLTC { get; set; }
+        public decimal ProbaBuyETH { get; set; }
+
         public decimal TotalEnterTax { get; set; }
 
     }

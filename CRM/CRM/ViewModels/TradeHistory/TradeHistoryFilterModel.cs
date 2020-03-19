@@ -48,6 +48,14 @@ namespace CRM.ViewModels
         public decimal APF { get; set; }
         public decimal SharpeRatio { get; set; }
 
+        public decimal ProbaBuyBTC { get; set; }
+        public decimal ProbaBuyLTC { get; set; }
+        public decimal ProbaBuyETH { get; set; }
+
+        public string ProbaBuyBTCstr { get; set; }
+        public string ProbaBuyLTCstr { get; set; }
+        public string ProbaBuyETHstr { get; set; }
+
         public decimal CompoundInterest { get; set; }
         public decimal CompoundInterestWithoutFee { get; set; }
 

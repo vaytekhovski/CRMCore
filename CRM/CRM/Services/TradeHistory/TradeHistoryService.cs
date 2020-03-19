@@ -71,6 +71,24 @@ namespace CRM.Services
 
             using (MySQLContext sQLContext = new MySQLContext())
             {
+                if (filter.Coin == null)
+                {
+                    model.ProbaBuyBTC = sQLContext.NeuralSignals.Where(x => x.Base == "BTC").LastOrDefault().ProbaBuy * 100M;
+                    model.ProbaBuyLTC = sQLContext.NeuralSignals.Where(x => x.Base == "LTC").LastOrDefault().ProbaBuy * 100M;
+                    model.ProbaBuyETH = sQLContext.NeuralSignals.Where(x => x.Base == "ETH").LastOrDefault().ProbaBuy * 100M;
+                }
+                else if(filter.Coin == "BTC")
+                {
+                    model.ProbaBuyBTC = sQLContext.NeuralSignals.Where(x => x.Base == "BTC").LastOrDefault().ProbaBuy * 100M;
+                }
+                else if(filter.Coin == "LTC")
+                {
+                    model.ProbaBuyLTC = sQLContext.NeuralSignals.Where(x => x.Base == "LTC").LastOrDefault().ProbaBuy * 100M;
+                }
+                else if(filter.Coin == "ETH")
+                {
+                    model.ProbaBuyETH = sQLContext.NeuralSignals.Where(x => x.Base == "ETH").LastOrDefault().ProbaBuy * 100M;
+                }
 
                 var signals = sQLContext.NeuralSignals
                     .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)

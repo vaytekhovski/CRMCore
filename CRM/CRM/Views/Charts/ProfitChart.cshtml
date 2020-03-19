@@ -47,7 +47,7 @@
             color: 'rgb(128, 0, 128)',
             width: 2
             },
-            name: 'Profit'
+            name: 'Прибыль'
         };
 
 
@@ -55,24 +55,31 @@
 
 
         var statisticsData = [{
-          values: [@Model.CountOfZero, @Model.CountOfMore, @Model.CountOfLess],
-          labels: ['Non-profit orders', 'Profit orders', 'Loss orders'],
-          domain: {column: 0},
-          name: 'Counts',
-          hoverinfo: 'label+percent+name',
-          hole: .4,
-          type: 'pie'
-        },{
+            values: [@Model.CountOfZero, @Model.CountOfMore, @Model.CountOfLess],
+            labels: ['Нулевые сделки', 'Прибыльные сделки', 'Убыточные сделки'],
+            domain: { column: 0 },
+            name: 'Кол-во',
+            hoverinfo: 'label+percent+name',
+            hole: .4,
+            type: 'pie',
+            marker: {
+                colors: ['rgba(161, 161, 161, 0.5)', 'rgba(0, 255, 0, 0.5)', 'rgba(255, 0, 0, 0.5)']
+            }
+        },
+            {
           values: [@Model.VolumeOfMore, @Model.VolumeOfLess],
-          labels: ['Profit orders', 'Loss orders'],
+          labels: ['Прибыльные сделки', 'Убыточные сделки'],
           text: 'CO2',
           textposition: 'inside',
           domain: {column: 1},
-          name: 'Volumes',
+          name: 'Объём',
           hoverinfo: 'label+percent+name',
           hole: .4,
-          type: 'pie'
-            }];
+            type: 'pie',
+                marker: {
+                    colors: ['rgba(0, 255, 0, 0.5)','rgba(255, 0, 0, 0.5)']
+                }
+        }];
 
         var layout = {
           title: 'Statistics',
@@ -82,7 +89,7 @@
                 size: 20
               },
               showarrow: false,
-              text: 'Counts',
+              text: 'Кол-во',
               x: 0.21,
               y: 0.5
             },
@@ -91,7 +98,7 @@
                 size: 20
               },
               showarrow: false,
-              text: 'Volumes',
+              text: 'Объём',
               x: 0.79,
               y: 0.5
             }

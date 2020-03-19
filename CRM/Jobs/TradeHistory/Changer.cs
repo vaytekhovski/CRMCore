@@ -146,18 +146,25 @@ namespace Jobs
 
                 var ignore = IgnoreIds.FirstOrDefault(id => item.Id == id);
 
-                if (ignore == 0) AccountTradeHistories.Add(new AccountTradeHistory
+                if (IgnoreIds.FirstOrDefault(id => item.Id == id) == 0)
                 {
-                    Id = counter++,
-                    Account = item.AccountId,
-                    Time = item.TimeEnded.AddHours(3),
-                    Side = item.Side,
-                    Pair = item.Base,
-                    Price = item.Rate,
-                    Quantity = item.ClosedAmount,
-                    DollarQuantity = item.Rate * item.ClosedAmount,
-                    LowerBand = 0M
-                });
+                    AccountTradeHistories.Add(new AccountTradeHistory
+                    {
+                        Id = counter++,
+                        Account = item.AccountId,
+                        Time = item.TimeEnded.AddHours(3),
+                        Side = item.Side,
+                        Pair = item.Base,
+                        Price = item.Rate,
+                        Quantity = item.ClosedAmount,
+                        DollarQuantity = item.Rate * item.ClosedAmount,
+                        LowerBand = 0M
+                    });
+                }
+                else
+                {
+                    string a = "a";
+                }
             }
         }
     }
