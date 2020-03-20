@@ -29,12 +29,34 @@ namespace CRM.Controllers
             var viewModel = new TradeHistoryFilterModel
             {
                 Id = "TradeHistory",
-                Account = "/",
-                Coin = "all",
+                Account = null,
+                Coin = null,
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr,
+                CurrentPage = 1
             };
 
+            var filter = new TradeHistoryFilter
+            {
+                Account = viewModel.Account,
+                Coin = viewModel.Coin,
+                StartDate = DateTime.Parse(viewModel.StartDate),
+                EndDate = DateTime.Parse(viewModel.EndDate),
+                CurrentPage = Convert.ToInt32(viewModel.CurrentPage.ToString())
+            };
+
+            TradeHistoryModel Model = _tradeHistoryService.Load(filter);
+
+            viewModel = MoveDataFromModelToViewModel(Model, viewModel);
+
+            viewModel.Orders = viewModel.Orders.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
+
+
+            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
+            viewModel.CurrentPage = filter.CurrentPage;
+            viewModel.CountOfPages = pagination.CountOfPages;
+            viewModel.Action = "TradeHistory/TradeHistory";
+            viewModel.TypeOfDate = "datetime-local";
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
@@ -120,27 +142,34 @@ namespace CRM.Controllers
                 viewModel.RF = Model.TotalProfit / viewModel.MIDD;
                 viewModel.PF = Model.ProfitOrdersSumm / Math.Abs(Model.LossOrdersSumm);
                 viewModel.APF = (Model.ProfitOrdersSumm - Model.AccountTradeHistories.Max(x => x.Profit) / Math.Abs(Model.LossOrdersSumm));
-                viewModel.CompoundInterest = 1;
-                viewModel.CompoundInterestWithoutFee = 1;
+                viewModel.CompoundInterest = 0;
+                viewModel.CompoundInterestWithoutFee = 0;
 
                 var MidPercentProfit = Model.AccountTradeHistories.Sum(x => x.PercentProfit) / Model.AccountTradeHistories.Count;
 
                 double StandardDeviation = 0;
-                foreach (var percentProfit in Model.AccountTradeHistories.Where(x=>x.PercentProfit != 0).OrderBy(x=> x.Time).Select(x => x.PercentProfit).ToList())
+                decimal _CompoundInterest = 1;
+                decimal _CompoundInterestWithoutFee = 1;
+
+                foreach (var coin in Model.AccountTradeHistories.Select(x=>x.Pair).Distinct())
                 {
-                    StandardDeviation += Math.Pow((double)percentProfit - (double)MidPercentProfit, 2);
+                    foreach (var percentProfit in Model.AccountTradeHistories.Where(x => x.Pair == coin).Where(x => x.PercentProfit != 0).OrderBy(x => x.Time).Select(x => x.PercentProfit).ToList())
+                    {
+                        StandardDeviation += Math.Pow((double)percentProfit - (double)MidPercentProfit, 2);
 
-                    viewModel.CompoundInterest *= 1 + (percentProfit / 100);
+                        _CompoundInterest *= 1 + (percentProfit / 100);
+                    }
+                    viewModel.CompoundInterest += (_CompoundInterest - 1) * 100; ;
+                    _CompoundInterest = 1;
+
+                    foreach (var percentProfitWithoutFee in Model.AccountTradeHistories.Where(x => x.Pair == coin).Where(x => x.PercentProfitWithoutFee != 0).Where(x => x.Pair == coin).OrderBy(x => x.Time).Select(x => x.PercentProfitWithoutFee).ToList())
+                    {
+                        _CompoundInterestWithoutFee *= 1 + (percentProfitWithoutFee / 100);
+                    }
+
+                    viewModel.CompoundInterestWithoutFee += (_CompoundInterestWithoutFee - 1) * 100; ;
+                    _CompoundInterestWithoutFee = 1;
                 }
-
-                foreach (var percentProfitWithoutFee in Model.AccountTradeHistories.Where(x => x.PercentProfitWithoutFee != 0).OrderBy(x => x.Time).Select(x => x.PercentProfitWithoutFee).ToList())
-                {
-                    viewModel.CompoundInterestWithoutFee *= 1 + (percentProfitWithoutFee / 100);
-                }
-
-                viewModel.CompoundInterest = (viewModel.CompoundInterest - 1) * 100;
-                viewModel.CompoundInterestWithoutFee = (viewModel.CompoundInterestWithoutFee - 1) * 100;
-
 
                 StandardDeviation /= Model.AccountTradeHistories.Count;
                 StandardDeviation = Math.Sqrt(StandardDeviation);

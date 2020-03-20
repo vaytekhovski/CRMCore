@@ -35,20 +35,8 @@ namespace Business
         private static void InitiateCoins()
         {
             Coins.Add(new Field { Value = "BTC", Name = "USDT-BTC" });
-            Coins.Add(new Field { Value = "BNB", Name = "USDT-BNB" });
-            Coins.Add(new Field { Value = "EOS", Name = "USDT-EOS" });
             Coins.Add(new Field { Value = "ETH", Name = "USDT-ETH" });
-            Coins.Add(new Field { Value = "XRP", Name = "USDT-XRP" });
             Coins.Add(new Field { Value = "LTC", Name = "USDT-LTC" });
-            Coins.Add(new Field { Value = "TRX", Name = "USDT-TRX" });
-
-            Coins.Add(new Field { Value = "ZEC", Name = "USDT-ZEC" });
-            Coins.Add(new Field { Value = "DASH", Name = "USDT-DASH" });
-            Coins.Add(new Field { Value = "XMR", Name = "USDT-XMR" });
-            Coins.Add(new Field { Value = "ONT", Name = "USDT-ONT" });
-            Coins.Add(new Field { Value = "XLM", Name = "USDT-XLM" });
-            Coins.Add(new Field { Value = "ADA", Name = "USDT-ADA" });
-            Coins.Add(new Field { Value = "BCHABC", Name = "USDT-BCHABC" });
         }
 
         private static void InitiateOrderType()
