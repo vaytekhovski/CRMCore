@@ -125,7 +125,7 @@ namespace CRM.Controllers
 
             viewModel.TotalEnterTax = Model.TotalEnterTax;
 
-            if (Model.AccountTradeHistories.Count > 0)
+            if (Model.AccountTradeHistories.Count > 0 && (decimal)Model.LossOrdersCount != 0)
             {
                 viewModel.RPL = (decimal)Model.ProfitOrdersCount / (decimal)Model.LossOrdersCount;
                 viewModel.AP = Model.ProfitOrdersCount > 0 ? Model.ProfitOrdersSumm / Model.ProfitOrdersCount : 0;
@@ -159,7 +159,7 @@ namespace CRM.Controllers
 
                         _CompoundInterest *= 1 + (percentProfit / 100);
                     }
-                    viewModel.CompoundInterest += (_CompoundInterest - 1) * 100; ;
+                    viewModel.CompoundInterest += (_CompoundInterest - 1) * 100;
                     _CompoundInterest = 1;
 
                     foreach (var percentProfitWithoutFee in Model.AccountTradeHistories.Where(x => x.Pair == coin).Where(x => x.PercentProfitWithoutFee != 0).Where(x => x.Pair == coin).OrderBy(x => x.Time).Select(x => x.PercentProfitWithoutFee).ToList())

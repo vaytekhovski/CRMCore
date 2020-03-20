@@ -57,6 +57,14 @@
         $('html, body').animate({ scrollTop: 0 }, '300');
     });
 
+        $(document).ready(function () {
+            $(".complicated_statistics").toggle();
+
+            $(".show_stat").click(function () {
+                $(".complicated_statistics").toggle();
+            });
+        });
+
     </script>
 }
 
@@ -76,108 +84,181 @@
 
 
     <div class="container table_block">
-        
         <div style="display: @(Model.TotalProfit == 0 ? "none" : "block");">
-            <table class="table table-font Indicators">
-                <tr>
-                    <th colspan="2">С учетом комиссии</th>
-                    <th colspan="2">Без учета комиссии</th>
-                    <th>Общая приб. (TP):</th>
-                    <th>Общий убыток (TL):</th>
-                    <th>Итоговый рез. (TR):</th>
-                </tr>
-                <tr>
-                    <th>Прибыльные</th>
-                    <th>Убыточные</th>
-                    <th>Прибыльные</th>
-                    <th>Убыточные</th>
-                    <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSumm)</td>
-                    <td>$ @String.Format("{0:0.##}", Model.LossOrdersSumm)</td>
-                    <td style="color: @(Model.TotalProfit > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
-                </tr>
-                <tr>
-                    <td>@Model.ProfitOrdersCount шт.</td>
-                    <td>@Model.LossOrdersCount шт.</td>
-                    <td>@Model.ProfitOrdersCountWithoutFee шт.</td>
-                    <td>@Model.LossOrdersCountWithoutFee шт.</td>
-                    <th>Кол-во приб. (NP): </th>
-                    <th>Кол-во уб. (NL): </th>
-                    <th>Итог. кол-во (N): </th>
-                </tr>
-                <tr>
-                    <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSumm)</td>
-                    <td>$ @String.Format("{0:0.##}", Model.LossOrdersSumm)</td>
-                    <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSummWithoutFee)</td>
-                    <td>$ @String.Format("{0:0.##}", Model.LossOrdersSummWithoutFee)</td>
-                    <td>@Model.ProfitOrdersCount</td>
-                    <td>@Model.LossOrdersCount</td>
-                    <td>@{var N = Model.ProfitOrdersCount + Model.LossOrdersCount;} @N</td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="color: @(Model.TotalProfit > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
-                    <td colspan="2" style="color: @(Model.TotalProfitWithoutFee > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)</td>
-                    <th>Отношение (P/L): </th>
-                    <th>Ср. прибыльная (AP): </th>
-                    <th>Ср. убыточная (AL): </th>
-                </tr>
-                <tr>
-                    <th colspan="4"></th>
-                    <td>@String.Format("{0:0.##}", Model.RPL)</td>
-                    <td>@String.Format("{0:0.##}", Model.AP)</td>
-                    <td>@String.Format("{0:0.##}", Model.AL)</td>
-                </tr>
-                <tr>
+            <div style="height:220px" class="desktop">
+                <div class="statistics-block-desktop">
+                    <table class="table table-font Indicators">
+                        <tr>
+                            <th>
 
-                    <th>Средний рез. (AR): </th>
-                    <th>Отн. ср. пр. к ср. уб. (AP/AL): </th>
-                    <th>Макс. нарастающий убыток (MIDD): </th>
-                    <th>Мин. депоз. (Dmin): </th>
-                    <th>Отдача (R): </th>
-                    <th>Фактор восстановления (RF): </th>
-                    <th>Профит-фактор (PF): </th>
-                </tr>
-                <tr>
-                    <td>@String.Format("{0:0.##}", Model.AR)</td>
-                    <td>@String.Format("{0:0.##}", Model.RAPAL)</td>
-                    <td>@String.Format("{0:0.##}", Model.MIDD)</td>
-                    <td>@String.Format("{0:0.##}", Model.Dmin)</td>
-                    <td>@String.Format("{0:0.##}", Model.R)</td>
-                    <td>@String.Format("{0:0.##}", Model.RF)</td>
-                    <td>@String.Format("{0:0.##}", Model.PF)</td>
-                </tr>
-                <tr>
-                    <th colspan="2">Достоверный профит-фактор (PF): </th>
-                    <th colspan="2">Коэфф. Шарпа: </th>
-                    <th>Сложные %: </th>
-                    <th></th>
-                    <th>Сложные % без ком.: </th>
-                </tr>
-                <tr>
-                    <td colspan="2">@String.Format("{0:0.##}", Model.APF)</td>
-                    <td colspan="2">@String.Format("{0:0.##}", Model.SharpeRatio)</td>
-                    <td style="color: @(Model.CompoundInterest > 0 ? "green" : "red")">@String.Format("{0:0.##}", Model.CompoundInterest)%</td>
-                    <td></td>
-                    <td style="color: @(Model.CompoundInterestWithoutFee > 0 ? "green" : "red")">@String.Format("{0:0.##}", Model.CompoundInterestWithoutFee)%</td>
-                </tr>
-            </table>
+                            </th>
+                            <th colspan="2">
+                                С учётом комиссии
+                            </th>
+                            <th colspan="2">
+                                Без учёта комиссии
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Прибыльные:
+                            </th>
+                            <td>
+                                $ @String.Format("{0:0.##}", Model.ProfitOrdersSumm)
+                            </td>
+                            <td>
+                                @Model.ProfitOrdersCount шт.
+                            </td>
+                            <td>
+                                $ @String.Format("{0:0.##}", Model.ProfitOrdersSummWithoutFee)
+                            </td>
+                            <td>
+                                @Model.ProfitOrdersCountWithoutFee шт.
+                            </td>
 
-            <div class="ProbaBuy-progress-bar-block">
-                <div style="display: @(Model.ProbaBuyBTC == 0 ? "none" : "block");">
-                    <p>Вероятность тренда для BTC: </p>
-                    <div class="progress" style="height: 20px;margin-bottom: 12px !important">
-                        <div id="progress-bar1" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyBTCstr%;background-color: #322352">@Model.ProbaBuyBTCstr%</div>
+                        </tr>
+                        <tr>
+                            <th>
+                                Убыточные:
+                            </th>
+                            <td>
+                                $ @String.Format("{0:0.##}", Model.LossOrdersSumm)
+                            </td>
+                            <td>
+                                @Model.LossOrdersCount шт.
+                            </td>
+                            <td>
+                                $ @String.Format("{0:0.##}", Model.LossOrdersSummWithoutFee)
+                            </td>
+                            <td>
+                                @Model.LossOrdersCountWithoutFee шт.
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <th>
+                                Прибыль:
+                            </th>
+                            <td colspan="2" style="color: @(Model.TotalProfit > 0 ? "green" : "red")">
+                                $ @String.Format("{0:0.##}", Model.TotalProfit)
+                            </td>
+                            <td colspan="2" style="color: @(Model.TotalProfitWithoutFee > 0 ? "green" : "red")">
+                                $ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <th>
+                                Сложные %:
+                            </th>
+                            <td colspan="2" style="color: @(Model.CompoundInterest > 0 ? "green" : "red")">
+                                @String.Format("{0:0.##}", Model.CompoundInterest)%
+                            </td>
+                            <td colspan="2" style="color: @(Model.CompoundInterestWithoutFee > 0 ? "green" : "red")">
+                                @String.Format("{0:0.##}", Model.CompoundInterestWithoutFee)%
+                            </td>
+
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="ProbaBuy-progress-bar-block-desktop">
+                    <div class="ProbaBuy-progress-bar-block">
+                        <p>Вероятность тренда: </p>
+                        <div style="display: @(Model.ProbaBuyBTC == 0 ? "none" : "block");">
+                            <div class="progress">
+                                <div id="progress-bar1" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyBTCstr%;background-color: #322352">BTC @Model.ProbaBuyBTCstr%</div>
+                            </div>
+                        </div>
+                        <div style="display: @(Model.ProbaBuyETH == 0 ? "none" : "block");">
+                            <div class="progress">
+                                <div id="progress-bar2" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyETHstr%;background-color: #322352">ETH @Model.ProbaBuyETHstr%</div>
+                            </div>
+                        </div>
+                        <div style="display: @(Model.ProbaBuyLTC == 0 ? "none" : "block");">
+                            <div class="progress">
+                                <div id="progress-bar3" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyLTCstr%;background-color: #322352">LTC @Model.ProbaBuyLTCstr%</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div style="display: @(Model.ProbaBuyETH == 0 ? "none" : "block");">
-                    <p>Вероятность тренда для ETH: </p>
-                    <div class="progress" style="height: 20px;margin-bottom: 12px !important">
-                        <div id="progress-bar2" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyETHstr%;background-color: #322352">@Model.ProbaBuyETHstr%</div>
+            </div>
+
+            <div style="padding: 10px 40%;" class="desktop">
+                <button style="width: 100%;" class="btn btn-secondary show_stat">Сложная статистика</button>
+            </div>
+
+            <div>
+                <table class="table table-font Indicators complicated_statistics">
+                    <tr>
+                        <th>Общая приб. (TP):</th>
+                        <th>Общий убыток (TL):</th>
+                        <th>Итоговый рез. (TR):</th>
+                        <th>Отношение (P/L): </th>
+                        <th>Ср. прибыльная (AP): </th>
+                        <th>Ср. убыточная (AL): </th>
+                    </tr>
+                    <tr>
+                        <td>$ @String.Format("{0:0.##}", Model.ProfitOrdersSumm)</td>
+                        <td>$ @String.Format("{0:0.##}", Model.LossOrdersSumm)</td>
+                        <td style="color: @(Model.TotalProfit > 0 ? "green" : "red")">$ @String.Format("{0:0.##}", Model.TotalProfit)</td>
+                        <td>@String.Format("{0:0.##}", Model.RPL)</td>
+                        <td>@String.Format("{0:0.##}", Model.AP)</td>
+                        <td>@String.Format("{0:0.##}", Model.AL)</td>
+                    </tr>
+                    <tr>
+                        <th>Кол-во приб. (NP): </th>
+                        <th>Кол-во уб. (NL): </th>
+                        <th>Итог. кол-во (N): </th>
+                        <th>Отдача (R): </th>
+                        <th>Фактор восстановления (RF): </th>
+                        <th>Профит-фактор (PF): </th>
+                    </tr>
+                    <tr>
+                        <td>@Model.ProfitOrdersCount</td>
+                        <td>@Model.LossOrdersCount</td>
+                        <td>@{var N = Model.ProfitOrdersCount + Model.LossOrdersCount;} @N</td>
+                        <td>@String.Format("{0:0.##}", Model.R)</td>
+                        <td>@String.Format("{0:0.##}", Model.RF)</td>
+                        <td>@String.Format("{0:0.##}", Model.PF)</td>
+                    </tr>
+                    <tr>
+                        <th>Средний рез. (AR): </th>
+                        <th>Отн. ср. пр. к ср. уб. (AP/AL): </th>
+                        <th>Макс. нарастающий убыток (MIDD): </th>
+                        <th>Мин. депоз. (Dmin): </th>
+                        <th>Достоверный профит-фактор (PF): </th>
+                        <th>Коэфф. Шарпа: </th>
+                    </tr>
+                    <tr>
+                        <td>@String.Format("{0:0.##}", Model.AR)</td>
+                        <td>@String.Format("{0:0.##}", Model.RAPAL)</td>
+                        <td>@String.Format("{0:0.##}", Model.MIDD)</td>
+                        <td>@String.Format("{0:0.##}", Model.Dmin)</td>
+                        <td>@String.Format("{0:0.##}", Model.APF)</td>
+                        <td>@String.Format("{0:0.##}", Model.SharpeRatio)</td>
+                    </tr>
+
+                </table>
+
+                <div class="ProbaBuy-progress-bar-block mobile">
+                    <div style="display: @(Model.ProbaBuyBTC == 0 ? "none" : "block");">
+                        <p>Вероятность тренда для BTC: </p>
+                        <div class="progress" style="height: 20px;margin-bottom: 12px !important">
+                            <div id="progress-bar1" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyBTCstr%;background-color: #322352">@Model.ProbaBuyBTCstr%</div>
+                        </div>
                     </div>
-                </div>
-                <div style="display: @(Model.ProbaBuyLTC == 0 ? "none" : "block");">
-                    <p>Вероятность тренда для LTC: </p>
-                    <div class="progress" style="height: 20px;margin-bottom: 12px !important">
-                        <div id="progress-bar3" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyLTCstr%;background-color: #322352">@Model.ProbaBuyLTCstr%</div>
+                    <div style="display: @(Model.ProbaBuyETH == 0 ? "none" : "block");">
+                        <p>Вероятность тренда для ETH: </p>
+                        <div class="progress" style="height: 20px;margin-bottom: 12px !important">
+                            <div id="progress-bar2" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyETHstr%;background-color: #322352">@Model.ProbaBuyETHstr%</div>
+                        </div>
+                    </div>
+                    <div style="display: @(Model.ProbaBuyLTC == 0 ? "none" : "block");">
+                        <p>Вероятность тренда для LTC: </p>
+                        <div class="progress" style="height: 20px;margin-bottom: 12px !important">
+                            <div id="progress-bar3" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyLTCstr%;background-color: #322352">@Model.ProbaBuyLTCstr%</div>
+                        </div>
                     </div>
                 </div>
             </div>

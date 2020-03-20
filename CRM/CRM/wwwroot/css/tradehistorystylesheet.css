@@ -19,14 +19,31 @@
     display:none !important;
 }
 
+.desktop{
+    display: none !important;
+}
+
 .ProbaBuy-progress-bar-block {
     padding: 0px 20px;
 }
 
+
+.mobile{
+    display:block;
 }
 
-table
-{
+}
+@media only screen and (min-width: 600px) {
+    .mobile {
+        display: none;
+    }
+    .desktop {
+        display: block;
+    }
+}
+
+
+table {
     font-size: 14px;
 }
 
@@ -34,75 +51,88 @@ table
     text-align: center;
 }
 
-
-
-/* Popup box  */
-.hover_bkgr_fricc {
-    cursor: pointer;
-    display: none;
-    height: 100%;
-    position: fixed;
-    text-align: center;
-    top: 0;
-    width: 100%;
-    z-index: 10000;
-}
-
-    .hover_bkgr_fricc .helper {
-        display: inline-block;
+    /* Popup box  */
+    .hover_bkgr_fricc {
+        cursor: pointer;
+        display: none;
         height: 100%;
-        vertical-align: middle;
+        position: fixed;
+        text-align: center;
+        top: 0;
+        width: 100%;
+        z-index: 10000;
     }
 
-    .hover_bkgr_fricc > div {
-        background-color: #a983f6;
-        box-shadow: 0px 0px 60px #a76be3;
-        display: inline-block;
-        height: auto;
-        max-width: 410px;
-        min-height: 100px;
-        vertical-align: middle;
+        .hover_bkgr_fricc .helper {
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        .hover_bkgr_fricc > div {
+            background-color: #a983f6;
+            box-shadow: 0px 0px 60px #a76be3;
+            display: inline-block;
+            height: auto;
+            max-width: 410px;
+            min-height: 100px;
+            vertical-align: middle;
+            width: 60%;
+            position: relative;
+            border-radius: 2px;
+            padding: 15px 5%;
+            color: white;
+        }
+
+    .trigger_popup_fricc {
+        cursor: pointer;
+    }
+
+
+
+    .Indicators {
+        /*margin: 20px auto;*/
+        width: 100% !important;
+        font-size: 12px;
+        text-align: center;
+    }
+
+        .Indicators th {
+            width: 200px;
+        }
+
+        .Indicators td {
+        }
+
+        .Indicators tr:first-child th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        .Indicators tr:first-child th:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        .Indicators tr:last-child th:first-child {
+            border-bottom-left-radius: 8px;
+        }
+
+        .Indicators tr:last-child th:last-child {
+            border-bottom-right-radius: 8px;
+        }
+
+    .ProbaBuy-progress-bar-block-desktop {
+        width: 40%;
+        display: inline;
+        float: left;
+        padding: 20px;
+        border-radius: 4px;
+        background-color: #ddd6ec;
+    }
+
+    .statistics-block-desktop {
         width: 60%;
-        position: relative;
-        border-radius: 2px;
-        padding: 15px 5%;
-        color: white;
+        display: inline;
+        float: left;
+        padding: 20px;
     }
-
-.trigger_popup_fricc {
-    cursor: pointer;
-}
-
-
-
-.Indicators {
-    /*margin: 20px auto;*/
-    width: 100% !important;
-    font-size: 12px;
-    text-align: center;
-}
-
-.Indicators th {
-    width:200px;
-}
-
-.Indicators td {
-
-}
-
-.Indicators tr:first-child th:first-child {
-    border-top-left-radius: 8px;
-}
-
-.Indicators tr:first-child th:last-child {
-    border-top-right-radius: 8px;
-}
-
-.Indicators tr:last-child th:first-child {
-    border-bottom-left-radius: 8px;
-}
-
-.Indicators tr:last-child th:last-child {
-    border-bottom-right-radius: 8px;
-}
 
