@@ -195,7 +195,6 @@
                     <th class="sorttable_nosort">Кол-во</th>
                     <th class="sorttable_nosort">Прибыль с ком.</th>
                     <th style="display: @(Context.User.Identity.Name != "5" ? "none" : "table-cell");" class="sorttable_nosort">Прибыль без ком.</th>
-                    <th class="sorttable_nosort"> Lower band</th>
                 </tr>
             </thead>
             <tbody>
@@ -245,7 +244,6 @@
                         <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
                         <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
                         <td class="profit" style="display: @(Context.User.Identity.Name != "5" ? "none" : "table-cell"); color: @(item.ProfitWithoutFee > 0 ? "green" : "red");">@itemProfitWithoutFeeStr</td>
-                        <td>@item.LowerBand</td>
                     </tr>
                 }
             </tbody>
