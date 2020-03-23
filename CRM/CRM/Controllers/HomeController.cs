@@ -17,6 +17,12 @@ namespace CRM.Controllers
             return View();
         }
 
+        public ActionResult PermissionDenied()
+        {
+            return View();
+        }
+
+
 
     }
 }
