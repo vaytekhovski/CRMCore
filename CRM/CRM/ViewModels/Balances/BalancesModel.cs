@@ -25,6 +25,7 @@ namespace CRM.ViewModels.Balances
         public string Currency { get; set; }
         public string Amount { get; set; }
         public double DollarAmount { get; set; }
+        public string buttonDisabled { get; set; }
     }
 
 }

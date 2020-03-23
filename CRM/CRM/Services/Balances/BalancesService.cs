@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using CRM.ViewModels.Balances;
@@ -45,27 +46,23 @@ namespace CRM.Services.Balances
             {
                 balance = new List<Balance>
                 {
-                    new Balance("USDT",currencies.USDT,0),
+                    new Balance("USDT",currencies.USDT, 0),
                     new Balance("BTC", currencies.BTC, 0),
-                    new Balance("BNB", currencies.BNB, 0),
-                    new Balance("EOS", currencies.EOS, 0),
                     new Balance("ETH", currencies.ETH, 0),
-                    new Balance("XRP", currencies.XRP, 0),
-                    new Balance("LTC", currencies.LTC, 0),
-                    new Balance("TRX", currencies.TRX, 0),
-                    new Balance("ZEC", currencies.ZEC, 0),
-                    new Balance("DASH", currencies.DASH, 0),
-                    new Balance("XMR", currencies.XMR, 0),
-                    new Balance("ONT", currencies.ONT, 0),
-                    new Balance("ADA", currencies.ADA, 0),
-                    new Balance("XMR", currencies.XMR, 0)
+                    new Balance("LTC", currencies.LTC, 0)
                 };
+
+                
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-
+            foreach (var item in balance)
+            {
+                var dAmount = Double.Parse(item.Amount, CultureInfo.InvariantCulture);
+                item.buttonDisabled = dAmount > 0.001 ? "false" : "true";
+            }
             return balance;
         }
 
@@ -76,18 +73,7 @@ namespace CRM.Services.Balances
     {
         public string USDT { get; set; }
         public string BTC { get; set; }
-        public string BNB { get; set; }
-        public string EOS { get; set; }
         public string ETH { get; set; }
-        public string XRP { get; set; }
         public string LTC { get; set; }
-        public string TRX { get; set; }
-        public string ZEC { get; set; }
-        public string DASH { get; set; }
-        public string XMR { get; set; }
-        public string ONT { get; set; }
-        public string XLM { get; set; }
-        public string ADA { get; set; }
-        public string BCHABC { get; set; }
     }
 }

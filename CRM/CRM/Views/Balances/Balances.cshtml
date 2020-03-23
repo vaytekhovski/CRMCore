@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Balances";
 }
 
@@ -24,27 +23,27 @@
     .table-font td, th {
         text-align: center;
     }
-
-
 </style>
 
 @Html.Partial("BalancesFilterPanel")
-<div class="content" style="min-height: 400px">
+<div class="content" style="min-height: 600px">
     <div class="container table_block">
-        <table class="table table-bordered table-font">
+        <table class="table table-font balance_table">
             <thead>
                 <tr>
-                    <th style="text-align:right">Валюта</th>
-                    <th style="text-align:left">Количество</th>
+                    <th>Валюта</th>
+                    <th>Количество</th>
+                    <th>Продажа</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.AccountBalances)
                 {
-                <tr>
-                    <th style="text-align:right">@item.Currency</th>
-                    <th style="text-align:left">@item.Amount</th>
-                </tr>
+                    <tr>
+                        <td>@item.Currency</td>
+                        <td>@item.Amount</td>
+                        <td><button id="@item.Currency" class="btn btn-secondary">Продать</button></td>
+                    </tr>
 
                 }
             </tbody>
@@ -52,3 +51,13 @@
 
     </div>
 </div>
+
+<script type="text/javascript">
+
+    window.addEventListener("load", function () {
+        document.getElementById("USDT").disabled = @Model.AccountBalances[0].buttonDisabled;
+        document.getElementById("BTC").disabled = @Model.AccountBalances[1].buttonDisabled;
+        document.getElementById("ETH").disabled = @Model.AccountBalances[2].buttonDisabled;
+        document.getElementById("LTC").disabled = @Model.AccountBalances[3].buttonDisabled;
+    });
+</script>

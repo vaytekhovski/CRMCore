@@ -16,7 +16,6 @@
     <Content Remove="wwwroot\css\mobileStylesheet.css" />
     <Content Remove="Views\Balances\_BalancesFilterPanel.cshtml" />
     <Content Remove="Views\Balances\_BalancesFilterPanel.html" />
-    <Content Remove="Views\Balances\Balances.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -290,7 +289,6 @@
     <Folder Include="Services\Balances\" />
     <Folder Include="Controllers\Balances\" />
     <Folder Include="ViewModels\Balances\" />
-    <Folder Include="Views\Balances\" />
   </ItemGroup>
 
   <ItemGroup>

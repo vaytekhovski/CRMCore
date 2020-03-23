@@ -20,21 +20,25 @@ namespace CRM.Controllers.Balances
         }
 
         [HttpGet]
-        public ActionResult Balances()
+        public async Task<ActionResult> Balances()
         {
             var model = new BalancesModel
             {
-                Account = "/",
+                Account = "556c8663-5706-4112-9440-c6ac965cfa26",
                 AccountBalances = new List<Balance>()
             };
             ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
+            
+
+            model = await _balancesService.LoadBalancesAsync(model.Account);
             return View(model);
         }
 
         [HttpPost]
         public async Task<ActionResult> Balances(BalancesModel model)
         {
-            model = await _balancesService.LoadBalancesAsync(model.Account); //TODO: !!! use async/await where possible
+            model = await _balancesService.LoadBalancesAsync(model.Account); 
+
             ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             return View(model);
         }
