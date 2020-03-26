@@ -28,6 +28,7 @@ namespace Business.Contexts
 
         public virtual DbSet<IndicatorValues> IndicatorValues { get; set; }
         public virtual DbSet<NeuralSignal> NeuralSignals { get; set; }
+        public virtual DbSet<ChartPoint> ChartPoints { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -43,6 +44,8 @@ namespace Business.Contexts
             modelBuilder.Entity<IndicatorPoints>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
             modelBuilder.Entity<TradeHistory>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
             modelBuilder.Entity<IndicatorValues>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
+            modelBuilder.Entity<ChartPoint>().HasKey(p => new { p.Exchange, p.Base, p.Quote, p.Time });
+
         }
     }
 }

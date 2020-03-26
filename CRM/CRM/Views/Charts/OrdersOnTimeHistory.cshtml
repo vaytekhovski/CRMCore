@@ -30,7 +30,7 @@
         @foreach (var item in Model.Indicators)
         {
             <text>
-            Values.push(parseFloat(@item.RSI));
+            Values.push(parseFloat(@item.Value));
             </text>
 
             }
@@ -39,7 +39,7 @@
                 {
             <text>
     Green.push(new Date(@item));
-    gValues.push(parseFloat(100));
+    gValues.push(parseFloat(@ViewBag.MaxValue));
             </text>
 
             }
@@ -48,7 +48,7 @@
                 {
             <text>
     Red.push(new Date(@item));
-    rValues.push(parseFloat(100));
+    rValues.push(parseFloat(@ViewBag.MaxValue));
             </text>
 
             }
@@ -59,7 +59,7 @@
             x: Dates,
             y: Values,
             type: 'scatter',
-            name: 'Course'
+            name: 'Курс'
         };
 
         var green = {
@@ -67,10 +67,10 @@
             y: gValues,
             type: 'bar',
 	marker: {
-        color: 'rgb(31, 133, 0)',
+        color: 'rgba(31, 133, 0, 0.5)',
         size: 22
             },
-    name: 'Profit orders'
+    name: 'Прибыльные сделки'
         };
 
         var red = {
@@ -78,10 +78,10 @@
             y: rValues,
          type: 'bar',
 	marker: {
-        color: 'rgb(255, 20, 20)',
+        color: 'rgba(255, 20, 20, 0.5)',
         size: 22
 	},
-            name: 'Loss orders'
+            name: 'Убыточные сделки'
     };
 
 

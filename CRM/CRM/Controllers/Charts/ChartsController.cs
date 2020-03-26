@@ -293,6 +293,10 @@ namespace CRM.Controllers.Charts
                     .Where(x => x.Account == filter.Account).ToList();
 
 
+                //ViewModel.GreenTimes.AddRange(BufOrders.Where(x => x.Profit > 0).Select(x => x.Time.ToJavascriptTicks()));
+                //ViewModel.RedTimes.AddRange(BufOrders.Where(x => x.Profit < 0).Select(x => x.Time.ToJavascriptTicks()));
+
+                
                 for (int i = 0; i < BufOrders.ToArray().Length - 1; i++)
                 {
                     if (BufOrders[i].Side == "buy" && BufOrders[i + 1].Side == "sell")
@@ -321,7 +325,7 @@ namespace CRM.Controllers.Charts
 
             using (MySQLContext context1 = new MySQLContext())
             {
-                List<IndicatorValues> BufIndicators = context1.IndicatorValues
+                List<ChartPoint> BufIndicators = context1.ChartPoints
                     .Where(x => x.Time >= filter.StartDate)
                     .Where(x => x.Time <= filter.EndDate)
                     .Where(x => x.Base == filter.Coin)
@@ -334,13 +338,14 @@ namespace CRM.Controllers.Charts
                     Indicators.Add(new IndicatorValuesModel
                     {
                         Time = item.Time.AddHours(3).ToJavascriptTicks(),
-                        RSI = item.RSI.ToString()
+                        Value = item.Close.ToString()
                     });
                 }
+
             }
 
             ViewModel.Indicators = Indicators;
-
+            ViewBag.MaxValue = Indicators.Select(x => double.Parse(x.Value)).Max();
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             ViewModel.PageName = "Orders On TimeHistory";
