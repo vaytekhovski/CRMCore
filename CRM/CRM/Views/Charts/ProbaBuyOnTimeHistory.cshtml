@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "ProbaBuysOnTimeHistory";
+
+}
+
+@section Scripts{
+
+    <script src="~/js/plotly-latest.min.js"></script>
+    <script type="text/javascript">
+
+        CHART = document.getElementById('Chart');
+
+        var Dates = [];
+        var Values = [];
+
+    var Green = [];
+    var gValues = [];
+
+
+        @foreach (var item in Model.Indicators)
+        {
+            <text>
+            Dates.push(new Date(@item.Time));
+            </text>
+
+            }
+
+        @foreach (var item in Model.Indicators)
+        {
+            <text>
+            Values.push(parseFloat(@item.Value));
+            </text>
+
+            }
+
+        @foreach (var item in Model.ProbaBuyTimes)
+                {
+            <text>
+    Green.push(new Date(@item));
+    gValues.push(parseFloat(@ViewBag.MaxValue));
+            </text>
+
+            }
+
+
+        var RSI = {
+            x: Dates,
+            y: Values,
+            type: 'scatter',
+            name: 'Курс'
+        };
+
+        var green = {
+            x: Green,
+            y: gValues,
+            type: 'bar',
+	marker: {
+        color: 'rgba(31, 133, 0, 0.5)',
+        size: 22
+            },
+    name: 'ProbaBuy'
+        };
+
+
+    var layout = {
+      height: 800
+    };
+
+
+        var data = [RSI,green];
+
+        Plotly.plot(CHART, data, layout);
+
+
+    </script>
+}
+
+
+@model CRM.ViewModels.Charts.ProbaBuyOnTimeHistoryViewModel
+
+@Html.Partial("_ProbaBuyOnTimeHistoryFilterPanel")
+
+<div class="content">
+
+    @Html.ValidationSummary()
+
+    <div id="Chart" style="display: @(Model.Indicators.Count != 0 ? "block" : "none")">
+    </div>
+
+</div>

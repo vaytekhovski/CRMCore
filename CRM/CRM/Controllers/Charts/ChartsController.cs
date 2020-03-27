@@ -352,6 +352,72 @@ namespace CRM.Controllers.Charts
             return View(ViewModel);
         }
 
+        [HttpGet]
+        public IActionResult ProbaBuyOnTimeHistory()
+        {
+            var viewModel = new ProbaBuyOnTimeHistoryViewModel
+            {
+                PageName = "OrdersOnTimeHistory",
+                StartDate = DatesHelper.MinDateStr,
+                EndDate = DatesHelper.CurrentDateStr
+            };
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult ProbaBuyOnTimeHistory(ProbaBuyOnTimeHistoryViewModel ViewModel)
+        {
+            TradeHistoryFilter filter = new TradeHistoryFilter
+            {
+                Coin = ViewModel.Coin,
+                Account = ViewModel.Account,
+                StartDate = DateTime.Parse(ViewModel.StartDate),
+                EndDate = DateTime.Parse(ViewModel.EndDate).AddDays(1),
+            };
+
+            List<IndicatorValuesModel> Indicators = new List<IndicatorValuesModel>();
+
+            using (MySQLContext context = new MySQLContext())
+            {
+                List<ChartPoint> BufIndicators = context.ChartPoints
+                    .Where(x => x.Time >= filter.StartDate)
+                    .Where(x => x.Time <= filter.EndDate)
+                    .Where(x => x.Base == filter.Coin)
+                    .OrderBy(x => x.Time).ToList();
+
+
+
+                foreach (var item in BufIndicators)
+                {
+                    Indicators.Add(new IndicatorValuesModel
+                    {
+                        Time = item.Time.AddHours(3).ToJavascriptTicks(),
+                        Value = item.Close.ToString()
+                    });
+                }
+
+
+                ViewModel.ProbaBuyTimes = context.NeuralSignals
+                    .Where(x=>x.Time > filter.StartDate && x.Time <filter.EndDate)
+                    .Where(x => x.Base == filter.Coin).Where(x => x.ProbaBuy > 0.5M)
+                    .Select(x => x.Time.ToJavascriptTicks()).ToList();
+
+            }
+
+            ViewModel.Indicators = Indicators;
+            ViewBag.MaxValue = Indicators.Select(x => double.Parse(x.Value)).Max();
+            ViewBag.MaxValue += ViewBag.MaxValue * 0.3;
+
+            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
+            ViewModel.PageName = "Orders On TimeHistory";
+
+
+            return View(ViewModel);
+        }
+
 
         [HttpGet]
         public ActionResult BollingerBands()
