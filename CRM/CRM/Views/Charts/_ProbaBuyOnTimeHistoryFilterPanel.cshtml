@@ -20,6 +20,13 @@
         </div>
 
         <div class="filter_element">
+            <input type="text" class="form-control filter_input_date" id="probaBuyMin" name="probaBuyMin" value=@Model.ProbaBuyMin placeholder="ProbaBuy min" />
+        </div>
+        <div class="filter_element">
+            <input type="text" class="form-control filter_input_date" id="probaBuyMax" name="probaBuyMax" value=@Model.ProbaBuyMax placeholder="ProbaBuy max" />
+        </div>
+
+        <div class="filter_element">
             <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/ProbaBuyOnTimeHistory" formmethod="post">Показать</button>
 
         </div>

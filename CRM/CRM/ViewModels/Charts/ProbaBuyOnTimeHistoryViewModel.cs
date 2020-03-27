@@ -13,6 +13,8 @@ namespace CRM.ViewModels.Charts
         public string EndDate { get; set; }
         public string Exchange { get; set; }
         public string Coin { get; set; }
+        public string ProbaBuyMin { get; set; }
+        public string ProbaBuyMax { get; set; }
 
         public List<IndicatorValuesModel> Indicators { get; set; }
         public List<long> ProbaBuyTimes { get; set; }

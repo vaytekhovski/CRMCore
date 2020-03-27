@@ -359,7 +359,9 @@ namespace CRM.Controllers.Charts
             {
                 PageName = "OrdersOnTimeHistory",
                 StartDate = DatesHelper.MinDateStr,
-                EndDate = DatesHelper.CurrentDateStr
+                EndDate = DatesHelper.CurrentDateStr,
+                ProbaBuyMin = "0.5",
+                ProbaBuyMax = "1"
             };
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
@@ -396,11 +398,13 @@ namespace CRM.Controllers.Charts
                         Value = item.Close.ToString()
                     });
                 }
-
+                decimal pMin = Convert.ToDecimal(ViewModel.ProbaBuyMin, System.Globalization.CultureInfo.InvariantCulture);
+                decimal pMax = Convert.ToDecimal(ViewModel.ProbaBuyMax, System.Globalization.CultureInfo.InvariantCulture);
 
                 ViewModel.ProbaBuyTimes = context.NeuralSignals
                     .Where(x=>x.Time > filter.StartDate && x.Time <filter.EndDate)
-                    .Where(x => x.Base == filter.Coin).Where(x => x.ProbaBuy > 0.5M)
+                    .Where(x => x.Base == filter.Coin)
+                    .Where(x => x.ProbaBuy > pMin && x.ProbaBuy < pMax)
                     .Select(x => x.Time.ToJavascriptTicks()).ToList();
 
             }
