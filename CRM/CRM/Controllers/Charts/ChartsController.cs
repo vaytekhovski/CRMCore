@@ -372,7 +372,6 @@ namespace CRM.Controllers.Charts
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
                 Coin = ViewModel.Coin,
-                Account = ViewModel.Account,
                 StartDate = DateTime.Parse(ViewModel.StartDate),
                 EndDate = DateTime.Parse(ViewModel.EndDate).AddDays(1),
             };
