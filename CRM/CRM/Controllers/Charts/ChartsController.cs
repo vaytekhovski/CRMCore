@@ -292,10 +292,6 @@ namespace CRM.Controllers.Charts
                     .Where(x => x.Pair == filter.Coin)
                     .Where(x => x.Account == filter.Account).ToList();
 
-
-                //ViewModel.GreenTimes.AddRange(BufOrders.Where(x => x.Profit > 0).Select(x => x.Time.ToJavascriptTicks()));
-                //ViewModel.RedTimes.AddRange(BufOrders.Where(x => x.Profit < 0).Select(x => x.Time.ToJavascriptTicks()));
-
                 
                 for (int i = 0; i < BufOrders.ToArray().Length - 1; i++)
                 {
@@ -346,6 +342,8 @@ namespace CRM.Controllers.Charts
 
             ViewModel.Indicators = Indicators;
             ViewBag.MaxValue = Indicators.Select(x => double.Parse(x.Value)).Max();
+            ViewBag.MaxValue += ViewBag.MaxValue * 0.3;
+
             ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             ViewModel.PageName = "Orders On TimeHistory";
