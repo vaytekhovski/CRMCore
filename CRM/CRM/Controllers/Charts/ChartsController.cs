@@ -442,6 +442,7 @@ namespace CRM.Controllers.Charts
             {
                 StartDate = DateTime.Parse(ViewModel.StartDate).AddHours(-3),
                 EndDate = DateTime.Parse(ViewModel.EndDate).AddHours(-3),
+                Coin = ViewModel.Coin
             };
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
@@ -453,6 +454,8 @@ namespace CRM.Controllers.Charts
             ViewModel.ProbaBuyValues = model.ProbaBuyValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewModel.BBLValues = model.BBLValues.Select(x => x.ToString(SeparateHelper.Separator)).ToList();
             ViewModel.PageName = "Bollinger Bands";
+            ViewBag.Coins = DropDownFields.GetCoins();
+
             return View(ViewModel);
         }
 

@@ -10,6 +10,7 @@ namespace CRM.ViewModels.Charts
         public string PageName { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public string Coin { get; set; }
 
         public List<long> Dates { get; set; }
         public List<string> ProbaSellValues { get; set; }

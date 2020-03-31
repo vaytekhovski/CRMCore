@@ -10,11 +10,8 @@
         @Html.Partial("_ChartButtons")
 
         <div class="filter_element">
-            <select class="form-control filter_input">
-                <option value="binance">Binance</option>
-            </select>
+            @Html.DropDownListFor(m => m.Coin, (IEnumerable<SelectListItem>)ViewBag.Coins, new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
         </div>
-
 
         <div class="filter_element">
             <input type="date" class="form-control filter_input_date" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />
