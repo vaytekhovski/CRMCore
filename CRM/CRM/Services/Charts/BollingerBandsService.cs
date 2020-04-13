@@ -19,6 +19,7 @@ namespace CRM.Services.Charts
             using (MySQLContext context = new MySQLContext())
             {
                 Signals = context.NeuralSignals
+                    .Where(x=>x.Base == filter.Coin)
                     .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
                     .OrderBy(x => x.Time).ToList();
             }
