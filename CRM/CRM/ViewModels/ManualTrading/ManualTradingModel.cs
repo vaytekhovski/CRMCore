@@ -11,12 +11,12 @@ namespace CRM.ViewModels.ManualTrading
         public string Coin { get; set; }
         public Unit Unit { get; set; }
         public List<Unit> Units { get; set; }
-
+        public List<string> CoinPrices { get; set; }
     }
 
     public class Unit
     {
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
         public double CountOfUnits3h { get; set; }
         public string PercentOfUnits3h { get; set; }
         public double CountOfUnits1h { get; set; }

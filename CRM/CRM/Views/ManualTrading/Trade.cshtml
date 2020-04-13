@@ -4,9 +4,10 @@
 }
 @model CRM.ViewModels.ManualTrading.ManualTradingModel
 
-<head>
-    <link href="~/css/ManualTrading.css" rel="stylesheet">
-</head>
+    <head>
+        <link href="~/css/ManualTrading.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    </head>
 
 
 
@@ -100,6 +101,184 @@
         </div>
     </div>
 
+    <div class="count_of_units_timeline">
+        <canvas id="units-timeline" width="400" height="200"></canvas>
+    </div>
+    <div class="coin_cost_timeline">
+        <canvas id="coin-cost-timeline" width="400" height="200"></canvas>
+
+    </div>
+
 
 </div>
 
+<script>
+
+    var Time = [];
+    var m5 = [];
+    var m15 = [];
+    var m30 = [];
+    var h1 = [];
+    var h3 = [];
+    var Prices = [];
+
+     @foreach (var item in Model.Units)
+    {
+            <text>
+    Time.push("@item.Time");
+
+    m5.push(parseFloat(@item.PercentOfUnits5m));
+
+    m15.push(parseFloat(@item.PercentOfUnits15m));
+
+    m30.push(parseFloat(@item.PercentOfUnits30m));
+
+    h1.push(parseFloat(@item.PercentOfUnits1h));
+
+    h3.push(parseFloat(@item.PercentOfUnits3h));
+
+            </text>
+
+    }
+
+    @foreach (var item in Model.CoinPrices)
+    {
+        <text>
+    Prices.push(parseFloat(@item));
+        </text>
+    }
+
+    var units_ctx = document.getElementById('units-timeline').getContext('2d');
+
+    var units_chart = new Chart(units_ctx, {
+        // The type of chart we want to create
+        type: 'line',
+        // The data for our dataset
+        data: {
+            labels: Time,
+            datasets: [{
+                label: '5 мин',
+                borderColor: 'rgba(255, 159, 28, 0.8)',
+                backgroundColor: 'rgba(255, 159, 28, 0.5)',
+                fill: true,
+                data: m5
+            },
+            {
+                label: '15 мин',
+                borderColor: 'rgba(23, 104, 172, 0.8)',
+                backgroundColor: 'rgba(23, 104, 172, 0.5)',
+                fill: true,
+                data: m15
+            },
+            {
+                label: '30 мин',
+                    borderColor: 'rgba(46, 96, 182, 0.8)',
+                backgroundColor: 'rgba(46, 96, 182, 0.5)',
+                fill: true,
+                data: m30
+            },
+            {
+                label: '1 час',
+                borderColor: 'rgba(244, 100, 48, 0.8)',
+                backgroundColor: 'rgba(244, 100, 48, 0.5)',
+                fill: true,
+                data: h1
+            } ,
+            {
+                label: '3 часа',
+                borderColor: 'rgba(42, 45, 52, 0.8)',
+                backgroundColor: 'rgba(42, 45, 52, 0.4)',
+                fill: true,
+                data: h3
+            } ]
+        },
+        options: {
+            responsive: true,
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                x: {
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Время'
+                    }
+                },
+                y: {
+                    stacked: true,
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Процент'
+                    }
+                },yAxes: [{
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }]
+            }
+        }
+    });
+
+    var coin_ctx = document.getElementById('coin-cost-timeline').getContext('2d');
+
+
+    var coin_chart = new Chart(coin_ctx, {
+        // The type of chart we want to create
+        type: 'line',
+        // The data for our dataset
+        data: {
+            labels: Time,
+            datasets: [{
+                label: 'BTC',
+                borderColor: 'rgba(255, 159, 28, 0.8)',
+                backgroundColor: 'rgba(255, 159, 28, 0.5)',
+                fill: true,
+                data: Prices
+            }]
+        },
+        options: {
+            responsive: true,
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                x: {
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Время'
+                    }
+                },
+                y: {
+                    stacked: true,
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Процент'
+                    }
+                },
+                yAxes: [{
+                    ticks: {
+                        suggestedMin: 6500,
+                        suggestedMax: 7000
+                    }
+                }]
+            }
+        }
+    });
+
+
+</script>
