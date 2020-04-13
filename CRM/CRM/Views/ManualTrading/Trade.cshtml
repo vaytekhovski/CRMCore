@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewData["Title"] = "Trade";
+}
+@model CRM.ViewModels.ManualTrading.ManualTradingModel
+
+<head>
+    <link href="~/css/ManualTrading.css" rel="stylesheet">
+</head>
+
+
+
+<div style="width:60%;margin:auto">
+    <h2>Trade</h2>
+    <div class="filter">
+
+    </div>
+    <div class="count_of_units">
+        <div class="vertical-bar">
+            <div class="unit-title">
+                3ч
+            </div>
+            <div class="unit-body">
+                <div class="unit-body-value">
+                    <h3>@Model.Unit.PercentOfUnits3h %</h3>
+                </div>
+                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits3h%;background-color: @(Model.Unit.CountOfUnits3h > 90 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+                </div>
+            </div>
+            <div class="unit-title">
+                @Model.Unit.CountOfUnits3h / 180
+            </div>
+        </div>
+        <div class="vertical-bar">
+            <div class="unit-title">
+                1ч
+            </div>
+            <div class="unit-body">
+                <div class="unit-body-value">
+                    <h3>@Model.Unit.PercentOfUnits1h %</h3>
+                </div>
+                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits1h%;background-color: @(Model.Unit.CountOfUnits1h > 30 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+
+                </div>
+            </div>
+
+            <div class="unit-title">
+                @Model.Unit.CountOfUnits1h / 60
+            </div>
+        </div>
+        <div class="vertical-bar">
+            <div class="unit-title">
+                30м
+            </div>
+            <div class="unit-body">
+                <div class="unit-body-value">
+                    <h3>@Model.Unit.PercentOfUnits30m %</h3>
+                </div>
+                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits30m%;background-color: @(Model.Unit.CountOfUnits30m > 15 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+
+                </div>
+            </div>
+
+            <div class="unit-title">
+                @Model.Unit.CountOfUnits30m / 30
+            </div>
+        </div>
+        <div class="vertical-bar">
+            <div class="unit-title">
+                15м
+            </div>
+            <div class="unit-body">
+                <div class="unit-body-value">
+                    <h3>@Model.Unit.PercentOfUnits15m %</h3>
+                </div>
+                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits15m%;background-color: @(Model.Unit.CountOfUnits15m > 7 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+                </div>
+            </div>
+
+            <div class="unit-title">
+                @Model.Unit.CountOfUnits15m / 15
+            </div>
+        </div>
+        <div class="vertical-bar">
+            <div class="unit-title">
+                5м
+            </div>
+            <div class="unit-body">
+                <div class="unit-body-value">
+                    <h3>@Model.Unit.PercentOfUnits5m %</h3>
+                </div>
+                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits5m%;background-color: @(Model.Unit.CountOfUnits5m > 2 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+
+
+                </div>
+            </div>
+            <div class="unit-title">
+                @Model.Unit.CountOfUnits5m / 5
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
