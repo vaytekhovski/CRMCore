@@ -53,14 +53,14 @@ namespace CRM.Controllers.ManualTrading
             ViewModel.Unit.CountOfUnits1h = NeuralSignals.Where(x => x.Time > now.AddHours(-1)).Where(x => x.Value == 1).Count();
             ViewModel.Unit.CountOfUnits3h = NeuralSignals.Where(x => x.Time > now.AddHours(-3)).Where(x => x.Value == 1).Count();
 
-            ViewModel.Unit.PercentOfUnits5m = Math.Round(ViewModel.Unit.CountOfUnits5m / 5 * 100, 0).ToString(SeparateHelper.Separator);
-            ViewModel.Unit.PercentOfUnits15m = Math.Round(ViewModel.Unit.CountOfUnits15m / 15 * 100, 0).ToString(SeparateHelper.Separator);
-            ViewModel.Unit.PercentOfUnits30m = Math.Round(ViewModel.Unit.CountOfUnits30m / 30 * 100, 0).ToString(SeparateHelper.Separator);
-            ViewModel.Unit.PercentOfUnits1h = Math.Round(ViewModel.Unit.CountOfUnits1h / 60 * 100, 0).ToString(SeparateHelper.Separator);
-            ViewModel.Unit.PercentOfUnits3h = Math.Round(ViewModel.Unit.CountOfUnits3h / 180 * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits5m = Math.Round((ViewModel.Unit.CountOfUnits5m / 5) * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits15m = Math.Round((ViewModel.Unit.CountOfUnits15m / 15) * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits30m = Math.Round((ViewModel.Unit.CountOfUnits30m / 30) * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits1h = Math.Round((ViewModel.Unit.CountOfUnits1h / 60) * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits3h = Math.Round((ViewModel.Unit.CountOfUnits3h / 180) * 100, 0).ToString(SeparateHelper.Separator);
 
 
-            for (var start = now.AddHours(-1); start < now; start = start.AddMinutes(1))
+            for (var start = now.AddHours(-1); start <= now; start = start.AddMinutes(1))
             {
                 ViewModels.ManualTrading.Unit Unit = new Unit
                 {
@@ -132,14 +132,13 @@ namespace CRM.Controllers.ManualTrading
             ViewModel.Unit.CountOfUnits1h = NeuralSignals.Where(x => x.Time > now.AddHours(-1)).Where(x => x.Value == 1).Count();
             ViewModel.Unit.CountOfUnits3h = NeuralSignals.Where(x => x.Time > now.AddHours(-3)).Where(x => x.Value == 1).Count();
 
-            ViewModel.Unit.PercentOfUnits5m = Math.Round(ViewModel.Unit.CountOfUnits5m / 5 * 100, 0).ToString(SeparateHelper.Separator);
-            ViewModel.Unit.PercentOfUnits15m = Math.Round(ViewModel.Unit.CountOfUnits15m / 15 * 100, 0).ToString(SeparateHelper.Separator);
-            ViewModel.Unit.PercentOfUnits30m = Math.Round(ViewModel.Unit.CountOfUnits30m / 30 * 100, 0).ToString(SeparateHelper.Separator);
-            ViewModel.Unit.PercentOfUnits1h = Math.Round(ViewModel.Unit.CountOfUnits1h / 60 * 100, 0).ToString(SeparateHelper.Separator);
-            ViewModel.Unit.PercentOfUnits3h = Math.Round(ViewModel.Unit.CountOfUnits3h / 180 * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits5m = Math.Round((ViewModel.Unit.CountOfUnits5m / 5) * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits15m = Math.Round((ViewModel.Unit.CountOfUnits15m / 15) * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits30m = Math.Round((ViewModel.Unit.CountOfUnits30m / 30) * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits1h = Math.Round((ViewModel.Unit.CountOfUnits1h / 60) * 100, 0).ToString(SeparateHelper.Separator);
+            ViewModel.Unit.PercentOfUnits3h = Math.Round((ViewModel.Unit.CountOfUnits3h / 180) * 100, 0).ToString(SeparateHelper.Separator);
 
-
-            for (var start = now.AddHours(-1); start < now; start = start.AddMinutes(1))
+            for (var start = now.AddHours(-1); start <= now; start = start.AddMinutes(1))
             {
                 ViewModels.ManualTrading.Unit Unit = new Unit
                 {
