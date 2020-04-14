@@ -28,6 +28,7 @@ namespace CRM.Controllers.ManualTrading
 
 
             List<NeuralSignal> NeuralSignals = new List<NeuralSignal>();
+            List<decimal> CoinPrices = new List<decimal>();
 
             var now = DateTime.Now.ToUniversalTime();
 
@@ -35,6 +36,7 @@ namespace CRM.Controllers.ManualTrading
             using (MySQLContext db = new MySQLContext())
             {
                 NeuralSignals = db.NeuralSignals.Where(x=>x.Base =="BTC").Where(x => x.Time > now.AddHours(-4)).ToList();
+                CoinPrices = db.ChartPoints.Where(x => x.Base == "BTC").Where(x => x.Time > now.AddHours(-1)).OrderBy(x => x.Time).Select(x => x.Close).ToList();
             }
 
             ViewModel.Unit.CountOfUnits5m = NeuralSignals.Where(x=>x.Time > now.AddMinutes(-5)).Where(x => x.Value == 1).Count();
@@ -71,6 +73,16 @@ namespace CRM.Controllers.ManualTrading
 
                 ViewModel.Units.Add(Unit);
             }
+
+            foreach (var item in CoinPrices)
+            {
+                ViewModel.CoinPrices.Add(item.ToString());
+
+            }
+
+            ViewBag.MinCourse = Convert.ToInt32(CoinPrices.Min() - 100);
+            ViewBag.MaxCourse = Convert.ToInt32(CoinPrices.Max() + 100);
+
 
             return View(ViewModel);
         }
