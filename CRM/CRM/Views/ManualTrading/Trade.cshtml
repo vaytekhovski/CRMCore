@@ -140,13 +140,14 @@
             </text>
 
     }
-
+    
     @foreach (var item in Model.CoinPrices)
     {
         <text>
     Prices.push(parseFloat(@item));
         </text>
     }
+    
 
     var units_ctx = document.getElementById('units-timeline').getContext('2d');
 

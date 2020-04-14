@@ -13,6 +13,7 @@ namespace Business.Models.Master
         public string Quote { get; set; }
         public decimal ProbaSell { get; set; }
         public decimal ProbaBuy { get; set; }
+        public int Value { get; set; }
         public decimal BBL { get; set; }
     }
 }
