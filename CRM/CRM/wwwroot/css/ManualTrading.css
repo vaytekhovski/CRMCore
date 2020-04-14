@@ -56,3 +56,26 @@
     position: absolute;
     bottom: 0;
 }
+
+.buy_sell{
+    height:400px;
+}
+
+.box {
+    display: inline;
+    float: left;
+    width: 40%;
+    margin: 50px;
+    text-align: center;
+    border: 1px #ccc solid;
+    border-radius: 5px;
+}
+
+.box .box-line:first-child{
+    border-bottom: 1px #ccc solid;
+}
+
+.box-line{
+    height:25%;
+    padding:10px;
+}

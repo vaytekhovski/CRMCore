@@ -2,16 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CRM.ViewModels.Balances;
 
 namespace CRM.ViewModels.ManualTrading
 {
     public class ManualTradingModel
     {
+        public ManualTradingModel()
+        {
+            Unit = new Unit();
+            Units = new List<Unit>();
+            CoinPrices = new List<string>();
+        }
+
         public string Account { get; set; }
         public string Coin { get; set; }
         public Unit Unit { get; set; }
         public List<Unit> Units { get; set; }
         public List<string> CoinPrices { get; set; }
+        public BalancesModel balancesModel { get; set; }
     }
 
     public class Unit

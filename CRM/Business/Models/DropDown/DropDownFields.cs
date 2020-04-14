@@ -84,16 +84,10 @@ namespace Business
             using (BasicContext context = new BasicContext())
             {
                 UserModel user = context.UserModels.FirstOrDefault(x => x.Id == UserId);
-                if (user.RoleId != 1)
-                {
-                    lst = context.ExchangeKeys
+                lst = context.ExchangeKeys
                       .Where(x => user.RoleId != (int)UserModel.Roles.Boss ? x.UserId == user.Id : true)
                       .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
                       .ToList();
-                }
-                else
-                    lst.Add(new SelectListItem { Text = "permission denied", Value = ":(" });
-
             }
 
             return lst;
