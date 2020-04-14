@@ -1,5 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
+.navbar-nav > li > a@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -7,9 +6,9 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
-  font-family: sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
 }
 
 body {
@@ -4240,7 +4239,7 @@ tbody.collapse.in {
 }
 
 .nav>li>a {
-  padding: 10px 15px
+  padding: 10px 10px
 }
 
 .nav>li>a:focus, .nav>li>a:hover {
@@ -4641,7 +4640,7 @@ tbody.collapse.in {
 
   .navbar-nav>li>a {
     padding-top: 14px;
-    padding-bottom: 14px
+    padding-bottom: 14px;
   }
 }
 
