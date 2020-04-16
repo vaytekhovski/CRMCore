@@ -23,6 +23,7 @@ namespace CRM.ViewModels.ManualTrading
         public BalancesModel balancesModel { get; set; }
         public string BuyAmount { get; set; }
         public string SellAmount { get; set; }
+        public string PlaceOrderResponse { get; set; }
     }
 
     public class Unit

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Models.DataVisioAPI;
+using CRM.Helpers;
 using Newtonsoft.Json;
 
 namespace CRM.Services.DataVisioAPI
@@ -43,6 +44,32 @@ namespace CRM.Services.DataVisioAPI
             };
 
             return JsonConvert.DeserializeObject<WalletCurrency>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync());
+        }
+
+        public async Task<string> PlaceOrder(PlaceOrderRequest placeOrderModel)
+        {
+            var Client = new HttpClient();
+            var token = Authorization();
+
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
+
+
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/login"),
+                Headers =
+                {
+                     { "type", placeOrderModel.type },
+                    { "side",placeOrderModel.side},
+                    {"base",placeOrderModel.@base },
+                    {"quote",placeOrderModel.quote },
+                    {"amount",placeOrderModel.amount.ToString(SeparateHelper.Separator) }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            return JsonConvert.DeserializeObject<PlaceOrderResponse>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync()).id;
         }
     }
 }

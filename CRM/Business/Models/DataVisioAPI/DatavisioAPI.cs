@@ -29,13 +29,18 @@ namespace Business.Models.DataVisioAPI
         public string LTC { get; set; }
     }
 
-    public class PlaceOrderModel
+    public class PlaceOrderRequest
     {
         public string type { get; set; }
         public string side { get; set; }
         public string @base { get; set; }
         public string quote { get; set; }
         public double amount { get; set; }
+    }
+
+    public class PlaceOrderResponse
+    {
+        public string id { get; set; }
     }
 
 }
