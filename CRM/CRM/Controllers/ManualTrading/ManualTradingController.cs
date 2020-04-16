@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business;
 using Business.Contexts;
+using Business.Models.DataVisioAPI;
 using Business.Models.Master;
 using CRM.Helpers;
 using CRM.Services.Balances;
+using CRM.Services.DataVisioAPI;
 using CRM.ViewModels.ManualTrading;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +18,13 @@ namespace CRM.Controllers.ManualTrading
     public class ManualTradingController : Controller
     {
         private readonly BalancesService _balancesService;
+        private readonly DatavisioAPIService datavisioAPIService;
 
 
         public ManualTradingController()
         {
             _balancesService = new BalancesService();
+            datavisioAPIService = new DatavisioAPIService();
         }
 
         [HttpGet]
@@ -40,7 +44,7 @@ namespace CRM.Controllers.ManualTrading
 
             var now = DateTime.Now.ToUniversalTime();
 
-
+            /*
             using (MySQLContext db = new MySQLContext())
             {
                 NeuralSignals = db.NeuralSignals.Where(x => x.Base == ViewModel.Coin).Where(x => x.Time > now.AddHours(-4)).ToList();
@@ -100,6 +104,8 @@ namespace CRM.Controllers.ManualTrading
                 ViewModel.CoinPrices.Add(item.ToString());
 
             }
+
+            */
 
             if (CoinPrices.Count != 0)
             {
@@ -209,6 +215,42 @@ namespace CRM.Controllers.ManualTrading
             ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             ViewBag.Coins = DropDownFields.GetCoins();
             return View(ViewModel);
+        }
+
+        public IActionResult Buy(ManualTradingModel ViewModel)
+        {
+
+            var response = datavisioAPIService.PlaceOrder(new PlaceOrderRequest()
+            {
+                type = "market",
+                side = "buy",
+                @base = ViewModel.Coin,
+                quote = "USDT",
+                amount = Convert.ToDouble(ViewModel.BuyAmount)
+            }).Result;
+
+            ViewModel.BuyAmount = "";
+            ViewModel.PlaceOrderResponse = response;
+
+            return RedirectToAction("Trade", "ManualTrading", new { ViewModel = ViewModel});
+        }
+
+        public IActionResult Sell(ManualTradingModel ViewModel)
+        {
+
+            var response = datavisioAPIService.PlaceOrder(new PlaceOrderRequest()
+            {
+                type = "market",
+                side = "sell",
+                @base = ViewModel.Coin,
+                quote = "USDT",
+                amount = Convert.ToDouble(ViewModel.SellAmount)
+            }).Result;
+
+            ViewModel.SellAmount = "";
+            ViewModel.PlaceOrderResponse = response;
+
+            return RedirectToAction("Trade", "ManualTrading", new { ViewModel = ViewModel });
         }
     }
 }

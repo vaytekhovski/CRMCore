@@ -28,4 +28,7 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\DataVisioAPI\" />
+  </ItemGroup>
 </Project>

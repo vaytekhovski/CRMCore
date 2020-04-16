@@ -125,6 +125,13 @@
 
     </div>
 
+    @if (Model.PlaceOrderResponse != null)
+    {
+    <div style="padding:30px;text-align:center">
+        <h2>Ордер: @Model.PlaceOrderResponse создан</h2>
+    </div>
+    }
+
     <div class="buy_sell">
         <div class="box">
             <div class="box-line">
@@ -141,18 +148,19 @@
                 {
                     if (item.Currency == Model.Coin)
                     {
-                        CurrencyAmount = item.Amount;
+                        CurrencyAmount = item.Free.ToString();
                     }
                 }
                 Доступно: @CurrencyAmount @Model.Coin
             </div>
-
-            <div class="box-line">
-                <input type="text" />
-            </div>
-            <div class="box-line">
-                <button class="btn btn-secondary">Продать</button>
-            </div>
+            <form>
+                <div class="box-line">
+                    <input type="text" value="@Model.SellAmount"/>
+                </div>
+                <div class="box-line">
+                    <button type="submit" id="TradeHistory" formaction="../ManualTrading/Sell" class="btn btn-secondary">Продать</button>
+                </div>
+            </form>
         </div>
         <div class="box">
             <div class="box-line">
@@ -168,18 +176,19 @@
                 {
                     if (item.Currency == "USDT")
                     {
-                        USDTAmount = item.Amount;
+                        USDTAmount = item.Free.ToString("#.##");
                     }
                 }
                 Доступно: @USDTAmount USDT
             </div>
-
-            <div class="box-line">
-                <input type="text" />
-            </div>
-            <div class="box-line">
-                <button class="btn btn-secondary">Купить</button>
-            </div>
+            <form>
+                <div class="box-line">
+                    <input type="text" value="@Model.BuyAmount" />
+                </div>
+                <div class="box-line">
+                    <button type="submit" id="TradeHistory" formaction="../ManualTrading/Buy" class="btn btn-secondary">Купить</button>
+                </div>
+            </form>
         </div>
     </div>
 

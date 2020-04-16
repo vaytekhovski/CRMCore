@@ -32,18 +32,22 @@
             <thead>
                 <tr>
                     <th>Валюта</th>
-                    <th>Количество</th>
+                    <th>Свободно</th>
+                    <th>В использовании</th>
+                    <th>Всего</th>
                     <th>Продажа</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.AccountBalances)
                 {
-                    <tr>
-                        <td>@item.Currency</td>
-                        <td>@item.Amount</td>
-                        <td><button id="@item.Currency" class="btn btn-secondary">Продать</button></td>
-                    </tr>
+                <tr>
+                    <td>@item.Currency</td>
+                    <td>@item.Free</td>
+                    <td>@item.Used</td>
+                    <td>@item.Total</td>
+                    <td><button id="@item.Currency" class="btn btn-secondary">Продать</button></td>
+                </tr>
 
                 }
             </tbody>

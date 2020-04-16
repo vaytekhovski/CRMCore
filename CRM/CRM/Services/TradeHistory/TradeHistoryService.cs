@@ -68,7 +68,7 @@ namespace CRM.Services
                 model.AccountTradeHistories = query.ToList();
                 
             }
-
+            /*
             using (MySQLContext sQLContext = new MySQLContext())
             {
                 if (filter.Coin == null)
@@ -91,7 +91,7 @@ namespace CRM.Services
                 }
             }
 
-
+            */
 
             return model;
         }
