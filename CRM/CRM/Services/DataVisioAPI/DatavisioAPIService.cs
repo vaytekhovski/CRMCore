@@ -31,7 +31,7 @@ namespace CRM.Services.DataVisioAPI
         public async Task<WalletCurrency> GetBalance(string CoinBase)
         {
             var Client = new HttpClient();
-            var token = Authorization();
+            var token = Authorization().Result;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -43,13 +43,16 @@ namespace CRM.Services.DataVisioAPI
                 Content = new StringContent(string.Empty)
             };
 
-            return JsonConvert.DeserializeObject<WalletCurrency>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync());
+            WalletCurrency walletCurrency = JsonConvert.DeserializeObject<WalletCurrency>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync());
+            walletCurrency.coin = CoinBase;
+
+            return walletCurrency;
         }
 
         public async Task<string> PlaceOrder(PlaceOrderRequest placeOrderModel)
         {
             var Client = new HttpClient();
-            var token = Authorization();
+            var token = Authorization().Result;
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
