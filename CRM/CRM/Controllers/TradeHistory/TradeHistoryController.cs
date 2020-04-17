@@ -178,9 +178,9 @@ namespace CRM.Controllers
 
                 SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-                viewModel.ProbaBuyBTCstr = Math.Round(Model.ProbaBuyBTC, 2).ToString(SeparateHelper.Separator);
-                viewModel.ProbaBuyLTCstr = Math.Round(Model.ProbaBuyLTC, 2).ToString(SeparateHelper.Separator);
-                viewModel.ProbaBuyETHstr = Math.Round(Model.ProbaBuyETH, 2).ToString(SeparateHelper.Separator);
+                viewModel.ProbaBuyBTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyBTC), 2).ToString(SeparateHelper.Separator);
+                viewModel.ProbaBuyLTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyLTC), 2).ToString(SeparateHelper.Separator);
+                viewModel.ProbaBuyETHstr = Math.Round(Convert.ToDouble(Model.ProbaBuyETH), 2).ToString(SeparateHelper.Separator);
 
                 viewModel.ProbaBuyBTC = Model.ProbaBuyBTC;
                 viewModel.ProbaBuyLTC = Model.ProbaBuyLTC;
