@@ -176,17 +176,17 @@ namespace CRM.Controllers
 
                 viewModel.SharpeRatio = (MidPercentProfit - 0.05m) / (decimal)StandardDeviation;
 
-                SeparateHelper.Separator.NumberDecimalSeparator = ".";
-
-                viewModel.ProbaBuyBTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyBTC), 2).ToString(SeparateHelper.Separator);
-                viewModel.ProbaBuyLTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyLTC), 2).ToString(SeparateHelper.Separator);
-                viewModel.ProbaBuyETHstr = Math.Round(Convert.ToDouble(Model.ProbaBuyETH), 2).ToString(SeparateHelper.Separator);
-
-                viewModel.ProbaBuyBTC = Model.ProbaBuyBTC;
-                viewModel.ProbaBuyLTC = Model.ProbaBuyLTC;
-                viewModel.ProbaBuyETH = Model.ProbaBuyETH;
-
             }
+
+            SeparateHelper.Separator.NumberDecimalSeparator = ".";
+
+            viewModel.ProbaBuyBTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyBTC), 2).ToString(SeparateHelper.Separator);
+            viewModel.ProbaBuyLTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyLTC), 2).ToString(SeparateHelper.Separator);
+            viewModel.ProbaBuyETHstr = Math.Round(Convert.ToDouble(Model.ProbaBuyETH), 2).ToString(SeparateHelper.Separator);
+
+            viewModel.ProbaBuyBTC = Model.ProbaBuyBTC;
+            viewModel.ProbaBuyLTC = Model.ProbaBuyLTC;
+            viewModel.ProbaBuyETH = Model.ProbaBuyETH;
 
             return viewModel;
         }
