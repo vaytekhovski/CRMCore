@@ -31,12 +31,12 @@ namespace Jobs
         {
             AccountTradeHistories = new List<AccountTradeHistory>();
             orders = _orders;
-
+            /*
             using (MySQLContext context = new MySQLContext())
             {
                 Signals = context.SignalsPrivate.Where(x => x.ErrorMessages == null).ToList();
             }
-
+            */
             using (BasicContext context = new BasicContext())
             {
                 LastId = regularCalculating ? context.AccountTradeHistories.FirstOrDefault(x => x.Time > Helper.FindTimeLastSell()).Id : 1;
@@ -48,7 +48,7 @@ namespace Jobs
 
             orders = ChangeAmounts(orders);
             AddToTradeHistories(orders);
-            AddSignals(Signals);
+            //AddSignals(Signals);
             
             return AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
         }
@@ -108,7 +108,7 @@ namespace Jobs
                 {
                     try
                     {
-                        orders.FirstOrDefault(x => x.Id == item.OrderId).ClosedAmount = item.Amount;
+                        orders.FirstOrDefault(x => x.id == item.OrderId.ToString()).amount = Convert.ToDouble(item.Amount);
                     }
                     catch (Exception ex)
                     {
@@ -140,24 +140,24 @@ namespace Jobs
         {
             AccountTradeHistories.Clear();
             int counter = LastId;
-            foreach (var item in orders.OrderBy(x => x.TimeEnded))
+            foreach (var item in orders.OrderBy(x => x.closed))
             {
-                if (item.ClosedAmount == 0) continue;
+                if (item.amount == 0) continue;
 
-                var ignore = IgnoreIds.FirstOrDefault(id => item.Id == id);
+                var ignore = IgnoreIds.FirstOrDefault(id => item.id == id.ToString());
 
-                if (IgnoreIds.FirstOrDefault(id => item.Id == id) == 0)
+                if (IgnoreIds.FirstOrDefault(id => item.id == id.ToString()) == 0)
                 {
                     AccountTradeHistories.Add(new AccountTradeHistory
                     {
                         Id = counter++,
-                        Account = item.AccountId,
-                        Time = item.TimeEnded.AddHours(3),
-                        Side = item.Side,
-                        Pair = item.Base,
-                        Price = item.Rate,
-                        Quantity = item.ClosedAmount,
-                        DollarQuantity = item.Rate * item.ClosedAmount,
+                        Account = item.account_id,
+                        Time = item.closed.AddHours(3),
+                        Side = item.side,
+                        Pair = item.@base,
+                        Price = Convert.ToDecimal(item.price),
+                        Quantity = Convert.ToDecimal(item.amount),
+                        DollarQuantity = Convert.ToDecimal(item.price * item.amount),
                         LowerBand = 0M
                     });
                 }

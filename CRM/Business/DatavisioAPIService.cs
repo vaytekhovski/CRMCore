@@ -6,7 +6,7 @@ using Business.Models.DataVisioAPI;
 using CRM.Helpers;
 using Newtonsoft.Json;
 
-namespace CRM.Services.DataVisioAPI
+namespace Business.DataVisioAPI
 {
     public class DatavisioAPIService
     {
@@ -74,5 +74,44 @@ namespace CRM.Services.DataVisioAPI
 
             return JsonConvert.DeserializeObject<PlaceOrderResponse>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync()).id;
         }
+
+        public async Task<Signals> GetSignals(string CoinBase)
+        {
+            var Client = new HttpClient();
+            var token = Authorization().Result;
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/signals/{CoinBase}/usdt?limit=240"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Signals>(response);
+        }
+
+        public async Task<Candles[]> GetCandles(string CoinBase)
+        {
+            var Client = new HttpClient();
+            var token = Authorization().Result;
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/exchange/{CoinBase}/usdt/candles?frame=1&since=1587135350000"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Candles[]>(response);
+        }
+
     }
 }

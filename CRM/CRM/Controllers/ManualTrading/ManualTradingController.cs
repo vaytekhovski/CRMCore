@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business;
 using Business.Contexts;
+using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
 using Business.Models.Master;
 using CRM.Helpers;
 using CRM.Services;
 using CRM.Services.Balances;
-using CRM.Services.DataVisioAPI;
 using CRM.ViewModels.ManualTrading;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +37,7 @@ namespace CRM.Controllers.ManualTrading
             ManualTradingModel ViewModel = new ManualTradingModel();
 
             ViewModel.Account = "556c8663-5706-4112-9440-c6ac965cfa26";
-            ViewModel.Coin = "ETH";
+            ViewModel.Coin = "BTC";
 
             ViewModel = manualTradingService.Load(ViewModel).Result;
 
@@ -61,7 +61,6 @@ namespace CRM.Controllers.ManualTrading
         [HttpPost]
         public async Task<ActionResult> Trade(ManualTradingModel ViewModel)
         {
-            SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
             ViewModel = manualTradingService.Load(ViewModel).Result;
 

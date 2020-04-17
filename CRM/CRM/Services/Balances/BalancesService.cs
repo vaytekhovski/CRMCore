@@ -6,8 +6,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Business;
+using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
-using CRM.Services.DataVisioAPI;
 using CRM.ViewModels.Balances;
 using Newtonsoft.Json;
 

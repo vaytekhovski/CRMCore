@@ -43,4 +43,61 @@ namespace Business.Models.DataVisioAPI
         public string id { get; set; }
     }
 
+    public class ListOrderModel
+    {
+        public Orders[] orders { get; set; }
+        public Page page { get; set; }
+    }
+
+    public class Signals
+    {
+        public Signal[] signals { get; set; }
+        public Page page { get; set; }
+    }
+
+    public class Page
+    {
+        public int current { get; set; }
+        public int last { get; set; }
+        public int limit { get; set; }
+        public int total { get; set; }
+    }
+
+    public class Signal
+    {
+        public string exchange { get; set; }
+        public string @base { get; set; }
+        public string quote { get; set; }
+        public DateTime time { get; set; }
+        public int value { get; set; }
+        public decimal proba { get; set; }
+        public decimal number { get; set; }
+        public Indicator indicators { get; set; }
+
+    }
+
+    public class Indicator
+    {
+
+        public decimal macd { get; set; }
+        public decimal sig { get; set; }
+        public decimal hist { get; set; }
+        public decimal rsi { get; set; }
+        public decimal obv { get; set; }
+        public decimal bbl { get; set; }
+        public decimal bbm { get; set; }
+        public decimal bbu { get; set; }
+    }
+
+    public class Candles
+    {
+        public decimal o { get; set; }
+        public decimal h { get; set; }
+        public decimal l { get; set; }
+        public decimal c { get; set; }
+        public decimal v { get; set; }
+        public long t { get; set; }
+
+    }
+
 }

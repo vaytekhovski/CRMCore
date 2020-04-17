@@ -135,6 +135,7 @@
     <PackageReference Include="MySql.Data.EntityFramework" Version="8.0.17" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.17" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore.Design" Version="8.0.17" />
+    <PackageReference Include="Chart.js" Version="2.9.3" />
   </ItemGroup>
 
 
@@ -293,6 +294,8 @@
     <Folder Include="Services\Balances\" />
     <Folder Include="Controllers\Balances\" />
     <Folder Include="ViewModels\Balances\" />
+    <Folder Include="Services\DataVisioAPI\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>

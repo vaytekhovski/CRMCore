@@ -10,35 +10,18 @@ namespace Business
         }
 
 
-        public Orders(int _Id, string _AccountId, string _Base, string _Side, DateTime _TimeEnded, decimal _ClosedAmount, decimal _Rate)
-        {
-            Id = _Id;
-            AccountId = _AccountId;
-            Base = _Base;
-            Side = _Side;
-            TimeEnded = _TimeEnded;
-            ClosedAmount = _ClosedAmount;
-            Rate = _Rate;
-        }
-
-
-
-        public int Id { get; set; }
-        //[Column("SagaId", TypeName = "char(36)")]
-        //public string SagaId { get; set; }
-        //[Column("AccountId", TypeName = "char(36)")]
-        public string AccountId { get; set; }
-        public string Exchange { get; set; }
-        public string Base { get; set; }
-        public string Quote { get; set; }
-        //[Column("OrderId", TypeName = "char(36)")]
-        public string OrderId { get; set; }
-        public string Side { get; set; }
-        public DateTime TimeStarted { get; set; }
-        public DateTime TimeEnded { get; set; }
-        public decimal InitialAmount { get; set; }
-        public decimal ClosedAmount { get; set; }
-        public decimal Rate { get; set; }
-        public byte Completed { get; set; }
+        public string id { get; set; }
+        public string account_id { get; set; }
+        public string exchange { get; set; }
+        public string @base { get; set; }
+        public string quote { get; set; }
+        public string number { get; set; }
+        public string status { get; set; }
+        public string type { get; set; }
+        public string side { get; set; }
+        public double price { get; set; }
+        public double amount { get; set; }
+        public DateTime created { get; set; }
+        public DateTime closed { get; set; }
     }
 }

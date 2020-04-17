@@ -2,14 +2,19 @@
 using System.Linq;
 using Business;
 using Business.Contexts;
+using Business.DataVisioAPI;
+using Business.Models.DataVisioAPI;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Services
 {
     public class TradeHistoryService
-    {        
+    {
+        private readonly DatavisioAPIService datavisioAPI;
+
         public TradeHistoryService()
         {
+            datavisioAPI = new DatavisioAPIService();
 
         }
 
@@ -92,6 +97,23 @@ namespace CRM.Services
             }
 
             */
+
+            Signals Signals = datavisioAPI.GetSignals("BTC").Result;
+            Signal signalBTC = Signals.signals.LastOrDefault();
+            model.ProbaBuyBTC = signalBTC.value == 1 ? signalBTC.proba : 1m - signalBTC.proba;
+            model.ProbaBuyBTC *= 100m;
+            /*
+            Signals = datavisioAPI.GetSignals("ETH").Result;
+            Signal signalETH = Signals.signals.LastOrDefault();
+            model.ProbaBuyETH = signalETH.value == 1 ? signalETH.proba : 1m - signalETH.proba;
+            model.ProbaBuyETH *= 100m;
+            */
+            Signals = datavisioAPI.GetSignals("LTC").Result;
+            Signal signalLTC = Signals.signals.LastOrDefault();
+            model.ProbaBuyLTC = signalLTC.value == 1 ? signalLTC.proba : 1m - signalLTC.proba;
+            model.ProbaBuyLTC *= 100m;
+
+
 
             return model;
         }
