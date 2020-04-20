@@ -98,10 +98,11 @@ namespace Business.DataVisioAPI
         {
             var Client = new HttpClient();
             var token = Authorization().Result;
+            var Since = (long)(DateTime.UtcNow.AddHours(-1).Subtract(new DateTime(1970, 1, 1))).TotalSeconds * 1000;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/exchange/{CoinBase}/usdt/candles?frame=1&since=1587135350000"),
+                RequestUri = new Uri($"http://159.65.126.124/api/exchange/{CoinBase}/usdt/candles?frame=1&since={Since}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
