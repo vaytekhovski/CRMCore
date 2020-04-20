@@ -52,7 +52,7 @@ namespace CRM.Services
             ViewModel.Unit.PercentOfUnits1h = Math.Round((ViewModel.Unit.CountOfUnits1h / CountOf1h) * 100, 0).ToString(SeparateHelper.Separator);
             ViewModel.Unit.PercentOfUnits3h = Math.Round((ViewModel.Unit.CountOfUnits3h / CountOf3h) * 100, 0).ToString(SeparateHelper.Separator);
 
-            for (var start = now.AddHours(-1); start <= now; start = start.AddMinutes(1))
+            for (var start = now.AddHours(-3); start <= now; start = start.AddMinutes(1))
             {
                 ViewModels.ManualTrading.Unit Unit = new Unit
                 {

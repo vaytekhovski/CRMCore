@@ -82,7 +82,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/signals/{CoinBase}/usdt?limit=240"),
+                RequestUri = new Uri($"http://159.65.126.124/api/signals/{CoinBase}/usdt?limit=360"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -98,7 +98,7 @@ namespace Business.DataVisioAPI
         {
             var Client = new HttpClient();
             var token = Authorization().Result;
-            var Since = (long)(DateTime.UtcNow.AddHours(-24).Subtract(new DateTime(1970, 1, 1))).TotalSeconds * 1000;
+            var Since = (long)(DateTime.UtcNow.AddHours(-3).Subtract(new DateTime(1970, 1, 1))).TotalSeconds * 1000;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
