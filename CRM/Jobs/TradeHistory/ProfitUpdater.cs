@@ -115,7 +115,7 @@ namespace Jobs
             InitializeIgnoreList();
             foreach (var item in IgnoreIds)
             {
-                UncalculatedTradeHistories.Remove(UncalculatedTradeHistories.FirstOrDefault(x=>x.Id == item))
+                UncalculatedTradeHistories.Remove(UncalculatedTradeHistories.FirstOrDefault(x => x.Id == item));
             }
 
             foreach (var _coin in UncalculatedTradeHistories.Select(x => x.Pair).Distinct())
