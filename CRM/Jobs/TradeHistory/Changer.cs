@@ -42,7 +42,6 @@ namespace Jobs
             }
 
 
-            InitializeIgnoreList();
             InitializeExchangeKeys();
 
             orders = ChangeAmounts(orders);
