@@ -115,15 +115,14 @@ namespace Jobs
             InitializeIgnoreList();
             foreach (var item in IgnoreIds)
             {
-                UncalculatedTradeHistories.Remove(UncalculatedTradeHistories.FirstOrDefault(x => x.Id == item));
+                var itemToRemove = UncalculatedTradeHistories.FirstOrDefault(x => x.Id == item);
+                UncalculatedTradeHistories.Remove(itemToRemove);
             }
 
             foreach (var _coin in UncalculatedTradeHistories.Select(x => x.Pair).Distinct())
             {
                 foreach (var Account in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
                 {
-                    decimal profit = 0;
-                    decimal profitWithoutFee = 0;
                     decimal Fee = 0;
                     decimal buyAmount = 0;
                     decimal buyAmountWithoutFee = 0;
@@ -136,11 +135,6 @@ namespace Jobs
                     {
                         Fee = TH[i].DollarQuantity * (decimal)0.001;
                         TH[i].Fee = Fee;
-
-                        if(TH[i].Id == 4606)
-                        {
-                            var a = "a";
-                        }
 
                         if (TH[i].Side == "buy") 
                         {
@@ -172,8 +166,6 @@ namespace Jobs
                                 Console.WriteLine(ex.Message);
                             }
 
-                            profit = 0;
-                            profitWithoutFee = 0;
                             buyAmount = 0;
                             buyAmountWithoutFee = 0;
                             sellAmount = 0;
