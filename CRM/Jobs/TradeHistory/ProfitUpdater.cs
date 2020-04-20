@@ -60,7 +60,7 @@ namespace Jobs
             }
         }
 
-        
+
         //private List<AccountTradeHistory> UpdateDesiredAmounts(List<AccountTradeHistory> UncalculatedTradeHistories)
         //{
         //    foreach (var _coin in UncalculatedTradeHistories.Where(x => x.Pair != "all").Select(x => x.Pair).Distinct())
@@ -100,8 +100,24 @@ namespace Jobs
         //}
 
 
+        private List<int> IgnoreIds = new List<int>();
+        private void InitializeIgnoreList()
+        {
+            using (BasicContext db = new BasicContext())
+            {
+                IgnoreIds.AddRange(db.IgnoreIds.Select(x => x.OrderId));
+            }
+
+        }
+
         private List<AccountTradeHistory> CalculateProfit(List<AccountTradeHistory> UncalculatedTradeHistories)
         {
+            InitializeIgnoreList();
+            foreach (var item in IgnoreIds)
+            {
+                UncalculatedTradeHistories.Remove(UncalculatedTradeHistories.FirstOrDefault(x=>x.Id == item))
+            }
+
             foreach (var _coin in UncalculatedTradeHistories.Select(x => x.Pair).Distinct())
             {
                 foreach (var Account in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
