@@ -34,7 +34,7 @@ namespace Jobs
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/orders"),
+                RequestUri = new Uri($"http://159.65.126.124/api/orders?limit=2821"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }

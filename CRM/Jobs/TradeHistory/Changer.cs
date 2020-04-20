@@ -22,7 +22,6 @@ namespace Jobs
         public static List<ExchangeKey> ExchangeKeys { get; set; }
         
 
-        private List<int> IgnoreIds = new List<int>();
 
         private int LastId;
 
@@ -122,14 +121,7 @@ namespace Jobs
             return orders;
         }
 
-        private void InitializeIgnoreList()
-        {
-            using (BasicContext db = new BasicContext())
-            {
-                IgnoreIds.AddRange(db.IgnoreIds.Select(x => x.OrderId));
-            }
-
-        }
+        
 
         private string AccountName(string accountId)
         {
@@ -140,31 +132,23 @@ namespace Jobs
         {
             AccountTradeHistories.Clear();
             int counter = LastId;
+
             foreach (var item in orders.OrderBy(x => x.closed))
             {
                 if (item.amount == 0) continue;
 
-                var ignore = IgnoreIds.FirstOrDefault(id => item.id == id.ToString());
-
-                if (IgnoreIds.FirstOrDefault(id => item.id == id.ToString()) == 0)
+                AccountTradeHistories.Add(new AccountTradeHistory
                 {
-                    AccountTradeHistories.Add(new AccountTradeHistory
-                    {
-                        Id = counter++,
-                        Account = item.account_id,
-                        Time = item.closed.AddHours(3),
-                        Side = item.side,
-                        Pair = item.@base,
-                        Price = Convert.ToDecimal(item.price),
-                        Quantity = Convert.ToDecimal(item.amount),
-                        DollarQuantity = Convert.ToDecimal(item.price * item.amount),
-                        LowerBand = 0M
-                    });
-                }
-                else
-                {
-                    string a = "a";
-                }
+                    Id = counter++,
+                    Account = item.account_id,
+                    Time = item.closed.AddHours(3),
+                    Side = item.side,
+                    Pair = item.@base,
+                    Price = Convert.ToDecimal(item.price),
+                    Quantity = Convert.ToDecimal(item.amount),
+                    DollarQuantity = Convert.ToDecimal(item.price * item.amount),
+                    LowerBand = 0M
+                });
             }
         }
     }

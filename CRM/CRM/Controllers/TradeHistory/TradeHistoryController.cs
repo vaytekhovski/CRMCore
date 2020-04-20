@@ -103,7 +103,7 @@ namespace CRM.Controllers
 
             foreach (var item in Model.AccountTradeHistories)
             {
-                item.Account = AccountExchangeKeys.ExchangeKeys.FirstOrDefault(x => x.AccountId == item.Account).Name;
+                item.Account = AccountExchangeKeys.GetExchangeKeys().FirstOrDefault(x => x.AccountId == item.Account).Name;
             }
 
             viewModel.Orders = Model.AccountTradeHistories;
