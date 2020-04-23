@@ -63,7 +63,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/wallets/{CoinBase}"),
+                RequestUri = new Uri($"http://159.65.126.124/api/exchange/wallets/{CoinBase}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }

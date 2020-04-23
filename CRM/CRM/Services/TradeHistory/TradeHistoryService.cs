@@ -72,32 +72,7 @@ namespace CRM.Services
                 model.CountOfElements = query.Count();
 
                 model.AccountTradeHistories = query.ToList();
-                
             }
-            /*
-            using (MySQLContext sQLContext = new MySQLContext())
-            {
-                if (filter.Coin == null)
-                {
-                    model.ProbaBuyBTC = sQLContext.NeuralSignals.Where(x => x.Base == "BTC").OrderByDescending(x => x.Time).FirstOrDefault().ProbaBuy * 100M;
-                    model.ProbaBuyLTC = sQLContext.NeuralSignals.Where(x => x.Base == "LTC").OrderByDescending(x => x.Time).FirstOrDefault().ProbaBuy * 100M;
-                    model.ProbaBuyETH = sQLContext.NeuralSignals.Where(x => x.Base == "ETH").OrderByDescending(x => x.Time).FirstOrDefault().ProbaBuy * 100M;
-                }
-                else if(filter.Coin == "BTC")
-                {
-                    model.ProbaBuyBTC = sQLContext.NeuralSignals.Where(x => x.Base == "BTC").OrderByDescending(x => x.Time).FirstOrDefault().ProbaBuy * 100M;
-                }
-                else if(filter.Coin == "LTC")
-                {
-                    model.ProbaBuyLTC = sQLContext.NeuralSignals.Where(x => x.Base == "LTC").OrderByDescending(x => x.Time).FirstOrDefault().ProbaBuy * 100M;
-                }
-                else if(filter.Coin == "ETH")
-                {
-                    model.ProbaBuyETH = sQLContext.NeuralSignals.Where(x => x.Base == "ETH").OrderByDescending(x => x.Time).FirstOrDefault().ProbaBuy * 100M;
-                }
-            }
-
-            */
 
             Signals Signals = datavisioAPI.GetSignals(httpContext, "BTC").Result;
             Signal signalBTC = Signals.signals.FirstOrDefault();
