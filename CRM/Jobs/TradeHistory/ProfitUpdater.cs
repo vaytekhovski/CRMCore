@@ -15,31 +15,24 @@ namespace Jobs
         {
 
         }
-        private List<AccountTradeHistory> AccountTradeHistories { get; set; }
 
-        private List<Field> Coins = new List<Field>();
+        private AccountTradeHistory LastEl;
 
-        private int LastSellId;
-
-        public void UpdateProfit(List<AccountTradeHistory> _AccountTradeHistories, bool regularCalculating = true)
+        public void UpdateProfit(List<AccountTradeHistory> AccountTradeHistories, bool regularCalculating = true)
         {
-            AccountTradeHistories = _AccountTradeHistories;
-            InitiateCoins();
-            LastSellId = Helper.FindLastSell();
+            LastEl = Helper.FindLastSellDayAgo();
 
             using (BasicContext context = new BasicContext())
             {
-                //AccountTradeHistories = UpdateDesiredAmounts(AccountTradeHistories);
-                List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories.ToList());
+                List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories);
 
                 if (regularCalculating)
                 {
-                    List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastSellId).ToList();
+                    List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastEl.Id).ToList();
                     context.AccountTradeHistories.RemoveRange(buf);
                 }
                 else
                 {
-                    //context.AccountTradeHistories.RemoveRange(context.AccountTradeHistories.ToList());
                     context.Database.ExecuteSqlCommand("TRUNCATE TABLE [AccountTradeHistories]");
                 }
 
@@ -59,45 +52,6 @@ namespace Jobs
                 }
             }
         }
-
-
-        //private List<AccountTradeHistory> UpdateDesiredAmounts(List<AccountTradeHistory> UncalculatedTradeHistories)
-        //{
-        //    foreach (var _coin in UncalculatedTradeHistories.Where(x => x.Pair != "all").Select(x => x.Pair).Distinct())
-        //    {
-        //        foreach (var AccountName in UncalculatedTradeHistories.Select(x => x.Account).Distinct())
-        //        {
-        //            decimal buyAmount = 0;
-
-        //            var TH = UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time).ToArray();
-
-        //            for (int i = 0; i < TH.Count(); i++)
-        //            {
-        //                buyAmount += TH[i].Side == "buy" ? TH[i].Quantity : 0;
-
-        //                if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
-        //                {
-        //                    TH[i].DesiredQuantity = buyAmount;
-        //                    TH[i].DesiredDollarQuantity = buyAmount * TH[i].Price;
-        //                    buyAmount = 0;
-        //                }
-        //            }
-
-        //            int j = 0;
-        //            foreach (var item in UncalculatedTradeHistories.Where(x => x.Pair == _coin && x.Account == AccountName).OrderBy(x => x.Time))
-        //            {
-        //                if (TH[j].DesiredQuantity != 0)
-        //                {
-        //                    item.DesiredQuantity = TH[j].DesiredQuantity;
-        //                    item.DesiredDollarQuantity = TH[j].DesiredDollarQuantity;
-        //                }
-        //                j++;
-        //            }
-        //        }
-        //    }
-
-        //    return UncalculatedTradeHistories;
-        //}
 
 
         private List<int> IgnoreIds = new List<int>();
@@ -149,10 +103,6 @@ namespace Jobs
 
                         if ((TH[i].Side == "sell" && i == TH.Count() - 1) || (TH[i].Side == "sell" && TH[i + 1].Side == "buy"))
                         {
-
-                            //profit += TH[i].Side == "buy" ? buyAmount * -1 : sellAmount;
-                            //profitWithoutFee += TH[i].Side == "buy" ? buyAmountWithoutFee * -1 : sellAmountWithoutFee;
-
                             TH[i].Profit = sellAmount - buyAmount;
                             TH[i].ProfitWithoutFee = sellAmountWithoutFee - buyAmountWithoutFee;
 
@@ -178,35 +128,6 @@ namespace Jobs
 
             return UncalculatedTradeHistories;
         }
-
-        private string AccountId(string accountId)
-        {
-            return Changer.ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
-        }
-
-        private string GetAccountId(string accountName)
-        {
-            return Changer.ExchangeKeys.FirstOrDefault(x => x.Name == accountName).AccountId;
-        }
-
-        private void InitiateCoins()
-        {
-            Coins.Add(new Field { Value = "BTC", Name = "USDT-BTC" });
-            Coins.Add(new Field { Value = "BNB", Name = "USDT-BNB" });
-            Coins.Add(new Field { Value = "EOS", Name = "USDT-EOS" });
-            Coins.Add(new Field { Value = "ETH", Name = "USDT-ETH" });
-            Coins.Add(new Field { Value = "XRP", Name = "USDT-XRP" });
-            Coins.Add(new Field { Value = "LTC", Name = "USDT-LTC" });
-            Coins.Add(new Field { Value = "TRX", Name = "USDT-TRX" });
-            Coins.Add(new Field { Value = "ZEC", Name = "USDT-ZEC" });
-            Coins.Add(new Field { Value = "DASH", Name = "USDT-DASH" });
-            Coins.Add(new Field { Value = "XMR", Name = "USDT-XMR" });
-            Coins.Add(new Field { Value = "ONT", Name = "USDT-ONT" });
-            Coins.Add(new Field { Value = "XLM", Name = "USDT-XLM" });
-            Coins.Add(new Field { Value = "ADA", Name = "USDT-ADA" });
-            Coins.Add(new Field { Value = "BCHABC", Name = "USDT-BCHABC" });
-        }
-
     }
 
     public class Field

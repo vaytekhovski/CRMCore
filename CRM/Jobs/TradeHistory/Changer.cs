@@ -13,100 +13,30 @@ namespace Jobs
 
         }
 
-        public List<AccountTradeHistory> AccountTradeHistories { get; private set; }
-
-        public List<SignalsPrivate> Signals { get; set; }
-
-        public List<Orders> orders { get; set; }
-
-        public static List<ExchangeKey> ExchangeKeys { get; set; }
-        
+        private AccountTradeHistory lastEl;
 
 
-        private int LastId;
-
-
-        public List<AccountTradeHistory> ChangeOrdersBeforeCalculate(List<Orders> _orders, bool regularCalculating = true)
+        public List<AccountTradeHistory> ChangeOrdersBeforeCalculate(List<Order> orders, bool regularCalculating = true)
         {
-            AccountTradeHistories = new List<AccountTradeHistory>();
-            orders = _orders;
-            /*
-            using (MySQLContext context = new MySQLContext())
-            {
-                Signals = context.SignalsPrivate.Where(x => x.ErrorMessages == null).ToList();
-            }
-            */
-            using (BasicContext context = new BasicContext())
-            {
-                LastId = regularCalculating ? context.AccountTradeHistories.FirstOrDefault(x => x.Time > Helper.FindTimeLastSell()).Id : 1;
-            }
+            lastEl = regularCalculating ? Helper.FindLastSellDayAgo() : new AccountTradeHistory { Id = 0, Time = new DateTime(1970, 1, 1, 1, 1, 1) };
 
-
-            InitializeExchangeKeys();
 
             orders = ChangeAmounts(orders);
-            AddToTradeHistories(orders);
-            //AddSignals(Signals);
             
-            return AccountTradeHistories.OrderByDescending(x => x.Time).ToList();
+            return AddToTradeHistories(orders.Where(x => x.closed > lastEl.Time).ToList()).OrderByDescending(x => x.Time).ToList();
         }
 
-        
-
-        private void AddSignals(List<SignalsPrivate> signals)
-        {
-            var previous = AccountTradeHistories.FirstOrDefault();
-
-            foreach (var item in from _acc in ExchangeKeys.Where(x => x.AccountId != "all")
-                                 from th in AccountTradeHistories.Where(x => x.Account == _acc.Name)
-                                 select th)
-            {
-
-                if ((item.Side == "buy" && previous.Side == "sell") || (item.Side == "buy" && item.Pair != previous.Pair))
-                {
-                    SignalsPrivate signal = signals.FirstOrDefault(x =>
-                    x.Base == item.Pair &&
-                    x.SourceTime.Year == item.Time.Year &&
-                    x.SourceTime.Month == item.Time.Month &&
-                    x.SourceTime.Day == item.Time.Day &&
-                    x.SourceTime.Hour == item.Time.AddHours(-3).Hour
-                    );
-
-                    if (signal != null)
-                    {
-                        item.SignalStr = signal.Id
-                            + " " + signal.Exchange
-                            + " " + signal.Base
-                            + " " + signal.SourceTime.AddHours(3)
-                            + " TrendDiff: " + signal.Value;
-                    }
-                }
-
-                previous = item;
-            }
-        }
-
-        private void InitializeExchangeKeys()
-        {
-            using (BasicContext context = new BasicContext())
-            {
-                ExchangeKeys = context.ExchangeKeys.ToList();
-            }
-        }
-
-        private List<Orders> ChangeAmounts(List<Orders> orders)
+        private List<Order> ChangeAmounts(List<Order> orders)
         {
             using(BasicContext db = new BasicContext())
             {
-                //db.WrongOrders.Add(new WrongOrders { OrderId = 1942, Amount = 0.07899000M });
-                //db.WrongOrders.Add(new WrongOrders { OrderId = 2282, Amount = 12.805860M });
-                //db.SaveChanges();
-
                 foreach (var item in db.WrongOrders.ToList())
                 {
                     try
                     {
-                        orders.FirstOrDefault(x => x.id == item.OrderId.ToString()).amount = Convert.ToDouble(item.Amount);
+                        var order = orders.FirstOrDefault(x => x.id == item.OrderId.ToString());
+                        if(order != null)
+                            order.amount = Convert.ToDouble(item.Amount);
                     }
                     catch (Exception ex)
                     {
@@ -120,17 +50,12 @@ namespace Jobs
             return orders;
         }
 
-        
 
-        private string AccountName(string accountId)
+        private List<AccountTradeHistory> AddToTradeHistories(ICollection<Order> orders)
         {
-            return ExchangeKeys.FirstOrDefault(x => x.AccountId == accountId).Name;
-        }
+            List<AccountTradeHistory> AccountTradeHistories = new List<AccountTradeHistory>();
 
-        private void AddToTradeHistories(ICollection<Orders> orders)
-        {
-            AccountTradeHistories.Clear();
-            int counter = LastId;
+            int counter = lastEl.Id;
 
             foreach (var item in orders.OrderBy(x => x.closed))
             {
@@ -149,6 +74,8 @@ namespace Jobs
                     LowerBand = 0M
                 });
             }
+
+            return AccountTradeHistories;
         }
     }
 }
