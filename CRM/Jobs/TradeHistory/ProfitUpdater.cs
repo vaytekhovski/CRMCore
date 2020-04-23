@@ -18,7 +18,7 @@ namespace Jobs
 
         private AccountTradeHistory LastEl;
 
-        public void UpdateProfit(List<AccountTradeHistory> AccountTradeHistories, bool regularCalculating = true)
+        public async void UpdateProfit(List<AccountTradeHistory> AccountTradeHistories, bool regularCalculating = true)
         {
             LastEl = Helper.FindLastSellDayAgo();
 
@@ -26,19 +26,15 @@ namespace Jobs
             {
                 List<AccountTradeHistory> CalculatedTradeHistories = CalculateProfit(AccountTradeHistories);
 
-                if (regularCalculating)
-                {
-                    List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastEl.Id).ToList();
-                    context.AccountTradeHistories.RemoveRange(buf);
-                }
-                else
-                {
-                    context.Database.ExecuteSqlCommand("TRUNCATE TABLE [AccountTradeHistories]");
-                }
-
-                context.AccountTradeHistories.AddRange(CalculatedTradeHistories);
+                List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastEl.Id).ToList();
+                context.AccountTradeHistories.RemoveRange(buf);
 
 
+                await context.AccountTradeHistories.AddRangeAsync(CalculatedTradeHistories);
+                await context.SaveChangesAsync();
+
+
+                /*
                 context.Database.OpenConnection();
                 try
                 {
@@ -49,7 +45,7 @@ namespace Jobs
                 finally
                 {
                     context.Database.CloseConnection();
-                }
+                }*/
             }
         }
 

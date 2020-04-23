@@ -36,14 +36,6 @@ namespace CRM.Helpers
             }
         }
 
-        public static List<ExchangeKey> GetExchangeKeys()
-        {
-            using (BasicContext db = new BasicContext())
-            {
-                return db.ExchangeKeys.ToList();
-            }
-        }
-
         
     }
 }

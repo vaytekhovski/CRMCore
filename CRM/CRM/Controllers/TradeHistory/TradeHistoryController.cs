@@ -99,10 +99,6 @@ namespace CRM.Controllers
         {
             //TODO: [COMPLETE] make single query for all distinct accounts, set names
 
-            foreach (var item in Model.AccountTradeHistories)
-            {
-                item.Account = AccountExchangeKeys.GetExchangeKeys().FirstOrDefault(x => x.AccountId == item.Account).Name;
-            }
 
             viewModel.Orders = Model.AccountTradeHistories;
 
