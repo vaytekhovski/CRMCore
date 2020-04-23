@@ -90,7 +90,7 @@ namespace CRM.Services
                 ViewModel.CoinPrices.Add(item.c);
             }
 
-            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(ViewModel.Account);
+            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(httpContext);
 
             
 
