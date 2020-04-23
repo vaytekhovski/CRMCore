@@ -45,7 +45,7 @@ namespace Business.Models.DataVisioAPI
 
     public class ListOrderModel
     {
-        public Orders[] orders { get; set; }
+        public Order[] orders { get; set; }
         public Page page { get; set; }
     }
 

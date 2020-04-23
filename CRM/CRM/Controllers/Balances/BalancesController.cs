@@ -33,7 +33,6 @@ namespace CRM.Controllers.Balances
                 AccountBalances = new List<Balance>()
             };
             model = await _balancesService.LoadBalancesAsync(HttpContext);
-            ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             return View(model);
         }
 
@@ -42,7 +41,6 @@ namespace CRM.Controllers.Balances
         {
             model = await _balancesService.LoadBalancesAsync(HttpContext);
 
-            ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             return View(model);
         }
     }

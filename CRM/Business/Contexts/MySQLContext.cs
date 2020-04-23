@@ -16,7 +16,7 @@ namespace Business.Contexts
             : base(options)
         {
         }
-        public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
 
         public virtual DbSet<SignalsPrivate> SignalsPrivate { get; set; }
 

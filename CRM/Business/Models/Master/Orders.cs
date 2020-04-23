@@ -2,9 +2,9 @@
 
 namespace Business
 {
-    public partial class Orders
+    public partial class Order
     {
-        public Orders()
+        public Order()
         {
 
         }
@@ -21,6 +21,7 @@ namespace Business
         public string side { get; set; }
         public double price { get; set; }
         public double amount { get; set; }
+        public double filled { get; set; }
         public DateTime created { get; set; }
         public DateTime closed { get; set; }
     }

@@ -22,7 +22,7 @@ namespace Jobs
 
         }
 
-        public async Task<List<Orders>> LoadOrders()
+        public async Task<List<Order>> LoadOrders()
         {
             return await datavisioAPI.GetOrderList();
         }

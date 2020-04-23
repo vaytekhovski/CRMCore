@@ -60,40 +60,6 @@ namespace Business
             Nulls.Add(new Field { Value = "null", Name = "Только нулевые" });
         }
 
-        public static IEnumerable<SelectListItem> GetAccounts(HttpContext httpContext)
-        {
-            int UserId = Convert.ToInt32(httpContext.User.Identity.Name);
-
-            List<SelectListItem> lst = new List<SelectListItem>();
-            using (BasicContext context = new BasicContext())
-            {
-                UserModel user = context.UserModels.FirstOrDefault(x => x.Id == UserId);
-
-                lst = context.ExchangeKeys
-                    .Where(x => user.RoleId == (int)UserModel.Roles.User ? x.UserId == user.Id : true)
-                    .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
-                    .ToList();
-            }
-
-            return lst;
-        }
-
-        public static IEnumerable<SelectListItem> GetAccountsForBalance(HttpContext httpContext)
-        {
-            int UserId = Convert.ToInt32(httpContext.User.Identity.Name);
-
-            List<SelectListItem> lst = new List<SelectListItem>();
-            using (BasicContext context = new BasicContext())
-            {
-                UserModel user = context.UserModels.FirstOrDefault(x => x.Id == UserId);
-                lst = context.ExchangeKeys
-                      .Where(x => user.RoleId != (int)UserModel.Roles.Boss ? x.UserId == user.Id : true)
-                      .Select(x => new SelectListItem { Text = x.Name, Value = x.AccountId })
-                      .ToList();
-            }
-
-            return lst;
-        }
 
         public static IEnumerable<SelectListItem> GetExchanges()
         {

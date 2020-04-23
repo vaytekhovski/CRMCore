@@ -224,7 +224,6 @@ namespace CRM.Controllers.Charts
                 EndDate = DatesHelper.CurrentDateStr
             };
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 
@@ -254,7 +253,6 @@ namespace CRM.Controllers.Charts
             ViewModel.VolumeOfLess = (model.LossOrdersSumm * -1).ToString(SeparateHelper.Separator);
 
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             ViewModel.PageName = "Profit";
             return View(ViewModel);
         }
@@ -269,7 +267,6 @@ namespace CRM.Controllers.Charts
                 EndDate = DatesHelper.CurrentDateStr
             };
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 
@@ -345,7 +342,6 @@ namespace CRM.Controllers.Charts
             ViewBag.MaxValue += ViewBag.MaxValue * 0.3;
 
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             ViewModel.PageName = "Orders On TimeHistory";
 
 
@@ -364,7 +360,6 @@ namespace CRM.Controllers.Charts
                 ProbaBuyMax = "1"
             };
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 
@@ -414,7 +409,6 @@ namespace CRM.Controllers.Charts
             ViewBag.MaxValue += ViewBag.MaxValue * 0.3;
 
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             ViewModel.PageName = "Orders On TimeHistory";
 
 
@@ -470,7 +464,6 @@ namespace CRM.Controllers.Charts
             };
 
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
 
 
             return View(ViewModel);
@@ -516,7 +509,6 @@ namespace CRM.Controllers.Charts
             
 
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
 
 
             return View(ViewModel);

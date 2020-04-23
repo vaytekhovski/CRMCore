@@ -37,7 +37,6 @@ namespace CRM.Controllers.Statistics
 
             //TODO: [COMPLETE] call GetAccounts and similar dropdown methods in controller, pass through ViewBag
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 
@@ -65,7 +64,6 @@ namespace CRM.Controllers.Statistics
             viewModel.Action = "Statistics/Statistics";
             viewModel.TypeOfDate = "date";
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
     }

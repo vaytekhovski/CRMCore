@@ -58,7 +58,6 @@ namespace CRM.Controllers
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 
@@ -93,7 +92,6 @@ namespace CRM.Controllers
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
             ViewBag.Coins = DropDownFields.GetCoins();
-            ViewBag.Accounts = DropDownFields.GetAccounts(HttpContext);
             return View(viewModel);
         }
 

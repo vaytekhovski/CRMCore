@@ -141,7 +141,7 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<Candles[]>(response);
         }
 
-        public async Task<List<Orders>> GetOrderList(HttpContext httpContext)
+        public async Task<List<Order>> GetOrderList(HttpContext httpContext)
         {
             var Client = new HttpClient();
             var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
@@ -161,7 +161,7 @@ namespace Business.DataVisioAPI
             return OrderList.orders.ToList();
         }
 
-        public async Task<List<Orders>> GetOrderList()
+        public async Task<List<Order>> GetOrderList()
         {
             var Client = new HttpClient();
             var token = Authorization(new LoginModel { Login = "Boss", Password = "9Qj7RTUdMF7C3Pf8" }).Result;
