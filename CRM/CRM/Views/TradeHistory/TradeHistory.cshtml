@@ -180,6 +180,11 @@
                                 <div id="progress-bar3" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyLTCstr%;background-color: #322352">LTC @Model.ProbaBuyLTCstr%</div>
                             </div>
                         </div>
+                        <div style="display: @(Model.ProbaBuyXRP == 0 ? "none" : "block");">
+                            <div class="progress">
+                                <div id="progress-bar3" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: @Model.ProbaBuyXRPstr%;background-color: #322352">XRP @Model.ProbaBuyXRPstr%</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

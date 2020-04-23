@@ -53,7 +53,7 @@ namespace CRM.Controllers.ManualTrading
             }
 
 
-            ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
+            //ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             ViewBag.Coins = DropDownFields.GetCoins();
             return View(ViewModel);
         }
@@ -75,7 +75,7 @@ namespace CRM.Controllers.ManualTrading
                 ViewBag.MaxCourse = 50;
             }
 
-            ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
+            //ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             ViewBag.Coins = DropDownFields.GetCoins();
             return View(ViewModel);
         }

@@ -29,7 +29,7 @@ namespace CRM.Controllers
             var viewModel = new TradeHistoryFilterModel
             {
                 Id = "TradeHistory",
-                Account = null,
+                Account = "556c8663-5706-4112-9440-c6ac965cfa26",
                 Coin = null,
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr,
@@ -183,10 +183,14 @@ namespace CRM.Controllers
             viewModel.ProbaBuyBTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyBTC), 2).ToString(SeparateHelper.Separator);
             viewModel.ProbaBuyLTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyLTC), 2).ToString(SeparateHelper.Separator);
             viewModel.ProbaBuyETHstr = Math.Round(Convert.ToDouble(Model.ProbaBuyETH), 2).ToString(SeparateHelper.Separator);
+            viewModel.ProbaBuyXRPstr = Math.Round(Convert.ToDouble(Model.ProbaBuyXRP), 2).ToString(SeparateHelper.Separator);
+
 
             viewModel.ProbaBuyBTC = Model.ProbaBuyBTC;
             viewModel.ProbaBuyLTC = Model.ProbaBuyLTC;
             viewModel.ProbaBuyETH = Model.ProbaBuyETH;
+            viewModel.ProbaBuyXRP = Model.ProbaBuyXRP;
+
 
             return viewModel;
         }

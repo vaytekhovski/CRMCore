@@ -102,16 +102,21 @@ namespace CRM.Services
             Signal signalBTC = Signals.signals.FirstOrDefault();
             model.ProbaBuyBTC = signalBTC.value == 1 ? signalBTC.proba : 1m - signalBTC.proba;
             model.ProbaBuyBTC *= 100m;
-            /*
+            
             Signals = datavisioAPI.GetSignals("ETH").Result;
             Signal signalETH = Signals.signals.FirstOrDefault();
             model.ProbaBuyETH = signalETH.value == 1 ? signalETH.proba : 1m - signalETH.proba;
             model.ProbaBuyETH *= 100m;
-            */
+            
             Signals = datavisioAPI.GetSignals("LTC").Result;
             Signal signalLTC = Signals.signals.FirstOrDefault();
             model.ProbaBuyLTC = signalLTC.value == 1 ? signalLTC.proba : 1m - signalLTC.proba;
             model.ProbaBuyLTC *= 100m;
+
+            Signals = datavisioAPI.GetSignals("XRP").Result;
+            Signal signalXRP = Signals.signals.FirstOrDefault();
+            model.ProbaBuyXRP = signalXRP.value == 1 ? signalXRP.proba : 1m - signalXRP.proba;
+            model.ProbaBuyXRP *= 100m;
 
 
 

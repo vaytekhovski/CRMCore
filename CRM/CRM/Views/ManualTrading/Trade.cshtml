@@ -20,10 +20,7 @@
                 <div class="filter_element">
                     @Html.DropDownListFor(m => m.Coin, (IEnumerable<SelectListItem>)ViewBag.Coins, "Все валюты", new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
                 </div>
-
-                <div class="filter_element">
-                    @Html.DropDownListFor(m => m.Account, (IEnumerable<SelectListItem>)ViewBag.Accounts, "Все аккаунты", new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
-                </div>
+                
                 <div class="filter_element">
                     <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../ManualTrading/Trade" formmethod="post">
                         Обновить
@@ -155,10 +152,11 @@
             </div>
             <form>
                 <div class="box-line">
-                    <input type="text" value="@Model.SellAmount"/>
+                    <input type="text" value="@Model.SellAmount" asp-for="SellAmount" />
+                    <input asp-for="Coin" style="display:none" />
                 </div>
                 <div class="box-line">
-                    <button type="submit" id="TradeHistory" formaction="../ManualTrading/Sell" class="btn btn-secondary">Продать</button>
+                    <button type="submit" id="TradeHistory" formaction="../ManualTrading/Sell" formmethod="post" class="btn btn-secondary">Продать</button>
                 </div>
             </form>
         </div>
@@ -183,10 +181,12 @@
             </div>
             <form>
                 <div class="box-line">
-                    <input type="text" value="@Model.BuyAmount" />
+                    <input type="text" value="@Model.BuyAmount" asp-for="BuyAmount" />
+                    <input asp-for="Coin" style="display:none" />
+
                 </div>
                 <div class="box-line">
-                    <button type="submit" id="TradeHistory" formaction="../ManualTrading/Buy" class="btn btn-secondary">Купить</button>
+                    <button type="submit" id="TradeHistory" formaction="../ManualTrading/Buy" formmethod="post" class="btn btn-secondary">Купить</button>
                 </div>
             </form>
         </div>

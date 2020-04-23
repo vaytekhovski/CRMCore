@@ -29,6 +29,8 @@ namespace Business
         public decimal ProbaBuyBTC { get; set; }
         public decimal ProbaBuyLTC { get; set; }
         public decimal ProbaBuyETH { get; set; }
+        public decimal ProbaBuyXRP { get; set; }
+
 
         public decimal TotalEnterTax { get; set; }
 
