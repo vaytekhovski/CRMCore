@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Business;
+using Business.Contexts;
 
 namespace Jobs
 {
@@ -10,8 +13,7 @@ namespace Jobs
         {
             Loader loader = new Loader();
             Console.WriteLine($"\n{DateTime.Now} |EveryTwoMinCalculate| Load Orders started");
-            DateTime timeToLoad = Helper.FindTimeLastSell().AddHours(-3);
-            var Orders = loader.LoadOrders(timeToLoad).Result;
+            var Orders = loader.LoadOrders().Result;
             Console.WriteLine($"{DateTime.Now} |EveryTwoMinCalculate| Load Orders ended");
 
             Changer changer = new Changer();
@@ -33,8 +35,7 @@ namespace Jobs
 
             Loader loader = new Loader();
             Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Load Orders started");
-            DateTime timeToLoad = new DateTime(2019, 04, 06);
-            var Orders = loader.LoadOrders(timeToLoad).Result;
+            var Orders = loader.LoadOrders().Result;
             Console.WriteLine($"{DateTime.Now} |DailyCalculate| Load Orders ended");
 
             Changer changer = new Changer();
