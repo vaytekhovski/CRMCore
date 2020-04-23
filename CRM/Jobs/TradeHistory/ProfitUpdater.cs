@@ -20,7 +20,10 @@ namespace Jobs
 
         public async void UpdateProfit(List<AccountTradeHistory> AccountTradeHistories, bool regularCalculating = true)
         {
-            LastEl = Helper.FindLastSellDayAgo();
+            if (regularCalculating)
+                LastEl = Helper.FindLastSellDayAgo();
+            else
+                LastEl = new AccountTradeHistory { Id = 0, Time = new DateTime(1970, 1, 1, 1, 1, 1) };
 
             using (BasicContext context = new BasicContext())
             {
