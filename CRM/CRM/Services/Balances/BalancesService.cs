@@ -31,6 +31,8 @@ namespace CRM.Services.Balances
             balancesModel.InsterBalance(datavisioAPIService.GetBalance(httpContext, "BTC").Result);
             balancesModel.InsterBalance(datavisioAPIService.GetBalance(httpContext, "ETH").Result);
             balancesModel.InsterBalance(datavisioAPIService.GetBalance(httpContext, "LTC").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(httpContext, "XRP").Result);
+
 
             return balancesModel;
         }
