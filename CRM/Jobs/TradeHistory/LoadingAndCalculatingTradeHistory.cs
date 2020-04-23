@@ -29,13 +29,14 @@ namespace Jobs
             DrawLine();
         }
 
-        public static void DailyCalculate()
+        public static async System.Threading.Tasks.Task DailyCalculateAsync()
         {
             DrawStars();
 
             Loader loader = new Loader();
             Console.WriteLine($"\n{DateTime.Now} |DailyCalculate| Load Orders started");
-            var Orders = loader.LoadOrders().Result;
+            var Orders = await loader.LoadOrders();
+
             Console.WriteLine($"{DateTime.Now} |DailyCalculate| Load Orders ended");
 
             Changer changer = new Changer();

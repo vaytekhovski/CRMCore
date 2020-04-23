@@ -32,23 +32,15 @@ namespace Jobs
                 List<AccountTradeHistory> buf = context.AccountTradeHistories.Where(x => x.Id > LastEl.Id).ToList();
                 context.AccountTradeHistories.RemoveRange(buf);
 
-
-                await context.AccountTradeHistories.AddRangeAsync(CalculatedTradeHistories);
-                await context.SaveChangesAsync();
-
-
-                /*
-                context.Database.OpenConnection();
-                try
+                int ordersCount = 0;
+                for (int i = 0; i < (CalculatedTradeHistories.Count / 500) + 1; i++)
                 {
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.AccountTradeHistories ON");
+                    var ordersToLoad = CalculatedTradeHistories.Skip(500 * i).Take(500).ToList();
+                    ordersCount += ordersToLoad.Count;
+                    context.AccountTradeHistories.AddRange(ordersToLoad);
                     context.SaveChanges();
-                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT dbo.AccountTradeHistories OFF");
+                    Console.WriteLine($"[{ordersCount}/{CalculatedTradeHistories.Count}] orders loaded");
                 }
-                finally
-                {
-                    context.Database.CloseConnection();
-                }*/
             }
         }
 

@@ -121,7 +121,7 @@ namespace QuartzSampleApp
     {
         public async Task Execute(IJobExecutionContext context)
         {
-            LoadingAndCalculatingTradeHistory.DailyCalculate();
+            LoadingAndCalculatingTradeHistory.DailyCalculateAsync();
         }
     }
 

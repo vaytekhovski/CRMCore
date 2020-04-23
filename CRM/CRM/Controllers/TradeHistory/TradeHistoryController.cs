@@ -81,6 +81,8 @@ namespace CRM.Controllers
 
             TradeHistoryModel Model = _tradeHistoryService.Load(filter, HttpContext);
 
+            var last = Model.AccountTradeHistories.FirstOrDefault();
+
             viewModel = MoveDataFromModelToViewModel(Model, viewModel);
 
             viewModel.Orders = viewModel.Orders.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();

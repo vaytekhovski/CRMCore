@@ -67,7 +67,7 @@ namespace CRM.Controllers.User
         [HttpGet]
         public ActionResult RestartDailyCalculate(string startDate, string endDate)
         {
-            LoadingAndCalculatingTradeHistory.DailyCalculate();
+            LoadingAndCalculatingTradeHistory.DailyCalculateAsync();
             return RedirectToAction("UserPanel");
         }
     }

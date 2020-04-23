@@ -63,7 +63,7 @@ namespace Jobs
 
                 AccountTradeHistories.Add(new AccountTradeHistory
                 {
-                    Id = counter++,
+                    Id = ++counter,
                     Account = item.account_id,
                     Time = item.closed.AddHours(3),
                     Side = item.side,
