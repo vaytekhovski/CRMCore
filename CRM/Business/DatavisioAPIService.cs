@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Business.Contexts;
 using Business.Models.DataVisioAPI;
 using CRM.Helpers;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace Business.DataVisioAPI
@@ -15,11 +19,23 @@ namespace Business.DataVisioAPI
 
         }
 
-        public async Task<string> Authorization()
+        public async Task<string> Authorization(int UserId)
         {
             var Client = new HttpClient();
             var uri = $"http://159.65.126.124/api/login";
-            LoginModel login = new LoginModel { Login = "datavisio", Password = "9Qj7RTUdMF7C3Pf8" };
+
+
+            UserModel User = new UserModel();
+            using (BasicContext context = new BasicContext())
+            {
+                User = context.UserModels.FirstOrDefault(x => x.Id == UserId);
+            }
+
+            LoginModel login = new LoginModel
+            {
+                Login = User.Login,
+                Password = User.Password
+            };
 
             var jsonInString = JsonConvert.SerializeObject(login);
             var resp = await Client.PostAsync(uri, new StringContent(jsonInString, Encoding.UTF8, "application/json"));
@@ -28,10 +44,22 @@ namespace Business.DataVisioAPI
             return authenticationResnose.token;
         }
 
-        public async Task<WalletCurrency> GetBalance(string CoinBase)
+        public async Task<string> Authorization(LoginModel login)
         {
             var Client = new HttpClient();
-            var token = Authorization().Result;
+            var uri = $"http://159.65.126.124/api/login";
+
+            var jsonInString = JsonConvert.SerializeObject(login);
+            var resp = await Client.PostAsync(uri, new StringContent(jsonInString, Encoding.UTF8, "application/json"));
+            AuthenticationResnose authenticationResnose = JsonConvert.DeserializeObject<AuthenticationResnose>(resp.Content.ReadAsStringAsync().Result);
+
+            return authenticationResnose.token;
+        }
+
+        public async Task<WalletCurrency> GetBalance(HttpContext httpContext, string CoinBase)
+        {
+            var Client = new HttpClient();
+            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -49,36 +77,35 @@ namespace Business.DataVisioAPI
             return walletCurrency;
         }
 
-        public async Task<string> PlaceOrder(PlaceOrderRequest placeOrderModel)
+        public async Task<string> PlaceOrder(HttpContext httpContext, PlaceOrderRequest placeOrderModel)
         {
             var Client = new HttpClient();
-            var token = Authorization().Result;
+            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
+            var jsonInString = JsonConvert.SerializeObject(placeOrderModel);
 
             var Request = new HttpRequestMessage
             {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/login"),
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"http://159.65.126.124/api/orders"),
                 Headers =
                 {
-                     { "type", placeOrderModel.type },
-                    { "side",placeOrderModel.side},
-                    {"base",placeOrderModel.@base },
-                    {"quote",placeOrderModel.quote },
-                    {"amount",placeOrderModel.amount.ToString(SeparateHelper.Separator) }
+                    { "Authorization", "Bearer " + token }
                 },
-                Content = new StringContent(string.Empty)
+                Content = new StringContent(jsonInString, Encoding.UTF8, "application/json")
             };
 
-            return JsonConvert.DeserializeObject<PlaceOrderResponse>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync()).id;
+            var response = JsonConvert.DeserializeObject<PlaceOrderResponse>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync());
+
+            return response.id;
         }
 
-        public async Task<Signals> GetSignals(string CoinBase)
+        public async Task<Signals> GetSignals(HttpContext httpContext, string CoinBase)
         {
             var Client = new HttpClient();
-            var token = Authorization().Result;
+            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -94,10 +121,10 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<Signals>(response);
         }
 
-        public async Task<Candles[]> GetCandles(string CoinBase)
+        public async Task<Candles[]> GetCandles(HttpContext httpContext, string CoinBase)
         {
             var Client = new HttpClient();
-            var token = Authorization().Result;
+            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
             var Since = (long)(DateTime.UtcNow.AddHours(-3).Subtract(new DateTime(1970, 1, 1))).TotalSeconds * 1000;
             var Request = new HttpRequestMessage
             {
@@ -112,6 +139,46 @@ namespace Business.DataVisioAPI
 
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Candles[]>(response);
+        }
+
+        public async Task<List<Orders>> GetOrderList(HttpContext httpContext)
+        {
+            var Client = new HttpClient();
+            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/orders?limit=5000"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            ListOrderModel OrderList = JsonConvert.DeserializeObject<ListOrderModel>(response);
+            return OrderList.orders.ToList();
+        }
+
+        public async Task<List<Orders>> GetOrderList()
+        {
+            var Client = new HttpClient();
+            var token = Authorization(new LoginModel { Login = "datavisio", Password = "9Qj7RTUdMF7C3Pf8" }).Result;
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/orders?limit=5000"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            ListOrderModel OrderList = JsonConvert.DeserializeObject<ListOrderModel>(response);
+            return OrderList.orders.ToList();
         }
 
     }

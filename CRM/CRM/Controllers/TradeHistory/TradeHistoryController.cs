@@ -45,7 +45,7 @@ namespace CRM.Controllers
                 CurrentPage = Convert.ToInt32(viewModel.CurrentPage.ToString())
             };
 
-            TradeHistoryModel Model = _tradeHistoryService.Load(filter);
+            TradeHistoryModel Model = _tradeHistoryService.Load(filter, HttpContext);
 
             viewModel = MoveDataFromModelToViewModel(Model, viewModel);
 
@@ -80,7 +80,7 @@ namespace CRM.Controllers
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
-            TradeHistoryModel Model = _tradeHistoryService.Load(filter);
+            TradeHistoryModel Model = _tradeHistoryService.Load(filter, HttpContext);
 
             viewModel = MoveDataFromModelToViewModel(Model, viewModel);
 

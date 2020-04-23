@@ -10,6 +10,7 @@ using Business.Models.Master;
 using CRM.Helpers;
 using CRM.Services.Balances;
 using CRM.ViewModels.ManualTrading;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace CRM.Services
@@ -25,13 +26,13 @@ namespace CRM.Services
             balancesService = new BalancesService();
         }
 
-        public async Task<ManualTradingModel> Load(ManualTradingModel ViewModel)
+        public async Task<ManualTradingModel> Load(ManualTradingModel ViewModel, HttpContext httpContext)
         {
             var now = DateTime.UtcNow;
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            Signals signals = datavisioAPI.GetSignals(ViewModel.Coin).Result;
+            Signals signals = datavisioAPI.GetSignals(httpContext, ViewModel.Coin).Result;
 
             ViewModel.Unit.CountOfUnits5m = signals.signals.Where(x => x.time > now.AddMinutes(-5)).Where(x => x.value == 1).Count();
             ViewModel.Unit.CountOfUnits15m = signals.signals.Where(x => x.time > now.AddMinutes(-15)).Where(x => x.value == 1).Count();
@@ -81,7 +82,7 @@ namespace CRM.Services
             }
 
 
-            var candles = datavisioAPI.GetCandles(ViewModel.Coin).Result.ToList();
+            var candles = datavisioAPI.GetCandles( httpContext,ViewModel.Coin).Result.ToList();
 
 
             foreach (var item in candles)

@@ -21,30 +21,10 @@ namespace Jobs
             datavisioAPI = new DatavisioAPIService();
 
         }
-        public async Task<List<Orders>> LoadOrders(DateTime timeToLoad)
+
+        public async Task<List<Orders>> LoadOrders()
         {
-            /*
-            using (MySQLContext context = new MySQLContext())
-            {
-                return context.Orders.Where(x => x.TimeEnded > timeToLoad && x.AccountId != "bccd3ca1-0b5e-41ac-8233-3a35209912c7").OrderBy(x => x.TimeEnded).ToList();
-            }*/
-
-            var Client = new HttpClient();
-            var token = datavisioAPI.Authorization().Result;
-            var Request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/orders?limit=2821"),
-                Headers =
-                {
-                     { "Authorization", "Bearer " + token }
-                },
-                Content = new StringContent(string.Empty)
-            };
-
-            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
-            ListOrderModel OrderList = JsonConvert.DeserializeObject<ListOrderModel>(response);
-            return OrderList.orders.ToList();
+            return await datavisioAPI.GetOrderList();
         }
     }
 

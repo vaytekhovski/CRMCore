@@ -39,7 +39,7 @@ namespace CRM.Controllers.ManualTrading
             ViewModel.Account = "556c8663-5706-4112-9440-c6ac965cfa26";
             ViewModel.Coin = "BTC";
 
-            ViewModel = manualTradingService.Load(ViewModel).Result;
+            ViewModel = manualTradingService.Load(ViewModel, HttpContext).Result;
 
             if (ViewModel.CoinPrices.Count != 0)
             {
@@ -62,7 +62,7 @@ namespace CRM.Controllers.ManualTrading
         public async Task<ActionResult> Trade(ManualTradingModel ViewModel)
         {
 
-            ViewModel = manualTradingService.Load(ViewModel).Result;
+            ViewModel = manualTradingService.Load(ViewModel, HttpContext).Result;
 
             if (ViewModel.CoinPrices.Count != 0)
             {
@@ -83,7 +83,7 @@ namespace CRM.Controllers.ManualTrading
         public IActionResult Buy(ManualTradingModel ViewModel)
         {
 
-            var response = datavisioAPIService.PlaceOrder(new PlaceOrderRequest()
+            var response = datavisioAPIService.PlaceOrder(HttpContext, new PlaceOrderRequest()
             {
                 type = "market",
                 side = "buy",
@@ -101,7 +101,7 @@ namespace CRM.Controllers.ManualTrading
         public IActionResult Sell(ManualTradingModel ViewModel)
         {
 
-            var response = datavisioAPIService.PlaceOrder(new PlaceOrderRequest()
+            var response = datavisioAPIService.PlaceOrder(HttpContext ,new PlaceOrderRequest()
             {
                 type = "market",
                 side = "sell",
