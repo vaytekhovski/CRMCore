@@ -29,7 +29,7 @@ namespace CRM.Controllers
             var viewModel = new TradeHistoryFilterModel
             {
                 Id = "TradeHistory",
-                Account = "556c8663-5706-4112-9440-c6ac965cfa26",
+                Account = null,
                 Coin = null,
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr,
