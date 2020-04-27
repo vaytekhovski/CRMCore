@@ -11,11 +11,13 @@ using CRM.Helpers;
 using CRM.Services;
 using CRM.Services.Balances;
 using CRM.ViewModels.ManualTrading;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.Controllers.ManualTrading
 {
+    [Authorize]
     public class ManualTradingController : Controller
     {
         private readonly ManualTradingService manualTradingService;
