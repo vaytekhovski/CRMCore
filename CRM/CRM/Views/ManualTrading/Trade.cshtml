@@ -11,189 +11,225 @@
 
 
 
-<div style="width:60%;margin:auto">
-    <h2>Ручная торговля</h2>
-    <div class="filter">
-        <form>
-            <div class="filter_panel container">
-
-                <div class="filter_element">
-                    @Html.DropDownListFor(m => m.Coin, (IEnumerable<SelectListItem>)ViewBag.Coins, "Все валюты", new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
-                </div>
-                
-                <div class="filter_element">
-                    <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../ManualTrading/Trade" formmethod="post">
-                        Обновить
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="count_of_units">
-        <div class="vertical-bar">
-            <div class="unit-title">
-                3ч
-            </div>
-            <div class="unit-body">
-                <div class="unit-body-value">
-                    <h3>@Model.Unit.PercentOfUnits3h %</h3>
-                </div>
-                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits3h%;background-color: @(Model.Unit.CountOfUnits3h > 90 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
-                </div>
-            </div>
-            <div class="unit-title">
-                @Model.Unit.CountOfUnits3h / 180
-            </div>
-        </div>
-        <div class="vertical-bar">
-            <div class="unit-title">
-                1ч
-            </div>
-            <div class="unit-body">
-                <div class="unit-body-value">
-                    <h3>@Model.Unit.PercentOfUnits1h %</h3>
-                </div>
-                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits1h%;background-color: @(Model.Unit.CountOfUnits1h > 30 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
-
-                </div>
-            </div>
-
-            <div class="unit-title">
-                @Model.Unit.CountOfUnits1h / 60
-            </div>
-        </div>
-        <div class="vertical-bar">
-            <div class="unit-title">
-                30м
-            </div>
-            <div class="unit-body">
-                <div class="unit-body-value">
-                    <h3>@Model.Unit.PercentOfUnits30m %</h3>
-                </div>
-                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits30m%;background-color: @(Model.Unit.CountOfUnits30m > 15 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
-
-                </div>
-            </div>
-
-            <div class="unit-title">
-                @Model.Unit.CountOfUnits30m / 30
-            </div>
-        </div>
-        <div class="vertical-bar">
-            <div class="unit-title">
-                15м
-            </div>
-            <div class="unit-body">
-                <div class="unit-body-value">
-                    <h3>@Model.Unit.PercentOfUnits15m %</h3>
-                </div>
-                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits15m%;background-color: @(Model.Unit.CountOfUnits15m > 7 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
-                </div>
-            </div>
-
-            <div class="unit-title">
-                @Model.Unit.CountOfUnits15m / 15
-            </div>
-        </div>
-        <div class="vertical-bar">
-            <div class="unit-title">
-                5м
-            </div>
-            <div class="unit-body">
-                <div class="unit-body-value">
-                    <h3>@Model.Unit.PercentOfUnits5m %</h3>
-                </div>
-                <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits5m%;background-color: @(Model.Unit.CountOfUnits5m > 2 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
-
-
-                </div>
-            </div>
-            <div class="unit-title">
-                @Model.Unit.CountOfUnits5m / 5
-            </div>
-        </div>
-    </div>
-
-    <div class="count_of_units_timeline">
-        <canvas id="units-timeline" width="400" height="200"></canvas>
-    </div>
-    <div class="coin_cost_timeline">
-        <canvas id="coin-cost-timeline" width="400" height="200"></canvas>
-
-    </div>
-
-    @if (Model.PlaceOrderResponse != null)
-    {
-    <div style="padding:30px;text-align:center">
-        <h2>Ордер: @Model.PlaceOrderResponse создан</h2>
-    </div>
-    }
-
-    <div class="buy_sell">
-        <div class="box">
-            <div class="box-line">
-                
-                <h4>Продажа @Model.Coin</h4>
-            </div>
-            <div class="box-line">
-
-                @{
-                    string CurrencyAmount = "";
-                }
-
-                @foreach (var item in Model.balancesModel.AccountBalances)
-                {
-                    if (item.Currency == Model.Coin)
-                    {
-                        CurrencyAmount = item.Free.ToString();
-                    }
-                }
-                Доступно: @CurrencyAmount @Model.Coin
-            </div>
+    <div style="width:60%;margin:auto">
+        <h2>Ручная торговля</h2>
+        <div class="filter">
             <form>
-                <div class="box-line">
-                    <input type="text" value="@Model.SellAmount" asp-for="SellAmount" />
-                    <input asp-for="Coin" style="display:none" />
-                </div>
-                <div class="box-line">
-                    <button type="submit" id="TradeHistory" formaction="../ManualTrading/Sell" formmethod="post" class="btn btn-secondary">Продать</button>
+                <div class="filter_panel container">
+
+                    <div class="filter_element">
+                        @Html.DropDownListFor(m => m.Coin, (IEnumerable<SelectListItem>)ViewBag.Coins, "Все валюты", new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
+                    </div>
+
+                    <div class="filter_element">
+                        <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../ManualTrading/Trade" formmethod="post">
+                            Обновить
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
-        <div class="box">
-            <div class="box-line">
-                <h4>Покупка @Model.Coin</h4>
-            </div>
-            <div class="box-line">
-
-                @{
-                    string USDTAmount = "";
-                }
-
-                @foreach (var item in Model.balancesModel.AccountBalances)
-                {
-                    if (item.Currency == "USDT")
-                    {
-                        USDTAmount = item.Free.ToString("#.##");
-                    }
-                }
-                Доступно: @USDTAmount USDT
-            </div>
-            <form>
-                <div class="box-line">
-                    <input type="text" value="@Model.BuyAmount" asp-for="BuyAmount" />
-                    <input asp-for="Coin" style="display:none" />
-
+        <div class="count_of_units">
+            <div class="vertical-bar">
+                <div class="unit-title">
+                    3ч
                 </div>
-                <div class="box-line">
-                    <button type="submit" id="TradeHistory" formaction="../ManualTrading/Buy" formmethod="post" class="btn btn-secondary">Купить</button>
+                <div class="unit-body">
+                    <div class="unit-body-value">
+                        <h3>@Model.Unit.PercentOfUnits3h %</h3>
+                    </div>
+                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits3h%;background-color: @(Model.Unit.CountOfUnits3h > 90 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+                    </div>
                 </div>
-            </form>
+                <div class="unit-title">
+                    @Model.Unit.CountOfUnits3h / 180
+                </div>
+            </div>
+            <div class="vertical-bar">
+                <div class="unit-title">
+                    1ч
+                </div>
+                <div class="unit-body">
+                    <div class="unit-body-value">
+                        <h3>@Model.Unit.PercentOfUnits1h %</h3>
+                    </div>
+                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits1h%;background-color: @(Model.Unit.CountOfUnits1h > 30 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+
+                    </div>
+                </div>
+
+                <div class="unit-title">
+                    @Model.Unit.CountOfUnits1h / 60
+                </div>
+            </div>
+            <div class="vertical-bar">
+                <div class="unit-title">
+                    30м
+                </div>
+                <div class="unit-body">
+                    <div class="unit-body-value">
+                        <h3>@Model.Unit.PercentOfUnits30m %</h3>
+                    </div>
+                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits30m%;background-color: @(Model.Unit.CountOfUnits30m > 15 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+
+                    </div>
+                </div>
+
+                <div class="unit-title">
+                    @Model.Unit.CountOfUnits30m / 30
+                </div>
+            </div>
+            <div class="vertical-bar">
+                <div class="unit-title">
+                    15м
+                </div>
+                <div class="unit-body">
+                    <div class="unit-body-value">
+                        <h3>@Model.Unit.PercentOfUnits15m %</h3>
+                    </div>
+                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits15m%;background-color: @(Model.Unit.CountOfUnits15m > 7 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+                    </div>
+                </div>
+
+                <div class="unit-title">
+                    @Model.Unit.CountOfUnits15m / 15
+                </div>
+            </div>
+            <div class="vertical-bar">
+                <div class="unit-title">
+                    5м
+                </div>
+                <div class="unit-body">
+                    <div class="unit-body-value">
+                        <h3>@Model.Unit.PercentOfUnits5m %</h3>
+                    </div>
+                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits5m%;background-color: @(Model.Unit.CountOfUnits5m > 2 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+
+
+                    </div>
+                </div>
+                <div class="unit-title">
+                    @Model.Unit.CountOfUnits5m / 5
+                </div>
+            </div>
         </div>
+
+        <div class="count_of_units_timeline">
+            <canvas id="units-timeline" width="400" height="200"></canvas>
+        </div>
+
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container">
+            <div id="tradingview_f77b3"></div>
+            <div class="tradingview-widget-copyright"><a href=$"https://ru.tradingview.com/symbols/BINANCE-{@Model.Coin}USDT/" rel="noopener" target="_blank"><span class="blue-text">График BTCUSDT</span></a> предоставлен TradingView</div>
+            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+            <script type="text/javascript">new TradingView.widget(
+                    {
+                        "width": 980,
+                        "height": 1000,
+                        "symbol": "BINANCE:"+"@Model.Coin"+"USDT",
+                        "interval": "1",
+                        "timezone": "Etc/UTC",
+                        "theme": "light",
+                        "style": "1",
+                        "locale": "ru",
+                        "toolbar_bg": "#f1f3f6",
+                        "enable_publishing": false,
+                        "withdateranges": true,
+                        "hide_side_toolbar": false,
+                        "allow_symbol_change": true,
+                        "studies": [
+                            "MACD@tv-basicstudies",
+                            "OBV@tv-basicstudies",
+                            "MAWeighted@tv-basicstudies",
+                            "RSI@tv-basicstudies",
+                            "PivotPointsHighLow@tv-basicstudies",
+                            "Volume@tv-basicstudies",
+                            "BollingerBandsWidth@tv-basicstudies"
+                        ],
+                        "container_id": "tradingview_f77b3"
+                    }
+                );</script>
+        </div>
+        <!-- TradingView Widget END -->
+
+        <div class="coin_cost_timeline">
+            @{/*<canvas id="coin-cost-timeline" width="400" height="200"></canvas>*/}
+
+        </div>
+
+        @if (Model.PlaceOrderResponse != null)
+        {
+            <div style="padding:30px;text-align:center">
+                <h2>Ордер: @Model.PlaceOrderResponse создан</h2>
+            </div>
+        }
+
+        <div class="buy_sell">
+            <div class="box">
+                <div class="box-line">
+
+                    <h4>Продажа @Model.Coin</h4>
+                </div>
+                <div class="box-line">
+
+                    @{
+                        string CurrencyAmount = "";
+                    }
+
+                    @foreach (var item in Model.balancesModel.AccountBalances)
+                    {
+                        if (item.Currency == Model.Coin)
+                        {
+                            CurrencyAmount = item.Free.ToString();
+                        }
+                    }
+                    Доступно: @CurrencyAmount @Model.Coin
+                </div>
+                <form>
+                    <div class="box-line">
+                        <input type="text" value="@Model.SellAmount" asp-for="SellAmount" />
+                        <input asp-for="Coin" style="display:none" />
+                    </div>
+                    <div class="box-line">
+                        <button type="submit" id="TradeHistory" formaction="../ManualTrading/Sell" formmethod="post" class="btn btn-secondary">Продать</button>
+                    </div>
+                </form>
+            </div>
+            <div class="box">
+                <div class="box-line">
+                    <h4>Покупка @Model.Coin</h4>
+                </div>
+                <div class="box-line">
+
+                    @{
+                        string USDTAmount = "";
+                    }
+
+                    @foreach (var item in Model.balancesModel.AccountBalances)
+                    {
+                        if (item.Currency == "USDT")
+                        {
+                            USDTAmount = item.Free.ToString("#.##");
+                        }
+                    }
+                    Доступно: @USDTAmount USDT
+                </div>
+                <form>
+                    <div class="box-line">
+                        <input type="text" value="@Model.BuyAmount" asp-for="BuyAmount" />
+                        <input asp-for="Coin" style="display:none" />
+
+                    </div>
+                    <div class="box-line">
+                        <button type="submit" id="TradeHistory" formaction="../ManualTrading/Buy" formmethod="post" class="btn btn-secondary">Купить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
     </div>
-
-
-</div>
 
 <script>
 
