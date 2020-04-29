@@ -11,19 +11,19 @@
 }
 
 .count_of_units {
-    width: 80%;
-    height: 350px;
+    width: 100%;
+    height: 100%;
     padding: 20px;
     margin: auto;
 }
 
 .count_of_units .vertical-bar {
-    width: 16%;
+    width: 18%;
     height: 100%;
     display: inline;
     float: left;
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
     border: 1px #a5a3a3 solid;
     border-radius: 5px;
     overflow: hidden;
@@ -78,4 +78,32 @@
 .box-line{
     height:25%;
     padding:10px;
+}
+
+.technical_indicators{
+    width:100%;
+    height:450px;
+    margin-bottom:40px;
+}
+
+.left{
+    display:initial;
+    float: left;
+}
+
+.right{
+    display:inline;
+    float:right;
+}
+
+.w60{
+    width:60%;
+}
+
+.w40{
+    width:40%;
+}
+
+.h100{
+    height:100%;
 }

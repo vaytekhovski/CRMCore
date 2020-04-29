@@ -42,6 +42,11 @@
 }
 
 /* filter panel */
+
+.filter {
+    margin-bottom: 40px;
+}
+
 .filter_element {
     vertical-align: top;
     margin-right: 5px;

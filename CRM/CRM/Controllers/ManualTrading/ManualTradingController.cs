@@ -57,6 +57,7 @@ namespace CRM.Controllers.ManualTrading
 
             //ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.TradingViewSymbol = $"BINANCE:{ViewModel.Coin}USDT";
             return View(ViewModel);
         }
 
@@ -79,6 +80,8 @@ namespace CRM.Controllers.ManualTrading
 
             //ViewBag.Accounts = DropDownFields.GetAccountsForBalance(HttpContext);
             ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.TradingViewSymbol = $"BINANCE:{ViewModel.Coin}USDT";
+
             return View(ViewModel);
         }
 

@@ -29,90 +29,115 @@
                 </div>
             </form>
         </div>
-        <div class="count_of_units">
-            <div class="vertical-bar">
-                <div class="unit-title">
-                    3ч
-                </div>
-                <div class="unit-body">
-                    <div class="unit-body-value">
-                        <h3>@Model.Unit.PercentOfUnits3h %</h3>
+        <div class="technical_indicators">
+            <div class="left w60 h100">
+                <div class="count_of_units">
+                    <div class="vertical-bar">
+                        <div class="unit-title">
+                            3ч
+                        </div>
+                        <div class="unit-body">
+                            <div class="unit-body-value">
+                                <h3>@Model.Unit.PercentOfUnits3h %</h3>
+                            </div>
+                            <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits3h%;background-color: @(Model.Unit.CountOfUnits3h > 90 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+                            </div>
+                        </div>
+                        <div class="unit-title">
+                            @Model.Unit.CountOfUnits3h / 180
+                        </div>
                     </div>
-                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits3h%;background-color: @(Model.Unit.CountOfUnits3h > 90 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+                    <div class="vertical-bar">
+                        <div class="unit-title">
+                            1ч
+                        </div>
+                        <div class="unit-body">
+                            <div class="unit-body-value">
+                                <h3>@Model.Unit.PercentOfUnits1h %</h3>
+                            </div>
+                            <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits1h%;background-color: @(Model.Unit.CountOfUnits1h > 30 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+
+                            </div>
+                        </div>
+
+                        <div class="unit-title">
+                            @Model.Unit.CountOfUnits1h / 60
+                        </div>
                     </div>
-                </div>
-                <div class="unit-title">
-                    @Model.Unit.CountOfUnits3h / 180
+                    <div class="vertical-bar">
+                        <div class="unit-title">
+                            30м
+                        </div>
+                        <div class="unit-body">
+                            <div class="unit-body-value">
+                                <h3>@Model.Unit.PercentOfUnits30m %</h3>
+                            </div>
+                            <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits30m%;background-color: @(Model.Unit.CountOfUnits30m > 15 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+
+                            </div>
+                        </div>
+
+                        <div class="unit-title">
+                            @Model.Unit.CountOfUnits30m / 30
+                        </div>
+                    </div>
+                    <div class="vertical-bar">
+                        <div class="unit-title">
+                            15м
+                        </div>
+                        <div class="unit-body">
+                            <div class="unit-body-value">
+                                <h3>@Model.Unit.PercentOfUnits15m %</h3>
+                            </div>
+                            <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits15m%;background-color: @(Model.Unit.CountOfUnits15m > 7 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+                            </div>
+                        </div>
+
+                        <div class="unit-title">
+                            @Model.Unit.CountOfUnits15m / 15
+                        </div>
+                    </div>
+                    <div class="vertical-bar">
+                        <div class="unit-title">
+                            5м
+                        </div>
+                        <div class="unit-body">
+                            <div class="unit-body-value">
+                                <h3>@Model.Unit.PercentOfUnits5m %</h3>
+                            </div>
+                            <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits5m%;background-color: @(Model.Unit.CountOfUnits5m > 2 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
+
+
+                            </div>
+                        </div>
+                        <div class="unit-title">
+                            @Model.Unit.CountOfUnits5m / 5
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="vertical-bar">
-                <div class="unit-title">
-                    1ч
+            <div class="right w40 h100">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://ru.tradingview.com/symbols/BINANCE-{@Model.Coin}USDT/" rel="noopener" target="_blank"><span class="blue-text">Технический анализ @Model.Coin USDT</span></a> от TradingView</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                        {
+                            "interval": "1m",
+                            "width": "100%",
+                            "isTransparent": true,
+                            "height": "100%",
+                            "symbol": "@ViewBag.TradingViewSymbol",
+                            "showIntervalTabs": true,
+                            "locale": "ru",
+                             "colorTheme": "light"
+                        }
+                    </script>
                 </div>
-                <div class="unit-body">
-                    <div class="unit-body-value">
-                        <h3>@Model.Unit.PercentOfUnits1h %</h3>
-                    </div>
-                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits1h%;background-color: @(Model.Unit.CountOfUnits1h > 30 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
-
-                    </div>
-                </div>
-
-                <div class="unit-title">
-                    @Model.Unit.CountOfUnits1h / 60
-                </div>
-            </div>
-            <div class="vertical-bar">
-                <div class="unit-title">
-                    30м
-                </div>
-                <div class="unit-body">
-                    <div class="unit-body-value">
-                        <h3>@Model.Unit.PercentOfUnits30m %</h3>
-                    </div>
-                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits30m%;background-color: @(Model.Unit.CountOfUnits30m > 15 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
-
-                    </div>
-                </div>
-
-                <div class="unit-title">
-                    @Model.Unit.CountOfUnits30m / 30
-                </div>
-            </div>
-            <div class="vertical-bar">
-                <div class="unit-title">
-                    15м
-                </div>
-                <div class="unit-body">
-                    <div class="unit-body-value">
-                        <h3>@Model.Unit.PercentOfUnits15m %</h3>
-                    </div>
-                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits15m%;background-color: @(Model.Unit.CountOfUnits15m > 7 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
-                    </div>
-                </div>
-
-                <div class="unit-title">
-                    @Model.Unit.CountOfUnits15m / 15
-                </div>
-            </div>
-            <div class="vertical-bar">
-                <div class="unit-title">
-                    5м
-                </div>
-                <div class="unit-body">
-                    <div class="unit-body-value">
-                        <h3>@Model.Unit.PercentOfUnits5m %</h3>
-                    </div>
-                    <div class="unit-fill" style="height:@Model.Unit.PercentOfUnits5m%;background-color: @(Model.Unit.CountOfUnits5m > 2 ? "rgba(32, 180, 34, 0.4)" : "rgba(180, 32, 34, 0.4)")">
-
-
-                    </div>
-                </div>
-                <div class="unit-title">
-                    @Model.Unit.CountOfUnits5m / 5
-                </div>
+                <!-- TradingView Widget END -->
             </div>
         </div>
+        
 
         <div class="count_of_units_timeline">
             <canvas id="units-timeline" width="400" height="200"></canvas>
@@ -121,7 +146,7 @@
         <!-- TradingView Widget BEGIN -->
         <div class="tradingview-widget-container">
             <div id="tradingview_f77b3"></div>
-            <div class="tradingview-widget-copyright"><a href=$"https://ru.tradingview.com/symbols/BINANCE-{@Model.Coin}USDT/" rel="noopener" target="_blank"><span class="blue-text">График BTCUSDT</span></a> предоставлен TradingView</div>
+            <div class="tradingview-widget-copyright"><a href=$"https://ru.tradingview.com/symbols/BINANCE-{@Model.Coin}USDT/" rel="noopener" target="_blank"><span class="blue-text">График @Model.Coin USDT</span></a> предоставлен TradingView</div>
             <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
             <script type="text/javascript">
                     new TradingView.widget(
@@ -147,7 +172,7 @@
         <!-- TradingView Widget BEGIN -->
         <div class="tradingview-widget-container">
             <div id="tradingview_b148b"></div>
-            <div class="tradingview-widget-copyright"><a href=$"https://ru.tradingview.com/symbols/BINANCE-{@Model.Coin}USDT/" rel="noopener" target="_blank"><span class="blue-text">График BTCUSDT</span></a> предоставлен TradingView</div>
+            <div class="tradingview-widget-copyright"><a href=$"https://ru.tradingview.com/symbols/BINANCE-{@Model.Coin}USDT/" rel="noopener" target="_blank"><span class="blue-text">График @Model.Coin USDT</span></a> предоставлен TradingView</div>
             <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
             <script type="text/javascript">
                     new TradingView.widget(
