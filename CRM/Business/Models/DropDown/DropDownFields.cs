@@ -38,7 +38,9 @@ namespace Business
             Coins.Add(new Field { Value = "ETH", Name = "USDT-ETH" });
             Coins.Add(new Field { Value = "LTC", Name = "USDT-LTC" });
             Coins.Add(new Field { Value = "XRP", Name = "USDT-XRP" });
-
+            Coins.Add(new Field { Value = "ADA", Name = "USDT-ADA" });
+            Coins.Add(new Field { Value = "BCH", Name = "USDT-BCH" });
+            Coins.Add(new Field { Value = "EOS", Name = "USDT-EOS" });
         }
 
         private static void InitiateOrderType()
