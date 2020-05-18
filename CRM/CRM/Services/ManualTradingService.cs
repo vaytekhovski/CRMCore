@@ -92,7 +92,17 @@ namespace CRM.Services
 
             ViewModel.balancesModel = await balancesService.LoadBalancesAsync(httpContext);
 
-            
+
+            ViewModel.Graphs = datavisioAPI.GetGraphs(ViewModel.Coin, ViewModel.StartDate, ViewModel.EndDate).Result;
+
+            foreach (var item in ViewModel.Graphs)
+            {
+                item.rsi /= 100;
+                item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time);
+                item.time_str = item.Time.ToString();
+            }
+
+            ViewModel.Graphs = ViewModel.Graphs.Where(x => x.Time > ViewModel.StartDate && x.Time < ViewModel.EndDate).ToList();
 
             return ViewModel;
         }

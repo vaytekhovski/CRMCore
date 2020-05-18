@@ -181,5 +181,27 @@ namespace Business.DataVisioAPI
             return OrderList.orders.ToList();
         }
 
+        public async Task<List<Graph>> GetGraphs(string CoinBase, DateTime StartDate, DateTime EndDate)
+        {
+            var since = ((DateTimeOffset)StartDate).ToUnixTimeSeconds();
+            var limit = (EndDate - StartDate).TotalMinutes;
+            var Client = new HttpClient();
+            var token = Authorization(new LoginModel { Login = "Boss", Password = "9Qj7RTUdMF7C3Pf8" }).Result;
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/graph/{CoinBase}/usdt?since={since}&limit={limit}"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            Graph[] graphs = JsonConvert.DeserializeObject<Graph[]>(response);
+            return graphs.ToList();
+        }
+
     }
 }
