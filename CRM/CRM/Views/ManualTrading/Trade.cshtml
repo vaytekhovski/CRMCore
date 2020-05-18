@@ -152,12 +152,14 @@
                 <div class="filter_panel container">
 
                     <div class="filter_element">
-                        <input type="datetime-local" style="width:180px !important" class="form-control filter_input_datetime" id="startDate" name="startDate" value=@Model.StartDate/>
+                        <input type="datetime-local" style="width:180px !important" class="form-control filter_input_datetime" id="startDate" name="startDate" value=@Model.StartDate.ToString("yyyy-MM-ddTHH:mm") />
                     </div>
 
                     <div class="filter_element">
-                        <input type="datetime-local" style="width:180px !important" class="form-control filter_input_datetime" id="endDate" name="endDate" value=@Model.EndDate/>
+                        <input type="datetime-local" style="width:180px !important" class="form-control filter_input_datetime" id="endDate" name="endDate" value=@Model.EndDate.ToString("yyyy-MM-ddTHH:mm") />
                     </div>
+
+                    
 
                     <div class="filter_element">
                         <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../ManualTrading/Trade" formmethod="post">
