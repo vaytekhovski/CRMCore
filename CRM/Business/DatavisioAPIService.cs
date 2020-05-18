@@ -184,7 +184,8 @@ namespace Business.DataVisioAPI
         public async Task<List<Graph>> GetGraphs(string CoinBase, DateTime StartDate, DateTime EndDate)
         {
             var since = ((DateTimeOffset)StartDate).ToUnixTimeSeconds();
-            var limit = (EndDate - StartDate).TotalMinutes;
+            var limit = Convert.ToInt32((EndDate - StartDate).TotalMinutes);
+
             var Client = new HttpClient();
             var token = Authorization(new LoginModel { Login = "Boss", Password = "9Qj7RTUdMF7C3Pf8" }).Result;
             var Request = new HttpRequestMessage
