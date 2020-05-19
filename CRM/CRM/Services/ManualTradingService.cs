@@ -53,7 +53,7 @@ namespace CRM.Services
             ViewModel.Unit.PercentOfUnits1h = Math.Round((ViewModel.Unit.CountOfUnits1h / CountOf1h) * 100, 0).ToString(SeparateHelper.Separator);
             ViewModel.Unit.PercentOfUnits3h = Math.Round((ViewModel.Unit.CountOfUnits3h / CountOf3h) * 100, 0).ToString(SeparateHelper.Separator);
 
-            for (var start = now.AddHours(-3); start <= now; start = start.AddMinutes(1))
+            for (var start = ViewModel.StartDate; start <= ViewModel.EndDate; start = start.AddMinutes(1))
             {
                 ViewModels.ManualTrading.Unit Unit = new Unit
                 {
@@ -98,11 +98,11 @@ namespace CRM.Services
             foreach (var item in ViewModel.Graphs)
             {
                 item.rsi /= 100;
-                item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time);
+                item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time).AddHours(3);
                 item.time_str = item.Time.ToString();
             }
 
-            ViewModel.Graphs = ViewModel.Graphs.Where(x => x.Time > ViewModel.StartDate && x.Time < ViewModel.EndDate).ToList();
+            //ViewModel.Graphs = ViewModel.Graphs.Where(x => x.Time > ViewModel.StartDate && x.Time < ViewModel.EndDate).ToList();
 
             return ViewModel;
         }
