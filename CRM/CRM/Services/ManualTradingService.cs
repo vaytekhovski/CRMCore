@@ -94,7 +94,7 @@ namespace CRM.Services
 
                 do
                 {
-                    BufArr = ViewModel.Units.Skip(ViewModel.TimeRange * step).Take(ViewModel.TimeRange * (1 + step)).ToArray();
+                    BufArr = ViewModel.Units.Skip(ViewModel.TimeRange * step).Take(ViewModel.TimeRange).ToArray();
 
                     if (BufArr.Length == 0)
                         continue;
@@ -117,10 +117,13 @@ namespace CRM.Services
                     step++;
 
                 } while (true);
+
+                ViewModel.Units.Clear();
+                ViewModel.Units.AddRange(BufUnits);
             }
 
 
-            var candles = datavisioAPI.GetCandles( httpContext,ViewModel.Coin).Result.ToList();
+           var candles = datavisioAPI.GetCandles( httpContext,ViewModel.Coin).Result.ToList();
 
 
             foreach (var item in candles)
@@ -136,6 +139,7 @@ namespace CRM.Services
             foreach (var item in ViewModel.Graphs)
             {
                 item.rsi /= 100;
+                item.reg /= 100;
                 item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time).AddHours(3);
                 item.time_str = item.Time.ToString();
             }
