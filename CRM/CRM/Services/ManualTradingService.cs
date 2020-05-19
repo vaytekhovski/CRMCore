@@ -98,7 +98,7 @@ namespace CRM.Services
             foreach (var item in ViewModel.Graphs)
             {
                 item.rsi /= 100;
-                item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time).AddHours(3);
+                item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time);
                 item.time_str = item.Time.ToString();
             }
 
