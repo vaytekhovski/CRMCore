@@ -138,6 +138,10 @@
                     </div>
 
                     <div class="filter_element">
+                        @Html.DropDownListFor(m => m.TimeRange, (IEnumerable<SelectListItem>)ViewBag.TimeRanges, new { @class = "form-control filter_input", name = "timerange", id = "timerange_selector" })
+                    </div>
+
+                    <div class="filter_element">
                         <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../ManualTrading/Trade" formmethod="post">
                             Обновить
                         </button>
@@ -303,13 +307,17 @@
 
     var graph_time = [];
     var graph_rsi = [];
-    var graph_lir = [];
+        var graph_lir = [];
+        var graph_reg = [];
+
 
     @foreach(var item in Model.Graphs)
     {<text>
     graph_time.push("@item.Time");
     graph_rsi.push(parseFloat(@item.rsi.ToString()));
     graph_lir.push(parseFloat(@item.lir.ToString()));
+    graph_reg.push(parseFloat(@item.reg.ToString()));
+
 
     </text>
     }
@@ -449,7 +457,15 @@
                 fill: false,
                 pointRadius: 0,
                 data: graph_lir
-            }]
+                },
+                {
+                    label: 'lris',
+                    borderColor: 'rgba(78, 205, 196, 0.8)',
+                    backgroundColor: 'rgba(78, 205, 196, 0.5)',
+                    fill: false,
+                    pointRadius: 0,
+                    data: graph_reg
+                }]
         },
         options: {
             responsive: true,

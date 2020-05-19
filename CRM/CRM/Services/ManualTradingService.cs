@@ -81,6 +81,44 @@ namespace CRM.Services
                 ViewModel.Units.Add(Unit);
             }
 
+            if(ViewModel.TimeRange != 1)
+            {
+                var BufUnits = new List<Unit>();
+                int step = 0;
+                Unit[] BufArr;
+                double[] BufArr5m;
+                double[] BufArr15m;
+                double[] BufArr30m;
+                double[] BufArr1h;
+                double[] BufArr3h;
+
+                do
+                {
+                    BufArr = ViewModel.Units.Skip(ViewModel.TimeRange * step).Take(ViewModel.TimeRange * (1 + step)).ToArray();
+
+                    if (BufArr.Length == 0)
+                        continue;
+
+                    BufArr5m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
+                    BufArr15m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
+                    BufArr30m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
+                    BufArr1h = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
+                    BufArr3h = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
+
+                    BufUnits.Add(new Unit
+                    {
+                        PercentOfUnits5m = BufArr5m[BufArr5m.Length / 2].ToString(),
+                        PercentOfUnits15m = BufArr5m[BufArr15m.Length / 2].ToString(),
+                        PercentOfUnits30m = BufArr5m[BufArr30m.Length / 2].ToString(),
+                        PercentOfUnits1h = BufArr5m[BufArr1h.Length / 2].ToString(),
+                        PercentOfUnits3h = BufArr5m[BufArr3h.Length / 2].ToString()
+                    }) ;
+
+                    step++;
+
+                } while (true);
+            }
+
 
             var candles = datavisioAPI.GetCandles( httpContext,ViewModel.Coin).Result.ToList();
 

@@ -15,6 +15,8 @@ namespace Business
         public static List<Field> OrderType = new List<Field>();
         public static List<Field> Situation = new List<Field>();
         public static List<Field> Nulls = new List<Field>();
+        public static List<Field> TimeRanges = new List<Field>();
+
 
         static DropDownFields()
         {
@@ -23,8 +25,20 @@ namespace Business
             InitiateOrderType();
             InitiateSituations();
             InitiateNulls();
+            InitiateTimeRange();
+
         }
 
+        private static void InitiateTimeRange()
+        {
+            TimeRanges.Add(new Field { Value = "1", Name = "1 мин" });
+            TimeRanges.Add(new Field { Value = "5", Name = "5 мин" });
+            TimeRanges.Add(new Field { Value = "15", Name = "15 мин" });
+            TimeRanges.Add(new Field { Value = "30", Name = "30 мин" });
+            TimeRanges.Add(new Field { Value = "60", Name = "1 час" });
+            TimeRanges.Add(new Field { Value = "180", Name = "3 часа" });
+
+        }
 
         private static void InitiateExchanges()
         {
@@ -86,6 +100,11 @@ namespace Business
         public static IEnumerable<SelectListItem> GetOrderTypes()
         {
             return OrderType.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
+        }
+
+        public static IEnumerable<SelectListItem> GetTimeRages()
+        {
+            return TimeRanges.Select(x => new SelectListItem { Text = x.Name, Value = x.Value }).ToList();
         }
 
     }
