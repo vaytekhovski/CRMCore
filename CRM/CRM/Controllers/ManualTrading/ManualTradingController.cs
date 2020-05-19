@@ -41,6 +41,7 @@ namespace CRM.Controllers.ManualTrading
             ViewModel.Account = "556c8663-5706-4112-9440-c6ac965cfa26";
             ViewModel.Coin = "BTC";
             ViewModel.StartDate = DateTime.UtcNow.AddHours(2);
+            ViewModel.StartDate = ViewModel.StartDate.AddMinutes(-ViewModel.StartDate.Minute);
             ViewModel.EndDate = DateTime.UtcNow.AddHours(3);
             ViewModel.TimeRange = 1;
 

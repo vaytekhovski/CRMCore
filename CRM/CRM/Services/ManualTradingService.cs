@@ -93,13 +93,14 @@ namespace CRM.Services
                 double[] BufArr3h;
 
                 int lenght = ViewModel.Units.Count;
-
+                string time = "";
                 do
                 {
                     BufArr = ViewModel.Units.Skip(ViewModel.TimeRange * step).Take(ViewModel.TimeRange).ToArray();
 
-                    lenght -= ViewModel.Units.Count - BufArr.Length;
+                    lenght -= BufArr.Length;
 
+                    time = BufArr[0].Time;
                     BufArr5m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
                     BufArr15m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
                     BufArr30m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
@@ -108,6 +109,7 @@ namespace CRM.Services
 
                     BufUnits.Add(new Unit
                     {
+                        Time = time,
                         PercentOfUnits5m = BufArr5m[BufArr5m.Length / 2].ToString(),
                         PercentOfUnits15m = BufArr5m[BufArr15m.Length / 2].ToString(),
                         PercentOfUnits30m = BufArr5m[BufArr30m.Length / 2].ToString(),
@@ -136,6 +138,46 @@ namespace CRM.Services
 
 
             ViewModel.Graphs = datavisioAPI.GetGraphs(ViewModel.Coin, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;
+
+            if(ViewModel.TimeRange != 1)
+            {
+                var BufGraphs = new List<Graph>();
+                int step = 0;
+                int lenght = ViewModel.Graphs.Count;
+                long time;
+                Graph[] BufArr;
+
+                decimal[] rsi;
+                decimal[] reg;
+                decimal[] lir;
+
+                do
+                {
+                    BufArr = ViewModel.Graphs.Skip(ViewModel.TimeRange * step).Take(ViewModel.TimeRange).ToArray();
+
+                    rsi = BufArr.OrderBy(x => x.rsi).Select(x => x.rsi).ToArray();
+                    reg = BufArr.OrderBy(x => x.reg).Select(x => x.reg).ToArray();
+                    lir = BufArr.OrderBy(x => x.lir).Select(x => x.lir).ToArray();
+                    time = BufArr[0].time;
+
+                    lenght -= BufArr.Length;
+
+                    BufGraphs.Add(new Graph
+                    {
+                        rsi = rsi[rsi.Length / 2],
+                        reg = reg[reg.Length / 2],
+                        lir = lir[lir.Length / 2],
+                        time = time,
+                    });
+
+                    step++;
+                } while (lenght != 0);
+
+                ViewModel.Graphs.Clear();
+                ViewModel.Graphs.AddRange(BufGraphs);
+            }
+
+
 
             foreach (var item in ViewModel.Graphs)
             {
