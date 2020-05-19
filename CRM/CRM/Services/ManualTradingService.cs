@@ -92,12 +92,13 @@ namespace CRM.Services
                 double[] BufArr1h;
                 double[] BufArr3h;
 
+                int lenght = ViewModel.Units.Count;
+
                 do
                 {
                     BufArr = ViewModel.Units.Skip(ViewModel.TimeRange * step).Take(ViewModel.TimeRange).ToArray();
 
-                    if (BufArr.Length == 0)
-                        continue;
+                    lenght -= ViewModel.Units.Count - BufArr.Length;
 
                     BufArr5m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
                     BufArr15m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
@@ -116,7 +117,7 @@ namespace CRM.Services
 
                     step++;
 
-                } while (true);
+                } while (lenght != 0);
 
                 ViewModel.Units.Clear();
                 ViewModel.Units.AddRange(BufUnits);
