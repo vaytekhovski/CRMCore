@@ -76,7 +76,7 @@ namespace CRM.Services
                 Unit.PercentOfUnits1h = Math.Round(Unit.CountOfUnits1h / CountOf1h * 100, 0).ToString(SeparateHelper.Separator);
                 Unit.PercentOfUnits3h = Math.Round(Unit.CountOfUnits3h / CountOf3h * 100, 0).ToString(SeparateHelper.Separator);
 
-                Unit.Time = start.ToString("HH:mm");
+                Unit.Time = start.AddHours(3).ToString("HH:mm");
 
                 ViewModel.Units.Add(Unit);
             }
@@ -93,12 +93,12 @@ namespace CRM.Services
             ViewModel.balancesModel = await balancesService.LoadBalancesAsync(httpContext);
 
 
-            ViewModel.Graphs = datavisioAPI.GetGraphs(ViewModel.Coin, ViewModel.StartDate, ViewModel.EndDate).Result;
+            ViewModel.Graphs = datavisioAPI.GetGraphs(ViewModel.Coin, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;
 
             foreach (var item in ViewModel.Graphs)
             {
                 item.rsi /= 100;
-                item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time);
+                item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time).AddHours(3);
                 item.time_str = item.Time.ToString();
             }
 
