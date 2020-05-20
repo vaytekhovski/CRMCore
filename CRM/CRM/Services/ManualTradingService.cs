@@ -76,15 +76,26 @@ namespace CRM.Services
                 Unit.PercentOfUnits1h = Math.Round(Unit.CountOfUnits1h / CountOf1h * 100, 0).ToString(SeparateHelper.Separator);
                 Unit.PercentOfUnits3h = Math.Round(Unit.CountOfUnits3h / CountOf3h * 100, 0).ToString(SeparateHelper.Separator);
 
-                Unit.Time = start.AddHours(3).ToString("HH:mm");
+                Unit.Time = start.AddHours(3);
 
                 ViewModel.Units.Add(Unit);
             }
 
             if(ViewModel.TimeRange != 1)
             {
+                DateTime[] times;
+                List<DateTime> Times = new List<DateTime>();
+                Times.Add(ViewModel.Units.FirstOrDefault().Time);
+                for (DateTime i = ViewModel.Units.Where(x=>x.Time > Times.FirstOrDefault()).FirstOrDefault(x =>x.Time.Minute % ViewModel.TimeRange == 0).Time; i <= ViewModel.Units.LastOrDefault().Time.AddMinutes(ViewModel.TimeRange); i = i.AddMinutes(ViewModel.TimeRange))
+                {
+                    Times.Add(i);
+                }
+
+                times = Times.ToArray();
+
                 var BufUnits = new List<Unit>();
                 int step = 0;
+                int timeStep = 0;
                 Unit[] BufArr;
                 double[] BufArr5m;
                 double[] BufArr15m;
@@ -92,15 +103,18 @@ namespace CRM.Services
                 double[] BufArr1h;
                 double[] BufArr3h;
 
-                int lenght = ViewModel.Units.Count;
-                string time = "";
+                int lenght = ViewModel.Units.Count - 1;
                 do
                 {
-                    BufArr = ViewModel.Units.Skip(ViewModel.TimeRange * step).Take(ViewModel.TimeRange).ToArray();
+                    BufArr = ViewModel.Units
+                        .OrderBy(x=>x.Time)
+                        .Where(x=>x.Time > times[timeStep])
+                        .Where(x=>x.Time <= times[timeStep + 1])
+                        .ToArray();
+
 
                     lenght -= BufArr.Length;
 
-                    time = BufArr[0].Time;
                     BufArr5m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
                     BufArr15m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
                     BufArr30m = BufArr.OrderBy(x => x.PercentOfUnits5m).Select(x => Convert.ToDouble(x.PercentOfUnits5m)).ToArray();
@@ -109,7 +123,7 @@ namespace CRM.Services
 
                     BufUnits.Add(new Unit
                     {
-                        Time = time,
+                        Time = BufArr.LastOrDefault().Time,
                         PercentOfUnits5m = BufArr5m[BufArr5m.Length / 2].ToString(),
                         PercentOfUnits15m = BufArr5m[BufArr15m.Length / 2].ToString(),
                         PercentOfUnits30m = BufArr5m[BufArr30m.Length / 2].ToString(),
@@ -118,6 +132,7 @@ namespace CRM.Services
                     }) ;
 
                     step++;
+                    timeStep++;
 
                 } while (lenght != 0);
 
@@ -139,12 +154,34 @@ namespace CRM.Services
 
             ViewModel.Graphs = datavisioAPI.GetGraphs(ViewModel.Coin, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;
 
+            foreach (var item in ViewModel.Graphs)
+            {
+                item.rsi /= 100;
+                item.reg /= 100;
+                item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time).AddHours(3);
+                item.Time = item.Time.AddSeconds(-item.Time.Second);
+            }
+
+            ViewModel.Graphs = ViewModel.Graphs.Where(x => x.Time >= ViewModel.StartDate.AddHours(-3)).Where(x => x.Time <= ViewModel.EndDate.AddHours(-3)).ToList();
+
             if(ViewModel.TimeRange != 1)
             {
+
+                DateTime[] timesG;
+                List<DateTime> Times = new List<DateTime>();
+                Times.Add(ViewModel.Graphs.FirstOrDefault().Time);
+                for (DateTime i = ViewModel.Graphs.Where(x => x.Time > Times.FirstOrDefault()).FirstOrDefault(x => x.Time.Minute % ViewModel.TimeRange == 0).Time; i <= ViewModel.Graphs.LastOrDefault().Time.AddMinutes(ViewModel.TimeRange); i = i.AddMinutes(ViewModel.TimeRange))
+                {
+                    Times.Add(i);
+                }
+
+                timesG = Times.ToArray();
+
                 var BufGraphs = new List<Graph>();
                 int step = 0;
-                int lenght = ViewModel.Graphs.Count;
-                long time;
+                int timeStep = 0;
+
+                int lenght = ViewModel.Graphs.Count - 1;
                 Graph[] BufArr;
 
                 decimal[] rsi;
@@ -153,12 +190,15 @@ namespace CRM.Services
 
                 do
                 {
-                    BufArr = ViewModel.Graphs.Skip(ViewModel.TimeRange * step).Take(ViewModel.TimeRange).ToArray();
+                    BufArr = ViewModel.Graphs
+                        .OrderBy(x => x.Time)
+                        .Where(x => x.Time > timesG[timeStep])
+                        .Where(x => x.Time <= timesG[timeStep + 1])
+                        .ToArray();
 
                     rsi = BufArr.OrderBy(x => x.rsi).Select(x => x.rsi).ToArray();
                     reg = BufArr.OrderBy(x => x.reg).Select(x => x.reg).ToArray();
                     lir = BufArr.OrderBy(x => x.lir).Select(x => x.lir).ToArray();
-                    time = BufArr[0].time;
 
                     lenght -= BufArr.Length;
 
@@ -167,10 +207,11 @@ namespace CRM.Services
                         rsi = rsi[rsi.Length / 2],
                         reg = reg[reg.Length / 2],
                         lir = lir[lir.Length / 2],
-                        time = time,
+                        Time = BufArr.LastOrDefault().Time,
                     });
 
                     step++;
+                    timeStep++;
                 } while (lenght != 0);
 
                 ViewModel.Graphs.Clear();
@@ -179,13 +220,7 @@ namespace CRM.Services
 
 
 
-            foreach (var item in ViewModel.Graphs)
-            {
-                item.rsi /= 100;
-                item.reg /= 100;
-                item.Time = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(item.time).AddHours(3);
-                item.time_str = item.Time.ToString();
-            }
+            
 
             //ViewModel.Graphs = ViewModel.Graphs.Where(x => x.Time > ViewModel.StartDate && x.Time < ViewModel.EndDate).ToList();
 

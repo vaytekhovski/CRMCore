@@ -33,7 +33,7 @@ namespace CRM.ViewModels.ManualTrading
 
     public class Unit
     {
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
         public double CountOfUnits3h { get; set; }
         public string PercentOfUnits3h { get; set; }
         public double CountOfUnits1h { get; set; }
