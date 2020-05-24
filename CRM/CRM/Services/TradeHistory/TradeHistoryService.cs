@@ -91,7 +91,7 @@ namespace CRM.Services
             model.LossOrdersCount = model.Deals.deals.Where(x => x.profit.clean.amount <= 0).Count();
             model.ProfitOrdersCount = model.Deals.deals.Where(x => x.profit.clean.amount > 0).Count();
 
-            model.LossOrdersCountWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount > 0).Count();
+            model.LossOrdersCountWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount <= 0).Count();
             model.ProfitOrdersCountWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount > 0).Count();
         }
 

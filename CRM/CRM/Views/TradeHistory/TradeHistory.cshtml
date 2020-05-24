@@ -278,6 +278,8 @@
                     <th class="sorttable_nosort">Купили</th>
                     <th class="sorttable_nosort">Продали</th>
                     <th class="sorttable_nosort">Прибыль</th>
+                    <th class="sorttable_nosort">Комиссия</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -321,9 +323,10 @@
                     <td>@item.opened.ToString("dd.MM.yy HH:mm")</td>
                     <td>@item.closed.ToString("dd.MM.yy HH:mm")</td>
                     <td>@item.coin</td>
-                    <td>@item.income.ToString("#.##") USDT</td>
-                    <td>@item.outcome.ToString("#.##") USDT</td>
+                    <td>@item.income.ToString("#.##") $</td>
+                    <td>@item.outcome.ToString("#.##") $</td>
                     <td class="profit" style="color: @(item.profit.clean.amount > 0 ? "green" : "red");">@itemProfitStr</td>
+                    <td>@item.fee $</td>
                 </tr>
                 }
             </tbody>

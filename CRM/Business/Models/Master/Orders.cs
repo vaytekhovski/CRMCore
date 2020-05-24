@@ -18,6 +18,7 @@ namespace Business
         public string quote { get; set; }
         public decimal income { get; set; }
         public decimal outcome { get; set; }
+        public decimal fee { get; set; }
         public profit profit { get; set; }
         public DateTime opened { get; set; }
         public DateTime closed { get; set; }
