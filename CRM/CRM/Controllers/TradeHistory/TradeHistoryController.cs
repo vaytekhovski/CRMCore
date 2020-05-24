@@ -151,7 +151,8 @@ namespace CRM.Controllers
                     foreach (var percentProfit in Model.Deals.deals.Where(x => x.@base == coin).Where(x => x.profit.clean.percent != 0).OrderBy(x => x.opened).Select(x => x.profit.clean.percent).ToList())
                     {
                         StandardDeviation += Math.Pow((double)percentProfit - (double)MidPercentProfit, 2);
-
+                        if (StandardDeviation == 0)
+                            StandardDeviation = 1;
                         _CompoundInterest *= 1 + (percentProfit / 100);
                     }
                     viewModel.CompoundInterest += (_CompoundInterest - 1) * 100;
