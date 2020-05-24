@@ -22,7 +22,7 @@ namespace Business.DataVisioAPI
         public async Task<string> Authorization(int UserId)
         {
             var Client = new HttpClient();
-            var uri = $"http://159.65.126.124/api/login";
+            var uri = $"http://159.65.126.124/api/auth";
 
 
             UserModel User = new UserModel();
@@ -33,8 +33,8 @@ namespace Business.DataVisioAPI
 
             LoginModel login = new LoginModel
             {
-                Login = User.Login,
-                Password = User.Password
+                username = User.Login,
+                password = User.Password
             };
 
             var jsonInString = JsonConvert.SerializeObject(login);
@@ -47,7 +47,7 @@ namespace Business.DataVisioAPI
         public async Task<string> Authorization(LoginModel login)
         {
             var Client = new HttpClient();
-            var uri = $"http://159.65.126.124/api/login";
+            var uri = $"https://api.datavisio.net/auth";
 
             var jsonInString = JsonConvert.SerializeObject(login);
             var resp = await Client.PostAsync(uri, new StringContent(jsonInString, Encoding.UTF8, "application/json"));
@@ -56,10 +56,9 @@ namespace Business.DataVisioAPI
             return authenticationResnose.token;
         }
 
-        public async Task<WalletCurrency> GetBalance(HttpContext httpContext, string CoinBase)
+        public async Task<WalletCurrency> GetBalance(string token, string CoinBase)
         {
             var Client = new HttpClient();
-            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -77,10 +76,9 @@ namespace Business.DataVisioAPI
             return walletCurrency;
         }
 
-        public async Task<string> PlaceOrder(HttpContext httpContext, PlaceOrderRequest placeOrderModel)
+        public async Task<string> PlaceOrder(string token, PlaceOrderRequest placeOrderModel)
         {
             var Client = new HttpClient();
-            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
@@ -102,14 +100,13 @@ namespace Business.DataVisioAPI
             return response.id;
         }
 
-        public async Task<Signals> GetSignals(HttpContext httpContext, string CoinBase)
+        public async Task<Signals> GetSignals(string token, string CoinBase)
         {
             var Client = new HttpClient();
-            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/signals/{CoinBase}/usdt?limit=2000"),
+                RequestUri = new Uri($"http://159.65.126.124/api/signals/binance/{CoinBase}/usdt?limit=2000"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -121,10 +118,9 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<Signals>(response);
         }
 
-        public async Task<Candles[]> GetCandles(HttpContext httpContext, string CoinBase)
+        public async Task<Candles[]> GetCandles(string token, string CoinBase)
         {
             var Client = new HttpClient();
-            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
             var Since = (long)(DateTime.UtcNow.AddHours(-3).Subtract(new DateTime(1970, 1, 1))).TotalSeconds * 1000;
             var Request = new HttpRequestMessage
             {
@@ -141,14 +137,13 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<Candles[]>(response);
         }
 
-        public async Task<List<Order>> GetOrderList(HttpContext httpContext)
+        public async Task<ListDeals> GetListDeals(string token)
         {
             var Client = new HttpClient();
-            var token = Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/orders?limit=5000"),
+                RequestUri = new Uri($"http://159.65.126.124/api/account/deals?limit=2000"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -157,37 +152,15 @@ namespace Business.DataVisioAPI
             };
 
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
-            ListOrderModel OrderList = JsonConvert.DeserializeObject<ListOrderModel>(response);
-            return OrderList.orders.ToList();
+            return JsonConvert.DeserializeObject<ListDeals>(response);
         }
 
-        public async Task<List<Order>> GetOrderList()
-        {
-            var Client = new HttpClient();
-            var token = Authorization(new LoginModel { Login = "Boss", Password = "9Qj7RTUdMF7C3Pf8" }).Result;
-            var Request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/orders?limit=5000"),
-                Headers =
-                {
-                     { "Authorization", "Bearer " + token }
-                },
-                Content = new StringContent(string.Empty)
-            };
-
-            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
-            ListOrderModel OrderList = JsonConvert.DeserializeObject<ListOrderModel>(response);
-            return OrderList.orders.ToList();
-        }
-
-        public async Task<List<Graph>> GetGraphs(string CoinBase, DateTime StartDate, DateTime EndDate)
+        public async Task<List<Graph>> GetGraphs(string token, string CoinBase, DateTime StartDate, DateTime EndDate)
         {
             var since = ((DateTimeOffset)StartDate).ToUnixTimeSeconds();
             var limit = Convert.ToInt32((EndDate - StartDate).TotalMinutes);
 
             var Client = new HttpClient();
-            var token = Authorization(new LoginModel { Login = "Boss", Password = "9Qj7RTUdMF7C3Pf8" }).Result;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,

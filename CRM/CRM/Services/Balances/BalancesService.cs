@@ -22,16 +22,16 @@ namespace CRM.Services.Balances
         }
         DatavisioAPIService datavisioAPIService;
 
-        public async Task<BalancesModel> LoadBalancesAsync(HttpContext httpContext)
+        public async Task<BalancesModel> LoadBalancesAsync(string token)
         {
 
             BalancesModel balancesModel = new BalancesModel();
 
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(httpContext, "USDT").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(httpContext, "BTC").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(httpContext, "ETH").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(httpContext, "LTC").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(httpContext, "XRP").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "USDT").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "BTC").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "ETH").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "LTC").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "XRP").Result);
 
 
             return balancesModel;

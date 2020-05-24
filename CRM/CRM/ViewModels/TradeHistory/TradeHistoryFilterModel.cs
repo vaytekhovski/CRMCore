@@ -1,4 +1,5 @@
 ﻿using Business;
+using Business.Models.DataVisioAPI;
 using System.Collections.Generic;
 
 namespace CRM.ViewModels
@@ -7,7 +8,6 @@ namespace CRM.ViewModels
     {
         public TradeHistoryFilterModel()
         {
-            Orders = new List<AccountTradeHistory>();
         }
 
         public string Id { get; set; }
@@ -17,11 +17,12 @@ namespace CRM.ViewModels
         public int LastVisiblePage { get; set; }
         public int CurrentPage { get; set; }
         public string Coin { get; set; }
-        public string Account { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string TypeOfDate { get; set; }
-        public ICollection<AccountTradeHistory> Orders { get; set; }
+        //public ICollection<AccountTradeHistory> Orders { get; set; }
+        public ListDeals Deals { get; set; }
+
         public decimal TotalProfit { get; set; }
         public decimal TotalProfitWithoutFee { get; set; }
         public int LossOrdersCount { get; set; }

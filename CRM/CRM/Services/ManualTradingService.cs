@@ -26,13 +26,13 @@ namespace CRM.Services
             balancesService = new BalancesService();
         }
 
-        public async Task<ManualTradingModel> Load(ManualTradingModel ViewModel, HttpContext httpContext)
+        public async Task<ManualTradingModel> Load(ManualTradingModel ViewModel, string token)
         {
             var now = DateTime.UtcNow;
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            Signals signals = datavisioAPI.GetSignals(httpContext, ViewModel.Coin).Result;
+            Signals signals = datavisioAPI.GetSignals(token, ViewModel.Coin).Result;
 
             ViewModel.Unit.CountOfUnits5m = signals.signals.Where(x => x.time > now.AddMinutes(-5)).Where(x => x.value == 1).Count();
             ViewModel.Unit.CountOfUnits15m = signals.signals.Where(x => x.time > now.AddMinutes(-15)).Where(x => x.value == 1).Count();
@@ -141,7 +141,7 @@ namespace CRM.Services
             }
 
 
-           var candles = datavisioAPI.GetCandles( httpContext,ViewModel.Coin).Result.ToList();
+           var candles = datavisioAPI.GetCandles(token, ViewModel.Coin).Result.ToList();
 
 
             foreach (var item in candles)
@@ -149,10 +149,10 @@ namespace CRM.Services
                 ViewModel.CoinPrices.Add(item.c);
             }
 
-            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(httpContext);
+            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(token);
 
 
-            ViewModel.Graphs = datavisioAPI.GetGraphs(ViewModel.Coin, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;
+            ViewModel.Graphs = datavisioAPI.GetGraphs(token, ViewModel.Coin, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;
 
             foreach (var item in ViewModel.Graphs)
             {

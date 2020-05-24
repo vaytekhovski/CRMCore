@@ -19,28 +19,14 @@ namespace CRM.Services
 
         }
 
-        public TradeHistoryModel LoadDataToChart(TradeHistoryFilter filter)
+        public TradeHistoryModel LoadDataToChart(TradeHistoryFilter filter, HttpContext httpContext)
         {
             var model = new TradeHistoryModel();
 
-            using(BasicContext db = new BasicContext())
-            {
-                var query = db.AccountTradeHistories
-                    .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
-                    .Where(x => x.Profit != 0)
-                    .AsNoTracking();
+            var token = datavisioAPI.Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
 
-                if (filter.Coin != null)
-                    query = query.Where(x => x.Pair == filter.Coin);
+            model.Deals = datavisioAPI.GetListDeals(token).Result;
 
-                if (filter.Account != null)
-                    query = query.Where(x => x.Account == filter.Account);
-
-                UpdateSummOfLossAndProfitOrders(model, query);
-                query = query.OrderByDescending(x => x.Time);
-
-                model.AccountTradeHistories = query.ToList();
-            }
 
             return model;
         }
@@ -49,47 +35,41 @@ namespace CRM.Services
         {
             var model = new TradeHistoryModel();
 
-            using (BasicContext context = new BasicContext())
-            {
-                var query = context.AccountTradeHistories
-                    .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate)
-                    .AsNoTracking();
+            var token = datavisioAPI.Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
 
-                if (filter.Coin != null)
-                    query = query.Where(x => x.Pair == filter.Coin);
+            model.Deals = datavisioAPI.GetListDeals(token).Result;
 
-                if (filter.Account != null)
-                    query = query.Where(x => x.Account == filter.Account);
+            if (filter.Coin != null)
+                model.Deals.deals = model.Deals.deals.Where(x => x.@base == filter.Coin).ToArray();
 
-                UpdateTotalProfit(model, query);
-                UpdateCountOfLossAndProfitOrders(model, query);
-                UpdateSummOfLossAndProfitOrders(model, query);
-                UpdateTotalEnterTax(model, query);
+            model.Deals.deals = model.Deals.deals.Where(x => x.opened >= filter.StartDate).Where(x => x.opened <= filter.EndDate).ToArray();
+
+            UpdateTotalProfit(model);
+            UpdateCountOfLossAndProfitOrders(model);
+            UpdateSummOfLossAndProfitOrders(model);
 
 
-                query = query.OrderByDescending(x => x.Time);
+            model.Deals.deals = model.Deals.deals.OrderByDescending(x => x.opened).ToArray();
 
-                model.CountOfElements = query.Count();
+            model.CountOfElements = model.Deals.deals.Count();
 
-                model.AccountTradeHistories = query.ToList();
-            }
 
-            Signals Signals = datavisioAPI.GetSignals(httpContext, "BTC").Result;
+            Signals Signals = datavisioAPI.GetSignals(token, "BTC").Result;
             Signal signalBTC = Signals.signals.FirstOrDefault();
             model.ProbaBuyBTC = signalBTC.value == 1 ? signalBTC.proba : 1m - signalBTC.proba;
             model.ProbaBuyBTC *= 100m;
             
-            Signals = datavisioAPI.GetSignals(httpContext,"ETH").Result;
+            Signals = datavisioAPI.GetSignals(token, "ETH").Result;
             Signal signalETH = Signals.signals.FirstOrDefault();
             model.ProbaBuyETH = signalETH.value == 1 ? signalETH.proba : 1m - signalETH.proba;
             model.ProbaBuyETH *= 100m;
             
-            Signals = datavisioAPI.GetSignals(httpContext,"LTC").Result;
+            Signals = datavisioAPI.GetSignals(token, "LTC").Result;
             Signal signalLTC = Signals.signals.FirstOrDefault();
             model.ProbaBuyLTC = signalLTC.value == 1 ? signalLTC.proba : 1m - signalLTC.proba;
             model.ProbaBuyLTC *= 100m;
 
-            Signals = datavisioAPI.GetSignals(httpContext,"XRP").Result;
+            Signals = datavisioAPI.GetSignals(token, "XRP").Result;
             Signal signalXRP = Signals.signals.FirstOrDefault();
             model.ProbaBuyXRP = signalXRP.value == 1 ? signalXRP.proba : 1m - signalXRP.proba;
             model.ProbaBuyXRP *= 100m;
@@ -99,33 +79,29 @@ namespace CRM.Services
             return model;
         }
 
-        private void UpdateTotalEnterTax(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
+
+        private void UpdateTotalProfit(TradeHistoryModel model)
         {
-            model.TotalEnterTax = query.Where(x => x.Fee != 0).Sum(x => x.Fee);
+            model.TotalProfit = model.Deals.deals.Sum(x => x.profit.clean.amount);
+            model.TotalProfitWithoutFee = model.Deals.deals.Sum(x => x.profit.dirty.amount);
         }
 
-        private void UpdateTotalProfit(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
+        private void UpdateCountOfLossAndProfitOrders(TradeHistoryModel model)
         {
-            model.TotalProfit = query.Where(x => x.Profit != 0).Sum(x => x.Profit);
-            model.TotalProfitWithoutFee = query.Where(x => x.ProfitWithoutFee != 0).Sum(x => x.ProfitWithoutFee);
+            model.LossOrdersCount = model.Deals.deals.Where(x => x.profit.clean.amount <= 0).Count();
+            model.ProfitOrdersCount = model.Deals.deals.Where(x => x.profit.clean.amount > 0).Count();
+
+            model.LossOrdersCountWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount > 0).Count();
+            model.ProfitOrdersCountWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount > 0).Count();
         }
 
-        private void UpdateCountOfLossAndProfitOrders(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
+        private void UpdateSummOfLossAndProfitOrders(TradeHistoryModel model)
         {
-            model.LossOrdersCount = query.Where(x => x.Profit < 0).Count();
-            model.ProfitOrdersCount = query.Where(x => x.Profit > 0).Count();
+            model.LossOrdersSumm = model.Deals.deals.Where(x => x.profit.clean.amount <= 0).Sum(x => x.profit.clean.amount);
+            model.ProfitOrdersSumm = model.Deals.deals.Where(x => x.profit.clean.amount > 0).Sum(x => x.profit.clean.amount);
 
-            model.LossOrdersCountWithoutFee = query.Where(x => x.ProfitWithoutFee < 0).Count();
-            model.ProfitOrdersCountWithoutFee = query.Where(x => x.ProfitWithoutFee > 0).Count();
-        }
-
-        private void UpdateSummOfLossAndProfitOrders(TradeHistoryModel model, IQueryable<AccountTradeHistory> query)
-        {
-            model.LossOrdersSumm = query.Where(x => x.Profit < 0).Sum(x => x.Profit);
-            model.ProfitOrdersSumm = query.Where(x => x.Profit > 0).Sum(x => x.Profit);
-
-            model.LossOrdersSummWithoutFee = query.Where(x => x.ProfitWithoutFee < 0).Sum(x => x.ProfitWithoutFee);
-            model.ProfitOrdersSummWithoutFee = query.Where(x => x.ProfitWithoutFee > 0).Sum(x => x.ProfitWithoutFee);
+            model.LossOrdersSummWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount <= 0).Sum(x => x.profit.dirty.amount);
+            model.ProfitOrdersSummWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount > 0).Sum(x => x.profit.dirty.amount);
         }
 
     }

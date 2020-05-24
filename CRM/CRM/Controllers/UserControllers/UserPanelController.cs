@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using CRM.ViewModels;
 using Business.Contexts;
 using Business;
-using Jobs;
 
 namespace CRM.Controllers.User
 {
@@ -64,11 +63,5 @@ namespace CRM.Controllers.User
         }
 
 
-        [HttpGet]
-        public ActionResult RestartDailyCalculate(string startDate, string endDate)
-        {
-            LoadingAndCalculatingTradeHistory.DailyCalculateAsync();
-            return RedirectToAction("UserPanel");
-        }
     }
 }

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRM", "CRM\CRM.csproj", "{8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{31AA650B-1481-4DF0-9BAA-145FAD141528}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jobs", "Jobs\Jobs.csproj", "{650E09D9-C2D2-4900-8217-2DADA1B9E77D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{31AA650B-1481-4DF0-9BAA-145FAD141528}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31AA650B-1481-4DF0-9BAA-145FAD141528}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31AA650B-1481-4DF0-9BAA-145FAD141528}.Release|Any CPU.Build.0 = Release|Any CPU
-		{650E09D9-C2D2-4900-8217-2DADA1B9E77D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{650E09D9-C2D2-4900-8217-2DADA1B9E77D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{650E09D9-C2D2-4900-8217-2DADA1B9E77D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{650E09D9-C2D2-4900-8217-2DADA1B9E77D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

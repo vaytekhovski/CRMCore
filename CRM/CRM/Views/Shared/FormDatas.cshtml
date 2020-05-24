@@ -2,10 +2,6 @@
 <input style="display:none" type=@Model.TypeOfDate name="startDate" value=@Model.StartDate />
 <input style="display:none" type=@Model.TypeOfDate name="endDate" value=@Model.EndDate />
 
-@if (Model.Id == "TradeHistory" || Model.Id == "Statistics")
-{
-    <input style="display:none" type="text" name="account" value=@Model.Account />
-}
 <input style="display:none" type="text" name="coin" value=@Model.Coin />
 
 @if (Model.Id == "Signals")

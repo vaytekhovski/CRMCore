@@ -54,7 +54,7 @@ namespace CRM.Controllers.Statistics
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
-            Model = _statisticsService.Load(filter);
+            Model = _statisticsService.Load(filter, HttpContext);
 
             viewModel.Statistics = Model.Statistics;
 

@@ -1,6 +1,9 @@
 ﻿using Business;
 using Business.Contexts;
+using Business.DataVisioAPI;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,50 +11,45 @@ namespace CRM.Services.Statistics
 {
     public class StatisticsService
     {
+        private readonly DatavisioAPIService datavisioAPI;
+
         public StatisticsService()
         {
+            datavisioAPI = new DatavisioAPIService();
 
         }
 
-        public StatisticsModel Load(StatisticsFilter filter)
+        public StatisticsModel Load(StatisticsFilter filter, HttpContext httpContext)
         {
             var model = new StatisticsModel();
 
-            using (BasicContext context = new BasicContext())
-            {
-                var query = context.AccountTradeHistories
-                    .Where(x => x.Time >= filter.StartDate && x.Time <= filter.EndDate.AddDays(1))
-                    .AsNoTracking();
+            var token = datavisioAPI.Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
 
-                if (filter.Coin != null)
-                    query = query.Where(x => x.Pair == filter.Coin);
+            Business.Models.DataVisioAPI.ListDeals deals = datavisioAPI.GetListDeals(token).Result;
 
-                if (filter.Account != null)
-                    query = query.Where(x => x.Account == filter.Account);
+            if (filter.Coin != null)
+                deals.deals = deals.deals.Where(x => x.@base == filter.Coin).ToArray();
 
+            var statistics = UpdateStatistics(deals);
+            statistics = UpdateTotalProfitInStatistics(statistics);
 
+            statistics = statistics.OrderByDescending(x => x.Date).ToList();
 
-                var statistics = UpdateStatistics(query);
-                statistics = UpdateTotalProfitInStatistics(statistics);
-
-                statistics = statistics.OrderByDescending(x => x.Date).ToList();
-
-                model.Statistics = statistics.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
-            }
+            model.Statistics = statistics.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
 
             return model;
         }
 
-        private List<StatisticsElement> UpdateStatistics(IQueryable<AccountTradeHistory> query)
+        private List<StatisticsElement> UpdateStatistics(Business.Models.DataVisioAPI.ListDeals deals)
         {
             var statistics = new List<StatisticsElement>();
 
-            foreach (var date in query.Select(x => x.Time.Date).Distinct())
+            foreach (var date in deals.deals.Select(x => x.closed.Date).Distinct())
             {
                 statistics.Add(new StatisticsElement
                 {
                     Date = date,
-                    ProfitOfDay = query.Where(x => x.Time.Date == date).Sum(x => x.Profit),
+                    ProfitOfDay = deals.deals.Where(x => x.closed.Date == date).Sum(x => x.profit.clean.amount),
                     TotalProfit = 0
                 });
             }

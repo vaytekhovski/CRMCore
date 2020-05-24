@@ -45,7 +45,10 @@ namespace CRM.Controllers.ManualTrading
             ViewModel.EndDate = DateTime.UtcNow.AddHours(3);
             ViewModel.TimeRange = 1;
 
-            ViewModel = manualTradingService.Load(ViewModel, HttpContext).Result;
+            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+
+
+            ViewModel = manualTradingService.Load(ViewModel, token).Result;
 
             if (ViewModel.CoinPrices.Count != 0)
             {
@@ -69,8 +72,9 @@ namespace CRM.Controllers.ManualTrading
         [HttpPost]
         public async Task<ActionResult> Trade(ManualTradingModel ViewModel)
         {
+            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
 
-            ViewModel = manualTradingService.Load(ViewModel, HttpContext).Result;
+            ViewModel = manualTradingService.Load(ViewModel, token).Result;
 
             if (ViewModel.CoinPrices.Count != 0)
             {
@@ -94,8 +98,9 @@ namespace CRM.Controllers.ManualTrading
 
         public IActionResult Buy(ManualTradingModel ViewModel)
         {
+            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
 
-            var response = datavisioAPIService.PlaceOrder(HttpContext, new PlaceOrderRequest()
+            var response = datavisioAPIService.PlaceOrder(token, new PlaceOrderRequest()
             {
                 type = "market",
                 side = "buy",
@@ -112,8 +117,9 @@ namespace CRM.Controllers.ManualTrading
 
         public IActionResult Sell(ManualTradingModel ViewModel)
         {
+            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
 
-            var response = datavisioAPIService.PlaceOrder(HttpContext ,new PlaceOrderRequest()
+            var response = datavisioAPIService.PlaceOrder(token, new PlaceOrderRequest()
             {
                 type = "market",
                 side = "sell",

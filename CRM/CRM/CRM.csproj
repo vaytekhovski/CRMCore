@@ -300,6 +300,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
-    <ProjectReference Include="..\Jobs\Jobs.csproj" />
   </ItemGroup>
 </Project>

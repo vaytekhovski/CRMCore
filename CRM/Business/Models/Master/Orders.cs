@@ -1,28 +1,25 @@
 ﻿using System;
+using Business.Models.DataVisioAPI;
 
 namespace Business
 {
-    public partial class Order
+    public partial class Deal
     {
-        public Order()
+        public Deal()
         {
 
         }
 
 
         public string id { get; set; }
-        public string account_id { get; set; }
         public string exchange { get; set; }
         public string @base { get; set; }
+        public string coin { get; set; }
         public string quote { get; set; }
-        public string number { get; set; }
-        public string status { get; set; }
-        public string type { get; set; }
-        public string side { get; set; }
-        public double price { get; set; }
-        public double amount { get; set; }
-        public double filled { get; set; }
-        public DateTime created { get; set; }
+        public decimal income { get; set; }
+        public decimal outcome { get; set; }
+        public profit profit { get; set; }
+        public DateTime opened { get; set; }
         public DateTime closed { get; set; }
     }
 }

@@ -12,7 +12,7 @@
 @section Scripts
 {
     <script type="text/javascript">
-    @* TODO: переделать в razor*@
+    @* TODO: переделать в razor
     $(function () {
         var searchBUY = 'buy';
         $("table tr td").filter(function () {
@@ -34,7 +34,7 @@
 
 
     });
-
+        *@
     function SignalMessage(str) {
         if (str) {
             $('.hover_bkgr_fricc').show();
@@ -272,29 +272,27 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th id="time">Время</th>
-                    <th class="sorttable_nosort">Аккаунт</th>
-                    <th class="sorttable_nosort">Тип</th>
-                    <th class="sorttable_nosort">Пара</th>
-                    <th class="sorttable_nosort">Цена</th>
-                    <th class="sorttable_nosort">Кол-во</th>
-                    <th class="sorttable_nosort">Кол-во</th>
+                    <th id="time">Время с </th>
+                    <th id="time">Время по </th>
+                    <th class="sorttable_nosort">Валюта</th>
+                    <th class="sorttable_nosort">Купили</th>
+                    <th class="sorttable_nosort">Продали</th>
                     <th class="sorttable_nosort">Прибыль с ком.</th>
-                    <th style="display: @(Context.User.Identity.Name != "5" ? "none" : "table-cell");" class="sorttable_nosort">Прибыль без ком.</th>
+                    <th class="sorttable_nosort">Прибыль без ком.</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Orders)
+                @foreach (var item in Model.Deals.deals)
                 {
                     string itemProfitStr = "";
-                    if (item.Profit != 0)
+                    if (item.profit.clean.amount != 0)
                     {
-                        itemProfitStr = item.Profit > 0 ? "+" : "";
-                        itemProfitStr += String.Format("{0:0.##}", item.Profit);
+                        itemProfitStr = item.profit.clean.amount > 0 ? "+" : "";
+                        itemProfitStr += String.Format("{0:0.##}", item.profit.clean.amount);
                         itemProfitStr += "$";
                         itemProfitStr += " | ";
-                        itemProfitStr += item.Profit > 0 ? "+" : "";
-                        itemProfitStr += String.Format("{0:0.##}", item.PercentProfit);
+                        itemProfitStr += item.profit.clean.amount > 0 ? "+" : "";
+                        itemProfitStr += String.Format("{0:0.##}", item.profit.clean.percent);
                         itemProfitStr += "%";
                     }
                     else
@@ -303,14 +301,14 @@
                     }
 
                     string itemProfitWithoutFeeStr = "";
-                    if (item.ProfitWithoutFee != 0)
+                    if (item.profit.dirty.amount != 0)
                     {
-                        itemProfitWithoutFeeStr = item.ProfitWithoutFee > 0 ? "+" : "";
-                        itemProfitWithoutFeeStr += String.Format("{0:0.##}", item.ProfitWithoutFee);
+                        itemProfitWithoutFeeStr = item.profit.dirty.amount > 0 ? "+" : "";
+                        itemProfitWithoutFeeStr += String.Format("{0:0.##}", item.profit.dirty.amount);
                         itemProfitWithoutFeeStr += "$";
                         itemProfitWithoutFeeStr += " | ";
-                        itemProfitWithoutFeeStr += item.ProfitWithoutFee > 0 ? "+" : "";
-                        itemProfitWithoutFeeStr += String.Format("{0:0.##}", item.PercentProfitWithoutFee);
+                        itemProfitWithoutFeeStr += item.profit.dirty.amount > 0 ? "+" : "";
+                        itemProfitWithoutFeeStr += String.Format("{0:0.##}", item.profit.dirty.percent);
                         itemProfitWithoutFeeStr += "%";
                     }
                     else
@@ -319,18 +317,16 @@
                     }
 
 
-                    <tr class="trigger_popup_fricc" onclick="SignalMessage('@item.SignalStr')">
-                        <td>@item.Id</td>
-                        <td>@item.Time.ToString("dd.MM.yy HH:mm")</td>
-                        <td>@item.Account</td>
-                        <td>@item.Side</td>
-                        <td>@item.Pair</td>
-                        <td>$@String.Format("{0:0.##}", item.Price)</td>
-                        <td>@item.Quantity</td>
-                        <td>$@String.Format("{0:0.##}", item.DollarQuantity)</td>
-                        <td class="profit" style="color: @(item.Profit > 0 ? "green" : "red");">@itemProfitStr</td>
-                        <td class="profit" style="display: @(Context.User.Identity.Name != "5" ? "none" : "table-cell"); color: @(item.ProfitWithoutFee > 0 ? "green" : "red");">@itemProfitWithoutFeeStr</td>
-                    </tr>
+                <tr class="trigger_popup_fricc">
+                    <td>@item.id</td>
+                    <td>@item.opened.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.closed.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.coin</td>
+                    <td>@item.income.ToString("#.##") USDT</td>
+                    <td>@item.outcome.ToString("#.##") USDT</td>
+                    <td class="profit" style="color: @(item.profit.clean.amount > 0 ? "green" : "red");">@itemProfitStr</td>
+                    <td class="profit" style="color: @(item.profit.dirty.amount > 0 ? "green" : "red");">@itemProfitWithoutFeeStr</td>
+                </tr>
                 }
             </tbody>
         </table>

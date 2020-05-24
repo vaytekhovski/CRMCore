@@ -3,8 +3,8 @@ namespace Business.Models.DataVisioAPI
 {
     public class LoginModel
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
     }
 
     public class AuthenticationResnose
@@ -43,10 +43,22 @@ namespace Business.Models.DataVisioAPI
         public string id { get; set; }
     }
 
-    public class ListOrderModel
+    public class ListDeals
     {
-        public Order[] orders { get; set; }
+        public Deal[] deals { get; set; }
         public Page page { get; set; }
+    }
+
+    public class profit
+    {
+        public margin dirty { get; set; }
+        public margin clean { get; set; }
+    }
+
+    public class margin
+    {
+        public decimal amount { get; set; }
+        public decimal percent { get; set; }
     }
 
     public class Signals
@@ -71,7 +83,6 @@ namespace Business.Models.DataVisioAPI
         public DateTime time { get; set; }
         public int value { get; set; }
         public decimal proba { get; set; }
-        public decimal number { get; set; }
         public Indicator indicators { get; set; }
 
     }

@@ -29,7 +29,6 @@ namespace CRM.Controllers
             var viewModel = new TradeHistoryFilterModel
             {
                 Id = "TradeHistory",
-                Account = null,
                 Coin = null,
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr,
@@ -38,7 +37,6 @@ namespace CRM.Controllers
 
             var filter = new TradeHistoryFilter
             {
-                Account = viewModel.Account,
                 Coin = viewModel.Coin,
                 StartDate = DateTime.Parse(viewModel.StartDate),
                 EndDate = DateTime.Parse(viewModel.EndDate),
@@ -49,7 +47,7 @@ namespace CRM.Controllers
 
             viewModel = MoveDataFromModelToViewModel(Model, viewModel);
 
-            viewModel.Orders = viewModel.Orders.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
+            viewModel.Deals.deals = viewModel.Deals.deals.Skip((filter.CurrentPage - 1) * 100).Take(100).ToArray();
 
 
             var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
@@ -72,7 +70,6 @@ namespace CRM.Controllers
 
             var filter = new TradeHistoryFilter
             {
-                Account = viewModel.Account,
                 Coin = viewModel.Coin,
                 StartDate = DateTime.Parse(viewModel.StartDate),
                 EndDate = DateTime.Parse(viewModel.EndDate),
@@ -81,11 +78,11 @@ namespace CRM.Controllers
 
             TradeHistoryModel Model = _tradeHistoryService.Load(filter, HttpContext);
 
-            var last = Model.AccountTradeHistories.FirstOrDefault();
+            var last = Model.Deals.deals.FirstOrDefault();
 
             viewModel = MoveDataFromModelToViewModel(Model, viewModel);
 
-            viewModel.Orders = viewModel.Orders.Skip((filter.CurrentPage - 1) * 100).Take(100).ToList();
+            viewModel.Deals.deals = viewModel.Deals.deals.Skip((filter.CurrentPage - 1) * 100).Take(100).ToArray();
 
 
             var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
@@ -99,10 +96,12 @@ namespace CRM.Controllers
 
         private TradeHistoryFilterModel MoveDataFromModelToViewModel(TradeHistoryModel Model, TradeHistoryFilterModel viewModel)
         {
-            //TODO: [COMPLETE] make single query for all distinct accounts, set names
+            viewModel.Deals = Model.Deals;
 
-
-            viewModel.Orders = Model.AccountTradeHistories;
+            foreach (var item in viewModel.Deals.deals)
+            {
+                item.coin = item.@base;
+            }
 
             viewModel.TotalProfit = Model.TotalProfit;
             viewModel.TotalProfitWithoutFee = Model.TotalProfitWithoutFee;
@@ -121,7 +120,7 @@ namespace CRM.Controllers
 
             viewModel.TotalEnterTax = Model.TotalEnterTax;
 
-            if (Model.AccountTradeHistories.Count > 0 && (decimal)Model.LossOrdersCount != 0)
+            if (Model.Deals.deals.Count() > 0 && (decimal)Model.LossOrdersCount != 0)
             {
                 viewModel.RPL = (decimal)Model.ProfitOrdersCount / (decimal)Model.LossOrdersCount;
                 viewModel.AP = Model.ProfitOrdersCount > 0 ? Model.ProfitOrdersSumm / Model.ProfitOrdersCount : 0;
@@ -129,27 +128,27 @@ namespace CRM.Controllers
                 viewModel.AR = Model.TotalProfit / (Model.ProfitOrdersCount + Model.LossOrdersCount);
                 viewModel.RAPAL = viewModel.AP / Math.Abs(viewModel.AL);
 
-                var TroughValue = Model.AccountTradeHistories.Min(x => x.DollarQuantity);
-                var PeakValue = Model.AccountTradeHistories.Max(x => x.DollarQuantity);
+                var TroughValue = Model.Deals.deals.Min(x => x.income);
+                var PeakValue = Model.Deals.deals.Max(x => x.income);
                 viewModel.MIDD = TroughValue - PeakValue / PeakValue;
                 viewModel.Dmin = viewModel.MIDD + 100;
 
                 viewModel.R = Model.TotalProfit / viewModel.Dmin;
                 viewModel.RF = Model.TotalProfit / viewModel.MIDD;
                 viewModel.PF = Model.ProfitOrdersSumm / Math.Abs(Model.LossOrdersSumm);
-                viewModel.APF = (Model.ProfitOrdersSumm - Model.AccountTradeHistories.Max(x => x.Profit) / Math.Abs(Model.LossOrdersSumm));
+                viewModel.APF = (Model.ProfitOrdersSumm - Model.Deals.deals.Max(x => x.profit.clean.amount) / Math.Abs(Model.LossOrdersSumm));
                 viewModel.CompoundInterest = 0;
                 viewModel.CompoundInterestWithoutFee = 0;
 
-                var MidPercentProfit = Model.AccountTradeHistories.Sum(x => x.PercentProfit) / Model.AccountTradeHistories.Count;
+                var MidPercentProfit = Model.Deals.deals.Sum(x => x.profit.clean.percent) / Model.Deals.deals.Count();
 
                 double StandardDeviation = 0;
                 decimal _CompoundInterest = 1;
                 decimal _CompoundInterestWithoutFee = 1;
 
-                foreach (var coin in Model.AccountTradeHistories.Select(x=>x.Pair).Distinct())
+                foreach (var coin in Model.Deals.deals.Select(x=>x.@base).Distinct())
                 {
-                    foreach (var percentProfit in Model.AccountTradeHistories.Where(x => x.Pair == coin).Where(x => x.PercentProfit != 0).OrderBy(x => x.Time).Select(x => x.PercentProfit).ToList())
+                    foreach (var percentProfit in Model.Deals.deals.Where(x => x.@base == coin).Where(x => x.profit.clean.percent != 0).OrderBy(x => x.opened).Select(x => x.profit.clean.percent).ToList())
                     {
                         StandardDeviation += Math.Pow((double)percentProfit - (double)MidPercentProfit, 2);
 
@@ -158,7 +157,7 @@ namespace CRM.Controllers
                     viewModel.CompoundInterest += (_CompoundInterest - 1) * 100;
                     _CompoundInterest = 1;
 
-                    foreach (var percentProfitWithoutFee in Model.AccountTradeHistories.Where(x => x.Pair == coin).Where(x => x.PercentProfitWithoutFee != 0).Where(x => x.Pair == coin).OrderBy(x => x.Time).Select(x => x.PercentProfitWithoutFee).ToList())
+                    foreach (var percentProfitWithoutFee in Model.Deals.deals.Where(x => x.@base == coin).Where(x => x.profit.dirty.percent != 0).Where(x => x.@base == coin).OrderBy(x => x.opened).Select(x => x.profit.dirty.percent).ToList())
                     {
                         _CompoundInterestWithoutFee *= 1 + (percentProfitWithoutFee / 100);
                     }
@@ -167,7 +166,7 @@ namespace CRM.Controllers
                     _CompoundInterestWithoutFee = 1;
                 }
 
-                StandardDeviation /= Model.AccountTradeHistories.Count;
+                StandardDeviation /= Model.Deals.deals.Count();
                 StandardDeviation = Math.Sqrt(StandardDeviation);
 
                 viewModel.SharpeRatio = (MidPercentProfit - 0.05m) / (decimal)StandardDeviation;

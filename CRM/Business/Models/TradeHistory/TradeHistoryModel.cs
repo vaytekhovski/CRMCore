@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Business.Models.DataVisioAPI;
 
 namespace Business
 {
@@ -8,7 +9,10 @@ namespace Business
         {
 
         }
-        public List<AccountTradeHistory> AccountTradeHistories { get; set; }
+        //public List<AccountTradeHistory> AccountTradeHistories { get; set; }
+
+        public ListDeals Deals { get; set; }
+
         public decimal TotalProfit { get; set; }
         public decimal TotalProfitWithoutFee { get; set; }
         public int CountOfPages { get; set; }
