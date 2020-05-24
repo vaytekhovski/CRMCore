@@ -277,8 +277,7 @@
                     <th class="sorttable_nosort">Валюта</th>
                     <th class="sorttable_nosort">Купили</th>
                     <th class="sorttable_nosort">Продали</th>
-                    <th class="sorttable_nosort">Прибыль с ком.</th>
-                    <th class="sorttable_nosort">Прибыль без ком.</th>
+                    <th class="sorttable_nosort">Прибыль</th>
                 </tr>
             </thead>
             <tbody>
@@ -325,7 +324,6 @@
                     <td>@item.income.ToString("#.##") USDT</td>
                     <td>@item.outcome.ToString("#.##") USDT</td>
                     <td class="profit" style="color: @(item.profit.clean.amount > 0 ? "green" : "red");">@itemProfitStr</td>
-                    <td class="profit" style="color: @(item.profit.dirty.amount > 0 ? "green" : "red");">@itemProfitWithoutFeeStr</td>
                 </tr>
                 }
             </tbody>

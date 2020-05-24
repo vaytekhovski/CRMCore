@@ -101,6 +101,8 @@ namespace CRM.Controllers
             foreach (var item in viewModel.Deals.deals)
             {
                 item.coin = item.@base;
+                item.opened = item.opened.AddHours(3);
+                item.closed = item.closed.AddHours(3);
             }
 
             viewModel.TotalProfit = Model.TotalProfit;
