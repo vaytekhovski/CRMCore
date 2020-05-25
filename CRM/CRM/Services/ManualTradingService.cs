@@ -162,7 +162,7 @@ namespace CRM.Services
                 item.Time = item.Time.AddSeconds(-item.Time.Second);
             }
 
-            ViewModel.Graphs = ViewModel.Graphs.Where(x => x.Time >= ViewModel.StartDate).Where(x => x.Time <= ViewModel.EndDate).ToList();
+            ViewModel.Graphs = ViewModel.Graphs.Where(x => x.Time >= ViewModel.StartDate.ToUniversalTime()).Where(x => x.Time <= ViewModel.EndDate.ToUniversalTime()).ToList();
 
             if(ViewModel.TimeRange != 1)
             {

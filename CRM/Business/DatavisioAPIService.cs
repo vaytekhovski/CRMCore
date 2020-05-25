@@ -164,7 +164,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/graph/{CoinBase}/usdt?since={since}&limit={limit}"),
+                RequestUri = new Uri($"http://159.65.126.124/api/graph/binance/{CoinBase}/usdt?since={since}&limit={limit}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }

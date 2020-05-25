@@ -116,6 +116,7 @@ namespace Business.Models.DataVisioAPI
         public long time { get; set; }
         public DateTime Time { get; set; }
         public string time_str { get; set; }
+        public decimal bbl { get; set; }
         public decimal rsi { get; set; }
         public decimal lir { get; set; }
         public decimal reg { get; set; }
