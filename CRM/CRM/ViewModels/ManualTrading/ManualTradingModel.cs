@@ -29,6 +29,7 @@ namespace CRM.ViewModels.ManualTrading
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int TimeRange { get; set; }
+        public ListDeals Deals { get; set; }
     }
 
     public class Unit

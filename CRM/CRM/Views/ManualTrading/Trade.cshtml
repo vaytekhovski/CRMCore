@@ -230,36 +230,7 @@
         }
 
         <div class="buy_sell">
-            <div class="box">
-                <div class="box-line">
-
-                    <h4>Продажа @Model.Coin</h4>
-                </div>
-                <div class="box-line">
-
-                    @{
-                        string CurrencyAmount = "";
-                    }
-
-                    @foreach (var item in Model.balancesModel.AccountBalances)
-                    {
-                        if (item.Currency == Model.Coin)
-                        {
-                            CurrencyAmount = item.Free.ToString();
-                        }
-                    }
-                    Доступно: @CurrencyAmount @Model.Coin
-                </div>
-                <form>
-                    <div class="box-line">
-                        <input type="text" value="@Model.SellAmount" asp-for="SellAmount" />
-                        <input asp-for="Coin" style="display:none" />
-                    </div>
-                    <div class="box-line">
-                        <button type="submit" id="TradeHistory" formaction="../ManualTrading/Sell" formmethod="post" class="btn btn-secondary">Продать</button>
-                    </div>
-                </form>
-            </div>
+            
             <div class="box">
                 <div class="box-line">
                     <h4>Покупка @Model.Coin</h4>
@@ -281,8 +252,9 @@
                 </div>
                 <form>
                     <div class="box-line">
-                        <input type="text" value="@Model.BuyAmount" asp-for="BuyAmount" />
+                        <input type="text" value="@Model.BuyAmount" asp-for="BuyAmount" />@Model.Coin
                         <input asp-for="Coin" style="display:none" />
+
 
                     </div>
                     <div class="box-line">
@@ -291,6 +263,60 @@
                 </form>
             </div>
         </div>
+
+        <table class="sortable table table-bordered table-font">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th id="time">Время с </th>
+                    <th id="time">Время по </th>
+                    <th class="sorttable_nosort">Валюта</th>
+                    <th class="sorttable_nosort">Купили</th>
+                    <th class="sorttable_nosort">Продали</th>
+                    <th class="sorttable_nosort">Прибыль</th>
+                    <th class="sorttable_nosort">Комиссия</th>
+                    <th class="sorttable_nosort">Закрытие</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Deals.deals)
+                {
+                    string itemProfitStr = "???";
+                    if (item.profit.clean.amount != -100)
+                    {
+                        itemProfitStr = item.profit.clean.amount > 0 ? "+" : "";
+                        itemProfitStr += String.Format("{0:0.##}", item.profit.clean.amount);
+                        itemProfitStr += "$";
+                        itemProfitStr += " | ";
+                        itemProfitStr += item.profit.clean.amount > 0 ? "+" : "";
+                        itemProfitStr += String.Format("{0:0.##}", item.profit.clean.percent);
+                        itemProfitStr += "%";
+                    }
+
+                    string outcome = "???";
+                    if(item.outcome != 0)
+                    {
+                        outcome = item.outcome.ToString("#.##") + " $";
+                    }
+
+
+                <tr class="trigger_popup_fricc">
+                    <td>@item.id</td>
+                    <td>@item.opened.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.closed.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.coin</td>
+                    <td>@item.income.ToString("#.##") $</td>
+                    <td>@outcome</td>
+                    <td class="profit" style="color: @(item.profit.clean.amount > 0 ? " green" : "red" );">@itemProfitStr</td>
+                    <td>@item.fee $</td>
+                    <td><a href="~/ManualTrading/Sell?DealId=@item.id"><button class="btn btn-danger"></button></a></td>
+
+                </tr>
+                }
+            </tbody>
+        </table>
 
 
     </div>

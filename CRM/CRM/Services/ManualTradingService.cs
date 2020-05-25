@@ -34,6 +34,16 @@ namespace CRM.Services
 
             Signals signals = datavisioAPI.GetSignals(token, ViewModel.Coin).Result;
 
+            ViewModel.Deals = datavisioAPI.GetListDeals(token).Result;
+            if (ViewModel.Deals.deals != null)
+            {
+                ViewModel.Deals.deals = ViewModel.Deals.deals.Where(x => x.type == "manual").ToArray();
+            }
+            else
+            {
+                ViewModel.Deals.deals = new Business.Deal[] { };
+            }
+
             ViewModel.Unit.CountOfUnits5m = signals.signals.Where(x => x.time > now.AddMinutes(-5)).Where(x => x.value == 1).Count();
             ViewModel.Unit.CountOfUnits15m = signals.signals.Where(x => x.time > now.AddMinutes(-15)).Where(x => x.value == 1).Count();
             ViewModel.Unit.CountOfUnits30m = signals.signals.Where(x => x.time > now.AddMinutes(-30)).Where(x => x.value == 1).Count();

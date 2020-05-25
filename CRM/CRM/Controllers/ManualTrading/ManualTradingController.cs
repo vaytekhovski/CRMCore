@@ -100,10 +100,9 @@ namespace CRM.Controllers.ManualTrading
         {
             var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
 
-            var response = datavisioAPIService.PlaceOrder(token, new PlaceOrderRequest()
+            var response = datavisioAPIService.EnterDeal(token, new PlaceOrderRequest()
             {
-                type = "market",
-                side = "buy",
+                exchange = "binance",
                 @base = ViewModel.Coin,
                 quote = "USDT",
                 amount = Convert.ToDouble(ViewModel.BuyAmount)
@@ -115,23 +114,13 @@ namespace CRM.Controllers.ManualTrading
             return RedirectToAction("Trade", "ManualTrading", new { ViewModel = ViewModel});
         }
 
-        public IActionResult Sell(ManualTradingModel ViewModel)
+        public IActionResult Sell(string DealId)
         {
             var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
 
-            var response = datavisioAPIService.PlaceOrder(token, new PlaceOrderRequest()
-            {
-                type = "market",
-                side = "sell",
-                @base = ViewModel.Coin,
-                quote = "USDT",
-                amount = Convert.ToDouble(ViewModel.SellAmount)
-            }).Result;
+            var response = datavisioAPIService.LeaveDeal(token, DealId).Result;
 
-            ViewModel.SellAmount = "";
-            ViewModel.PlaceOrderResponse = response;
-
-            return RedirectToAction("Trade", "ManualTrading", new { ViewModel = ViewModel });
+            return RedirectToAction("Trade", "ManualTrading");
         }
     }
 }

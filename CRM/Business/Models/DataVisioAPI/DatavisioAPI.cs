@@ -31,8 +31,7 @@ namespace Business.Models.DataVisioAPI
 
     public class PlaceOrderRequest
     {
-        public string type { get; set; }
-        public string side { get; set; }
+        public string exchange { get; set; }
         public string @base { get; set; }
         public string quote { get; set; }
         public double amount { get; set; }

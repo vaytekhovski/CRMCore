@@ -76,18 +76,16 @@ namespace Business.DataVisioAPI
             return walletCurrency;
         }
 
-        public async Task<string> PlaceOrder(string token, PlaceOrderRequest placeOrderModel)
+        public async Task<string> EnterDeal(string token, PlaceOrderRequest placeOrderModel)
         {
             var Client = new HttpClient();
-
-            SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
             var jsonInString = JsonConvert.SerializeObject(placeOrderModel);
 
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://159.65.126.124/api/orders"),
+                RequestUri = new Uri($"http://159.65.126.124/api/account/deals"),
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
@@ -98,6 +96,26 @@ namespace Business.DataVisioAPI
             var response = JsonConvert.DeserializeObject<PlaceOrderResponse>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync());
 
             return response.id;
+        }
+
+        public async Task<string> LeaveDeal(string token, string DealId)
+        {
+            var Client = new HttpClient();
+
+
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}"),
+                Headers =
+                {
+                    { "Authorization", "Bearer " + token }
+                }
+            };
+
+            var response = JsonConvert.DeserializeObject<string>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync());
+
+            return response;
         }
 
         public async Task<Signals> GetSignals(string token, string CoinBase)

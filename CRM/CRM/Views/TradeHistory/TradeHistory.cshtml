@@ -285,8 +285,8 @@
             <tbody>
                 @foreach (var item in Model.Deals.deals)
                 {
-                    string itemProfitStr = "";
-                    if (item.profit.clean.amount != 0)
+                    string itemProfitStr = "???";
+                    if (item.profit.clean.amount != -100)
                     {
                         itemProfitStr = item.profit.clean.amount > 0 ? "+" : "";
                         itemProfitStr += String.Format("{0:0.##}", item.profit.clean.amount);
@@ -296,27 +296,12 @@
                         itemProfitStr += String.Format("{0:0.##}", item.profit.clean.percent);
                         itemProfitStr += "%";
                     }
-                    else
-                    {
-                        itemProfitStr = null;
-                    }
 
-                    string itemProfitWithoutFeeStr = "";
-                    if (item.profit.dirty.amount != 0)
+                    string outcome = "???";
+                    if (item.outcome != 0)
                     {
-                        itemProfitWithoutFeeStr = item.profit.dirty.amount > 0 ? "+" : "";
-                        itemProfitWithoutFeeStr += String.Format("{0:0.##}", item.profit.dirty.amount);
-                        itemProfitWithoutFeeStr += "$";
-                        itemProfitWithoutFeeStr += " | ";
-                        itemProfitWithoutFeeStr += item.profit.dirty.amount > 0 ? "+" : "";
-                        itemProfitWithoutFeeStr += String.Format("{0:0.##}", item.profit.dirty.percent);
-                        itemProfitWithoutFeeStr += "%";
+                        outcome = item.outcome.ToString("#.##") + " $";
                     }
-                    else
-                    {
-                        itemProfitStr = null;
-                    }
-
 
                 <tr class="trigger_popup_fricc">
                     <td>@item.id</td>
@@ -324,7 +309,7 @@
                     <td>@item.closed.ToString("dd.MM.yy HH:mm")</td>
                     <td>@item.coin</td>
                     <td>@item.income.ToString("#.##") $</td>
-                    <td>@item.outcome.ToString("#.##") $</td>
+                    <td>@outcome</td>
                     <td class="profit" style="color: @(item.profit.clean.amount > 0 ? "green" : "red");">@itemProfitStr</td>
                     <td>@item.fee $</td>
                 </tr>
