@@ -188,41 +188,43 @@ namespace CRM.Services
                 timesG = Times.ToArray();
 
                 var BufGraphs = new List<Graph>();
-                int step = 0;
-                int timeStep = 0;
-
-                int lenght = ViewModel.Graphs.Count - 1;
                 Graph[] BufArr;
 
                 decimal[] rsi;
                 decimal[] reg;
                 decimal[] lir;
 
-                do
+                int index = 0;
+
+                while(true)
                 {
+                    if (index + 1 > timesG.Length)
+                    {
+                        break;
+                    }
+
                     BufArr = ViewModel.Graphs
-                        .OrderBy(x => x.Time)
-                        .Where(x => x.Time > timesG[timeStep])
-                        .Where(x => x.Time <= timesG[timeStep + 1])
-                        .ToArray();
+                            .OrderBy(x => x.Time)
+                            .Where(x => x.Time > timesG[index])
+                            .Where(x => x.Time <= timesG[index + 1])
+                            .ToArray();
 
                     rsi = BufArr.OrderBy(x => x.rsi).Select(x => x.rsi).ToArray();
                     reg = BufArr.OrderBy(x => x.reg).Select(x => x.reg).ToArray();
                     lir = BufArr.OrderBy(x => x.lir).Select(x => x.lir).ToArray();
 
-                    lenght -= BufArr.Length;
-
-                    BufGraphs.Add(new Graph
+                    if(BufArr.Length != 0)
                     {
-                        rsi = rsi[rsi.Length / 2],
-                        reg = reg[reg.Length / 2],
-                        lir = lir[lir.Length / 2],
-                        Time = BufArr.LastOrDefault().Time,
-                    });
-
-                    step++;
-                    timeStep++;
-                } while (lenght != 0);
+                        BufGraphs.Add(new Graph
+                        {
+                            rsi = rsi.Length != 0 ? rsi[rsi.Length / 2] : 0,
+                            reg = reg.Length != 0 ? reg[reg.Length / 2] : 0,
+                            lir = lir.Length != 0 ? lir[lir.Length / 2] : 0,
+                            Time = BufArr.LastOrDefault().Time,
+                        });
+                    }
+                    index++;
+                }
 
                 ViewModel.Graphs.Clear();
                 ViewModel.Graphs.AddRange(BufGraphs);
