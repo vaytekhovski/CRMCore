@@ -105,7 +105,7 @@ namespace CRM.Controllers.ManualTrading
                 exchange = "binance",
                 @base = ViewModel.Coin,
                 quote = "USDT",
-                amount = Convert.ToDouble(ViewModel.BuyAmount)
+                amount = Convert.ToDouble(ViewModel.BuyAmount.ToString().Replace(',','.'))
             }).Result;
 
             ViewModel.BuyAmount = "";

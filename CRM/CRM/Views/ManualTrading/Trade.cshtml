@@ -284,6 +284,9 @@
                 @foreach (var item in Model.Deals.deals)
                 {
                     string itemProfitStr = "???";
+                    string outcome = "???";
+                    string fee = "???";
+
                     if (item.profit.clean.percent != -100)
                     {
                         itemProfitStr = item.profit.clean.amount > 0 ? "+" : "";
@@ -293,24 +296,18 @@
                         itemProfitStr += item.profit.clean.amount > 0 ? "+" : "";
                         itemProfitStr += String.Format("{0:0.##}", item.profit.clean.percent);
                         itemProfitStr += "%";
-                    }
 
-                    string outcome = "???";
-                    string fee = "???";
-
-                    if (item.outcome != 0)
-                    {
-                        outcome = item.outcome.ToString("#.##") + " $";
+                        outcome = item.outcome.Value.ToString("#.##") + " $";
                         fee = item.fee + "$";
                     }
 
 
                 <tr class="trigger_popup_fricc">
                     <td>@item.id</td>
-                    <td>@item.opened.ToString("dd.MM.yy HH:mm")</td>
-                    <td>@item.closed.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.opened.Value.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.closed.Value.ToString("dd.MM.yy HH:mm")</td>
                     <td>@item.coin</td>
-                    <td>@item.income.ToString("#.##") $</td>
+                    <td>@item.income.Value.ToString("#.##") $</td>
                     <td>@outcome</td>
                     <td class="profit" style="color: @(item.profit.clean.amount > 0 ? " green" : "red" );">@itemProfitStr</td>
                     <td>@fee</td>

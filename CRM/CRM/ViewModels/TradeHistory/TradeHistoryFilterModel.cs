@@ -41,10 +41,10 @@ namespace CRM.ViewModels
         public decimal AL { get; set; }
         public decimal AR { get; set; }
         public decimal RAPAL { get; set; }
-        public decimal MIDD { get; set; }
-        public decimal Dmin { get; set; }
-        public decimal R { get; set; }
-        public decimal RF { get; set; }
+        public decimal? MIDD { get; set; }
+        public decimal? Dmin { get; set; }
+        public decimal? R { get; set; }
+        public decimal? RF { get; set; }
         public decimal PF { get; set; }
         public decimal APF { get; set; }
         public decimal SharpeRatio { get; set; }

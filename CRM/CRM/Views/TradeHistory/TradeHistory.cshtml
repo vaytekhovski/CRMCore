@@ -300,7 +300,7 @@
                     string outcome = "???";
                     if (item.outcome != 0)
                     {
-                        outcome = item.outcome.ToString("#.##") + " $";
+                        outcome = item.outcome.Value.ToString("#.##") + " $";
                     }
 
                     string fee = "???";
@@ -311,10 +311,10 @@
 
                 <tr class="trigger_popup_fricc">
                     <td>@item.id</td>
-                    <td>@item.opened.ToString("dd.MM.yy HH:mm")</td>
-                    <td>@item.closed.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.opened.Value.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.closed.Value.ToString("dd.MM.yy HH:mm")</td>
                     <td>@item.coin</td>
-                    <td>@item.income.ToString("#.##") $</td>
+                    <td>@item.income.Value.ToString("#.##") $</td>
                     <td>@outcome</td>
                     <td class="profit" style="color: @(item.profit.clean.amount > 0 ? "green" : "red");">@itemProfitStr</td>
                     <td>@fee</td>

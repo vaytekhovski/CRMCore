@@ -13,7 +13,7 @@ namespace CRM.ViewModels.Charts
         public string StartDate { get; set; }
         public string EndDate { get; set; }
 
-        public List<long> Dates { get; set; }
+        public List<long?> Dates { get; set; }
         public List<string> Values { get; set; }
 
         public int CountOfZero { get; set; }
@@ -25,7 +25,7 @@ namespace CRM.ViewModels.Charts
 
         public ProfitViewModel()
         {
-            Dates = new List<long>();
+            Dates = new List<long?>();
             Values = new List<string>();
         }
     }

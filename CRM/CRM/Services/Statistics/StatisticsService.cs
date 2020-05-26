@@ -44,12 +44,12 @@ namespace CRM.Services.Statistics
         {
             var statistics = new List<StatisticsElement>();
 
-            foreach (var date in deals.deals.Select(x => x.closed.Date).Distinct())
+            foreach (var date in deals.deals.Select(x => x.closed.Value.Date).Distinct())
             {
                 statistics.Add(new StatisticsElement
                 {
                     Date = date,
-                    ProfitOfDay = deals.deals.Where(x => x.closed.Date == date).Sum(x => x.profit.clean.amount),
+                    ProfitOfDay = deals.deals.Where(x => x.closed.Value.Date == date).Sum(x => x.profit.clean.amount),
                     TotalProfit = 0
                 });
             }
