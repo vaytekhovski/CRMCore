@@ -286,6 +286,10 @@
                 @foreach (var item in Model.Deals.deals)
                 {
                     string itemProfitStr = "???";
+                    string outcome = "???";
+                    string fee = "???";
+
+
                     if (item.profit.clean.percent != -100)
                     {
                         itemProfitStr = item.profit.clean.amount > 0 ? "+" : "";
@@ -295,18 +299,11 @@
                         itemProfitStr += item.profit.clean.amount > 0 ? "+" : "";
                         itemProfitStr += String.Format("{0:0.##}", item.profit.clean.percent);
                         itemProfitStr += "%";
-                    }
 
-                    string outcome = "???";
-                    if (item.outcome != 0)
-                    {
                         outcome = item.outcome.Value.ToString("#.##") + " $";
-                    }
 
-                    string fee = "???";
-                    if(item.fee != 0)
-                    {
                         fee = item.fee + "$";
+
                     }
 
                 <tr class="trigger_popup_fricc">
