@@ -11,7 +11,7 @@
 
 
 
-    <div style="width:60%;margin:auto">
+    <div class="container table_block">
         <h2>Ручная торговля</h2>
 
         <div class="technical_indicators">
@@ -142,7 +142,7 @@
                     </div>
 
                     <div class="filter_element">
-                        <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../ManualTrading/Trade" formmethod="post">
+                        <button type="submit" id="TradeHistory" class="btn short-filter_button btn-primary" formaction="../ManualTrading/Trade" formmethod="post">
                             Обновить
                         </button>
                     </div>
@@ -284,7 +284,7 @@
                 @foreach (var item in Model.Deals.deals)
                 {
                     string itemProfitStr = "???";
-                    if (item.profit.clean.amount != -100)
+                    if (item.profit.clean.percent != -100)
                     {
                         itemProfitStr = item.profit.clean.amount > 0 ? "+" : "";
                         itemProfitStr += String.Format("{0:0.##}", item.profit.clean.amount);
@@ -296,9 +296,12 @@
                     }
 
                     string outcome = "???";
-                    if(item.outcome != 0)
+                    string fee = "???";
+
+                    if (item.outcome != 0)
                     {
                         outcome = item.outcome.ToString("#.##") + " $";
+                        fee = item.fee + "$";
                     }
 
 
@@ -310,8 +313,13 @@
                     <td>@item.income.ToString("#.##") $</td>
                     <td>@outcome</td>
                     <td class="profit" style="color: @(item.profit.clean.amount > 0 ? " green" : "red" );">@itemProfitStr</td>
-                    <td>@item.fee $</td>
-                    <td><a href="~/ManualTrading/Sell?DealId=@item.id"><button class="btn btn-danger"></button></a></td>
+                    <td>@fee</td>
+                    <td>
+                        @if (outcome == "???")
+                        {
+                    <a href="~/ManualTrading/Sell?DealId=@item.id">Продать</a>
+                        }
+                    </td>
 
                 </tr>
                 }

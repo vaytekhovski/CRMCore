@@ -44,6 +44,14 @@ namespace CRM.Services
                 ViewModel.Deals.deals = new Business.Deal[] { };
             }
 
+            foreach (var item in ViewModel.Deals.deals)
+            {
+                item.coin = item.@base;
+                item.opened = item.opened.AddHours(3);
+                item.closed = item.closed.AddHours(3);
+                item.fee = Math.Abs(item.profit.dirty.amount - item.profit.clean.amount);
+            }
+
             ViewModel.Unit.CountOfUnits5m = signals.signals.Where(x => x.time > now.AddMinutes(-5)).Where(x => x.value == 1).Count();
             ViewModel.Unit.CountOfUnits15m = signals.signals.Where(x => x.time > now.AddMinutes(-15)).Where(x => x.value == 1).Count();
             ViewModel.Unit.CountOfUnits30m = signals.signals.Where(x => x.time > now.AddMinutes(-30)).Where(x => x.value == 1).Count();
