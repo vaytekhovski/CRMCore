@@ -7,6 +7,6 @@ namespace Business
    public class IgnoreIds
     {
         public int Id { get; set; }
-        public int OrderId { get; set; }
+        public string OrderId { get; set; }
     }
 }

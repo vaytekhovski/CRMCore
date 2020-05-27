@@ -283,9 +283,9 @@
             <tbody>
                 @foreach (var item in Model.Deals.deals)
                 {
-                    string itemProfitStr = "???";
-                    string outcome = "???";
-                    string fee = "???";
+                    string itemProfitStr = "";
+                    string outcome = "";
+                    string fee = "";
 
                     if (item.profit.clean.percent != -100)
                     {

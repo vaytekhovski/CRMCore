@@ -44,6 +44,25 @@ namespace CRM.Services
 
             model.Deals.deals = model.Deals.deals.Where(x => x.opened >= filter.StartDate).Where(x => x.opened <= filter.EndDate).ToArray();
 
+            /*
+            System.Collections.Generic.List<IgnoreIds> IgnoreList = new System.Collections.Generic.List<IgnoreIds>();
+            using (BasicContext db = new BasicContext())
+            {
+                IgnoreList = db.IgnoreIds.ToList();
+            }
+
+            foreach (var item in IgnoreList)
+            {
+                var dealToRemove = model.Deals.deals.First(x => x.id == item.OrderId);
+                if (dealToRemove != null) {
+                    var DealList = model.Deals.deals.ToList();
+                    DealList.Remove(dealToRemove);
+                    model.Deals.deals = DealList.ToArray();
+                        }
+            }
+            */
+
+
             UpdateTotalProfit(model);
             UpdateCountOfLossAndProfitOrders(model);
             UpdateSummOfLossAndProfitOrders(model);
@@ -82,26 +101,26 @@ namespace CRM.Services
 
         private void UpdateTotalProfit(TradeHistoryModel model)
         {
-            model.TotalProfit = model.Deals.deals.Sum(x => x.profit.clean.amount);
-            model.TotalProfitWithoutFee = model.Deals.deals.Sum(x => x.profit.dirty.amount);
+            model.TotalProfit = model.Deals.deals.Where(x => x.outcome != 0).Sum(x => x.profit.clean.amount);
+            model.TotalProfitWithoutFee = model.Deals.deals.Where(x => x.outcome != 0).Sum(x => x.profit.dirty.amount);
         }
 
         private void UpdateCountOfLossAndProfitOrders(TradeHistoryModel model)
         {
-            model.LossOrdersCount = model.Deals.deals.Where(x => x.profit.clean.amount <= 0).Count();
-            model.ProfitOrdersCount = model.Deals.deals.Where(x => x.profit.clean.amount > 0).Count();
+            model.LossOrdersCount = model.Deals.deals.Where(x => x.outcome != 0).Where(x => x.profit.clean.amount <= 0).Count();
+            model.ProfitOrdersCount = model.Deals.deals.Where(x => x.outcome != 0).Where(x => x.profit.clean.amount > 0).Count();
 
-            model.LossOrdersCountWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount <= 0).Count();
-            model.ProfitOrdersCountWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount > 0).Count();
+            model.LossOrdersCountWithoutFee = model.Deals.deals.Where(x => x.outcome != 0).Where(x => x.profit.dirty.amount <= 0).Count();
+            model.ProfitOrdersCountWithoutFee = model.Deals.deals.Where(x => x.outcome != 0).Where(x => x.profit.dirty.amount > 0).Count();
         }
 
         private void UpdateSummOfLossAndProfitOrders(TradeHistoryModel model)
         {
-            model.LossOrdersSumm = model.Deals.deals.Where(x => x.profit.clean.amount <= 0).Sum(x => x.profit.clean.amount);
-            model.ProfitOrdersSumm = model.Deals.deals.Where(x => x.profit.clean.amount > 0).Sum(x => x.profit.clean.amount);
+            model.LossOrdersSumm = model.Deals.deals.Where(x => x.outcome != 0).Where(x => x.profit.clean.amount <= 0).Sum(x => x.profit.clean.amount);
+            model.ProfitOrdersSumm = model.Deals.deals.Where(x => x.outcome != 0).Where(x => x.profit.clean.amount > 0).Sum(x => x.profit.clean.amount);
 
-            model.LossOrdersSummWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount <= 0).Sum(x => x.profit.dirty.amount);
-            model.ProfitOrdersSummWithoutFee = model.Deals.deals.Where(x => x.profit.dirty.amount > 0).Sum(x => x.profit.dirty.amount);
+            model.LossOrdersSummWithoutFee = model.Deals.deals.Where(x => x.outcome != 0).Where(x => x.profit.dirty.amount <= 0).Sum(x => x.profit.dirty.amount);
+            model.ProfitOrdersSummWithoutFee = model.Deals.deals.Where(x => x.outcome != 0).Where(x => x.profit.dirty.amount > 0).Sum(x => x.profit.dirty.amount);
         }
 
     }
