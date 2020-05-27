@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Business;
+using Business.Contexts;
 using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
 using Business.Models.Master;
@@ -35,9 +37,30 @@ namespace CRM.Services
             Signals signals = datavisioAPI.GetSignals(token, ViewModel.Coin).Result;
 
             ViewModel.Deals = datavisioAPI.GetListDeals(token).Result;
+
+            System.Collections.Generic.List<IgnoreIds> IgnoreList = new System.Collections.Generic.List<IgnoreIds>();
+            using (BasicContext db = new BasicContext())
+            {
+                IgnoreList = db.IgnoreIds.ToList();
+
+            }
+
+            foreach (var item in IgnoreList)
+            {
+                var dealToRemove = ViewModel.Deals.deals.First(x => x.id == "d3ad08f1-a2bd-4f32-89f4-81e2ae5ed5cb");
+                if (dealToRemove != null)
+                {
+                    var DealList = ViewModel.Deals.deals.ToList();
+                    DealList.Remove(dealToRemove);
+                    ViewModel.Deals.deals = DealList.ToArray();
+                }
+            }
+
             if (ViewModel.Deals.deals != null)
             {
-                ViewModel.Deals.deals = ViewModel.Deals.deals.Where(x => x.type == "manual").ToArray();
+                var Deals = ViewModel.Deals.deals.Where(x=>x.type != "manual").Where(x => x.outcome == 0).ToList();
+                Deals.AddRange(ViewModel.Deals.deals.Where(x => x.type == "manual").ToList());
+                ViewModel.Deals.deals = Deals.OrderByDescending(x=>x.opened).ToArray();
             }
             else
             {
@@ -166,6 +189,8 @@ namespace CRM.Services
             {
                 ViewModel.CoinPrices.Add(item.c);
             }
+
+            ViewModel.LastPrice = candles.Last().c;
 
             ViewModel.balancesModel = await balancesService.LoadBalancesAsync(token);
 

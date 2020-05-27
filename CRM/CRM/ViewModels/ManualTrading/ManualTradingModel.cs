@@ -21,6 +21,7 @@ namespace CRM.ViewModels.ManualTrading
         public Unit Unit { get; set; }
         public List<Unit> Units { get; set; }
         public List<decimal> CoinPrices { get; set; }
+        public decimal LastPrice { get; set; }
         public List<Graph> Graphs { get; set; }
         public BalancesModel balancesModel { get; set; }
         public string BuyAmount { get; set; }

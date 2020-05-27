@@ -312,7 +312,7 @@
                     <td class="profit" style="color: @(item.profit.clean.amount > 0 ? " green" : "red" );">@itemProfitStr</td>
                     <td>@fee</td>
                     <td>
-                        @if (outcome == "???")
+                        @if (outcome == "")
                         {
                     <a href="~/ManualTrading/Sell?DealId=@item.id">Продать</a>
                         }

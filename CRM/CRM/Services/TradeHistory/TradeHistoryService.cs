@@ -49,11 +49,7 @@ namespace CRM.Services
             using (BasicContext db = new BasicContext())
             {
                 IgnoreList = db.IgnoreIds.ToList();
-                db.IgnoreIds.Add(new IgnoreIds
-                {
-                    OrderId = "d3ad08f1-a2bd-4f32-89f4-81e2ae5ed5cb"
-                });
-                db.SaveChanges();
+
             }
 
             foreach (var item in IgnoreList)
