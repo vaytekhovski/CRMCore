@@ -47,7 +47,7 @@ namespace CRM.Services
 
             foreach (var item in IgnoreList)
             {
-                var dealToRemove = ViewModel.Deals.deals.First(x => x.id == "d3ad08f1-a2bd-4f32-89f4-81e2ae5ed5cb");
+                var dealToRemove = ViewModel.Deals.deals.First(x => x.id == item.OrderId);
                 if (dealToRemove != null)
                 {
                     var DealList = ViewModel.Deals.deals.ToList();
