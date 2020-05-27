@@ -44,23 +44,28 @@ namespace CRM.Services
 
             model.Deals.deals = model.Deals.deals.Where(x => x.opened >= filter.StartDate).Where(x => x.opened <= filter.EndDate).ToArray();
 
-            /*
+            
             System.Collections.Generic.List<IgnoreIds> IgnoreList = new System.Collections.Generic.List<IgnoreIds>();
             using (BasicContext db = new BasicContext())
             {
                 IgnoreList = db.IgnoreIds.ToList();
+                db.IgnoreIds.Add(new IgnoreIds
+                {
+                    OrderId = "d3ad08f1-a2bd-4f32-89f4-81e2ae5ed5cb"
+                });
+                db.SaveChanges();
             }
 
             foreach (var item in IgnoreList)
             {
-                var dealToRemove = model.Deals.deals.First(x => x.id == item.OrderId);
+                var dealToRemove = model.Deals.deals.First(x => x.id == "d3ad08f1-a2bd-4f32-89f4-81e2ae5ed5cb");
                 if (dealToRemove != null) {
                     var DealList = model.Deals.deals.ToList();
                     DealList.Remove(dealToRemove);
                     model.Deals.deals = DealList.ToArray();
                         }
             }
-            */
+            
 
 
             UpdateTotalProfit(model);

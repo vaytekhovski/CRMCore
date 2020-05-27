@@ -190,6 +190,9 @@ namespace CRM.Controllers
             viewModel.ProbaBuyETH = Model.ProbaBuyETH;
             viewModel.ProbaBuyXRP = Model.ProbaBuyXRP;
 
+            viewModel.CompoundInterest /= 2;
+            viewModel.CompoundInterestWithoutFee /= 2;
+
             var OpendedDeals = Model.Deals.deals.Where(x => x.outcome == 0).ToList();
             if (OpendedDeals != null)
             {
