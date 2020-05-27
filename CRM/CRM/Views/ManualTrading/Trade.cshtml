@@ -253,8 +253,10 @@
                 </div>
                 <form>
                     <div class="box-line">
-                        <input type="text" value="@Model.BuyAmount" asp-for="BuyAmount" />@Model.Coin
+                        <input id="USDTBuyAmount" type="text" style="margin:10px" placeholder="USDT"/>
+                        <input id="CoinBuyAmount" type="text" style="margin:10px" placeholder="@Model.Coin" value="@Model.BuyAmount" asp-for="BuyAmount" />
                         <input asp-for="Coin" style="display:none" />
+                        <input id="Price" value="@Model.LastPrice" style="display:none" />
 
 
                     </div>
@@ -326,6 +328,25 @@
 
 
     </div>
+
+    <script type="text/javascript">
+        var USDTinput = document.getElementById('USDTBuyAmount');
+        var Coininput = document.getElementById('CoinBuyAmount');
+        var Price = document.getElementById('Price').value;
+
+        USDTinput.oninput = function () {
+            var USDT = USDTinput.value.replace("USDT", "");
+            Coininput.value = (USDT / Price).toFixed(8) + " @Model.Coin";
+        }
+
+
+        Coininput.oninput = function () {
+            var Coin = Coininput.value.replace("@Model.Coin", "");
+            USDTinput.value = (Coin * Price).toFixed(2) + " USDT";
+        }
+
+    </script>
+
 
     <script>
 
