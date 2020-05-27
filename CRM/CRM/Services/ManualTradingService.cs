@@ -47,7 +47,7 @@ namespace CRM.Services
 
             foreach (var item in IgnoreList)
             {
-                var dealToRemove = ViewModel.Deals.deals.First(x => x.id == item.OrderId);
+                var dealToRemove = ViewModel.Deals.deals.FirstOrDefault(x => x.id == item.OrderId);
                 if (dealToRemove != null)
                 {
                     var DealList = ViewModel.Deals.deals.ToList();
@@ -183,14 +183,14 @@ namespace CRM.Services
 
 
            var candles = datavisioAPI.GetCandles(token, ViewModel.Coin).Result.ToList();
-
+           ViewModel.LastPrice = candles.Last().c;
 
             foreach (var item in candles)
             {
                 ViewModel.CoinPrices.Add(item.c);
             }
 
-            ViewModel.LastPrice = candles.Last().c;
+            
 
             ViewModel.balancesModel = await balancesService.LoadBalancesAsync(token);
 

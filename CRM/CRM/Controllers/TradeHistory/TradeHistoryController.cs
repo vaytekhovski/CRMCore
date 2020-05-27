@@ -51,6 +51,7 @@ namespace CRM.Controllers
 
 
             var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
+
             viewModel.CurrentPage = filter.CurrentPage;
             viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "TradeHistory/TradeHistory";

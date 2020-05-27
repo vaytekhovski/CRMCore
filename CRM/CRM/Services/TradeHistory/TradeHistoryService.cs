@@ -54,14 +54,16 @@ namespace CRM.Services
 
             foreach (var item in IgnoreList)
             {
-                var dealToRemove = model.Deals.deals.First(x => x.id == item.OrderId);
+                var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.OrderId);
                 if (dealToRemove != null) {
                     var DealList = model.Deals.deals.ToList();
                     DealList.Remove(dealToRemove);
                     model.Deals.deals = DealList.ToArray();
                         }
             }
-            
+
+            //var candles = datavisioAPI.GetCandles(token, ViewModel.Coin).Result.ToList();
+            //ViewModel.LastPrice = candles.Last().c;
 
 
             UpdateTotalProfit(model);

@@ -22,7 +22,7 @@ namespace CRM.ViewModels
         public string TypeOfDate { get; set; }
         //public ICollection<AccountTradeHistory> Orders { get; set; }
         public ListDeals Deals { get; set; }
-
+        public decimal LastPrice { get; set; }
         public decimal TotalProfit { get; set; }
         public decimal TotalProfitWithoutFee { get; set; }
         public int LossOrdersCount { get; set; }
