@@ -271,7 +271,7 @@
         <table class="sortable table table-bordered table-font" style=" display: @(Model.TotalProfit == 0 ? "none" : "table");">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Номер торговой сессии</th>
                     <th id="time">Время с </th>
                     <th id="time">Время по </th>
                     <th class="sorttable_nosort">Валюта</th>
@@ -288,7 +288,7 @@
                     string itemProfitStr = "";
                     string outcome = "";
                     string fee = "";
-
+                    string closed = "";
 
                     if (item.profit.clean.percent != -100)
                     {
@@ -303,13 +303,14 @@
                         outcome = item.outcome.Value.ToString("#.##") + " $";
 
                         fee = item.fee + "$";
+                        closed = item.closed.Value.ToString("dd.MM.yy HH:mm");
 
                     }
 
                 <tr class="trigger_popup_fricc">
                     <td><a href="~/ManualTrading/GetDeal?DealId=@item.id">@item.id</a></td>
                     <td>@item.opened.ToString("dd.MM.yy HH:mm")</td>
-                    <td>@item.closed.Value.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@closed</td>
                     <td>@item.coin</td>
                     <td>@item.income.Value.ToString("#.##") $</td>
                     <td>@outcome</td>

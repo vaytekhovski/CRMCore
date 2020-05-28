@@ -6,6 +6,8 @@
 
     <head>
         <link href="~/css/ManualTrading.css" rel="stylesheet">
+        <link href="~/css/tradehistorystylesheet.css" rel="stylesheet">
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
     </head>
@@ -50,8 +52,8 @@
                 <div class="box-line">
                     <button type="submit" id="TradeHistory" formaction="../ManualTrading/TradeDeal" formmethod="post" class="btn btn-secondary">Докупить</button>
 
-                    <a href="~/ManualTrading/Sell?DealId=@Model.Deal.id">
-                        <button class="btn btn-secondary">Продать</button>
+                    <a href="~/ManualTrading/Sell?DealId=@Model.Deal.id" class="btn btn-secondary">
+                        Продать
                     </a>
                 </div>
             </form>
