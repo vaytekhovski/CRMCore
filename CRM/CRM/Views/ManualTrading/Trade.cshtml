@@ -306,8 +306,8 @@
 
 
                 <tr class="trigger_popup_fricc">
-                    <td>@item.id</td>
-                    <td>@item.opened.Value.ToString("dd.MM.yy HH:mm")</td>
+                    <td><a href="~/ManualTrading/GetDeal?DealId=@item.id">@item.id</a></td>
+                    <td>@item.opened.ToString("dd.MM.yy HH:mm")</td>
                     <td>@item.closed.Value.ToString("dd.MM.yy HH:mm")</td>
                     <td>@item.coin</td>
                     <td>@item.income.Value.ToString("#.##") $</td>

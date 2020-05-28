@@ -22,12 +22,15 @@ namespace CRM.Controllers.ManualTrading
     {
         private readonly ManualTradingService manualTradingService;
         private readonly DatavisioAPIService datavisioAPIService;
+        private readonly BalancesService balancesService;
 
 
         public ManualTradingController()
         {
             manualTradingService = new ManualTradingService();
             datavisioAPIService = new DatavisioAPIService();
+            balancesService = new BalancesService();
+
         }
 
         [HttpGet]
@@ -122,5 +125,36 @@ namespace CRM.Controllers.ManualTrading
 
             return RedirectToAction("Trade", "ManualTrading");
         }
+
+        public async Task<IActionResult> GetDeal(string DealId)
+        {
+            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+
+            var response = datavisioAPIService.GetDeal(token, DealId).Result;
+            response.coin = response.@base;
+
+            GetDealModel Model = new GetDealModel()
+            {
+                Deal = response,
+                balancesModel = await balancesService.LoadBalancesAsync(token)
+            };
+
+            var candles = datavisioAPIService.GetCandles(token, Model.Deal.coin).Result.ToList();
+            Model.LastPrice = candles.Last().c;
+
+            Model.Deal.orders = Model.Deal.orders.OrderByDescending(x => x.created).ToArray();
+            return View(Model);
+        }
+
+        public IActionResult TradeDeal(GetDealModel Model)
+        {
+            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            double amount = Convert.ToDouble(Model.BuyAmount.ToString().Replace(',', '.').Replace(" " + Model.Deal.coin, ""));
+
+            var response = datavisioAPIService.TradeDeal(token, Model.Deal.id, amount).Result;
+
+            return RedirectToAction("GetDeal", "ManualTrading", new {DealId = Model.Deal.id });
+        }
+
     }
 }

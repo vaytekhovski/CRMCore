@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Business;
+using Business.Models.DataVisioAPI;
 using CRM.Helpers;
 using CRM.Models;
 using CRM.Services;
@@ -102,7 +103,7 @@ namespace CRM.Controllers
             foreach (var item in Model.Deals.deals)
             {
                 item.coin = item.@base;
-                item.opened = item.opened.Value.AddHours(3);
+                item.opened = item.opened.AddHours(3);
                 item.closed = item.closed != null ? item.closed.Value.AddHours(3) : new DateTime(1999, 01, 01);
                 item.fee = Math.Abs(item.profit.dirty.amount - item.profit.clean.amount);
             }

@@ -98,6 +98,31 @@ namespace Business.DataVisioAPI
             return response.id;
         }
 
+        public async Task<string> TradeDeal(string token,string DealId, double amount)
+        {
+            var Client = new HttpClient();
+            TradeDealRequest tradeDealRequest = new TradeDealRequest
+            {
+                amount = amount
+            };
+            var jsonInString = JsonConvert.SerializeObject(tradeDealRequest);
+
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}"),
+                Headers =
+                {
+                    { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(jsonInString, Encoding.UTF8, "application/json")
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<string>(response);
+        }
+
         public async Task<string> LeaveDeal(string token, string DealId)
         {
             var Client = new HttpClient();
@@ -113,10 +138,12 @@ namespace Business.DataVisioAPI
                 }
             };
 
-            var response = JsonConvert.DeserializeObject<string>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync());
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
 
-            return response;
+            return JsonConvert.DeserializeObject<string>(response);
         }
+
+
 
         public async Task<Signals> GetSignals(string token, string CoinBase)
         {
@@ -171,6 +198,26 @@ namespace Business.DataVisioAPI
 
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<ListDeals>(response);
+        }
+
+        public async Task<Deal> GetDeal(string token, string DealId)
+        {
+            var Client = new HttpClient();
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            var Deal = JsonConvert.DeserializeObject<Deal>(response);
+            Deal.id = DealId;
+            return Deal;
         }
 
         public async Task<List<Graph>> GetGraphs(string token, string CoinBase, DateTime StartDate, DateTime EndDate)

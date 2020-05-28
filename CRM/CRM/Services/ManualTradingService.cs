@@ -64,13 +64,13 @@ namespace CRM.Services
             }
             else
             {
-                ViewModel.Deals.deals = new Business.Deal[] { };
+                ViewModel.Deals.deals = new Deal[] { };
             }
 
             foreach (var item in ViewModel.Deals.deals)
             {
                 item.coin = item.@base;
-                item.opened = item.opened.Value.AddHours(3);
+                item.opened = item.opened.AddHours(3);
                 item.closed = item.closed != null ? item.closed.Value.AddHours(3) : new DateTime(1999,01,01);
                 item.fee = Math.Abs(item.profit.dirty.amount - item.profit.clean.amount);
             }

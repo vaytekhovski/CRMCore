@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewData["Title"] = "Get Deal";
+}
+@model CRM.ViewModels.ManualTrading.GetDealModel
+
+    <head>
+        <link href="~/css/ManualTrading.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    </head>
+
+
+<div class="container table_block">
+    <h2>Deal @Model.Deal.id</h2>
+
+    <div class="buy_sell">
+
+        <div class="box" style="width:30% !important">
+            <div class="box-line">
+                <h4>Покупка @Model.Deal.coin</h4>
+                <h3>@Model.Deal.coin @Model.LastPrice</h3>
+            </div>
+            <div class="box-line">
+
+                @{
+                    string USDTAmount = "";
+                }
+
+                @foreach (var item in Model.balancesModel.AccountBalances)
+                {
+                    if (item.Currency == "USDT")
+                    {
+                        USDTAmount = item.Free.ToString("#.##");
+                    }
+                }
+                Доступно: @USDTAmount USDT
+            </div>
+            <form>
+                <div class="box-line">
+                    <input id="USDTBuyAmount" type="text" style="margin:10px" placeholder="USDT" />
+                    <input id="CoinBuyAmount" type="text" style="margin:10px" placeholder="@Model.Deal.coin" value="@Model.BuyAmount" asp-for="BuyAmount" />
+                    <input asp-for="Deal.coin" style="display:none" />
+                    <input asp-for="Deal.id" style="display:none" />
+
+                    <input id="Price" value="@Model.LastPrice" style="display:none" />
+
+
+                </div>
+                <div class="box-line">
+                    <button type="submit" id="TradeHistory" formaction="../ManualTrading/TradeDeal" formmethod="post" class="btn btn-secondary">Докупить</button>
+
+                    <a href="~/ManualTrading/Sell?DealId=@Model.Deal.id">
+                        <button class="btn btn-secondary">Продать</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+        <div class="box" style="width:60% !important">
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container">
+                <div id="tradingview_f77b3"></div>
+                <div class="tradingview-widget-copyright"><a href=$"https://ru.tradingview.com/symbols/BINANCE-{@Model.Deal.coin}USDT/" rel="noopener" target="_blank"><span class="blue-text">График @Model.Deal.coin USDT</span></a> предоставлен TradingView</div>
+                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                <script type="text/javascript">
+                    new TradingView.widget(
+                    {
+                        "width": 650,
+                        "height": 350,
+                        "symbol": "BINANCE:"+"@Model.Deal.coin"+"USDT",
+                        "interval": "1",
+                        "timezone": "Etc/UTC",
+                        "theme": "light",
+                        "style": "1",
+                        "locale": "ru",
+                        "toolbar_bg": "#f1f3f6",
+                        "enable_publishing": false,
+                        "withdateranges": true,
+                        "hide_side_toolbar": false,
+                        "allow_symbol_change": true,
+                        "container_id": "tradingview_f77b3"
+                    }
+                );</script>
+            </div>
+            <!-- TradingView Widget END -->
+
+        </div>
+    </div>
+
+
+
+    <table class="sortable table table-bordered table-font">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th class="sorttable_nosort">Тип</th>
+                <th id="time">Создан</th>
+                <th id="time">Закрыт</th>
+                <th class="sorttable_nosort">Ордер</th>
+                <th class="sorttable_nosort">Статус</th>
+                <th class="sorttable_nosort">Цена</th>
+                <th class="sorttable_nosort">Количество</th>
+                <th class="sorttable_nosort">Заполнено</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Deal.orders)
+            {
+                <tr class="trigger_popup_fricc">
+                    <td>@item.id</td>
+                    <td>@item.type</td>
+                    <td>@item.created.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.closed.Value.ToString("dd.MM.yy HH:mm")</td>
+                    <td>@item.side</td>
+                    <td>@item.status</td>
+                    <td>@item.price.ToString("#.##") $</td>
+                    <td>@item.amount @Model.Deal.coin</td>
+                    <td>@item.filled @Model.Deal.coin</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<script type="text/javascript">
+        var USDTinput = document.getElementById('USDTBuyAmount');
+        var Coininput = document.getElementById('CoinBuyAmount');
+        var Price = document.getElementById('Price').value;
+
+        USDTinput.oninput = function () {
+            var USDT = USDTinput.value.replace("USDT", "");
+            Coininput.value = (USDT / Price).toFixed(8) + " @Model.Deal.coin";
+        }
+
+
+        Coininput.oninput = function () {
+            var Coin = Coininput.value.replace("@Model.Deal.coin", "");
+            USDTinput.value = (Coin * Price).toFixed(2) + " USDT";
+        }
+
+</script>

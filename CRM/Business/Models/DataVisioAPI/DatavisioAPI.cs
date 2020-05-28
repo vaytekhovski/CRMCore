@@ -37,6 +37,11 @@ namespace Business.Models.DataVisioAPI
         public double amount { get; set; }
     }
 
+    public class TradeDealRequest
+    {
+        public double amount { get; set; }
+    }
+
     public class PlaceOrderResponse
     {
         public string id { get; set; }
