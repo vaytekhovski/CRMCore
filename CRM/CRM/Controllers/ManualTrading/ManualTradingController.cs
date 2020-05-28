@@ -142,6 +142,11 @@ namespace CRM.Controllers.ManualTrading
             var candles = datavisioAPIService.GetCandles(token, Model.Deal.coin).Result.ToList();
             Model.LastPrice = candles.Last().c;
 
+            foreach (var item in Model.Deal.orders)
+            {
+                item.created = item.created.AddHours(3);
+                item.closed = item.closed != null ? item.closed.Value.AddHours(3) : new DateTime(1999, 01, 01);
+            }
             Model.Deal.orders = Model.Deal.orders.OrderByDescending(x => x.created).ToArray();
             return View(Model);
         }
