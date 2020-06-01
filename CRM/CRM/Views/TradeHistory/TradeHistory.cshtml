@@ -150,16 +150,19 @@
                             <td colspan="2" style="color: @(Model.TotalProfit > 0 ? "green" : "red")">
                                 $ @String.Format("{0:0.##}", Model.TotalProfit)
                             </td>
-                            <td colspan="3" style="color: @(Model.TotalProfitWithoutFee > 0 ? "green" : "red")">
+                            <td colspan="2" style="color: @(Model.TotalProfitWithoutFee > 0 ? "green" : "red")">
                                 $ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)
+                            </td>
+                            <td>
+
                             </td>
                         </tr>
                         <tr>
                             <th>Прибыль депозиту:</th>
-                            <td style="color: @(Model.DepositProfit > 0 ? "green" : "red")">
+                            <td colspan="2" style="color: @(Model.DepositProfit > 0 ? "green" : "red")">
                                 @String.Format("{0:0.##}", Model.DepositProfit) %
                             </td>
-                            <td colspan="4"></td>
+                            <td colspan="3"></td>
                         </tr>
 
                     </table>
