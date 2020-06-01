@@ -35,6 +35,7 @@ namespace Business
         public decimal ProbaBuyETH { get; set; }
         public decimal ProbaBuyXRP { get; set; }
 
+        public decimal DepositProfit { get; set; }
 
         public decimal TotalEnterTax { get; set; }
 

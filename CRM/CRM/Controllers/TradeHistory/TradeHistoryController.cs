@@ -125,6 +125,8 @@ namespace CRM.Controllers
 
             viewModel.TotalEnterTax = Model.TotalEnterTax;
 
+            viewModel.DepositProfit = Model.DepositProfit;
+
             if (ClosedDeals.Count() > 0 && (decimal)Model.LossOrdersCount != 0)
             {
                 viewModel.RPL = (decimal)Model.ProfitOrdersCount / (decimal)Model.LossOrdersCount;
@@ -180,16 +182,7 @@ namespace CRM.Controllers
                 viewModel.ProfitAverage = ClosedDeals.Where(x => x.profit.clean.amount > 0).Select(x => x.profit.clean.percent).Average();
                 viewModel.LossAverage = ClosedDeals.Where(x => x.profit.clean.amount <= 0).Select(x => x.profit.clean.percent).Average();
 
-                viewModel.DepositProfit = 0;
-                if (ClosedDeals.FirstOrDefault(x => x.closed.Value < new DateTime(2020, 05, 16)) != null)
-                {
-                    var profitBefore1605 = ClosedDeals.Where(x => x.closed.Value < new DateTime(2020, 05, 16)).Sum(x => x.profit.clean.amount);
-                    viewModel.DepositProfit = (profitBefore1605 / 200) * 100;
-
-                }
-
-                var profitAfter1605 = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Sum(x => x.profit.clean.amount);
-                viewModel.DepositProfit += (profitAfter1605 / 1100) * 100;
+                
             }
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
