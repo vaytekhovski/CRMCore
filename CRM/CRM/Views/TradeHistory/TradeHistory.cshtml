@@ -155,10 +155,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <th colspan="3">Прибыль депозиту:</th>
-                            <td colspan="3" style="color: @(Model.DepositProfit > 0 ? "green" : "red")">
+                            <th>Прибыль депозиту:</th>
+                            <td style="color: @(Model.DepositProfit > 0 ? "green" : "red")">
                                 @String.Format("{0:0.##}", Model.DepositProfit) %
                             </td>
+                            <td colspan="4"></td>
                         </tr>
 
                     </table>
