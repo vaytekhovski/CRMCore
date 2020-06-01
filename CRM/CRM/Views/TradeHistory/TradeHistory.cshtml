@@ -118,7 +118,7 @@
                             <td>
                                 @Model.ProfitOrdersCountWithoutFee шт.
                             </td>
-                            <td>
+                            <td style="color:green">
                                 @String.Format("{0:0.##}", Model.ProfitAverage) %
                             </td>
 
@@ -139,7 +139,7 @@
                             <td>
                                 @Model.LossOrdersCountWithoutFee шт.
                             </td>
-                            <td>
+                            <td style="color:red">
                                 @String.Format("{0:0.##}", Model.LossAverage) %
                             </td>
                         </tr>
@@ -150,11 +150,14 @@
                             <td colspan="2" style="color: @(Model.TotalProfit > 0 ? "green" : "red")">
                                 $ @String.Format("{0:0.##}", Model.TotalProfit)
                             </td>
-                            <td colspan="2" style="color: @(Model.TotalProfitWithoutFee > 0 ? "green" : "red")">
+                            <td colspan="3" style="color: @(Model.TotalProfitWithoutFee > 0 ? "green" : "red")">
                                 $ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)
                             </td>
-                            <td>
-
+                        </tr>
+                        <tr>
+                            <th colspan="3">Прибыль депозиту:</th>
+                            <td colspan="3" style="color: @(Model.DepositProfit > 0 ? "green" : "red")">
+                                @String.Format("{0:0.##}", Model.DepositProfit) %
                             </td>
                         </tr>
 
