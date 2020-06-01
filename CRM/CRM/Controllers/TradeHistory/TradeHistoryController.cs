@@ -177,6 +177,9 @@ namespace CRM.Controllers
 
                 viewModel.SharpeRatio = (MidPercentProfit - 0.05m) / (decimal)StandardDeviation;
 
+                viewModel.ProfitAverage = ClosedDeals.Where(x => x.profit.clean.amount > 0).Select(x => x.profit.clean.percent).Average();
+                viewModel.LossAverage = ClosedDeals.Where(x => x.profit.clean.amount <= 0).Select(x => x.profit.clean.percent).Average();
+
             }
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
