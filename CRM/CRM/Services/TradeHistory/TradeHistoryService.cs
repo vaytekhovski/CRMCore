@@ -46,21 +46,32 @@ namespace CRM.Services
 
             model.DepositProfit = 0;
             decimal Deposit = 0;
-            if(filter.StartDate < new DateTime(2020, 05, 16))
-            {
-                Deposit = 200;
-                Deposit += ClosedDeals.Where(x => x.closed.Value > new DateTime(2020, 04, 01)).Where(x => x.closed.Value < filter.StartDate).Sum(x => x.profit.clean.amount);
-                var profitBefore1605 = ClosedDeals.Where(x => x.opened > filter.StartDate).Where(x => x.closed.Value < new DateTime(2020, 05, 16)).Sum(x => x.profit.clean.amount);
-                model.DepositProfit = (profitBefore1605 / Deposit) * 100;
 
-                Deposit = 1100;
-                var profitAfter1605 = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
-                model.DepositProfit += (profitAfter1605 / Deposit) * 100;
-            }
-            else
+            if (httpContext.User.Identity.Name == "6")
             {
-                Deposit = 1100;
-                Deposit += ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value <= filter.StartDate).Sum(x => x.profit.clean.amount);
+                if (filter.StartDate < new DateTime(2020, 05, 16))
+                {
+                    Deposit = 200;
+                    Deposit += ClosedDeals.Where(x => x.closed.Value > new DateTime(2020, 04, 01)).Where(x => x.closed.Value < filter.StartDate).Sum(x => x.profit.clean.amount);
+                    var profitBefore1605 = ClosedDeals.Where(x => x.opened > filter.StartDate).Where(x => x.closed.Value < new DateTime(2020, 05, 16)).Sum(x => x.profit.clean.amount);
+                    model.DepositProfit = (profitBefore1605 / Deposit) * 100;
+
+                    Deposit = 1100;
+                    var profitAfter1605 = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
+                    model.DepositProfit += (profitAfter1605 / Deposit) * 100;
+                }
+                else
+                {
+                    Deposit = 1100;
+                    Deposit += ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value <= filter.StartDate).Sum(x => x.profit.clean.amount);
+                    var profitAfter1605 = ClosedDeals.Where(x => x.opened >= filter.StartDate).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
+                    model.DepositProfit += (profitAfter1605 / Deposit) * 100;
+                }
+            }
+            else if(httpContext.User.Identity.Name == "7")
+            {
+                Deposit = 47;
+                Deposit += ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 01)).Where(x => x.closed.Value <= filter.StartDate).Sum(x => x.profit.clean.amount);
                 var profitAfter1605 = ClosedDeals.Where(x => x.opened >= filter.StartDate).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
                 model.DepositProfit += (profitAfter1605 / Deposit) * 100;
             }
@@ -78,11 +89,12 @@ namespace CRM.Services
             foreach (var item in IgnoreList)
             {
                 var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.OrderId);
-                if (dealToRemove != null) {
+                if (dealToRemove != null) 
+                {
                     var DealList = model.Deals.deals.ToList();
                     DealList.Remove(dealToRemove);
                     model.Deals.deals = DealList.ToArray();
-                        }
+                }
             }
 
             //var candles = datavisioAPI.GetCandles(token, ViewModel.Coin).Result.ToList();
