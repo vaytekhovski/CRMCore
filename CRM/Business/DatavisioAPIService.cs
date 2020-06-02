@@ -242,5 +242,58 @@ namespace Business.DataVisioAPI
             return graphs.ToList();
         }
 
+        public async Task<ShowAccount> ShowAccount(string token)
+        {
+            var Client = new HttpClient();
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/account"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            ShowAccount show = JsonConvert.DeserializeObject<ShowAccount>(response);
+            return show;
+        }
+
+        public async Task EnablePair(string token, string @base)
+        {
+            string quote = "usdt";
+
+            var Client = new HttpClient();
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"http://159.65.126.124/api/account/binance/{@base}/{quote}/enable"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+        }
+
+        public async Task DisablePair(string token, string @base)
+        {
+            string quote = "usdt";
+            var Client = new HttpClient();
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"http://159.65.126.124/api/account/binance/{@base}/{quote}/disable"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+        }
     }
 }

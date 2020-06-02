@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using CRM.ViewModels;
 using Business.Contexts;
 using Business;
+using Business.DataVisioAPI;
 
 namespace CRM.Controllers.User
 {
@@ -18,6 +19,8 @@ namespace CRM.Controllers.User
     public class UserPanelController : Controller
     {
         private readonly ChangeUserDataService _changeUserDataService;
+        private readonly DatavisioAPIService datavisioAPIService;
+
         private BasicContext db;
 
         public UserPanelController(BasicContext context)
@@ -25,8 +28,10 @@ namespace CRM.Controllers.User
             db = context;
 
             _changeUserDataService = new ChangeUserDataService();
+            datavisioAPIService = new DatavisioAPIService();
+
         }
-       
+
         [HttpGet]
         public ActionResult UserPanel(UserPanelModel model)
         {
@@ -35,12 +40,44 @@ namespace CRM.Controllers.User
             model.Login = user.Login;
             model.Password = user.Password;
             model.RegistrationDate = user.RegistrationDate;
-            ViewBag.isUser = user.RoleId != 1 ? true : false;
+
+            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            model.AccountData = datavisioAPIService.ShowAccount(token).Result;
+
+            foreach (var pair in model.AccountData.pairs)
+            {
+                pair.coin = pair.@base;
+            }
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> ChangeEnabling(UserPanelModel model)
+        {
+            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+
+            var AccountData = datavisioAPIService.ShowAccount(token).Result;
+
+            foreach (var pair in model.AccountData.pairs)
+            {
+                if (AccountData.pairs.First(x => x.@base == pair.coin).enabled != pair.enabled)
+                {
+                    if (pair.enabled)
+                    {
+                        await datavisioAPIService.EnablePair(token, pair.coin);
+                    }
+                    else
+                    {
+                        await datavisioAPIService.DisablePair(token, pair.coin);
+                    }
+                }
+            }
+
+            return RedirectToAction("UserPanel", "UserPanel");
+        }
+
         [HttpGet]
-        public async Task<ActionResult> ChangeLoginAsync(UserPanelModel model)
+        public async Task<ActionResult> ChangeLogin(UserPanelModel model)
         {
             _changeUserDataService.ChangeUserLogin(User.Identity.Name, model.Login);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

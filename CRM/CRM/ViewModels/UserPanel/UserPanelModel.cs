@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business.Models.DataVisioAPI;
+using System;
 
 namespace CRM.ViewModels
 {
@@ -8,5 +9,7 @@ namespace CRM.ViewModels
         public string Login { get; set; }
         public string Password { get; set; }
         public DateTime RegistrationDate { get; set; }
+
+        public ShowAccount AccountData { get; set; }
     }
 }

@@ -27,12 +27,51 @@
                     <div style="text-align:center">
                         <h1>USER PANEL</h1>
                     </div>
+                    <div>
+
+                        @{ /*
+                         <div class="user_block">
+                             <label>Торговля включена </label>
+                             <input type="checkbox" asp-for="AccountData.enabled" />
+                         </div>
+                       */ }
+                        <div class="user_block">
+                            <label asp-for="AccountData.pairs[0].coin" style="font-size: 14px;">@Model.AccountData.pairs[0].coin</label>
+                            <input type="checkbox" asp-for="@Model.AccountData.pairs[0].enabled" style="margin-right: 10px;" />
+                            <input type="text" asp-for="@Model.AccountData.pairs[0].coin" style="display:none" />
+
+                            <label asp-for="AccountData.pairs[1].coin" style="font-size: 14px;">@Model.AccountData.pairs[1].coin</label>
+                            <input type="checkbox" asp-for="@Model.AccountData.pairs[1].enabled" style="margin-right: 10px;" />
+                            <input type="text" asp-for="@Model.AccountData.pairs[1].coin" style="display:none" />
+
+                            <label asp-for="AccountData.pairs[2].coin" style="font-size: 14px;">@Model.AccountData.pairs[2].coin</label>
+                            <input type="checkbox" asp-for="@Model.AccountData.pairs[2].enabled" style="margin-right: 10px;" />
+                            <input type="text" asp-for="@Model.AccountData.pairs[2].coin" style="display:none" />
+
+                            <label asp-for="AccountData.pairs[3].coin" style="font-size: 14px;">@Model.AccountData.pairs[3].coin</label>
+                            <input type="checkbox" asp-for="@Model.AccountData.pairs[3].enabled" style="margin-right: 10px;" />
+                            <input type="text" asp-for="@Model.AccountData.pairs[3].coin" style="display:none" />
+
+                            <label asp-for="AccountData.pairs[4].coin" style="font-size: 14px;">@Model.AccountData.pairs[4].coin</label>
+                            <input type="checkbox" asp-for="@Model.AccountData.pairs[4].enabled" style="margin-right: 10px;" />
+                            <input type="text" asp-for="@Model.AccountData.pairs[4].coin" style="display:none" />
+
+                            <label asp-for="AccountData.pairs[5].coin" style="font-size: 14px;">@Model.AccountData.pairs[5].coin</label>
+                            <input type="checkbox" asp-for="@Model.AccountData.pairs[5].enabled" style="margin-right: 10px;" />
+                            <input type="text" asp-for="@Model.AccountData.pairs[5].coin" style="display:none" />
+                        </div>
+
+                        <div>
+                            <button class="btn filter_button" type="submit" formaction="/UserPanel/ChangeEnabling" formmethod="post">Применить</button>
+                        </div>
+
+                    </div>
 
                     <div class="user_block">
                         <label>Логин:</label><br />
                         <div class="user_row">
                             <input class="form-control user_input" placeholder="@Model.Login" type="text" asp-for="Login" />
-                            <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeLoginAsync" formmethod="get">Изменить</button>
+                            <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeLogin" formmethod="get">Изменить</button>
                         </div>
                     </div>
 
@@ -43,22 +82,6 @@
                             <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
                         </div>
                     </div>
-
-                    @if (!ViewBag.isUser)
-                    {
-                    <div>
-
-                        <div class="user_block">
-                            <label>Перезапуск обновления статистики: </label><br />
-                            <div class="user_row">
-                                <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/RestartDailyCalculate" formmethod="get">Перезапустить</button>
-                            </div>
-                        </div>
-
-                        
-
-                    </div>
-                    }
 
 
                     <div class="user_block">

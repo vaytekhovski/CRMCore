@@ -126,4 +126,20 @@ namespace Business.Models.DataVisioAPI
         public decimal reg { get; set; }
     }
 
+    public class ShowAccount
+    {
+        public string Id { get; set; }
+        public bool enabled { get; set; }
+        public Pair[] pairs { get; set; }
+    }
+
+    public class Pair
+    {
+        public string exchange { get; set; }
+        public string @base { get; set; }
+        public string coin { get; set; }
+        public string quote { get; set; }
+        public decimal number { get; set; }
+        public bool enabled { get; set; }
+    }
 }
