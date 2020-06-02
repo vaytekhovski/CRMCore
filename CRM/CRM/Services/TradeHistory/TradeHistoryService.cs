@@ -50,18 +50,18 @@ namespace CRM.Services
             {
                 Deposit = 200;
                 Deposit += ClosedDeals.Where(x => x.closed.Value > new DateTime(2020, 04, 01)).Where(x => x.closed.Value < filter.StartDate).Sum(x => x.profit.clean.amount);
-                var profitBefore1605 = ClosedDeals.Where(x => x.closed.Value > filter.StartDate).Where(x => x.closed.Value < new DateTime(2020, 05, 16)).Sum(x => x.profit.clean.amount);
+                var profitBefore1605 = ClosedDeals.Where(x => x.opened > filter.StartDate).Where(x => x.closed.Value < new DateTime(2020, 05, 16)).Sum(x => x.profit.clean.amount);
                 model.DepositProfit = (profitBefore1605 / Deposit) * 100;
 
                 Deposit = 1100;
-                var profitAfter1605 = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Sum(x => x.profit.clean.amount);
+                var profitAfter1605 = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
                 model.DepositProfit += (profitAfter1605 / Deposit) * 100;
             }
             else
             {
                 Deposit = 1100;
-                Deposit += ClosedDeals.Where(x => x.closed.Value > new DateTime(2020, 05, 16)).Where(x => x.closed.Value < filter.StartDate).Sum(x => x.profit.clean.amount);
-                var profitAfter1605 = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Sum(x => x.profit.clean.amount);
+                Deposit += ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value <= filter.StartDate).Sum(x => x.profit.clean.amount);
+                var profitAfter1605 = ClosedDeals.Where(x => x.opened >= filter.StartDate).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
                 model.DepositProfit += (profitAfter1605 / Deposit) * 100;
             }
             
