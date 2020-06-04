@@ -29,6 +29,7 @@ namespace Business.Models.DataVisioAPI
     public class Order
     {
         public string id { get; set; }
+        public string coin { get; set; }
         public string type { get; set; }
         public string side { get; set; }
         public string number { get; set; }

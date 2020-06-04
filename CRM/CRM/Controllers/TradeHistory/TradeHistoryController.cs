@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Business;
+using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
 using CRM.Helpers;
 using CRM.Models;
@@ -17,11 +19,36 @@ namespace CRM.Controllers
     {
         private readonly TradeHistoryService _tradeHistoryService;
         private readonly PaginationService _paginationService;
+        private readonly DatavisioAPIService datavisioAPI;
+
 
         public TradeHistoryController()
         {
             _tradeHistoryService = new TradeHistoryService();
             _paginationService = new PaginationService();
+            datavisioAPI = new DatavisioAPIService();
+
+        }
+
+
+        public ActionResult ErrorOrders()
+        {
+            List<Order> orders = new List<Order>();
+
+            var token = datavisioAPI.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var deals = datavisioAPI.GetListDeals(token).Result.deals.ToList();
+
+            foreach (var deal in deals)
+            {
+                List<Order> Buf = datavisioAPI.GetDeal(token, deal.id).Result.orders.Where(x => x.status == "failed").ToList();
+                foreach (var order in Buf)
+                {
+                    order.coin = deal.@base;
+                }
+                orders.AddRange(Buf);
+            }
+
+            return View(orders);
         }
         
         [HttpGet]

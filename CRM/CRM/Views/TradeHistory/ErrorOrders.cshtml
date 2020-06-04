@@ -1,0 +1,37 @@
+﻿@model List<Business.Models.DataVisioAPI.Order>
+@{
+    ViewBag.Title = "Trade History";
+}
+
+    <div class="content" style="min-height: 400px">
+        <div class="container table_block" style="margin-top: 100px;">
+            <table class="sortable table table-bordered table-font" ">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th id="time">Время</th>
+                        <th class="sorttable_nosort">Тип</th>
+                        <th class="sorttable_nosort">Статус</th>
+                        <th class="sorttable_nosort">Валюта</th>
+                        <th class="sorttable_nosort">Цена</th>
+                        <th class="sorttable_nosort">Количество</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr class="trigger_popup_fricc">
+                            <td>@order.id</td>
+                            <td>@order.created.ToString("dd.MM.yy HH:mm")</td>
+                            <td>@order.side</td>
+                            <td>@order.status</td>
+                            <td>@order.coin</td>
+                            <td>@order.price</td>
+                            <td>@order.amount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
