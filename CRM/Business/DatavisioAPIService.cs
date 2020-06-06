@@ -62,7 +62,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/exchange/wallets/{CoinBase}"),
+                RequestUri = new Uri($"http://159.65.126.124/api/exchange/binance/wallets/{CoinBase}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -200,6 +200,24 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<ListDeals>(response);
         }
 
+        public async Task<ListDeals> GetListErrorDeals(string token)
+        {
+            var Client = new HttpClient();
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/account/deals?failed=true"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ListDeals>(response);
+        }
+
         public async Task<Deal> GetDeal(string token, string DealId)
         {
             var Client = new HttpClient();
@@ -295,5 +313,7 @@ namespace Business.DataVisioAPI
             };
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
         }
+
+        
     }
 }
