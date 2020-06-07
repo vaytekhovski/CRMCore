@@ -145,7 +145,7 @@ namespace Business.DataVisioAPI
 
 
 
-        public async Task<Signals> GetSignals(string token, string CoinBase)
+        public async Task<Signals>  GetSignals(string token, string CoinBase)
         {
             var Client = new HttpClient();
             var Request = new HttpRequestMessage
@@ -170,7 +170,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/exchange/{CoinBase}/usdt/candles?frame=1&since={Since}"),
+                RequestUri = new Uri($"http://159.65.126.124/api/exchange/binance/{CoinBase}/usdt/candles?frame=1&since={Since}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
