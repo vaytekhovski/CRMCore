@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business;
-using Business.Contexts;
 using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
 using Business.Models.Master;
@@ -48,7 +47,7 @@ namespace CRM.Controllers.ManualTrading
             ViewModel.EndDate = DateTime.UtcNow.AddHours(3);
             ViewModel.TimeRange = 1;
 
-            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var token = HttpContext.User.Identity.Name;
 
 
             ViewModel = manualTradingService.Load(ViewModel, token).Result;
@@ -75,7 +74,7 @@ namespace CRM.Controllers.ManualTrading
         [HttpPost]
         public async Task<ActionResult> Trade(ManualTradingModel ViewModel)
         {
-            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var token = HttpContext.User.Identity.Name;
 
             ViewModel = manualTradingService.Load(ViewModel, token).Result;
 
@@ -101,7 +100,7 @@ namespace CRM.Controllers.ManualTrading
 
         public IActionResult Buy(ManualTradingModel ViewModel)
         {
-            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var token = HttpContext.User.Identity.Name;
 
             var response = datavisioAPIService.EnterDeal(token, new PlaceOrderRequest()
             {
@@ -119,7 +118,7 @@ namespace CRM.Controllers.ManualTrading
 
         public IActionResult Sell(string DealId)
         {
-            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var token = HttpContext.User.Identity.Name;
 
             var response = datavisioAPIService.LeaveDeal(token, DealId).Result;
 
@@ -128,7 +127,7 @@ namespace CRM.Controllers.ManualTrading
 
         public async Task<IActionResult> GetDeal(string DealId)
         {
-            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var token = HttpContext.User.Identity.Name;
 
             var response = datavisioAPIService.GetDeal(token, DealId).Result;
             response.coin = response.@base;
@@ -153,7 +152,7 @@ namespace CRM.Controllers.ManualTrading
 
         public IActionResult TradeDeal(GetDealModel Model)
         {
-            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var token = HttpContext.User.Identity.Name;
             double amount = Convert.ToDouble(Model.BuyAmount.ToString().Replace(',', '.').Replace(" " + Model.Deal.coin, ""));
 
             var response = datavisioAPIService.TradeDeal(token, Model.Deal.id, amount).Result;

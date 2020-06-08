@@ -1,5 +1,4 @@
 ﻿using Business;
-using Business.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -21,21 +20,5 @@ namespace CRM.Helpers
     public static class SeparateHelper
     {
        public static NumberFormatInfo Separator = new NumberFormatInfo();
-    }
-
-    public static class AccountExchangeKeys
-    {
-        public static List<ExchangeKey> ExchangeKeys;
-
-
-        static AccountExchangeKeys()
-        {
-            using (BasicContext db = new BasicContext())
-            {
-                ExchangeKeys = db.ExchangeKeys.ToList();
-            }
-        }
-
-        
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Business;
-using Business.Contexts;
 using Business.DataVisioAPI;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +22,7 @@ namespace CRM.Services.Statistics
         {
             var model = new StatisticsModel();
 
-            var token = datavisioAPI.Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
+            var token = httpContext.User.Identity.Name;
 
             Business.Models.DataVisioAPI.ListDeals deals = datavisioAPI.GetListDeals(token).Result;
 

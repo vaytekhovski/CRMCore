@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Business;
-using Business.Contexts;
 using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
 using Microsoft.AspNetCore.Http;
@@ -23,8 +22,7 @@ namespace CRM.Services
         {
             var model = new TradeHistoryModel();
 
-            var token = datavisioAPI.Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
-
+            var token = httpContext.User.Identity.Name;
             model.Deals = datavisioAPI.GetListDeals(token).Result;
 
 
@@ -35,7 +33,7 @@ namespace CRM.Services
         {
             var model = new TradeHistoryModel();
 
-            var token = datavisioAPI.Authorization(Convert.ToInt32(httpContext.User.Identity.Name)).Result;
+            var token = httpContext.User.Identity.Name;
 
             model.Deals = datavisioAPI.GetListDeals(token).Result;
 
@@ -78,17 +76,11 @@ namespace CRM.Services
             
             model.Deals.deals = model.Deals.deals.Where(x => x.opened >= filter.StartDate).Where(x => x.opened <= filter.EndDate).ToArray();
 
-            
-            System.Collections.Generic.List<IgnoreIds> IgnoreList = new System.Collections.Generic.List<IgnoreIds>();
-            using (BasicContext db = new BasicContext())
-            {
-                IgnoreList = db.IgnoreIds.ToList();
+            var IgnoreIds = DropDownFields.GetIgnoreIds();
 
-            }
-
-            foreach (var item in IgnoreList)
+            foreach (var item in IgnoreIds)
             {
-                var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.OrderId);
+                var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.Value);
                 if (dealToRemove != null) 
                 {
                     var DealList = model.Deals.deals.ToList();

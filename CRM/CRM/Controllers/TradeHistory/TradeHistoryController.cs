@@ -35,7 +35,7 @@ namespace CRM.Controllers
         {
             List<Order> orders = new List<Order>();
 
-            var token = datavisioAPI.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var token = HttpContext.User.Identity.Name;
             var deals = datavisioAPI.GetListDeals(token).Result.deals.ToList();
 
             foreach (var deal in deals)

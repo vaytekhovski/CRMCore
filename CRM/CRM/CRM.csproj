@@ -11,4 +11,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Charts\" />
+    <Folder Include="Services\Data\" />
+  </ItemGroup>
 </Project>

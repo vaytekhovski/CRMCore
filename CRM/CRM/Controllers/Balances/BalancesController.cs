@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business;
-using Business.Contexts;
 using Business.DataVisioAPI;
 using CRM.Models;
 using CRM.Services.Balances;
@@ -37,7 +36,7 @@ namespace CRM.Controllers.Balances
                 Account = "",
                 AccountBalances = new List<Balance>()
             };
-            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var token = HttpContext.User.Identity.Name;
 
             model = await _balancesService.LoadBalancesAsync(token);
             return View(model);
@@ -46,7 +45,7 @@ namespace CRM.Controllers.Balances
         [HttpPost]
         public async Task<ActionResult> Balances(BalancesModel model)
         {
-            var token = datavisioAPIService.Authorization(Convert.ToInt32(HttpContext.User.Identity.Name)).Result;
+            var token = HttpContext.User.Identity.Name;
 
             model = await _balancesService.LoadBalancesAsync(token);
 

@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Contexts\" />
     <Folder Include="Models\DataVisioAPI\" />
   </ItemGroup>
 </Project>

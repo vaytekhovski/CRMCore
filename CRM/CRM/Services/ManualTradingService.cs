@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Business;
-using Business.Contexts;
 using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
 using Business.Models.Master;
@@ -38,16 +37,12 @@ namespace CRM.Services
 
             ViewModel.Deals = datavisioAPI.GetListDeals(token).Result;
 
-            System.Collections.Generic.List<IgnoreIds> IgnoreList = new System.Collections.Generic.List<IgnoreIds>();
-            using (BasicContext db = new BasicContext())
-            {
-                IgnoreList = db.IgnoreIds.ToList();
 
-            }
+            var IgnoreIds = DropDownFields.GetIgnoreIds();
 
-            foreach (var item in IgnoreList)
+            foreach (var item in IgnoreIds)
             {
-                var dealToRemove = ViewModel.Deals.deals.FirstOrDefault(x => x.id == item.OrderId);
+                var dealToRemove = ViewModel.Deals.deals.FirstOrDefault(x => x.id == item.Value);
                 if (dealToRemove != null)
                 {
                     var DealList = ViewModel.Deals.deals.ToList();

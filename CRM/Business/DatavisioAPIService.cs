@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Business.Contexts;
 using Business.Models.DataVisioAPI;
 using CRM.Helpers;
 using Microsoft.AspNetCore.Http;
@@ -17,31 +16,6 @@ namespace Business.DataVisioAPI
         public DatavisioAPIService()
         {
 
-        }
-
-        public async Task<string> Authorization(int UserId)
-        {
-            var Client = new HttpClient();
-            var uri = $"http://159.65.126.124/api/auth";
-
-
-            UserModel User = new UserModel();
-            using (BasicContext context = new BasicContext())
-            {
-                User = context.UserModels.FirstOrDefault(x => x.Id == UserId);
-            }
-
-            LoginModel login = new LoginModel
-            {
-                username = User.Login,
-                password = User.Password
-            };
-
-            var jsonInString = JsonConvert.SerializeObject(login);
-            var resp = await Client.PostAsync(uri, new StringContent(jsonInString, Encoding.UTF8, "application/json"));
-            AuthenticationResnose authenticationResnose = JsonConvert.DeserializeObject<AuthenticationResnose>(resp.Content.ReadAsStringAsync().Result);
-
-            return authenticationResnose.token;
         }
 
         public async Task<string> Authorization(LoginModel login)
