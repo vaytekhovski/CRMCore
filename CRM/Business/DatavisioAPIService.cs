@@ -13,6 +13,7 @@ namespace Business.DataVisioAPI
 {
     public class DatavisioAPIService
     {
+        private static HttpClient Client = new HttpClient();
         public DatavisioAPIService()
         {
 
@@ -20,8 +21,7 @@ namespace Business.DataVisioAPI
 
         public async Task<string> Authorization(LoginModel login)
         {
-            var Client = new HttpClient();
-            var uri = $"https://api.datavisio.net/auth";
+            var uri = $"http://159.65.126.124/api/auth";
 
             var jsonInString = JsonConvert.SerializeObject(login);
             var resp = await Client.PostAsync(uri, new StringContent(jsonInString, Encoding.UTF8, "application/json"));
@@ -32,7 +32,6 @@ namespace Business.DataVisioAPI
 
         public async Task<WalletCurrency> GetBalance(string token, string CoinBase)
         {
-            var Client = new HttpClient();
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -52,7 +51,6 @@ namespace Business.DataVisioAPI
 
         public async Task<string> EnterDeal(string token, PlaceOrderRequest placeOrderModel)
         {
-            var Client = new HttpClient();
 
             var jsonInString = JsonConvert.SerializeObject(placeOrderModel);
 
@@ -74,7 +72,6 @@ namespace Business.DataVisioAPI
 
         public async Task<string> TradeDeal(string token,string DealId, double amount)
         {
-            var Client = new HttpClient();
             TradeDealRequest tradeDealRequest = new TradeDealRequest
             {
                 amount = amount
@@ -99,9 +96,6 @@ namespace Business.DataVisioAPI
 
         public async Task<string> LeaveDeal(string token, string DealId)
         {
-            var Client = new HttpClient();
-
-
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Delete,
@@ -121,7 +115,6 @@ namespace Business.DataVisioAPI
 
         public async Task<Signals>  GetSignals(string token, string CoinBase)
         {
-            var Client = new HttpClient();
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -139,7 +132,6 @@ namespace Business.DataVisioAPI
 
         public async Task<Candles[]> GetCandles(string token, string CoinBase)
         {
-            var Client = new HttpClient();
             var Since = (long)(DateTime.UtcNow.AddHours(-3).Subtract(new DateTime(1970, 1, 1))).TotalSeconds * 1000;
             var Request = new HttpRequestMessage
             {
@@ -158,7 +150,6 @@ namespace Business.DataVisioAPI
 
         public async Task<ListDeals> GetListDeals(string token)
         {
-            var Client = new HttpClient();
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -176,7 +167,6 @@ namespace Business.DataVisioAPI
 
         public async Task<ListDeals> GetListErrorDeals(string token)
         {
-            var Client = new HttpClient();
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -194,7 +184,6 @@ namespace Business.DataVisioAPI
 
         public async Task<Deal> GetDeal(string token, string DealId)
         {
-            var Client = new HttpClient();
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -217,7 +206,6 @@ namespace Business.DataVisioAPI
             var since = ((DateTimeOffset)StartDate).ToUnixTimeSeconds();
             var limit = Convert.ToInt32((EndDate - StartDate).TotalMinutes);
 
-            var Client = new HttpClient();
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -236,7 +224,6 @@ namespace Business.DataVisioAPI
 
         public async Task<ShowAccount> ShowAccount(string token)
         {
-            var Client = new HttpClient();
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -256,8 +243,6 @@ namespace Business.DataVisioAPI
         public async Task EnablePair(string token, string @base)
         {
             string quote = "usdt";
-
-            var Client = new HttpClient();
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
@@ -274,7 +259,6 @@ namespace Business.DataVisioAPI
         public async Task DisablePair(string token, string @base)
         {
             string quote = "usdt";
-            var Client = new HttpClient();
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,

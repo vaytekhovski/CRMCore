@@ -26,7 +26,7 @@ namespace CRM
                     options.LoginPath = new PathString("/Home/Home");
                     options.AccessDeniedPath = new PathString("/Home/Home");
                 });
-
+            services.AddHttpClient();
             services.AddRazorPages();
             services.AddMvc(options => options.EnableEndpointRouting = false);
         }
