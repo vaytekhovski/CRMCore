@@ -81,7 +81,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}"),
+                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}/trade"),
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
@@ -98,8 +98,8 @@ namespace Business.DataVisioAPI
         {
             var Request = new HttpRequestMessage
             {
-                Method = HttpMethod.Delete,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}"),
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}/leave"),
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
