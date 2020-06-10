@@ -68,23 +68,6 @@
                     </div>
 
                     <div class="user_block">
-                        <label>Логин:</label><br />
-                        <div class="user_row">
-                            <input class="form-control user_input" placeholder="@Model.Login" type="text" asp-for="Login" />
-                            <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangeLogin" formmethod="get">Изменить</button>
-                        </div>
-                    </div>
-
-                    <div class="user_block">
-                        <label>Пароль:</label><br />
-                        <div class="user_row">
-                            <input class="form-control user_input" placeholder="@Model.Password" type="text" asp-for="Password" />
-                            <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ChangePassword" formmethod="get">Изменить</button>
-                        </div>
-                    </div>
-
-
-                    <div class="user_block">
                         <div>
                             <label>Дата регистрации: @Model.RegistrationDate</label>
                         </div>
