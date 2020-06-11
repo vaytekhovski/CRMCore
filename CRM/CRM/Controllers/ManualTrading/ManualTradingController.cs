@@ -137,7 +137,7 @@ namespace CRM.Controllers.ManualTrading
             GetDealModel Model = new GetDealModel()
             {
                 Deal = response,
-                balancesModel = await balancesService.LoadBalancesAsync(token, response.coin)
+                balancesModel = await balancesService.LoadBalancesAsync(token, "USDT")
             };
 
             stopwatch.Stop();
