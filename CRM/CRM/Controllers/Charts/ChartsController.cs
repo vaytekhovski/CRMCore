@@ -49,7 +49,7 @@ namespace CRM.Controllers.Charts
         }
 
         [HttpPost]
-        public ActionResult ProfitChart(ProfitViewModel ViewModel, HttpContext httpContext)
+        public ActionResult ProfitChart(ProfitViewModel ViewModel)
         {
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
@@ -61,7 +61,7 @@ namespace CRM.Controllers.Charts
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            var model = _tradeHistoryService.LoadDataToChart(filter, httpContext);
+            var model = _tradeHistoryService.LoadDataToChart(filter, HttpContext);
 
             ViewModel.Dates = model.Deals.deals.Select(x => x.closed.ToJavascriptTicks()).ToList();
             ViewModel.Values = model.Deals.deals.Select(x => x.profit.clean.amount.ToString(SeparateHelper.Separator)).ToList();

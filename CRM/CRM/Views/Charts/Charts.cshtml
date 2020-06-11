@@ -2,7 +2,7 @@
     ViewBag.Title = "Charts";
 }
 
-@model CRM.ViewModels.Charts.AskOnBidViewModel
+@model CRM.ViewModels.Charts.ProfitViewModel
 
 
     <head>
@@ -10,15 +10,8 @@
     </head>
     <div class="filter_panel">
         <form action="/" method="post">
-            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/AsksOnBids" formmethod="get">Asks on Bids</button>
-            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/DeltaOnTradeHistory" formmethod="get">Delta on Trade History</button>
-            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/IndicatorPoints" formmethod="get">IndicatorPoints</button>
-            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/TradeHistoryOnTradeHistoryDelta" formmethod="get">Volumes and Asks</button>
-            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/ProfitChart" formmethod="get">Profit</button>
-            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/OrdersOnTimeHistory" formmethod="get">Orders on Time History</button>
-            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/BollingerBands" formmethod="get">Bollinger Bands</button>
-            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/TradeHistoryIndicators" formmethod="get">TradeHistory Indicators</button>
-            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../Charts/ProbaBuyOnTimeHistory" formmethod="get">ProbaBuy on Time History</button>
+            <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../Charts/ProfitChart" formmethod="get">Profit</button>
+            <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../Charts/OrdersOnTimeHistory" formmethod="get">Orders on Time History</button>
 
         </form>
     </div>

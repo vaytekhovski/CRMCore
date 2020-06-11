@@ -8,11 +8,6 @@
     <div class="filter_panel container">
 
         @Html.Partial("_ChartButtons")
-
-        <div class="filter_element">
-            @Html.DropDownListFor(m => m.Account, (IEnumerable<SelectListItem>)ViewBag.Accounts, new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
-        </div>
-
         <div class="filter_element">
             @Html.DropDownListFor(m => m.Coin, (IEnumerable<SelectListItem>)ViewBag.Coins, "Все валюты", new { @class = "form-control filter_input", name = "coin", id = "coin_selector" })
         </div>

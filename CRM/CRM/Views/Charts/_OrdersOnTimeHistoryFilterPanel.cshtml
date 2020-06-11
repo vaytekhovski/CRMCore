@@ -12,10 +12,6 @@
         </div>
 
         <div class="filter_element">
-            @Html.DropDownListFor(m => m.Account, (IEnumerable<SelectListItem>)ViewBag.Accounts, new { @class = "form-control filter_input", name = "accounts", id = "excange_selector" })
-        </div>
-
-        <div class="filter_element">
             <input type="date" class="form-control filter_input_date" id="startDate" name="startDate" value=@Model.StartDate min="2019-04-05" />
         </div>
 

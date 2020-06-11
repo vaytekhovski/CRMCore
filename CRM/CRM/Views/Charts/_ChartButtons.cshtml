@@ -3,42 +3,13 @@
         <div class="dropdown">
             <a class="dropbtn btn short_filter_button btn-primary dropdown_btn" href="">@Model.PageName</a>
             <div class="dropdown-content">
-                @if (Model.PageName != "Asks on Bids")
-                {
-                    <a href="../Charts/AsksOnBids">Asks on Bids</a>
-                }
-                @if (Model.PageName != "Delta on TradeHistory")
-                {
-                    <a href="../Charts/DeltaOnTradeHistory">Delta on TradeHistory</a>
-                }
-                @if (Model.PageName != "Indicator Points")
-                {
-                    <a href="../Charts/IndicatorPoints">Indicator Points</a>
-                }
-
-                @if (Model.PageName != "Volumes and Asks")
-                {
-                    <a href="../Charts/TradeHistoryOnTradeHistoryDelta">Volumes and Asks</a>
-                }
                 @if (Model.PageName != "Profit")
                 {
                     <a href="../Charts/ProfitChart">Profit</a>
                 }
                 @if (Model.PageName != "Orders On TimeHistory")
                 {
-                    <a href="../Charts/OrdersOnTimeHistory">Profit On TimeHistory</a>
-                }
-                @if (Model.PageName != "ProbaBuy On TimeHistory")
-                {
-                    <a href="../Charts/ProbaBuyOnTimeHistory">ProbaBuy On TimeHistory</a>
-                }
-                @if (Model.PageName != "Bollinger Bands")
-                {
-                    <a href="../Charts/BollingerBands">Bollinger Bands</a>
-                }
-                @if (Model.PageName != "TH Indicators")
-                {
-                <a href="../Charts/TradeHistoryIndicators">TradeHistory Indicators</a>
+                    <a href="../Charts/OrdersOnTimeHistory">Orders On TimeHistory</a>
                 }
             </div>
         </div>
