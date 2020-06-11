@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Business;
@@ -128,25 +129,36 @@ namespace CRM.Controllers.ManualTrading
         public async Task<IActionResult> GetDeal(string DealId)
         {
             var token = HttpContext.User.Identity.Name;
-
             var response = datavisioAPIService.GetDeal(token, DealId).Result;
             response.coin = response.@base;
 
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             GetDealModel Model = new GetDealModel()
             {
                 Deal = response,
-                balancesModel = await balancesService.LoadBalancesAsync(token)
+                balancesModel = await balancesService.LoadBalancesAsync(token, response.coin)
             };
 
-            var candles = datavisioAPIService.GetCandles(token, Model.Deal.coin).Result.ToList();
-            Model.LastPrice = candles.Last().c;
+            stopwatch.Stop();
+            Debug.WriteLine("Потрачено миллисекунд на выполнение Balance: " + stopwatch.ElapsedMilliseconds);
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
 
+            var candles = datavisioAPIService.GetCandles(token, Model.Deal.coin).Result.ToList();
+            stopwatch.Stop();
+            Debug.WriteLine("Потрачено миллисекунд на выполнение GetCandles: " + stopwatch.ElapsedMilliseconds);
+            Model.LastPrice = candles.Last().c;
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
             foreach (var item in Model.Deal.orders)
             {
                 item.created = item.created.AddHours(3);
                 item.closed = item.closed != null ? item.closed.Value.AddHours(3) : new DateTime(1999, 01, 01);
             }
             Model.Deal.orders = Model.Deal.orders.OrderByDescending(x => x.created).ToArray();
+            stopwatch.Stop();
+            Debug.WriteLine("Потрачено миллисекунд на выполнение fix: " + stopwatch.ElapsedMilliseconds);
             return View(Model);
         }
 

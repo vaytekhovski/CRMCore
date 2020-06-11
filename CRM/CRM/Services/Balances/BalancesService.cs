@@ -24,7 +24,6 @@ namespace CRM.Services.Balances
 
         public async Task<BalancesModel> LoadBalancesAsync(string token)
         {
-
             BalancesModel balancesModel = new BalancesModel();
 
             balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "USDT").Result);
@@ -33,6 +32,13 @@ namespace CRM.Services.Balances
             balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "LTC").Result);
             balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "XRP").Result);
 
+            return balancesModel;
+        }
+
+        public async Task<BalancesModel> LoadBalancesAsync(string token, string Coin)
+        {
+            BalancesModel balancesModel = new BalancesModel();
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, Coin).Result);
 
             return balancesModel;
         }

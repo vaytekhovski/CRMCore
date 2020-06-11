@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -47,6 +48,24 @@ namespace Business.DataVisioAPI
             walletCurrency.coin = CoinBase;
 
             return walletCurrency;
+        }
+
+        public async Task GetBalance(string token)
+        {
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/exchange/binance/wallets"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+            var responce = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+
+            //var Wallets = JsonConvert.DeserializeObject<WalletCurrency>();
+            
         }
 
         public async Task<string> EnterDeal(string token, PlaceOrderRequest placeOrderModel)
@@ -160,7 +179,6 @@ namespace Business.DataVisioAPI
                 },
                 Content = new StringContent(string.Empty)
             };
-
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<ListDeals>(response);
         }
@@ -194,7 +212,6 @@ namespace Business.DataVisioAPI
                 },
                 Content = new StringContent(string.Empty)
             };
-
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
             var Deal = JsonConvert.DeserializeObject<Deal>(response);
             Deal.id = DealId;

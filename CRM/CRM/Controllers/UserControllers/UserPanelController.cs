@@ -9,6 +9,7 @@ using CRM.ViewModels;
 using Business;
 using Business.DataVisioAPI;
 using CRM.Services.Balances;
+using System.Diagnostics;
 
 namespace CRM.Controllers.User
 {
@@ -28,6 +29,8 @@ namespace CRM.Controllers.User
         [HttpGet]
         public async Task<ActionResult> UserPanel(UserPanelModel model)
         {
+            
+
             var token = HttpContext.User.Identity.Name;
             model.AccountData = datavisioAPIService.ShowAccount(token).Result;
 
@@ -35,8 +38,8 @@ namespace CRM.Controllers.User
             {
                 pair.coin = pair.@base;
             }
-
             model.Balances = await balancesService.LoadBalancesAsync(token);
+            
             return View(model);
         }
 

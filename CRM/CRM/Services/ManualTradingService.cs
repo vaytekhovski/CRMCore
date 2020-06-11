@@ -187,7 +187,7 @@ namespace CRM.Services
 
             
 
-            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(token);
+            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(token, ViewModel.Coin);
 
 
             ViewModel.Graphs = datavisioAPI.GetGraphs(token, ViewModel.Coin, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;
