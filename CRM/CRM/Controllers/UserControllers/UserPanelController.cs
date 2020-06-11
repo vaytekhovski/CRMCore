@@ -29,16 +29,15 @@ namespace CRM.Controllers.User
         [HttpGet]
         public async Task<ActionResult> UserPanel(UserPanelModel model)
         {
-            
-
             var token = HttpContext.User.Identity.Name;
+            model.Balances = await balancesService.LoadBalancesAsync(token);
             model.AccountData = datavisioAPIService.ShowAccount(token).Result;
 
             foreach (var pair in model.AccountData.pairs)
             {
                 pair.coin = pair.@base;
             }
-            model.Balances = await balancesService.LoadBalancesAsync(token);
+            
             
             return View(model);
         }

@@ -177,7 +177,7 @@ namespace CRM.Services
             }
 
 
-           var candles = datavisioAPI.GetCandles(token, "USDT").Result.ToList();
+           var candles = datavisioAPI.GetCandles(token, ViewModel.Coin).Result.ToList();
            ViewModel.LastPrice = candles.Last().c;
 
             foreach (var item in candles)
@@ -187,7 +187,7 @@ namespace CRM.Services
 
             
 
-            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(token, ViewModel.Coin);
+            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(token, "USDT");
 
 
             ViewModel.Graphs = datavisioAPI.GetGraphs(token, ViewModel.Coin, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;
