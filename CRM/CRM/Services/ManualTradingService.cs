@@ -177,7 +177,7 @@ namespace CRM.Services
             }
 
 
-           var candles = datavisioAPI.GetCandles(token, ViewModel.Coin).Result.ToList();
+           var candles = datavisioAPI.GetCandles(token, "USDT").Result.ToList();
            ViewModel.LastPrice = candles.Last().c;
 
             foreach (var item in candles)
