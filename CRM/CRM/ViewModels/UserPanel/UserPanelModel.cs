@@ -1,4 +1,5 @@
 ﻿using Business.Models.DataVisioAPI;
+using CRM.ViewModels.Balances;
 using System;
 
 namespace CRM.ViewModels
@@ -11,5 +12,7 @@ namespace CRM.ViewModels
         public DateTime RegistrationDate { get; set; }
 
         public ShowAccount AccountData { get; set; }
+
+        public BalancesModel Balances { get; set; }
     }
 }

@@ -42,6 +42,7 @@ namespace CRM.Services.Statistics
         private List<StatisticsElement> UpdateStatistics(Business.Models.DataVisioAPI.ListDeals deals)
         {
             var statistics = new List<StatisticsElement>();
+            deals.deals = deals.deals.Where(x => x.closed != null).ToArray();
 
             foreach (var date in deals.deals.Select(x => x.closed.Value.Date).Distinct())
             {

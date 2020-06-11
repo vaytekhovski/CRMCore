@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using CRM.ViewModels;
 using Business;
 using Business.DataVisioAPI;
+using CRM.Services.Balances;
 
 namespace CRM.Controllers.User
 {
@@ -15,16 +16,17 @@ namespace CRM.Controllers.User
     public class UserPanelController : Controller
     {
         private readonly DatavisioAPIService datavisioAPIService;
-
+        private readonly BalancesService balancesService;
 
         public UserPanelController()
         {
             datavisioAPIService = new DatavisioAPIService();
+            balancesService = new BalancesService();
 
         }
 
         [HttpGet]
-        public ActionResult UserPanel(UserPanelModel model)
+        public async Task<ActionResult> UserPanel(UserPanelModel model)
         {
             var token = HttpContext.User.Identity.Name;
             model.AccountData = datavisioAPIService.ShowAccount(token).Result;
@@ -33,6 +35,8 @@ namespace CRM.Controllers.User
             {
                 pair.coin = pair.@base;
             }
+
+            model.Balances = await balancesService.LoadBalancesAsync(token);
             return View(model);
         }
 
