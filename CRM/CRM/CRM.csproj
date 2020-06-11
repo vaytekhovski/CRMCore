@@ -5,15 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\Charts\**" />
+    <Compile Remove="Services\Data\**" />
+    <Content Remove="Services\Charts\**" />
+    <Content Remove="Services\Data\**" />
+    <EmbeddedResource Remove="Services\Charts\**" />
+    <EmbeddedResource Remove="Services\Data\**" />
+    <None Remove="Services\Charts\**" />
+    <None Remove="Services\Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Chart.js" Version="2.9.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Charts\" />
-    <Folder Include="Services\Data\" />
   </ItemGroup>
 </Project>

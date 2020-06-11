@@ -25,7 +25,7 @@ namespace CRM.Controllers.Charts
         [HttpGet]
         public ActionResult Charts()
         {
-            var model = new AskOnBidViewModel
+            var model = new ProfitViewModel
             {
                 StartDate = DatesHelper.MinDateStr,
                 EndDate = DatesHelper.CurrentDateStr
