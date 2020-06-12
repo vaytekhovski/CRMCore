@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using AuthApp.Controllers;
 using Business;
 using Business.DataVisioAPI;
@@ -85,7 +86,7 @@ namespace CRM.Controllers
             viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
-            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Coins = DropDownFields.GetCoins().Where(x=> HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "LTC" : true);
             return View(viewModel);
         }
 
@@ -120,7 +121,7 @@ namespace CRM.Controllers
             viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
-            ViewBag.Coins = DropDownFields.GetCoins();
+            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "LTC" : true); ;
             return View(viewModel);
         }
 
