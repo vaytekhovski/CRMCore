@@ -289,6 +289,22 @@ namespace Business.DataVisioAPI
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
         }
 
-        
+        public async Task<bool> isKeyAvailable(string token)
+        {
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://159.65.126.124/api/account"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = Client.SendAsync(Request).Result.IsSuccessStatusCode;
+            return response;
+        }
+
     }
 }

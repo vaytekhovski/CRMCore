@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
+using AuthApp.Controllers;
 using Business;
 using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
@@ -22,7 +24,7 @@ namespace CRM.Services
         {
             var model = new TradeHistoryModel();
 
-            var token = httpContext.User.Identity.Name;
+            var token = AccountController.GetAuthorizationKey(httpContext, datavisioAPI).Result;
             model.Deals = datavisioAPI.GetListDeals(token).Result;
 
 
@@ -33,7 +35,7 @@ namespace CRM.Services
         {
             var model = new TradeHistoryModel();
 
-            var token = httpContext.User.Identity.Name;
+            var token = AccountController.GetAuthorizationKey(httpContext, datavisioAPI).Result;
 
             model.Deals = datavisioAPI.GetListDeals(token).Result;
 
@@ -45,7 +47,7 @@ namespace CRM.Services
             model.DepositProfit = 0;
             decimal Deposit = 0;
 
-            if (httpContext.User.Identity.Name == "6")
+            if (httpContext.User.FindFirst(x=>x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss")
             {
                 if (filter.StartDate < new DateTime(2020, 05, 16))
                 {
@@ -66,7 +68,7 @@ namespace CRM.Services
                     model.DepositProfit += (profitAfter1605 / Deposit) * 100;
                 }
             }
-            else if(httpContext.User.Identity.Name == "7")
+            else if(httpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "test")
             {
                 Deposit = 47;
                 Deposit += ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 01)).Where(x => x.closed.Value <= filter.StartDate).Sum(x => x.profit.clean.amount);

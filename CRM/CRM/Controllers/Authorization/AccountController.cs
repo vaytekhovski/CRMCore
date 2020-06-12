@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using Business;
 using Business.DataVisioAPI;
+using Microsoft.AspNetCore.Http;
 
 namespace AuthApp.Controllers
 {
@@ -44,7 +45,7 @@ namespace AuthApp.Controllers
 
             if (key != null)
             {
-                await Authenticate(key);
+                await Authenticate(key, model.Login);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -60,12 +61,13 @@ namespace AuthApp.Controllers
             return View();
         }
 
-        public async Task Authenticate(string key)
+        public async Task Authenticate(string key, string login)
         {
             // создаем один claim
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, key),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, login)
             };
 
             // создаем объект ClaimsIdentity
@@ -80,6 +82,19 @@ namespace AuthApp.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Home", "Home");
+        }
+
+        public static async Task<string> GetAuthorizationKey(HttpContext httpContext, DatavisioAPIService datavisioAPIService)
+        {
+            string key = httpContext.User.Identity.Name;
+
+            if(!datavisioAPIService.isKeyAvailable(key).Result)
+            {
+                await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            }
+
+
+            return key;
         }
     }
 }

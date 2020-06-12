@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AuthApp.Controllers;
 using Business;
 using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
@@ -35,7 +36,7 @@ namespace CRM.Controllers
         {
             List<Order> orders = new List<Order>();
 
-            var token = HttpContext.User.Identity.Name;
+            var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPI).Result;
             var deals = datavisioAPI.GetListDeals(token).Result.deals.ToList();
 
             foreach (var deal in deals)
@@ -84,7 +85,7 @@ namespace CRM.Controllers
             viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
-            ViewBag.Coins = DropDownFields.GetCoins().Where(x=> HttpContext.User.Identity.Name == "6" ? x.Value == "BTC" || x.Value == "LTC" : true);
+            ViewBag.Coins = DropDownFields.GetCoins();
             return View(viewModel);
         }
 
@@ -119,7 +120,7 @@ namespace CRM.Controllers
             viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
-            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.Identity.Name == "6" ? x.Value == "BTC" || x.Value == "LTC" : true);
+            ViewBag.Coins = DropDownFields.GetCoins();
             return View(viewModel);
         }
 

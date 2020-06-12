@@ -10,6 +10,7 @@ using Business;
 using Business.DataVisioAPI;
 using CRM.Services.Balances;
 using System.Diagnostics;
+using AuthApp.Controllers;
 
 namespace CRM.Controllers.User
 {
@@ -29,7 +30,7 @@ namespace CRM.Controllers.User
         [HttpGet]
         public async Task<ActionResult> UserPanel(UserPanelModel model)
         {
-            var token = HttpContext.User.Identity.Name;
+            var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
             model.Balances = await balancesService.LoadBalancesAsync(token);
             model.AccountData = datavisioAPIService.ShowAccount(token).Result;
 
@@ -45,7 +46,7 @@ namespace CRM.Controllers.User
         [HttpPost]
         public async Task<ActionResult> ChangeEnabling(UserPanelModel model)
         {
-            var token = HttpContext.User.Identity.Name;
+            var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
 
             var AccountData = datavisioAPIService.ShowAccount(token).Result;
 
