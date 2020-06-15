@@ -31,6 +31,10 @@ namespace CRM.Controllers.User
         public async Task<ActionResult> UserPanel(UserPanelModel model)
         {
             var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
+            if (token == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             model.Balances = await balancesService.LoadBalancesAsync(token);
             model.AccountData = datavisioAPIService.ShowAccount(token).Result;
 
@@ -47,7 +51,10 @@ namespace CRM.Controllers.User
         public async Task<ActionResult> ChangeEnabling(UserPanelModel model)
         {
             var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
-
+            if (token == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             var AccountData = datavisioAPIService.ShowAccount(token).Result;
 
             foreach (var pair in model.AccountData.pairs)
