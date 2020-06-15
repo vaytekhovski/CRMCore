@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Signals";
+
+}
+
+@section Scripts
+{
+    <script src="~/js/plotly-latest.min.js"></script>
+    <script type="text/javascript">
+
+        CHART = document.getElementById('Chart');
+
+        var dates = [];
+
+        var values = [];
+
+
+
+        @foreach (var item in Model.Dates)
+        {
+            <text>
+            dates.push(new Date(@item));
+            </text>
+        }
+
+        @foreach (var item in Model.Values)
+        {
+            <text>
+            values.push(parseFloat(@item));
+            </text>
+
+            }
+
+
+
+            var profit = {
+            x: dates,
+            y: values,
+            mode: 'lines+markers',
+            marker: {
+            color: 'rgb(128, 0, 128)',
+                size: 4
+            },
+            line: {
+            color: 'rgb(128, 0, 128)',
+            width: 2
+            },
+            name: 'Signal'
+        };
+
+
+        var data = [profit];
+
+
+
+        Plotly.plot(CHART, data);
+
+
+    </script>
+}
+
+@model CRM.ViewModels.Charts.SignalsModel
+
+<div class="content">
+
+    @Html.ValidationSummary()
+
+    <div id="Chart" style="display: @(Model.Dates.Count != 0 ? "block" : "none")">
+    </div>
+
+
+</div>
