@@ -25,11 +25,7 @@ namespace CRM.Services
         {
             var model = new TradeHistoryModel();
 
-            var token = AccountController.GetAuthorizationKey(httpContext, datavisioAPI).Result;
-            if (token == "")
-            {
-                return null;
-            }
+            var token = httpContext.User.Identity.Name;
             model.Deals = datavisioAPI.GetListDeals(token).Result;
 
 
@@ -40,11 +36,7 @@ namespace CRM.Services
         {
             var model = new TradeHistoryModel();
 
-            var token = AccountController.GetAuthorizationKey(httpContext, datavisioAPI).Result;
-            if(token == "")
-            {
-                return null;
-            }
+            var token = httpContext.User.Identity.Name;
 
             model.Deals = datavisioAPI.GetListDeals(token).Result;
 

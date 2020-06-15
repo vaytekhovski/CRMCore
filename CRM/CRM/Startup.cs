@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace CRM
 {
@@ -25,6 +26,7 @@ namespace CRM
                 {
                     options.LoginPath = new PathString("/Home/Home");
                     options.AccessDeniedPath = new PathString("/Home/Home");
+                    options.ExpireTimeSpan = TimeSpan.FromHours(12);
                 });
             services.AddHttpClient();
             services.AddRazorPages();

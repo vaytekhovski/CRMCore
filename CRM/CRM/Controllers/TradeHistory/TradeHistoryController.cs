@@ -37,11 +37,7 @@ namespace CRM.Controllers
         {
             List<Order> orders = new List<Order>();
 
-            var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPI).Result;
-            if (token == "")
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            var token = HttpContext.User.Identity.Name;
             var deals = datavisioAPI.GetListDeals(token).Result.deals.ToList();
 
             foreach (var deal in deals)
@@ -78,10 +74,7 @@ namespace CRM.Controllers
             };
 
             TradeHistoryModel Model = _tradeHistoryService.Load(filter, HttpContext);
-            if (Model == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            
             viewModel = MoveDataFromModelToViewModel(Model, viewModel);
 
             viewModel.Deals.deals = viewModel.Deals.deals.Skip((filter.CurrentPage - 1) * 100).Take(100).ToArray();
@@ -115,10 +108,7 @@ namespace CRM.Controllers
             };
 
             TradeHistoryModel Model = _tradeHistoryService.Load(filter, HttpContext);
-            if(Model == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+            
 
             var last = Model.Deals.deals.FirstOrDefault();
 

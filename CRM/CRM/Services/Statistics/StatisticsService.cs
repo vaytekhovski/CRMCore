@@ -23,11 +23,7 @@ namespace CRM.Services.Statistics
         {
             var model = new StatisticsModel();
 
-            var token = AccountController.GetAuthorizationKey(httpContext, datavisioAPI).Result;
-            if (token == "")
-            {
-                return null;
-            }
+            var token = httpContext.User.Identity.Name;
             Business.Models.DataVisioAPI.ListDeals deals = datavisioAPI.GetListDeals(token).Result;
 
             if (filter.Coin != null)
