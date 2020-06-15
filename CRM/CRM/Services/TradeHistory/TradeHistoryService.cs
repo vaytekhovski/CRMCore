@@ -6,6 +6,7 @@ using Business;
 using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Services
@@ -25,6 +26,10 @@ namespace CRM.Services
             var model = new TradeHistoryModel();
 
             var token = AccountController.GetAuthorizationKey(httpContext, datavisioAPI).Result;
+            if (token == "")
+            {
+                return null;
+            }
             model.Deals = datavisioAPI.GetListDeals(token).Result;
 
 
@@ -36,6 +41,10 @@ namespace CRM.Services
             var model = new TradeHistoryModel();
 
             var token = AccountController.GetAuthorizationKey(httpContext, datavisioAPI).Result;
+            if(token == "")
+            {
+                return null;
+            }
 
             model.Deals = datavisioAPI.GetListDeals(token).Result;
 

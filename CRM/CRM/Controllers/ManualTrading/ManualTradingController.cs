@@ -50,6 +50,10 @@ namespace CRM.Controllers.ManualTrading
             ViewModel.TimeRange = 1;
 
             var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
+            if (token == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
 
             ViewModel = manualTradingService.Load(ViewModel, token).Result;
@@ -77,6 +81,10 @@ namespace CRM.Controllers.ManualTrading
         public async Task<ActionResult> Trade(ManualTradingModel ViewModel)
         {
             var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
+            if (token == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
             ViewModel = manualTradingService.Load(ViewModel, token).Result;
 
@@ -103,6 +111,10 @@ namespace CRM.Controllers.ManualTrading
         public IActionResult Buy(ManualTradingModel ViewModel)
         {
             var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
+            if (token == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
             var response = datavisioAPIService.EnterDeal(token, new PlaceOrderRequest()
             {
@@ -121,7 +133,10 @@ namespace CRM.Controllers.ManualTrading
         public IActionResult Sell(string DealId)
         {
             var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
-
+            if (token == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             var response = datavisioAPIService.LeaveDeal(token, DealId).Result;
 
             return RedirectToAction("Trade", "ManualTrading");
@@ -130,6 +145,10 @@ namespace CRM.Controllers.ManualTrading
         public async Task<IActionResult> GetDeal(string DealId)
         {
             var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
+            if (token == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             var response = datavisioAPIService.GetDeal(token, DealId).Result;
             response.coin = response.@base;
 
@@ -166,6 +185,10 @@ namespace CRM.Controllers.ManualTrading
         public IActionResult TradeDeal(GetDealModel Model)
         {
             var token = AccountController.GetAuthorizationKey(HttpContext, datavisioAPIService).Result;
+            if (token == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             double amount = Convert.ToDouble(Model.BuyAmount.ToString().Replace(',', '.').Replace(" " + Model.Deal.coin, ""));
 
             var response = datavisioAPIService.TradeDeal(token, Model.Deal.id, amount).Result;

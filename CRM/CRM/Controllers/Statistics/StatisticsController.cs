@@ -55,6 +55,10 @@ namespace CRM.Controllers.Statistics
             };
 
             Model = _statisticsService.Load(filter, HttpContext);
+            if (Model == null)
+            {
+                return RedirectToAction("Login","Account");
+            }
 
             viewModel.Statistics = Model.Statistics;
 
