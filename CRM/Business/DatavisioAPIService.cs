@@ -22,7 +22,7 @@ namespace Business.DataVisioAPI
 
         public async Task<string> Authorization(LoginModel login)
         {
-            var uri = $"http://159.65.126.124/api/auth";
+            var uri = $"http://157.245.174.60/api/auth";
 
             var jsonInString = JsonConvert.SerializeObject(login);
             var resp = await Client.PostAsync(uri, new StringContent(jsonInString, Encoding.UTF8, "application/json"));
@@ -36,7 +36,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/exchange/binance/wallets/{CoinBase}"),
+                RequestUri = new Uri($"http://157.245.174.60/api/exchange/binance/wallets/{CoinBase}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -55,7 +55,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/exchange/binance/wallets"),
+                RequestUri = new Uri($"http://157.245.174.60/api/exchange/binance/wallets"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -76,7 +76,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/deals"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account/deals"),
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
@@ -100,7 +100,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}/trade"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account/deals/{DealId}/trade"),
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
@@ -118,7 +118,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}/leave"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account/deals/{DealId}/leave"),
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
@@ -137,7 +137,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/signals/binance/{CoinBase}/usdt?limit=2000"),
+                RequestUri = new Uri($"http://157.245.174.60/api/signals/binance/{CoinBase}/usdt?limit=2000"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -155,7 +155,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/exchange/binance/{CoinBase}/usdt/candles?frame=1&since={Since}"),
+                RequestUri = new Uri($"http://157.245.174.60/api/exchange/binance/{CoinBase}/usdt/candles?frame=1&since={Since}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -172,7 +172,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/deals?limit=2000"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account/deals?limit=2000"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -188,7 +188,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/deals?failed=true"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account/deals?failed=true"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -205,7 +205,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/deals/{DealId}"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account/deals/{DealId}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -226,7 +226,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/graph/binance/{CoinBase}/usdt?since={since}&limit={limit}"),
+                RequestUri = new Uri($"http://157.245.174.60/api/graph/binance/{CoinBase}/usdt?since={since}&limit={limit}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -244,7 +244,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/account"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -263,7 +263,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/binance/{@base}/{quote}/enable"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account/binance/{@base}/{quote}/enable"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -279,7 +279,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://159.65.126.124/api/account/binance/{@base}/{quote}/disable"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account/binance/{@base}/{quote}/disable"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -294,7 +294,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://159.65.126.124/api/account"),
+                RequestUri = new Uri($"http://157.245.174.60/api/account"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
