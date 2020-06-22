@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Business.DataVisioAPI;
+using Business.Models.DataVisioAPI;
 
 namespace CRM.Controllers.Charts
 {
@@ -16,10 +18,12 @@ namespace CRM.Controllers.Charts
     public class ChartsController : Controller
     {
         private readonly TradeHistoryService _tradeHistoryService;
+        private readonly DatavisioAPIService datavisioAPIService;
 
         public ChartsController()
         {
             _tradeHistoryService = new TradeHistoryService();
+            datavisioAPIService = new DatavisioAPIService();
         }
 
         [HttpGet]
@@ -108,6 +112,19 @@ namespace CRM.Controllers.Charts
 
 
             return View(ViewModel);
+        }
+
+        public IActionResult Signals()
+        {
+            SignalsModel model = new SignalsModel();
+
+            var token = HttpContext.User.Identity.Name;
+            var Signals = datavisioAPIService.GetSignals(token, "BTC").Result;
+
+            model.Dates = Signals.signals.Select(x => x.time.AddHours(3).ToJavascriptTicks()).ToList();
+            model.Values = Signals.signals.Select(x => x.value.ToString(SeparateHelper.Separator)).ToList();
+            model.PageName = "Signals";
+            return View(model);
         }
 
 
