@@ -119,10 +119,15 @@ namespace CRM.Controllers.Charts
             SignalsModel model = new SignalsModel();
 
             var token = HttpContext.User.Identity.Name;
-            var Signals = datavisioAPIService.GetSignals(token, "BTC").Result;
+            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
+            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
 
-            model.Dates = Signals.signals.Select(x => x.time.AddHours(3).ToJavascriptTicks()).ToList();
-            model.Values = Signals.signals.Select(x => x.value.ToString(SeparateHelper.Separator)).ToList();
+
+            model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3).ToJavascriptTicks()).ToList();
+            model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3).ToJavascriptTicks()).ToList();
+
+            model.RaiseValues = RaiseSignals.signals.Select(x => x.value.ToString(SeparateHelper.Separator)).ToList();
+            model.FallValues = FallSignals.signals.Select(x => x.value.ToString(SeparateHelper.Separator)).ToList();
             model.PageName = "Signals";
             return View(model);
         }

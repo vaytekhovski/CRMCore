@@ -10,46 +10,78 @@
 
         CHART = document.getElementById('Chart');
 
-        var dates = [];
+        var RaiseDates = [];
+        var FallDates = [];
 
-        var values = [];
+        var RaiseValues = [];
+        var FallValues = [];
 
 
 
-        @foreach (var item in Model.Dates)
+        @foreach (var item in Model.RaiseDates)
         {
             <text>
-            dates.push(new Date(@item));
+        RaiseDates.push(new Date(@item));
             </text>
         }
 
-        @foreach (var item in Model.Values)
+        @foreach (var item in Model.RaiseValues)
         {
             <text>
-            values.push(parseFloat(@item));
+        RaiseValues.push(parseFloat(@item));
+            </text>
+
+            }
+
+        @foreach (var item in Model.FallDates)
+        {
+            <text>
+        FallDates.push(new Date(@item));
+            </text>
+        }
+
+        @foreach (var item in Model.FallValues)
+        {
+            <text>
+        FallValues.push(parseFloat(@item));
             </text>
 
             }
 
 
 
-            var profit = {
-            x: dates,
-            y: values,
+            var Raise = {
+            x: RaiseDates,
+            y: RaiseValues,
             mode: 'lines+markers',
             marker: {
-            color: 'rgb(128, 0, 128)',
+                color: 'rgb(61, 219, 13)',
                 size: 4
             },
             line: {
-            color: 'rgb(128, 0, 128)',
+                color: 'rgb(61, 219, 13)',
             width: 2
             },
-            name: 'Signal'
+            name: 'Raise'
+        };
+        
+            var Fall = {
+            x: FallDates,
+            y: FallValues,
+            mode: 'lines+markers',
+            marker: {
+                color: 'rgb(230, 9, 79)',
+                size: 4
+            },
+            line: {
+                color: 'rgb(230, 9, 79)',
+            width: 2
+            },
+            name: 'Fall'
         };
 
 
-        var data = [profit];
+        var data = [Raise, Fall];
 
 
 
@@ -65,7 +97,7 @@
 
     @Html.ValidationSummary()
 
-    <div id="Chart" style="display: @(Model.Dates.Count != 0 ? "block" : "none")">
+    <div id="Chart" style="display: @(Model.RaiseValues.Count != 0 ? "block" : "none")">
     </div>
 
 

@@ -106,22 +106,22 @@ namespace CRM.Services
             model.CountOfElements = model.Deals.deals.Count();
 
 
-            Signals Signals = datavisioAPI.GetSignals(token, "BTC").Result;
+            Signals Signals = datavisioAPI.GetSignals(token, "BTC", "raise").Result;
             Signal signalBTC = Signals.signals.FirstOrDefault();
             model.ProbaBuyBTC = signalBTC.value == 1 ? signalBTC.proba : 1m - signalBTC.proba;
             model.ProbaBuyBTC *= 100m;
             
-            Signals = datavisioAPI.GetSignals(token, "ETH").Result;
+            Signals = datavisioAPI.GetSignals(token, "ETH", "raise").Result;
             Signal signalETH = Signals.signals.FirstOrDefault();
             model.ProbaBuyETH = signalETH.value == 1 ? signalETH.proba : 1m - signalETH.proba;
             model.ProbaBuyETH *= 100m;
             
-            Signals = datavisioAPI.GetSignals(token, "LTC").Result;
+            Signals = datavisioAPI.GetSignals(token, "LTC", "raise").Result;
             Signal signalLTC = Signals.signals.FirstOrDefault();
             model.ProbaBuyLTC = signalLTC.value == 1 ? signalLTC.proba : 1m - signalLTC.proba;
             model.ProbaBuyLTC *= 100m;
 
-            Signals = datavisioAPI.GetSignals(token, "XRP").Result;
+            Signals = datavisioAPI.GetSignals(token, "XRP", "raise").Result;
             Signal signalXRP = Signals.signals.FirstOrDefault();
             model.ProbaBuyXRP = signalXRP.value == 1 ? signalXRP.proba : 1m - signalXRP.proba;
             model.ProbaBuyXRP *= 100m;

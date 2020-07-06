@@ -33,7 +33,7 @@ namespace CRM.Services
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            Signals signals = datavisioAPI.GetSignals(token, ViewModel.Coin).Result;
+            Signals signals = datavisioAPI.GetSignals(token, ViewModel.Coin, "raise").Result;
 
             ViewModel.Deals = datavisioAPI.GetListDeals(token).Result;
 

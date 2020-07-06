@@ -132,12 +132,12 @@ namespace Business.DataVisioAPI
 
 
 
-        public async Task<Signals>  GetSignals(string token, string CoinBase)
+        public async Task<Signals> GetSignals(string token, string CoinBase, string source)
         {
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/signals/binance/{CoinBase}/usdt?limit=2000"),
+                RequestUri = new Uri($"http://46.101.131.228/api/signals/binance/{CoinBase}/usdt?limit=5000&source={source}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -148,6 +148,7 @@ namespace Business.DataVisioAPI
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Signals>(response);
         }
+
 
         public async Task<Candles[]> GetCandles(string token, string CoinBase)
         {
