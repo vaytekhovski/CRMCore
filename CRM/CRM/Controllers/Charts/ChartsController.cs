@@ -126,8 +126,8 @@ namespace CRM.Controllers.Charts
             model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3).ToJavascriptTicks()).ToList();
             model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3).ToJavascriptTicks()).ToList();
 
-            model.RaiseValues = RaiseSignals.signals.Select(x => x.value.ToString(SeparateHelper.Separator)).ToList();
-            model.FallValues = FallSignals.signals.Select(x => x.value.ToString(SeparateHelper.Separator)).ToList();
+            model.RaiseValues = RaiseSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.FallValues = FallSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
             model.PageName = "Signals";
             return View(model);
         }
