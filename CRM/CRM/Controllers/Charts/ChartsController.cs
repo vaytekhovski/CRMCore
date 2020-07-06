@@ -11,6 +11,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
+using System.Text;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace CRM.Controllers.Charts
 {
@@ -155,16 +158,18 @@ namespace CRM.Controllers.Charts
 
             model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3)).ToList();
             model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3)).ToList();
-
+            int i = 0;
             foreach (var signal in RaiseSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
                 model.signals.Add(new RaiseFallSignals
                 {
+                    Id = i,
                     Date = signal.time,
                     RaiseProba = signal.proba
                 });
+                i++;
             }
 
             foreach (var signal in FallSignals.signals)
@@ -181,9 +186,11 @@ namespace CRM.Controllers.Charts
                 {
                     model.signals.Add(new RaiseFallSignals
                     {
+                        Id = i,
                         Date = signal.time,
                         FallProba = signal.proba
                     });
+                    i++;
                 }
             }
 
@@ -263,6 +270,104 @@ namespace CRM.Controllers.Charts
             model.FallValues = FallSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
             model.PageName = "Signals";
             return View(model);
+        }
+
+
+        public IActionResult ExportToCSV(DateTime start, DateTime end)
+        {
+            SignalsModel model = new SignalsModel()
+            {
+                StartDate = start.ToString(),
+                EndDate = end.ToString()
+            };
+
+            var token = HttpContext.User.Identity.Name;
+            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
+            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
+
+            TradeHistoryFilter filter = new TradeHistoryFilter
+            {
+                StartDate = DateTime.Parse(model.StartDate),
+                EndDate = DateTime.Parse(model.EndDate),
+            };
+
+            RaiseSignals.signals = RaiseSignals.signals
+                .Where(x => x.time >= filter.StartDate.AddHours(-3))
+                .Where(x => x.time < filter.EndDate.AddHours(-3))
+                .OrderBy(x => x.time)
+                .ToArray();
+
+
+            FallSignals.signals = FallSignals.signals
+                .Where(x => x.time >= filter.StartDate.AddHours(-3))
+                .Where(x => x.time < filter.EndDate.AddHours(-3))
+                .OrderBy(x => x.time)
+                .ToArray();
+
+
+
+            model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+
+            foreach (var signal in RaiseSignals.signals)
+            {
+                signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
+                signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
+                model.signals.Add(new RaiseFallSignals
+                {
+                    Date = signal.time,
+                    RaiseProba = signal.proba
+                });
+            }
+
+            foreach (var signal in FallSignals.signals)
+            {
+                signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
+                signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
+
+                var sign = model.signals.FirstOrDefault(x => x.Date == signal.time);
+                if (sign != null)
+                {
+                    sign.FallProba = signal.proba;
+                }
+                else
+                {
+                    model.signals.Add(new RaiseFallSignals
+                    {
+                        Date = signal.time,
+                        FallProba = signal.proba
+                    });
+                }
+            }
+
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("RaiseFallSignals" + DateTime.Now.ToString());
+                var currentRow = 1;
+                worksheet.Cell(currentRow, 1).Value = "Date";
+                worksheet.Cell(currentRow, 2).Value = "Raise Proba";
+                worksheet.Cell(currentRow, 3).Value = "Fall Proba";
+                
+                foreach (var signal in model.signals)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).Value = signal.Date;
+                    worksheet.Cell(currentRow, 2).Value = signal.RaiseProba;
+                    worksheet.Cell(currentRow, 3).Value = signal.FallProba;
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+
+                    return File(
+                        content,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        "users.xlsx");
+                }
+            }
         }
 
 

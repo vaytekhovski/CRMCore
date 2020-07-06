@@ -104,6 +104,7 @@
     <canvas id="myChart" width="400" height="200" style="display: @(Model.RaiseValues.Count != 0 ? "block" : "none")"></canvas>
 
     <div style=" padding-left: 350px; padding-right: 350px;">
+        <a href="~/Charts/ExportToCSV/?start=@Model.StartDate&end=@Model.EndDate">Скачать</a>
         <table class=" table table-bordered table-font">
             <tr>
                 <th>Дата</th>
