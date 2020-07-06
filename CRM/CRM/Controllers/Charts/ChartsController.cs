@@ -365,7 +365,7 @@ namespace CRM.Controllers.Charts
                     return File(
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "users.xlsx");
+                        "RaiseFallSignals" + DateTime.Now.ToJavascriptTicks() + ".xlsx");
                 }
             }
         }
