@@ -101,4 +101,23 @@
 
     <canvas id="myChart" width="400" height="200" style="display: @(Model.RaiseValues.Count != 0 ? "block" : "none")"></canvas>
 
+    <div style=" padding-left: 350px; padding-right: 350px;">
+        <table class=" table table-bordered table-font">
+            <tr>
+                <th>Дата</th>
+                <th>Raise proba</th>
+                <th>Fall proba</th>
+            </tr>
+            @foreach (var item in Model.signals)
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.RaiseProba</td>
+                    <td>@item.FallProba</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
 </div>

@@ -159,11 +159,32 @@ namespace CRM.Controllers.Charts
             foreach (var signal in RaiseSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
+                signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
+                model.signals.Add(new RaiseFallSignals
+                {
+                    Date = signal.time,
+                    RaiseProba = signal.proba
+                });
             }
 
             foreach (var signal in FallSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
+                signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
+
+                var sign = model.signals.FirstOrDefault(x => x.Date == signal.time);
+                if (sign != null)
+                {
+                    sign.FallProba = signal.proba;
+                }
+                else
+                {
+                    model.signals.Add(new RaiseFallSignals
+                    {
+                        Date = signal.time,
+                        FallProba = signal.proba
+                    });
+                }
             }
 
 
@@ -208,16 +229,35 @@ namespace CRM.Controllers.Charts
             foreach (var signal in RaiseSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
-                signal.time = signal.time.AddHours(3);
+                signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
+                model.signals.Add(new RaiseFallSignals
+                {
+                    Date = signal.time,
+                    RaiseProba = signal.proba
+                });
             }
 
             foreach (var signal in FallSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
-                signal.time = signal.time.AddHours(3);
+                signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
 
+                var sign = model.signals.FirstOrDefault(x => x.Date == signal.time);
+                if(sign != null)
+                {
+                    sign.FallProba = signal.proba;
+                }
+                else
+                {
+                    model.signals.Add(new RaiseFallSignals
+                    {
+                        Date = signal.time,
+                        FallProba = signal.proba
+                    });
+                }
             }
 
+            
 
             model.RaiseValues = RaiseSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
             model.FallValues = FallSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
