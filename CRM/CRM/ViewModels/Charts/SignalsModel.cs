@@ -9,8 +9,8 @@ namespace CRM.ViewModels.Charts
     {
         public SignalsModel()
         {
-            RaiseDates = new List<long>();
-            FallDates = new List<long>();
+            RaiseDates = new List<DateTime>();
+            FallDates = new List<DateTime>();
             RaiseValues = new List<string>();
             FallValues = new List<string>();
         }
@@ -21,8 +21,8 @@ namespace CRM.ViewModels.Charts
         public string StartDate { get; set; }
         public string EndDate { get; set; }
 
-        public List<long> RaiseDates { get; set; }
-        public List<long> FallDates { get; set; }
+        public List<DateTime> RaiseDates { get; set; }
+        public List<DateTime> FallDates { get; set; }
         public List<string> RaiseValues { get; set; }
         public List<string> FallValues { get; set; }
     }

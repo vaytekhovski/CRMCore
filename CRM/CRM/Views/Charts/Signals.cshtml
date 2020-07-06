@@ -5,7 +5,7 @@
 
 @section Scripts
 {
-    <script src="~/js/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script type="text/javascript">
 
         CHART = document.getElementById('Chart');
@@ -21,7 +21,7 @@
         @foreach (var item in Model.RaiseDates)
         {
             <text>
-        RaiseDates.push(new Date(@item));
+        RaiseDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
             </text>
         }
 
@@ -36,7 +36,7 @@
         @foreach (var item in Model.FallDates)
         {
             <text>
-        FallDates.push(new Date(@item));
+        FallDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
             </text>
         }
 
@@ -48,57 +48,57 @@
 
             }
 
+        ctx = document.getElementById('myChart').getContext('2d');
 
-
-            var Raise = {
-            x: RaiseDates,
-            y: RaiseValues,
-            mode: 'lines+markers',
-            marker: {
-                color: 'rgb(61, 219, 13)',
-                size: 4
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: FallDates,
+                datasets: [{
+                    label: 'Raise',
+                    borderColor: 'rgba(23, 227, 101, 0.8)',
+                    backgroundColor: 'rgba(23, 227, 101, 0.5)',
+                    fill: false,
+                    data: RaiseValues,
+                    pointRadius:0
+                }, {
+                    label: 'Fall',
+                        borderColor: 'rgba(219, 22, 22, 0.8)',
+                        backgroundColor: 'rgba(219, 22, 22, 0.5)',
+                    fill: false,
+                        data: FallValues,
+                        pointRadius: 0
+                }]
             },
-            line: {
-                color: 'rgb(61, 219, 13)',
-            width: 2
-            },
-            name: 'Raise'
-        };
-        
-            var Fall = {
-            x: FallDates,
-            y: FallValues,
-            mode: 'lines+markers',
-            marker: {
-                color: 'rgb(230, 9, 79)',
-                size: 4
-            },
-            line: {
-                color: 'rgb(230, 9, 79)',
-            width: 2
-            },
-            name: 'Fall'
-        };
-
-
-        var data = [Raise, Fall];
-
-
-
-        Plotly.plot(CHART, data);
+            options: {
+                responsive: true,
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+        });
 
 
     </script>
+
 }
 
 @model CRM.ViewModels.Charts.SignalsModel
-
+@Html.Partial("_SignalsFilterPanel")
 <div class="content">
 
     @Html.ValidationSummary()
 
-    <div id="Chart" style="display: @(Model.RaiseValues.Count != 0 ? "block" : "none")">
-    </div>
-
+    <canvas id="myChart" width="400" height="200" style="display: @(Model.RaiseValues.Count != 0 ? "block" : "none")"></canvas>
 
 </div>

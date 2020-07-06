@@ -114,17 +114,108 @@ namespace CRM.Controllers.Charts
             return View(ViewModel);
         }
 
+        [HttpGet]
         public IActionResult Signals()
         {
-            SignalsModel model = new SignalsModel();
+            SignalsModel model = new SignalsModel() {
+                StartDate = DatesHelper.MinDateTimeStr,
+                EndDate = DatesHelper.CurrentDateTimeStr
+            };
+            TradeHistoryFilter filter = new TradeHistoryFilter
+            {
+                StartDate = DateTime.Parse(model.StartDate),
+                EndDate = DateTime.Parse(model.EndDate),
+            };
+
+
+            var token = HttpContext.User.Identity.Name;
+
+            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
+
+            RaiseSignals.signals = RaiseSignals.signals
+                .Where(x => x.time >= filter.StartDate.AddHours(-3))
+                .Where(x => x.time < filter.EndDate.AddHours(-3))
+                .OrderBy(x => x.time)
+                .ToArray();
+
+
+
+            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
+
+            FallSignals.signals = FallSignals.signals
+                .Where(x => x.time >= filter.StartDate.AddHours(-3))
+                .Where(x => x.time < filter.EndDate.AddHours(-3))
+                .OrderBy(x => x.time)
+                .ToArray();
+
+
+            model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+
+            foreach (var signal in RaiseSignals.signals)
+            {
+                signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
+            }
+
+            foreach (var signal in FallSignals.signals)
+            {
+                signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
+            }
+
+
+            model.RaiseValues = RaiseSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.FallValues = FallSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.PageName = "Signals";
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Signals(SignalsModel model)
+        {
+
+            TradeHistoryFilter filter = new TradeHistoryFilter
+            {
+                StartDate = DateTime.Parse(model.StartDate),
+                EndDate = DateTime.Parse(model.EndDate),
+            };
 
             var token = HttpContext.User.Identity.Name;
             var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
+                
+            RaiseSignals.signals = RaiseSignals.signals
+                .Where(x => x.time >= filter.StartDate.AddHours(-3))
+                .Where(x => x.time < filter.EndDate.AddHours(-3))
+                .OrderBy(x => x.time)
+                .ToArray();
+
+
+
             var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
 
+            FallSignals.signals = FallSignals.signals
+                .Where(x => x.time >= filter.StartDate.AddHours(-3))
+                .Where(x => x.time < filter.EndDate.AddHours(-3))
+                .OrderBy(x => x.time)
+                .ToArray();
 
-            model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3).ToJavascriptTicks()).ToList();
-            model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3).ToJavascriptTicks()).ToList();
+
+
+            model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+
+            foreach (var signal in RaiseSignals.signals)
+            {
+                signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
+                signal.time = signal.time.AddHours(3);
+            }
+
+            foreach (var signal in FallSignals.signals)
+            {
+                signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
+                signal.time = signal.time.AddHours(3);
+
+            }
+
 
             model.RaiseValues = RaiseSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
             model.FallValues = FallSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
