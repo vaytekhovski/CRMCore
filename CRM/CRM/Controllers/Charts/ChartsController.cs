@@ -343,7 +343,7 @@ namespace CRM.Controllers.Charts
 
             using (var workbook = new XLWorkbook())
             {
-                var worksheet = workbook.Worksheets.Add("RaiseFallSignals" + DateTime.Now.ToString());
+                var worksheet = workbook.Worksheets.Add("RaiseFallSignals" + DateTime.Now.ToJavascriptTicks());
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "Date";
                 worksheet.Cell(currentRow, 2).Value = "Raise Proba";
