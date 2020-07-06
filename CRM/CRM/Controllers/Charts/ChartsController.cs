@@ -121,16 +121,23 @@ namespace CRM.Controllers.Charts
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr
             };
+            
+
+            var token = HttpContext.User.Identity.Name;
+
+            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
+
+            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
+
+            var FirstDate = RaiseSignals.signals.Last().time > FallSignals.signals.Last().time ? RaiseSignals.signals.Last().time : FallSignals.signals.Last().time;
+
+            model.StartDate = FirstDate.AddHours(3).ToString("yyyy-MM-ddTHH:mm");
+
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
                 StartDate = DateTime.Parse(model.StartDate),
                 EndDate = DateTime.Parse(model.EndDate),
             };
-
-
-            var token = HttpContext.User.Identity.Name;
-
-            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
 
             RaiseSignals.signals = RaiseSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
@@ -138,9 +145,6 @@ namespace CRM.Controllers.Charts
                 .OrderBy(x => x.time)
                 .ToArray();
 
-
-
-            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
 
             FallSignals.signals = FallSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
@@ -173,24 +177,22 @@ namespace CRM.Controllers.Charts
         public IActionResult Signals(SignalsModel model)
         {
 
+            var token = HttpContext.User.Identity.Name;
+            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
+            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
+
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
                 StartDate = DateTime.Parse(model.StartDate),
                 EndDate = DateTime.Parse(model.EndDate),
-            };
-
-            var token = HttpContext.User.Identity.Name;
-            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
-                
+            }; 
+            
             RaiseSignals.signals = RaiseSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
                 .ToArray();
 
-
-
-            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
 
             FallSignals.signals = FallSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
