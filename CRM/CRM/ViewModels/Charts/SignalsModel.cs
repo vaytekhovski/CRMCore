@@ -13,6 +13,8 @@ namespace CRM.ViewModels.Charts
             FallDates = new List<DateTime>();
             RaiseValues = new List<string>();
             FallValues = new List<string>();
+            FallEMA = new List<string>();
+            RaiseEMA = new List<string>();
             signals = new List<RaiseFallSignals>();
         }
 
@@ -26,6 +28,8 @@ namespace CRM.ViewModels.Charts
         public List<DateTime> FallDates { get; set; }
         public List<string> RaiseValues { get; set; }
         public List<string> FallValues { get; set; }
+        public List<string> FallEMA { get; set; }
+        public List<string> RaiseEMA { get; set; }
 
         public List<RaiseFallSignals> signals { get; set; }
     }

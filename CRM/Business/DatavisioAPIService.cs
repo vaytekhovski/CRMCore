@@ -115,6 +115,15 @@ namespace Business.DataVisioAPI
 
         public async Task<string> LeaveDeal(string token, string DealId)
         {
+            TradeDealRequest tradeDealRequest = new TradeDealRequest
+            {
+                amount = 0
+            };
+
+            tradeDealRequest.amount = Convert.ToDouble(GetDeal(token, DealId).Result.orders.Sum(x => x.amount));
+
+            var jsonInString = JsonConvert.SerializeObject(tradeDealRequest);
+
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
@@ -122,7 +131,8 @@ namespace Business.DataVisioAPI
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
-                }
+                },
+                Content = new StringContent(jsonInString, Encoding.UTF8, "application/json")
             };
 
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
@@ -219,7 +229,7 @@ namespace Business.DataVisioAPI
             return Deal;
         }
 
-        public async Task<List<Graph>> GetGraphs(string token, string CoinBase, DateTime StartDate, DateTime EndDate)
+        public async Task<List<Graph>> GetGraphs(string token, string CoinBase, DateTime StartDate, DateTime EndDate, string source = "raise")
         {
             var since = ((DateTimeOffset)StartDate).ToUnixTimeSeconds();
             var limit = Convert.ToInt32((EndDate - StartDate).TotalMinutes);
@@ -227,7 +237,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/graph/binance/{CoinBase}/usdt?since={since}&limit={limit}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/graph/binance/{CoinBase}/usdt?since={since}&limit={limit}&source={source}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }

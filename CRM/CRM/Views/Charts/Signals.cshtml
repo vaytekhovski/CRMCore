@@ -16,6 +16,8 @@
         var RaiseValues = [];
         var FallValues = [];
 
+        var RaiseEMA = [];
+        var FallEMA = [];
 
 
         @foreach (var item in Model.RaiseDates)
@@ -46,6 +48,22 @@
         FallValues.push(parseFloat(@item));
             </text>
 
+            } 
+
+        @foreach (var item in Model.FallEMA)
+        {
+            <text>
+        FallEMA.push(parseFloat(@item));
+            </text>
+
+            } 
+
+        @foreach (var item in Model.RaiseEMA)
+        {
+            <text>
+        RaiseEMA.push(parseFloat(@item));
+            </text>
+
             }
 
         ctx = document.getElementById('myChart').getContext('2d');
@@ -55,7 +73,7 @@
             data: {
                 labels: FallDates,
                 datasets: [{
-                    label: 'Raise',
+                    label: 'Raise Proba',
                     borderColor: 'rgba(23, 227, 101, 0.8)',
                     backgroundColor: 'rgba(23, 227, 101, 0.5)',
                     fill: false,
@@ -63,12 +81,28 @@
                     data: RaiseValues,
                     pointRadius:0
                 }, {
-                    label: 'Fall',
+                    label: 'Fall Proba',
                     borderColor: 'rgba(219, 22, 22, 0.8)',
                     backgroundColor: 'rgba(219, 22, 22, 0.5)',
                         fill: false,
                         type: 'scatter',
                     data: FallValues,
+                    pointRadius: 0
+                },{
+                    label: 'Raise EMA',
+                        borderColor: 'rgba(33, 79, 219, 0.8)',
+                        backgroundColor: 'rgba(33, 79, 219, 0.5)',
+                        fill: false,
+                        type: 'scatter',
+                        data: RaiseEMA,
+                    pointRadius: 0
+                },{
+                    label: 'Fall EMA',
+                        borderColor: 'rgba(33, 219, 160, 0.8)',
+                        backgroundColor: 'rgba(33, 219, 160, 0.5)',
+                        fill: false,
+                        type: 'scatter',
+                        data: FallEMA,
                     pointRadius: 0
                 }]
             },
@@ -101,8 +135,9 @@
 
     @Html.ValidationSummary()
 
-    <canvas id="myChart" width="400" height="200" style="display: @(Model.RaiseValues.Count != 0 ? "block" : "none")"></canvas>
-
+    <div style="height:30%; width:80%;margin: 0 auto;">
+        <canvas id="myChart"  style="display: @(Model.RaiseValues.Count != 0 ? "block" : "none")"></canvas>
+    </div>
     <div style=" padding-left: 350px; padding-right: 350px;">
         <a href="~/Charts/ExportToCSV/?start=@Model.StartDate&end=@Model.EndDate">Скачать</a>
         <table class=" table table-bordered table-font">

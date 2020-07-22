@@ -124,6 +124,7 @@ namespace Business.Models.DataVisioAPI
         public decimal rsi { get; set; }
         public decimal lir { get; set; }
         public decimal reg { get; set; }
+        public decimal ema { get; set; }
     }
 
     public class ShowAccount

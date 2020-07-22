@@ -121,7 +121,7 @@ namespace CRM.Controllers.Charts
         public IActionResult Signals()
         {
             SignalsModel model = new SignalsModel() {
-                StartDate = DatesHelper.MinDateTimeStr,
+                StartDate = DateTime.Parse(DatesHelper.CurrentDateTimeStr).AddDays(-1).ToString("yyyy-MM-ddTHH:mm"),
                 EndDate = DatesHelper.CurrentDateTimeStr
             };
             
@@ -132,9 +132,12 @@ namespace CRM.Controllers.Charts
 
             var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
 
-            var FirstDate = RaiseSignals.signals.Last().time > FallSignals.signals.Last().time ? RaiseSignals.signals.Last().time : FallSignals.signals.Last().time;
+            var RaiseEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), "raise").Result;
+            var FallEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), "fall").Result;
 
-            model.StartDate = FirstDate.AddHours(3).ToString("yyyy-MM-ddTHH:mm");
+            //var FirstDate = RaiseSignals.signals.Last().time > FallSignals.signals.Last().time ? RaiseSignals.signals.Last().time : FallSignals.signals.Last().time;
+
+            //model.StartDate = FirstDate.AddHours(3).ToString("yyyy-MM-ddTHH:mm");
 
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
@@ -197,6 +200,8 @@ namespace CRM.Controllers.Charts
 
             model.RaiseValues = RaiseSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
             model.FallValues = FallSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.RaiseEMA = RaiseEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
+            model.FallEMA = FallEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList(); 
             model.PageName = "Signals";
             return View(model);
         }
@@ -208,6 +213,11 @@ namespace CRM.Controllers.Charts
             var token = HttpContext.User.Identity.Name;
             var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
             var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
+
+
+            var RaiseEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), "raise").Result;
+            var FallEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), "fall").Result;
+
 
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
@@ -268,6 +278,8 @@ namespace CRM.Controllers.Charts
 
             model.RaiseValues = RaiseSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
             model.FallValues = FallSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.RaiseEMA = RaiseEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
+            model.FallEMA = FallEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
             model.PageName = "Signals";
             return View(model);
         }
