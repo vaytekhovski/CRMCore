@@ -132,8 +132,8 @@ namespace CRM.Controllers.Charts
 
             var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
 
-            var RaiseEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), "raise").Result;
-            var FallEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), "fall").Result;
+            var RaiseEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "raise").Result;
+            var FallEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "fall").Result;
 
             //var FirstDate = RaiseSignals.signals.Last().time > FallSignals.signals.Last().time ? RaiseSignals.signals.Last().time : FallSignals.signals.Last().time;
 
@@ -215,8 +215,8 @@ namespace CRM.Controllers.Charts
             var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
 
 
-            var RaiseEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), "raise").Result;
-            var FallEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate), DateTime.Parse(model.EndDate), "fall").Result;
+            var RaiseEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "raise").Result;
+            var FallEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "fall").Result;
 
 
             TradeHistoryFilter filter = new TradeHistoryFilter
