@@ -337,7 +337,7 @@
     <script type="text/javascript">
         var USDTinput = document.getElementById('USDTBuyAmount');
         var Coininput = document.getElementById('CoinBuyAmount');
-        var Price = document.getElementById('Price').value;
+        var Price = document.getElementById('Price').value.replace(",", ".");
 
         USDTinput.oninput = function () {
             var USDT = USDTinput.value.replace("USDT", "");

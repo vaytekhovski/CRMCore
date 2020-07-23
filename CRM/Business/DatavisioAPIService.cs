@@ -120,8 +120,6 @@ namespace Business.DataVisioAPI
                 amount = 0
             };
 
-            tradeDealRequest.amount = Convert.ToDouble(GetDeal(token, DealId).Result.orders.Sum(x => x.amount));
-
             var jsonInString = JsonConvert.SerializeObject(tradeDealRequest);
 
             var Request = new HttpRequestMessage

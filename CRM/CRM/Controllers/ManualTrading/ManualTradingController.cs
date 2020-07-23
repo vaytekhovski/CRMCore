@@ -104,12 +104,13 @@ namespace CRM.Controllers.ManualTrading
         {
             var token = HttpContext.User.Identity.Name;
 
+            var amount = Convert.ToDouble(ViewModel.BuyAmount.ToString().Replace('.', ',').Replace(" " + ViewModel.Coin, ""));
             var response = datavisioAPIService.EnterDeal(token, new PlaceOrderRequest()
             {
                 exchange = "binance",
                 @base = ViewModel.Coin,
                 quote = "USDT",
-                amount = Convert.ToDouble(ViewModel.BuyAmount.ToString().Replace(',','.').Replace(" " + ViewModel.Coin, ""))
+                amount = amount
             }).Result;
 
             ViewModel.BuyAmount = "";

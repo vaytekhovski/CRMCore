@@ -45,6 +45,7 @@ namespace Business
             IgnoreIds.Add(new Field { Value = "8a6957d0-b66a-4a5a-8ec0-e7a3eacc7dbe", Name = "13" });
             IgnoreIds.Add(new Field { Value = "c63cb362-4d33-473e-8d79-cc88618057a4", Name = "14" });
             IgnoreIds.Add(new Field { Value = "8e892a02-27a5-4a82-aee4-5c6f6bbc0fb4", Name = "15" });
+            IgnoreIds.Add(new Field { Value = "777170de-275f-4703-a8f3-a4ca1282e1f5", Name = "16" });
 
         }
 
