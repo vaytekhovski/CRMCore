@@ -124,26 +124,29 @@ namespace CRM.Controllers.Charts
                 StartDate = DateTime.Parse(DatesHelper.CurrentDateTimeStr).AddDays(-1).ToString("yyyy-MM-ddTHH:mm"),
                 EndDate = DatesHelper.CurrentDateTimeStr
             };
-            
-
-            var token = HttpContext.User.Identity.Name;
-
-            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
-
-            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
-
-            var RaiseEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "raise").Result;
-            var FallEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "fall").Result;
-
-            //var FirstDate = RaiseSignals.signals.Last().time > FallSignals.signals.Last().time ? RaiseSignals.signals.Last().time : FallSignals.signals.Last().time;
-
-            //model.StartDate = FirstDate.AddHours(3).ToString("yyyy-MM-ddTHH:mm");
 
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
                 StartDate = DateTime.Parse(model.StartDate),
                 EndDate = DateTime.Parse(model.EndDate),
+                Coin = "BTC"
             };
+
+
+            var token = HttpContext.User.Identity.Name;
+
+            var RaiseSignals = datavisioAPIService.GetSignals(token, filter.Coin, "raise").Result;
+
+            var FallSignals = datavisioAPIService.GetSignals(token, filter.Coin, "fall").Result;
+
+            var RaiseEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "raise").Result;
+            var FallEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "fall").Result;
+
+            //var FirstDate = RaiseSignals.signals.Last().time > FallSignals.signals.Last().time ? RaiseSignals.signals.Last().time : FallSignals.signals.Last().time;
+
+            //model.StartDate = FirstDate.AddHours(3).ToString("yyyy-MM-ddTHH:mm");
+
+            
 
             RaiseSignals.signals = RaiseSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
@@ -203,28 +206,47 @@ namespace CRM.Controllers.Charts
             model.RaiseEMA = RaiseEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
             model.FallEMA = FallEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList(); 
             model.PageName = "Signals";
+            ViewBag.Coins = DropDownFields.GetCoins();
+
             return View(model);
         }
 
         [HttpPost]
         public IActionResult Signals(SignalsModel model)
         {
-
-            var token = HttpContext.User.Identity.Name;
-            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
-            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
-
-
-            var RaiseEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "raise").Result;
-            var FallEMA = datavisioAPIService.GetGraphs(token, "BTC", DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "fall").Result;
-
-
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
                 StartDate = DateTime.Parse(model.StartDate),
                 EndDate = DateTime.Parse(model.EndDate),
-            }; 
-            
+                Coin = model.Coin
+            };
+
+            var token = HttpContext.User.Identity.Name;
+            var RaiseSignals = datavisioAPIService.GetSignals(token, filter.Coin, "raise").Result;
+            var FallSignals = datavisioAPIService.GetSignals(token, filter.Coin, "fall").Result;
+
+
+            var RaiseEMA = new List<Graph>();
+            var FallEMA = new List<Graph>();
+
+
+            try
+            {
+                RaiseEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "raise").Result;
+
+            }
+            catch {
+            }
+
+            try
+            {
+                FallEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "fall").Result;
+            }
+            catch {
+            }
+
+
+
             RaiseSignals.signals = RaiseSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
@@ -281,6 +303,8 @@ namespace CRM.Controllers.Charts
             model.RaiseEMA = RaiseEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
             model.FallEMA = FallEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
             model.PageName = "Signals";
+            ViewBag.Coins = DropDownFields.GetCoins();
+
             return View(model);
         }
 

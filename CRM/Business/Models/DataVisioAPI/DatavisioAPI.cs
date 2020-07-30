@@ -117,9 +117,11 @@ namespace Business.Models.DataVisioAPI
 
     public class Graph
     {
-        public long time { get; set; }
         public DateTime Time { get; set; }
         public string time_str { get; set; }
+
+        public long time { get; set; }
+        public decimal proba { get; set; }
         public decimal bbl { get; set; }
         public decimal rsi { get; set; }
         public decimal lir { get; set; }
