@@ -30,6 +30,10 @@ namespace CRM.ViewModels.Charts
         public List<string> FallValues { get; set; }
         public List<string> FallEMA { get; set; }
         public List<string> RaiseEMA { get; set; }
+        public List<string> BBM { get; set; }
+        public List<string> BBL { get; set; }
+        public List<string> BBU { get; set; }
+
 
         public List<RaiseFallSignals> signals { get; set; }
     }

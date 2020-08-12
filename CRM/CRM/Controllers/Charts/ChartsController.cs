@@ -175,6 +175,10 @@ namespace CRM.Controllers.Charts
                 i++;
             }
 
+            model.BBL = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
+            model.BBM = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
+            model.BBU = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
+
             foreach (var signal in FallSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
@@ -252,7 +256,12 @@ namespace CRM.Controllers.Charts
                     Date = signal.time,
                     RaiseProba = signal.proba
                 });
+
             }
+
+            model.BBL = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
+            model.BBM = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
+            model.BBU = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
 
             foreach (var signal in FallSignals.signals)
             {

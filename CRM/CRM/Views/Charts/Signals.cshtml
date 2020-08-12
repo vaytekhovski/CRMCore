@@ -19,6 +19,10 @@
         var RaiseEMA = [];
         var FallEMA = [];
 
+        var BBL = [];
+        var BBM = [];
+        var BBU = [];
+
 
         @foreach (var item in Model.RaiseDates)
         {
@@ -64,7 +68,28 @@
         RaiseEMA.push(parseFloat(@item));
             </text>
 
-            }
+        }
+
+        @foreach(var item in Model.BBL)
+        {
+            <text>
+        BBL.push(parseFloat(@item));
+        </text>
+        }
+        
+        @foreach(var item in Model.BBM)
+        {
+            <text>
+        BBM.push(parseFloat(@item));
+        </text>
+        }
+        
+        @foreach(var item in Model.BBU)
+        {
+            <text>
+        BBU.push(parseFloat(@item));
+        </text>
+        }
 
         ctx = document.getElementById('myChart').getContext('2d');
 
@@ -103,6 +128,30 @@
                         fill: false,
                         type: 'scatter',
                         data: FallEMA,
+                    pointRadius: 0
+                },{
+                    label: 'BBL',
+                        borderColor: 'rgba(199, 222, 27, 0.8)',
+                        backgroundColor: 'rgba(199, 222, 27, 0.5)',
+                        fill: false,
+                        type: 'scatter',
+                        data: BBL,
+                    pointRadius: 0
+                },{
+                    label: 'BBM',
+                        borderColor: 'rgba(28, 214, 217, 0.8)',
+                        backgroundColor: 'rgba(28, 214, 217, 0.5)',
+                        fill: false,
+                        type: 'scatter',
+                        data: BBM,
+                    pointRadius: 0
+                },{
+                    label: 'BBU',
+                        borderColor: 'rgba(161, 26, 214, 0.8)',
+                        backgroundColor: 'rgba(161, 26, 214, 0.5)',
+                        fill: false,
+                        type: 'scatter',
+                        data: BBU,
                     pointRadius: 0
                 }]
             },
