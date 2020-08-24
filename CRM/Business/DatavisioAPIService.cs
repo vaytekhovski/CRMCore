@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Business.Models.DataVisioAPI;
 using CRM.Helpers;
@@ -15,10 +17,17 @@ namespace Business.DataVisioAPI
     public class DatavisioAPIService
     {
         private static HttpClient Client = new HttpClient();
+
+        private static string accountId = "";
         public DatavisioAPIService()
         {
-
         }
+
+        public static void setAccountId(string accountId)
+        {
+            DatavisioAPIService.accountId = accountId;
+        }
+
 
         public async Task<string> Authorization(LoginModel login)
         {
@@ -89,7 +98,7 @@ namespace Business.DataVisioAPI
             return response.id;
         }
 
-        public async Task<string> TradeDeal(string token,string DealId, double amount)
+        public async Task<string> TradeDeal(string token, string DealId, double amount)
         {
             TradeDealRequest tradeDealRequest = new TradeDealRequest
             {
@@ -178,10 +187,12 @@ namespace Business.DataVisioAPI
 
         public async Task<ListDeals> GetListDeals(string token)
         {
+
+
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/deals?limit=2000"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/deals?limit=2000"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -194,10 +205,11 @@ namespace Business.DataVisioAPI
 
         public async Task<ListDeals> GetListErrorDeals(string token)
         {
+
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/deals?failed=true"),
+                RequestUri = new Uri($"http://46.101.131.228/api/account/{accountId}/deals?failed=true"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -214,7 +226,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/deals/{DealId}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/account/{accountId}/deals/{DealId}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -250,10 +262,11 @@ namespace Business.DataVisioAPI
 
         public async Task<ShowAccount> ShowAccount(string token)
         {
+
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/account"),
+                RequestUri = new Uri($"http://46.101.131.228/api/account/{accountId}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -263,6 +276,24 @@ namespace Business.DataVisioAPI
 
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
             ShowAccount show = JsonConvert.DeserializeObject<ShowAccount>(response);
+            return show;
+        }
+
+        public async Task<List<ShowAccount>> ShowAccounts(string token)
+        {
+            var Request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts"),
+                Headers =
+                {
+                     { "Authorization", "Bearer " + token }
+                },
+                Content = new StringContent(string.Empty)
+            };
+
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            List<ShowAccount> show = JsonConvert.DeserializeObject<List<ShowAccount>>(response);
             return show;
         }
 

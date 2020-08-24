@@ -131,18 +131,19 @@ namespace Business.Models.DataVisioAPI
 
     public class ShowAccount
     {
-        public string Id { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
+        public string exchange { get; set; }
         public bool enabled { get; set; }
         public Pair[] pairs { get; set; }
     }
 
     public class Pair
     {
-        public string exchange { get; set; }
         public string @base { get; set; }
         public string coin { get; set; }
         public string quote { get; set; }
-        public decimal number { get; set; }
+        public string strategy { get; set; }
         public bool enabled { get; set; }
     }
 }

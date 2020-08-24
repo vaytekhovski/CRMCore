@@ -16,6 +16,7 @@ namespace Business.Models.DataVisioAPI
         public string @base { get; set; }
         public string coin { get; set; }
         public string quote { get; set; }
+        public string strategy { get; set; }
         public string type { get; set; }
         public decimal? income { get; set; }
         public decimal? outcome { get; set; }

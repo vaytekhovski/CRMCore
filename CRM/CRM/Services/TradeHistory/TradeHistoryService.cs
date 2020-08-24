@@ -23,13 +23,12 @@ namespace CRM.Services
 
         public TradeHistoryModel LoadDataToChart(TradeHistoryFilter filter, HttpContext httpContext)
         {
-            var model = new TradeHistoryModel();
 
             var token = httpContext.User.Identity.Name;
-            model.Deals = datavisioAPI.GetListDeals(token).Result;
+            //model.Deals = datavisioAPI.GetListDeals(token).Result;
 
 
-            return model;
+            return null;
         }
 
         public TradeHistoryModel Load(TradeHistoryFilter filter, HttpContext httpContext)

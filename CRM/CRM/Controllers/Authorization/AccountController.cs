@@ -10,6 +10,8 @@ using System;
 using Business;
 using Business.DataVisioAPI;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System.Threading;
 
 namespace AuthApp.Controllers
 {
@@ -45,7 +47,11 @@ namespace AuthApp.Controllers
 
             if (key != null)
             {
-                await Authenticate(key, model.Login);
+                var accounts = DatavisioAPIService.ShowAccounts(key).Result;
+                var accountId = accounts.FirstOrDefault(x => x.name == model.Login).id;
+
+                await Authenticate(accountId, key, model.Login);
+                DatavisioAPIService.setAccountId(accountId);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -61,11 +67,14 @@ namespace AuthApp.Controllers
             return View();
         }
 
-        public async Task Authenticate(string key, string login)
+        public async Task Authenticate(string accountId, string key, string login)
         {
+            
+
             // создаем один claim
             var claims = new List<Claim>
             {
+                new Claim("accountId", accountId),
                 new Claim(ClaimsIdentity.DefaultNameClaimType, key),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, login)
             };
