@@ -36,8 +36,9 @@ namespace CRM.Services
             var model = new TradeHistoryModel();
 
             var token = httpContext.User.Identity.Name;
+            var accountId = httpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            model.Deals = datavisioAPI.GetListDeals(token).Result;
+            model.Deals = datavisioAPI.GetListDeals(accountId, token).Result;
 
             if (filter.Coin != null)
                 model.Deals.deals = model.Deals.deals.Where(x => x.@base == filter.Coin).ToArray();

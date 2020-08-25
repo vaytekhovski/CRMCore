@@ -12,6 +12,7 @@ using CRM.Services;
 using CRM.Services.Pagination;
 using CRM.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRM.Controllers
@@ -28,6 +29,7 @@ namespace CRM.Controllers
         {
             _tradeHistoryService = new TradeHistoryService();
             _paginationService = new PaginationService();
+
             datavisioAPI = new DatavisioAPIService();
 
         }
@@ -38,11 +40,13 @@ namespace CRM.Controllers
             List<Order> orders = new List<Order>();
 
             var token = HttpContext.User.Identity.Name;
-            var deals = datavisioAPI.GetListDeals(token).Result.deals.ToList();
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
+            var deals = datavisioAPI.GetListDeals(accountId, token).Result.deals.ToList();
 
             foreach (var deal in deals)
             {
-                List<Order> Buf = datavisioAPI.GetDeal(token, deal.id).Result.orders.Where(x => x.status == "failed").ToList();
+                List<Order> Buf = datavisioAPI.GetDeal(accountId, token, deal.id).Result.orders.Where(x => x.status == "failed").ToList();
                 foreach (var order in Buf)
                 {
                     order.coin = deal.@base;

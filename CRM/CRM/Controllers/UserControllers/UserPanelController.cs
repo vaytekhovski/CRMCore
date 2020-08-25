@@ -22,6 +22,7 @@ namespace CRM.Controllers.User
 
         public UserPanelController()
         {
+
             datavisioAPIService = new DatavisioAPIService();
             balancesService = new BalancesService();
 
@@ -31,8 +32,10 @@ namespace CRM.Controllers.User
         public async Task<ActionResult> UserPanel(UserPanelModel model)
         {
             var token = HttpContext.User.Identity.Name;
-            model.Balances = await balancesService.LoadBalancesAsync(token);
-            model.AccountData = datavisioAPIService.ShowAccount(token).Result;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
+            model.Balances = await balancesService.LoadBalancesAsync(accountId, token);
+            model.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
 
             foreach (var pair in model.AccountData.pairs)
             {
@@ -46,8 +49,10 @@ namespace CRM.Controllers.User
         [HttpPost]
         public async Task<ActionResult> ChangeEnabling(UserPanelModel model)
         {
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
             var token = HttpContext.User.Identity.Name;
-            var AccountData = datavisioAPIService.ShowAccount(token).Result;
+            var AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
 
             foreach (var pair in model.AccountData.pairs)
             {
@@ -55,11 +60,11 @@ namespace CRM.Controllers.User
                 {
                     if (pair.enabled)
                     {
-                        await datavisioAPIService.EnablePair(token, pair.coin);
+                        await datavisioAPIService.EnablePair(accountId, token, pair.coin);
                     }
                     else
                     {
-                        await datavisioAPIService.DisablePair(token, pair.coin);
+                        await datavisioAPIService.DisablePair(accountId, token, pair.coin);
                     }
                 }
             }

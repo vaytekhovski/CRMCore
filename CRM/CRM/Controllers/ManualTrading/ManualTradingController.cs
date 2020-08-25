@@ -29,6 +29,7 @@ namespace CRM.Controllers.ManualTrading
         public ManualTradingController()
         {
             manualTradingService = new ManualTradingService();
+
             datavisioAPIService = new DatavisioAPIService();
             balancesService = new BalancesService();
 
@@ -50,9 +51,10 @@ namespace CRM.Controllers.ManualTrading
             ViewModel.TimeRange = 1;
 
             var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
 
-            ViewModel = manualTradingService.Load(ViewModel, token).Result;
+            ViewModel = manualTradingService.Load(accountId, ViewModel, token).Result;
 
             if (ViewModel.CoinPrices.Count != 0)
             {
@@ -77,8 +79,9 @@ namespace CRM.Controllers.ManualTrading
         public async Task<ActionResult> Trade(ManualTradingModel ViewModel)
         {
             var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            ViewModel = manualTradingService.Load(ViewModel, token).Result;
+            ViewModel = manualTradingService.Load(accountId, ViewModel, token).Result;
 
             if (ViewModel.CoinPrices.Count != 0)
             {
@@ -104,8 +107,10 @@ namespace CRM.Controllers.ManualTrading
         {
             var token = HttpContext.User.Identity.Name;
 
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
             var amount = Convert.ToDouble(ViewModel.BuyAmount.ToString().Replace(',', '.').Replace(" " + ViewModel.Coin, ""));
-            var response = datavisioAPIService.EnterDeal(token, new PlaceOrderRequest()
+            var response = datavisioAPIService.EnterDeal(accountId, token, new PlaceOrderRequest()
             {
                 exchange = "binance",
                 @base = ViewModel.Coin,
@@ -122,8 +127,9 @@ namespace CRM.Controllers.ManualTrading
         public IActionResult Sell(string DealId)
         {
             var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            var response = datavisioAPIService.LeaveDeal(token, DealId).Result;
+            var response = datavisioAPIService.LeaveDeal(accountId, token, DealId).Result;
 
             return RedirectToAction("Trade", "ManualTrading");
         }
@@ -131,8 +137,9 @@ namespace CRM.Controllers.ManualTrading
         public async Task<IActionResult> GetDeal(string DealId)
         {
             var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            var response = datavisioAPIService.GetDeal(token, DealId).Result;
+            var response = datavisioAPIService.GetDeal(accountId, token, DealId).Result;
             response.coin = response.@base;
 
             Stopwatch stopwatch = new Stopwatch();
@@ -140,7 +147,7 @@ namespace CRM.Controllers.ManualTrading
             GetDealModel Model = new GetDealModel()
             {
                 Deal = response,
-                balancesModel = await balancesService.LoadBalancesAsync(token, "USDT")
+                balancesModel = await balancesService.LoadBalancesAsync(accountId, token)
             };
 
             stopwatch.Stop();
@@ -168,10 +175,11 @@ namespace CRM.Controllers.ManualTrading
         public IActionResult TradeDeal(GetDealModel Model)
         {
             var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
             double amount = Convert.ToDouble(Model.BuyAmount.ToString().Replace(',', '.').Replace(" " + Model.Deal.coin, ""));
 
-            var response = datavisioAPIService.TradeDeal(token, Model.Deal.id, amount).Result;
+            var response = datavisioAPIService.TradeDeal(accountId, token, Model.Deal.id, amount).Result;
 
             return RedirectToAction("GetDeal", "ManualTrading", new {DealId = Model.Deal.id });
         }

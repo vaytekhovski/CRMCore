@@ -18,16 +18,9 @@ namespace Business.DataVisioAPI
     {
         private static HttpClient Client = new HttpClient();
 
-        private static string accountId = "";
         public DatavisioAPIService()
         {
         }
-
-        public static void setAccountId(string accountId)
-        {
-            DatavisioAPIService.accountId = accountId;
-        }
-
 
         public async Task<string> Authorization(LoginModel login)
         {
@@ -40,12 +33,12 @@ namespace Business.DataVisioAPI
             return authenticationResnose.token;
         }
 
-        public async Task<WalletCurrency> GetBalance(string token, string CoinBase)
+        public async Task<WalletCurrency> GetBalance(string accountId, string token, string CoinBase)
         {
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/exchange/binance/wallets/{CoinBase}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/balance/debit/{CoinBase}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -53,18 +46,19 @@ namespace Business.DataVisioAPI
                 Content = new StringContent(string.Empty)
             };
 
-            WalletCurrency walletCurrency = JsonConvert.DeserializeObject<WalletCurrency>(await Client.SendAsync(Request).Result.Content.ReadAsStringAsync());
+            var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            WalletCurrency walletCurrency = JsonConvert.DeserializeObject<WalletCurrency>(response);
             walletCurrency.coin = CoinBase;
 
             return walletCurrency;
         }
 
-        public async Task GetBalance(string token)
+        public async Task GetBalance(string accountId, string token)
         {
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/exchange/binance/wallets"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/balance/debit"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -77,7 +71,7 @@ namespace Business.DataVisioAPI
             
         }
 
-        public async Task<string> EnterDeal(string token, PlaceOrderRequest placeOrderModel)
+        public async Task<string> EnterDeal(string accountId, string token, PlaceOrderRequest placeOrderModel)
         {
 
             var jsonInString = JsonConvert.SerializeObject(placeOrderModel);
@@ -85,7 +79,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/deals"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/deals"),
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
@@ -98,7 +92,7 @@ namespace Business.DataVisioAPI
             return response.id;
         }
 
-        public async Task<string> TradeDeal(string token, string DealId, double amount)
+        public async Task<string> TradeDeal(string accountId, string token, string DealId, double amount)
         {
             TradeDealRequest tradeDealRequest = new TradeDealRequest
             {
@@ -109,7 +103,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/deals/{DealId}/trade"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/deals/{DealId}/trade"),
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
@@ -122,7 +116,7 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<string>(response);
         }
 
-        public async Task<string> LeaveDeal(string token, string DealId)
+        public async Task<string> LeaveDeal(string accountId, string token, string DealId)
         {
             TradeDealRequest tradeDealRequest = new TradeDealRequest
             {
@@ -134,7 +128,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/deals/{DealId}/leave"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/deals/{DealId}/leave"),
                 Headers =
                 {
                     { "Authorization", "Bearer " + token }
@@ -173,7 +167,7 @@ namespace Business.DataVisioAPI
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/exchange/binance/{CoinBase}/usdt/candles?frame=1&since={Since}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/exchanges/binance/candles/{CoinBase}/usdt?frame=1&since={Since}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -185,10 +179,8 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<Candles[]>(response);
         }
 
-        public async Task<ListDeals> GetListDeals(string token)
+        public async Task<ListDeals> GetListDeals(string accountId, string token)
         {
-
-
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -203,7 +195,7 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<ListDeals>(response);
         }
 
-        public async Task<ListDeals> GetListErrorDeals(string token)
+        public async Task<ListDeals> GetListErrorDeals(string accountId, string token)
         {
 
             var Request = new HttpRequestMessage
@@ -221,12 +213,12 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<ListDeals>(response);
         }
 
-        public async Task<Deal> GetDeal(string token, string DealId)
+        public async Task<Deal> GetDeal(string accountId, string token, string DealId)
         {
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/{accountId}/deals/{DealId}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/deals/{DealId}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -260,13 +252,13 @@ namespace Business.DataVisioAPI
             return graphs.ToList();
         }
 
-        public async Task<ShowAccount> ShowAccount(string token)
+        public async Task<ShowAccount> ShowAccount(string accountId, string token)
         {
 
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/{accountId}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -297,13 +289,13 @@ namespace Business.DataVisioAPI
             return show;
         }
 
-        public async Task EnablePair(string token, string @base)
+        public async Task EnablePair(string accountId, string token, string @base)
         {
             string quote = "usdt";
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/binance/{@base}/{quote}/enable"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/pairs/{@base}/{quote}/enable"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -313,13 +305,13 @@ namespace Business.DataVisioAPI
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
         }
 
-        public async Task DisablePair(string token, string @base)
+        public async Task DisablePair(string accountId, string token, string @base)
         {
             string quote = "usdt";
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://46.101.131.228/api/account/binance/{@base}/{quote}/disable"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/pairs/{@base}/{quote}/disable"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }

@@ -51,7 +51,6 @@ namespace AuthApp.Controllers
                 var accountId = accounts.FirstOrDefault(x => x.name == model.Login).id;
 
                 await Authenticate(accountId, key, model.Login);
-                DatavisioAPIService.setAccountId(accountId);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -76,7 +75,7 @@ namespace AuthApp.Controllers
             {
                 new Claim("accountId", accountId),
                 new Claim(ClaimsIdentity.DefaultNameClaimType, key),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, login)
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, login),
             };
 
             // создаем объект ClaimsIdentity

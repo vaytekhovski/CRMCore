@@ -27,7 +27,7 @@ namespace CRM.Services
             balancesService = new BalancesService();
         }
 
-        public async Task<ManualTradingModel> Load(ManualTradingModel ViewModel, string token)
+        public async Task<ManualTradingModel> Load(string accountId, ManualTradingModel ViewModel, string token)
         {
             var now = DateTime.UtcNow;
 
@@ -35,7 +35,7 @@ namespace CRM.Services
 
             Signals signals = datavisioAPI.GetSignals(token, ViewModel.Coin, "raise").Result;
 
-            ViewModel.Deals = datavisioAPI.GetListDeals(token).Result;
+            ViewModel.Deals = datavisioAPI.GetListDeals(accountId, token).Result;
 
 
             var IgnoreIds = DropDownFields.GetIgnoreIds();
@@ -187,7 +187,7 @@ namespace CRM.Services
 
             
 
-            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(token, "USDT");
+            ViewModel.balancesModel = await balancesService.LoadBalancesAsync(accountId, token);
 
 
             ViewModel.Graphs = datavisioAPI.GetGraphs(token, ViewModel.Coin, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;

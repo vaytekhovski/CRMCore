@@ -24,7 +24,9 @@ namespace CRM.Services.Statistics
             var model = new StatisticsModel();
 
             var token = httpContext.User.Identity.Name;
-            Business.Models.DataVisioAPI.ListDeals deals = datavisioAPI.GetListDeals(token).Result;
+            var accountId = httpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
+            Business.Models.DataVisioAPI.ListDeals deals = datavisioAPI.GetListDeals(accountId, token).Result;
 
             if (filter.Coin != null)
                 deals.deals = deals.deals.Where(x => x.@base == filter.Coin).ToArray();

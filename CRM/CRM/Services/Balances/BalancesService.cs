@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,23 +23,23 @@ namespace CRM.Services.Balances
         }
         DatavisioAPIService datavisioAPIService;
 
-        public async Task<BalancesModel> LoadBalancesAsync(string token)
+        public async Task<BalancesModel> LoadBalancesAsync(string accountId, string token)
         {
             BalancesModel balancesModel = new BalancesModel();
 
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "USDT").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "BTC").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "ETH").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "LTC").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, "XRP").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "USDT").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "BTC").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "ETH").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "LTC").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "XRP").Result);
 
             return balancesModel;
         }
 
-        public async Task<BalancesModel> LoadBalancesAsync(string token, string Coin)
+        public async Task<BalancesModel> LoadBalancesAsync(string accountId, string token, string Coin)
         {
             BalancesModel balancesModel = new BalancesModel();
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(token, Coin).Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, Coin).Result);
 
             return balancesModel;
         }
