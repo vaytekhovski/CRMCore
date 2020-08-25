@@ -50,7 +50,7 @@ namespace AuthApp.Controllers
                 var accounts = DatavisioAPIService.ShowAccounts(key).Result;
                 var accountId = accounts.FirstOrDefault(x => x.name == model.Login).id;
 
-                await Authenticate(accountId, key, model.Login);
+                await Authenticate(HttpContext, accountId, key, model.Login);
                 return RedirectToAction("Index", "Home");
             }
 
@@ -66,7 +66,7 @@ namespace AuthApp.Controllers
             return View();
         }
 
-        public async Task Authenticate(string accountId, string key, string login)
+        public static async Task Authenticate(HttpContext httpContext, string accountId, string key, string login)
         {
             
 
@@ -82,7 +82,7 @@ namespace AuthApp.Controllers
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
            
             // установка аутентификационных куки
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
 
         }
 

@@ -1,6 +1,7 @@
 ﻿using Business.Models.DataVisioAPI;
 using CRM.ViewModels.Balances;
 using System;
+using System.Collections.Generic;
 
 namespace CRM.ViewModels
 {
@@ -14,5 +15,6 @@ namespace CRM.ViewModels
         public ShowAccount AccountData { get; set; }
 
         public BalancesModel Balances { get; set; }
+        public List<ShowAccount> Accounts { get; set; }
     }
 }

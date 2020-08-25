@@ -36,7 +36,7 @@ namespace CRM.Controllers.User
 
             model.Balances = await balancesService.LoadBalancesAsync(accountId, token);
             model.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
-
+            model.Accounts = datavisioAPIService.ShowAccounts(token).Result;
             foreach (var pair in model.AccountData.pairs)
             {
                 pair.coin = pair.@base;
@@ -72,7 +72,13 @@ namespace CRM.Controllers.User
             return RedirectToAction("UserPanel", "UserPanel");
         }
 
-        
+        public async Task<IActionResult> SwitchAccount(string accountId, string Name)
+        {
+            await AccountController.Authenticate(HttpContext, accountId, HttpContext.User.Identity.Name, Name);
+            return RedirectToAction("UserPanel", "UserPanel");
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> ExitFromAccount()
         {
