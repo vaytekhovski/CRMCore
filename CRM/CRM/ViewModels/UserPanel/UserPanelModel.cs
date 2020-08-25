@@ -13,8 +13,8 @@ namespace CRM.ViewModels
         public DateTime RegistrationDate { get; set; }
 
         public ShowAccount AccountData { get; set; }
+        public List<ShowAccount> Accounts { get; set; }
 
         public BalancesModel Balances { get; set; }
-        public List<ShowAccount> Accounts { get; set; }
     }
 }

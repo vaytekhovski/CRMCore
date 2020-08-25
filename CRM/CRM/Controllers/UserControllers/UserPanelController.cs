@@ -72,10 +72,17 @@ namespace CRM.Controllers.User
             return RedirectToAction("UserPanel", "UserPanel");
         }
 
-        public async Task<IActionResult> SwitchAccount(string accountId, string Name)
+        public async Task<IActionResult> SwitchAccount(string accountId, string Name, string returnUrl = "")
         {
             await AccountController.Authenticate(HttpContext, accountId, HttpContext.User.Identity.Name, Name);
-            return RedirectToAction("UserPanel", "UserPanel");
+            if (returnUrl == "")
+            {
+                return RedirectToAction("UserPanel", "UserPanel");
+            }
+            else
+            {
+                return Redirect(returnUrl);
+            }
         }
 
 

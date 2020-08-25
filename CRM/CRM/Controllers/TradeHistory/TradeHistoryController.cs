@@ -22,7 +22,7 @@ namespace CRM.Controllers
     {
         private readonly TradeHistoryService _tradeHistoryService;
         private readonly PaginationService _paginationService;
-        private readonly DatavisioAPIService datavisioAPI;
+        private readonly DatavisioAPIService datavisioAPIService;
 
 
         public TradeHistoryController()
@@ -30,7 +30,7 @@ namespace CRM.Controllers
             _tradeHistoryService = new TradeHistoryService();
             _paginationService = new PaginationService();
 
-            datavisioAPI = new DatavisioAPIService();
+            datavisioAPIService = new DatavisioAPIService();
 
         }
 
@@ -42,11 +42,11 @@ namespace CRM.Controllers
             var token = HttpContext.User.Identity.Name;
             var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            var deals = datavisioAPI.GetListDeals(accountId, token).Result.deals.ToList();
+            var deals = datavisioAPIService.GetListDeals(accountId, token).Result.deals.ToList();
 
             foreach (var deal in deals)
             {
-                List<Order> Buf = datavisioAPI.GetDeal(accountId, token, deal.id).Result.orders.Where(x => x.status == "failed").ToList();
+                List<Order> Buf = datavisioAPIService.GetDeal(accountId, token, deal.id).Result.orders.Where(x => x.status == "failed").ToList();
                 foreach (var order in Buf)
                 {
                     order.coin = deal.@base;
@@ -90,6 +90,14 @@ namespace CRM.Controllers
             viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
+
+
+            var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
+            viewModel.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
+            viewModel.Accounts = datavisioAPIService.ShowAccounts(token).Result;
+
             ViewBag.Coins = DropDownFields.GetCoins().Where(x=> HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "LTC" : true);
             return View(viewModel);
         }
@@ -126,6 +134,15 @@ namespace CRM.Controllers
             viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
+
+
+
+            var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
+            viewModel.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
+            viewModel.Accounts = datavisioAPIService.ShowAccounts(token).Result;
+
             ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "LTC" : true); ;
             return View(viewModel);
         }

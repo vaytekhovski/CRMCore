@@ -20,9 +20,18 @@
 
 
         <div class="filter_element">
-            <button type="submit" id="TradeHistory" class="btn filter_button btn-primary" formaction="../TradeHistory/TradeHistory" formmethod="post">
-                Показать историю
+            <button type="submit" id="TradeHistory" class="btn short_filter_button btn-primary" formaction="../TradeHistory/TradeHistory" formmethod="post">
+                Показать
             </button>
+        </div>
+        <div class="filter_element">
+            @foreach (var account in Model.Accounts)
+            {
+                <a class="btn short_filter_button" style=" font-size: 25px; color: black; background-color: @(@account.name != @Model.AccountData.name ? "white" : "#a76be3")" href="../UserPanel/SwitchAccount?&accountId=@account.id&Name=@account.name&returnUrl=../TradeHistory/TradeHistory">
+                    @account.name
+                </a>
+
+            }
         </div>
     </div>
 

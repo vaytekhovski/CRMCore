@@ -10,6 +10,8 @@ namespace CRM.ViewModels
         {
         }
 
+        public ShowAccount AccountData { get; set; }
+        public List<ShowAccount> Accounts { get; set; }
         public string Id { get; set; }
         public string Action { get; set; }
         public int CountOfPages { get; set; }
