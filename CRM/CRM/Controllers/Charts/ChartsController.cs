@@ -25,7 +25,7 @@ namespace CRM.Controllers.Charts
 
         public ChartsController()
         {
-            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+            //var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
             _tradeHistoryService = new TradeHistoryService();
 
             datavisioAPIService = new DatavisioAPIService();

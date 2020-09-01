@@ -19,7 +19,7 @@ namespace CRM.Controllers.Statistics
 
         public StatisticsController()
         {
-            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+            //var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
             _statisticsService = new StatisticsService();
             _paginationService = new PaginationService();
