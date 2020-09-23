@@ -10,62 +10,62 @@
 
         CHART = document.getElementById('Chart');
 
-        var RaiseDates = [];
-        var FallDates = [];
+        var boostDates = [];
+        var logregDates = [];
 
-        var RaiseValues = [];
-        var FallValues = [];
+        var boostValues = [];
+        var logregValues = [];
 
-        var RaiseEMA = [];
-        var FallEMA = [];
+        var boostEMA = [];
+        var logregEMA = [];
 
         var BBL = [];
         var BBM = [];
         var BBU = [];
 
 
-        @foreach (var item in Model.RaiseDates)
+        @foreach (var item in Model.boostDates)
         {
             <text>
-        RaiseDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
+        boostDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
             </text>
         }
 
-        @foreach (var item in Model.RaiseValues)
+        @foreach (var item in Model.boostValues)
         {
             <text>
-        RaiseValues.push(parseFloat(@item));
+        boostValues.push(parseFloat(@item));
             </text>
 
             }
 
-        @foreach (var item in Model.FallDates)
+        @foreach (var item in Model.logregDates)
         {
             <text>
-        FallDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
+        logregDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
             </text>
         }
 
-        @foreach (var item in Model.FallValues)
+        @foreach (var item in Model.logregValues)
         {
             <text>
-        FallValues.push(parseFloat(@item));
+        logregValues.push(parseFloat(@item));
             </text>
 
             } 
 
-        @foreach (var item in Model.FallEMA)
+        @foreach (var item in Model.logregEMA)
         {
             <text>
-        FallEMA.push(parseFloat(@item));
+        logregEMA.push(parseFloat(@item));
             </text>
 
             } 
 
-        @foreach (var item in Model.RaiseEMA)
+        @foreach (var item in Model.boostEMA)
         {
             <text>
-        RaiseEMA.push(parseFloat(@item));
+        boostEMA.push(parseFloat(@item));
             </text>
 
         }
@@ -96,38 +96,38 @@
         var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: RaiseDates,
+                labels: boostDates,
                 datasets: [{
-                    label: 'Raise Proba',
+                    label: 'boost Proba',
                     borderColor: 'rgba(23, 227, 101, 0.8)',
                     backgroundColor: 'rgba(23, 227, 101, 0.5)',
                     fill: false,
                     type: 'scatter',
-                    data: RaiseValues,
+                    data: boostValues,
                     pointRadius:0
                 }, {
-                    label: 'Fall Proba',
+                    label: 'logreg Proba',
                     borderColor: 'rgba(219, 22, 22, 0.8)',
                     backgroundColor: 'rgba(219, 22, 22, 0.5)',
                         fill: false,
                         type: 'scatter',
-                    data: FallValues,
+                    data: logregValues,
                     pointRadius: 0
                 },{
-                    label: 'Raise EMA',
+                    label: 'boost EMA',
                         borderColor: 'rgba(33, 79, 219, 0.8)',
                         backgroundColor: 'rgba(33, 79, 219, 0.5)',
                         fill: false,
                         type: 'scatter',
-                        data: RaiseEMA,
+                        data: boostEMA,
                     pointRadius: 0
                 },{
-                    label: 'Fall EMA',
+                    label: 'logreg EMA',
                         borderColor: 'rgba(33, 219, 160, 0.8)',
                         backgroundColor: 'rgba(33, 219, 160, 0.5)',
                         fill: false,
                         type: 'scatter',
-                        data: FallEMA,
+                        data: logregEMA,
                     pointRadius: 0
                 },{
                     label: 'BBL',
@@ -185,22 +185,22 @@
     @Html.ValidationSummary()
 
     <div style="height:30%; width:80%;margin: 0 auto;">
-        <canvas id="myChart"  style="display: @(Model.RaiseValues.Count != 0 ? "block" : "none")"></canvas>
+        <canvas id="myChart"  style="display: @(Model.boostValues.Count != 0 ? "block" : "none")"></canvas>
     </div>
     <div style=" padding-left: 350px; padding-right: 350px;">
         <a href="~/Charts/ExportToCSV/?start=@Model.StartDate&end=@Model.EndDate">Скачать</a>
         <table class=" table table-bordered table-font">
             <tr>
                 <th>Дата</th>
-                <th>Raise proba</th>
-                <th>Fall proba</th>
+                <th>boost proba</th>
+                <th>logreg proba</th>
             </tr>
             @foreach (var item in Model.signals)
             {
                 <tr>
                     <td>@item.Date</td>
-                    <td>@item.RaiseProba</td>
-                    <td>@item.FallProba</td>
+                    <td>@item.boostProba</td>
+                    <td>@item.logregProba</td>
                 </tr>
             }
 

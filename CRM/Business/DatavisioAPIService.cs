@@ -231,11 +231,10 @@ namespace Business.DataVisioAPI
             return Deal;
         }
 
-        public async Task<List<Graph>> GetGraphs(string token, string CoinBase, DateTime StartDate, DateTime EndDate, string source = "raise")
+        public async Task<List<Graph>> GetGraphs(string token, string CoinBase, DateTime StartDate, DateTime EndDate, string source = "boost")
         {
             var since = ((DateTimeOffset)StartDate).ToUnixTimeSeconds();
             var limit = Convert.ToInt32((EndDate - StartDate).TotalMinutes);
-
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,

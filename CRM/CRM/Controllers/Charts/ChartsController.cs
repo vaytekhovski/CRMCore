@@ -70,7 +70,7 @@ namespace CRM.Controllers.Charts
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            var model = _tradeHistoryService.LoadDataToChart(filter, HttpContext);
+            var model = _tradeHistoryService.Load(filter, HttpContext);
 
             ViewModel.Dates = model.Deals.deals.Select(x => x.closed.ToJavascriptTicks()).ToList();
             ViewModel.Values = model.Deals.deals.Select(x => x.profit.clean.amount.ToString(SeparateHelper.Separator)).ToList();
@@ -87,44 +87,16 @@ namespace CRM.Controllers.Charts
             return View(ViewModel);
         }
 
-        [HttpGet]
-        public ActionResult OrdersOnTimeHistory()
-        {
-            var viewModel = new OrdersOnTimeHistoryViewModel
-            {
-                PageName = "OrdersOnTimeHistory",
-                StartDate = DatesHelper.MinDateStr,
-                EndDate = DatesHelper.CurrentDateStr
-            };
-            ViewBag.Coins = DropDownFields.GetCoins();
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public ActionResult OrdersOnTimeHistory(OrdersOnTimeHistoryViewModel ViewModel)
-        {
-            TradeHistoryFilter filter = new TradeHistoryFilter
-            {
-                Coin = ViewModel.Coin,
-                Account = ViewModel.Account,
-                StartDate = DateTime.Parse(ViewModel.StartDate),
-                EndDate = DateTime.Parse(ViewModel.EndDate).AddDays(1),
-            };
-            
-
-            ViewBag.Coins = DropDownFields.GetCoins();
-            ViewModel.PageName = "Orders On TimeHistory";
-
-
-            return View(ViewModel);
-        }
+        
 
         [HttpGet]
         public IActionResult Signals()
         {
             SignalsModel model = new SignalsModel() {
-                StartDate = DateTime.Parse(DatesHelper.CurrentDateTimeStr).AddDays(-1).ToString("yyyy-MM-ddTHH:mm"),
-                EndDate = DatesHelper.CurrentDateTimeStr
+                //StartDate = DateTime.Parse(DatesHelper.CurrentDateTimeStr).AddDays(-1).ToString("yyyy-MM-ddTHH:mm"),
+                StartDate = DateTime.UtcNow.AddDays(-5).ToString("yyyy-MM-ddTHH:mm"),
+            //EndDate = DatesHelper.CurrentDateTimeStr
+            EndDate = DateTime.UtcNow.AddDays(-4).ToString("yyyy-MM-ddTHH:mm"),
             };
 
             TradeHistoryFilter filter = new TradeHistoryFilter
@@ -137,54 +109,54 @@ namespace CRM.Controllers.Charts
 
             var token = HttpContext.User.Identity.Name;
 
-            var RaiseSignals = datavisioAPIService.GetSignals(token, filter.Coin, "raise").Result;
+            var boostSignals = datavisioAPIService.GetSignals(token, filter.Coin, "boost").Result;
 
-            var FallSignals = datavisioAPIService.GetSignals(token, filter.Coin, "fall").Result;
+            var logregSignals = datavisioAPIService.GetSignals(token, filter.Coin, "logreg").Result;
 
-            var RaiseEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "raise").Result;
-            var FallEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "fall").Result;
+            var boostEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "boost").Result;
+            var logregEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logreg").Result;
 
-            //var FirstDate = RaiseSignals.signals.Last().time > FallSignals.signals.Last().time ? RaiseSignals.signals.Last().time : FallSignals.signals.Last().time;
+            //var FirstDate = boostSignals.signals.Last().time > logregSignals.signals.Last().time ? boostSignals.signals.Last().time : logregSignals.signals.Last().time;
 
             //model.StartDate = FirstDate.AddHours(3).ToString("yyyy-MM-ddTHH:mm");
 
             
 
-            RaiseSignals.signals = RaiseSignals.signals
+            boostSignals.signals = boostSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
                 .ToArray();
 
 
-            FallSignals.signals = FallSignals.signals
+            logregSignals.signals = logregSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
                 .ToArray();
 
 
-            model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3)).ToList();
-            model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.boostDates = boostSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.logregDates = logregSignals.signals.Select(x => x.time.AddHours(3)).ToList();
             int i = 0;
-            foreach (var signal in RaiseSignals.signals)
+            foreach (var signal in boostSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
-                model.signals.Add(new RaiseFallSignals
+                model.signals.Add(new boostlogregSignals
                 {
                     Id = i,
                     Date = signal.time,
-                    RaiseProba = signal.proba
+                    boostProba = signal.proba
                 });
                 i++;
             }
 
-            model.BBL = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
-            model.BBM = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
-            model.BBU = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
+            model.BBL = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
+            model.BBM = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
+            model.BBU = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
 
-            foreach (var signal in FallSignals.signals)
+            foreach (var signal in logregSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
@@ -192,25 +164,25 @@ namespace CRM.Controllers.Charts
                 var sign = model.signals.FirstOrDefault(x => x.Date == signal.time);
                 if (sign != null)
                 {
-                    sign.FallProba = signal.proba;
+                    sign.logregProba = signal.proba;
                 }
                 else
                 {
-                    model.signals.Add(new RaiseFallSignals
+                    model.signals.Add(new boostlogregSignals
                     {
                         Id = i,
                         Date = signal.time,
-                        FallProba = signal.proba
+                        logregProba = signal.proba
                     });
                     i++;
                 }
             }
 
 
-            model.RaiseValues = RaiseSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
-            model.FallValues = FallSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
-            model.RaiseEMA = RaiseEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
-            model.FallEMA = FallEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList(); 
+            model.boostValues = boostSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.logregValues = logregSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.boostEMA = boostEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
+            model.logregEMA = logregEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList(); 
             model.PageName = "Signals";
             ViewBag.Coins = DropDownFields.GetCoins();
 
@@ -228,17 +200,17 @@ namespace CRM.Controllers.Charts
             };
 
             var token = HttpContext.User.Identity.Name;
-            var RaiseSignals = datavisioAPIService.GetSignals(token, filter.Coin, "raise").Result;
-            var FallSignals = datavisioAPIService.GetSignals(token, filter.Coin, "fall").Result;
+            var boostSignals = datavisioAPIService.GetSignals(token, filter.Coin, "boost").Result;
+            var logregSignals = datavisioAPIService.GetSignals(token, filter.Coin, "logreg").Result;
 
 
-            var RaiseEMA = new List<Graph>();
-            var FallEMA = new List<Graph>();
+            var boostEMA = new List<Graph>();
+            var logregEMA = new List<Graph>();
 
 
             try
             {
-                RaiseEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "raise").Result;
+                boostEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "boost").Result;
 
             }
             catch {
@@ -246,21 +218,21 @@ namespace CRM.Controllers.Charts
 
             try
             {
-                FallEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "fall").Result;
+                logregEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logreg").Result;
             }
             catch {
             }
 
 
 
-            RaiseSignals.signals = RaiseSignals.signals
+            boostSignals.signals = boostSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
                 .ToArray();
 
 
-            FallSignals.signals = FallSignals.signals
+            logregSignals.signals = logregSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
@@ -268,26 +240,26 @@ namespace CRM.Controllers.Charts
 
 
 
-            model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3)).ToList();
-            model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.boostDates = boostSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.logregDates = logregSignals.signals.Select(x => x.time.AddHours(3)).ToList();
 
-            foreach (var signal in RaiseSignals.signals)
+            foreach (var signal in boostSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
-                model.signals.Add(new RaiseFallSignals
+                model.signals.Add(new boostlogregSignals
                 {
                     Date = signal.time,
-                    RaiseProba = signal.proba
+                    boostProba = signal.proba
                 });
 
             }
 
-            model.BBL = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
-            model.BBM = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
-            model.BBU = RaiseSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
+            model.BBL = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
+            model.BBM = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
+            model.BBU = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
 
-            foreach (var signal in FallSignals.signals)
+            foreach (var signal in logregSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
@@ -295,24 +267,24 @@ namespace CRM.Controllers.Charts
                 var sign = model.signals.FirstOrDefault(x => x.Date == signal.time);
                 if(sign != null)
                 {
-                    sign.FallProba = signal.proba;
+                    sign.logregProba = signal.proba;
                 }
                 else
                 {
-                    model.signals.Add(new RaiseFallSignals
+                    model.signals.Add(new boostlogregSignals
                     {
                         Date = signal.time,
-                        FallProba = signal.proba
+                        logregProba = signal.proba
                     });
                 }
             }
 
             
 
-            model.RaiseValues = RaiseSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
-            model.FallValues = FallSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
-            model.RaiseEMA = RaiseEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
-            model.FallEMA = FallEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
+            model.boostValues = boostSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.logregValues = logregSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.boostEMA = boostEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
+            model.logregEMA = logregEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
             model.PageName = "Signals";
             ViewBag.Coins = DropDownFields.GetCoins();
 
@@ -329,8 +301,8 @@ namespace CRM.Controllers.Charts
             };
 
             var token = HttpContext.User.Identity.Name;
-            var RaiseSignals = datavisioAPIService.GetSignals(token, "BTC", "raise").Result;
-            var FallSignals = datavisioAPIService.GetSignals(token, "BTC", "fall").Result;
+            var boostSignals = datavisioAPIService.GetSignals(token, "BTC", "boost").Result;
+            var logregSignals = datavisioAPIService.GetSignals(token, "BTC", "logreg").Result;
 
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
@@ -338,14 +310,14 @@ namespace CRM.Controllers.Charts
                 EndDate = DateTime.Parse(model.EndDate),
             };
 
-            RaiseSignals.signals = RaiseSignals.signals
+            boostSignals.signals = boostSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
                 .ToArray();
 
 
-            FallSignals.signals = FallSignals.signals
+            logregSignals.signals = logregSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
@@ -353,21 +325,21 @@ namespace CRM.Controllers.Charts
 
 
 
-            model.RaiseDates = RaiseSignals.signals.Select(x => x.time.AddHours(3)).ToList();
-            model.FallDates = FallSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.boostDates = boostSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.logregDates = logregSignals.signals.Select(x => x.time.AddHours(3)).ToList();
 
-            foreach (var signal in RaiseSignals.signals)
+            foreach (var signal in boostSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
-                model.signals.Add(new RaiseFallSignals
+                model.signals.Add(new boostlogregSignals
                 {
                     Date = signal.time,
-                    RaiseProba = signal.proba
+                    boostProba = signal.proba
                 });
             }
 
-            foreach (var signal in FallSignals.signals)
+            foreach (var signal in logregSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
@@ -375,14 +347,14 @@ namespace CRM.Controllers.Charts
                 var sign = model.signals.FirstOrDefault(x => x.Date == signal.time);
                 if (sign != null)
                 {
-                    sign.FallProba = signal.proba;
+                    sign.logregProba = signal.proba;
                 }
                 else
                 {
-                    model.signals.Add(new RaiseFallSignals
+                    model.signals.Add(new boostlogregSignals
                     {
                         Date = signal.time,
-                        FallProba = signal.proba
+                        logregProba = signal.proba
                     });
                 }
             }
@@ -390,18 +362,18 @@ namespace CRM.Controllers.Charts
 
             using (var workbook = new XLWorkbook())
             {
-                var worksheet = workbook.Worksheets.Add("RaiseFallSignals" + DateTime.Now.ToJavascriptTicks());
+                var worksheet = workbook.Worksheets.Add("boostlogregSignals" + DateTime.Now.ToJavascriptTicks());
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "Date";
-                worksheet.Cell(currentRow, 2).Value = "Raise Proba";
-                worksheet.Cell(currentRow, 3).Value = "Fall Proba";
+                worksheet.Cell(currentRow, 2).Value = "boost Proba";
+                worksheet.Cell(currentRow, 3).Value = "logreg Proba";
                 
                 foreach (var signal in model.signals)
                 {
                     currentRow++;
                     worksheet.Cell(currentRow, 1).Value = signal.Date;
-                    worksheet.Cell(currentRow, 2).Value = signal.RaiseProba;
-                    worksheet.Cell(currentRow, 3).Value = signal.FallProba;
+                    worksheet.Cell(currentRow, 2).Value = signal.boostProba;
+                    worksheet.Cell(currentRow, 3).Value = signal.logregProba;
                 }
 
                 using (var stream = new MemoryStream())
@@ -412,7 +384,7 @@ namespace CRM.Controllers.Charts
                     return File(
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "RaiseFallSignals" + DateTime.Now.ToJavascriptTicks() + ".xlsx");
+                        "boostlogregSignals" + DateTime.Now.ToJavascriptTicks() + ".xlsx");
                 }
             }
         }

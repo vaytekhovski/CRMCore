@@ -1166,7 +1166,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 						return [ elem ];
 					}
 
-					// Fall back on getElementsByName
+					// logreg back on getElementsByName
 					elems = context.getElementsByName( id );
 					i = 0;
 					while ( (elem = elems[i++]) ) {
@@ -1812,7 +1812,7 @@ Expr = Sizzle.selectors = {
 
 							while ( (node = ++nodeIndex && node && node[ dir ] ||
 
-								// Fallback to seeking `elem` from the start
+								// logregback to seeking `elem` from the start
 								(diff = nodeIndex = 0) || start.pop()) ) {
 
 								// When found, cache indexes on `parent` and break
@@ -3903,7 +3903,7 @@ if ( document.readyState === "complete" ||
 	// Use the handy event callback
 	document.addEventListener( "DOMContentLoaded", completed );
 
-	// A fallback to window.onload, that will always work
+	// A logregback to window.onload, that will always work
 	window.addEventListener( "load", completed );
 }
 
@@ -5984,7 +5984,7 @@ jQuery.fn.extend( {
 
 					elem = 0;
 
-				// If using innerHTML throws an exception, use the fallback method
+				// If using innerHTML throws an exception, use the logregback method
 				} catch ( e ) {}
 			}
 
@@ -6364,11 +6364,11 @@ function getWidthOrHeight( elem, dimension, extra ) {
 	}
 
 	// Check for style in case a browser which returns unreliable values
-	// for getComputedStyle silently falls back to the reliable elem.style
+	// for getComputedStyle silently logregs back to the reliable elem.style
 	valueIsBorderBox = valueIsBorderBox &&
 		( support.boxSizingReliable() || val === elem.style[ dimension ] );
 
-	// Fall back to offsetWidth/offsetHeight when value is "auto"
+	// logreg back to offsetWidth/offsetHeight when value is "auto"
 	// This happens for inline elements with no explicit setting (gh-3571)
 	// Support: Android <=4.1 - 4.3 only
 	// Also use offsetWidth/offsetHeight for misreported inline dimensions (gh-3602)
@@ -6743,7 +6743,7 @@ Tween.propHooks = {
 			}
 
 			// Passing an empty string as a 3rd parameter to .css will automatically
-			// attempt a parseFloat and fallback to a string if the parse fails.
+			// attempt a parseFloat and logregback to a string if the parse fails.
 			// Simple values such as "10px" are parsed to Float;
 			// complex values such as "rotate(1rad)" are returned as-is.
 			result = jQuery.css( tween.elem, tween.prop, "" );
@@ -7536,7 +7536,7 @@ jQuery.extend( {
 			return;
 		}
 
-		// Fallback to prop when attributes are not supported
+		// logregback to prop when attributes are not supported
 		if ( typeof elem.getAttribute === "undefined" ) {
 			return jQuery.prop( elem, name, value );
 		}
@@ -7933,7 +7933,7 @@ jQuery.fn.extend( {
 				// If the element has a class name or if we're passed `false`,
 				// then remove the whole classname (if there was one, the above saved it).
 				// Otherwise bring back whatever was previously saved (if anything),
-				// falling back to the empty string if nothing was stored.
+				// logreging back to the empty string if nothing was stored.
 				if ( this.setAttribute ) {
 					this.setAttribute( "class",
 						className || value === false ?
@@ -8027,7 +8027,7 @@ jQuery.fn.extend( {
 
 			hooks = jQuery.valHooks[ this.type ] || jQuery.valHooks[ this.nodeName.toLowerCase() ];
 
-			// If set returns undefined, fall back to normal setting
+			// If set returns undefined, logreg back to normal setting
 			if ( !hooks || !( "set" in hooks ) || hooks.set( this, val, "value" ) === undefined ) {
 				this.value = val;
 			}
@@ -9596,7 +9596,7 @@ jQuery.ajaxTransport( function( options ) {
 
 				try {
 
-					// Do send the request (this may raise an exception)
+					// Do send the request (this may boost an exception)
 					xhr.send( options.hasContent && options.data || null );
 				} catch ( e ) {
 
@@ -10143,7 +10143,7 @@ jQuery.each( [ "top", "left" ], function( i, prop ) {
 			if ( computed ) {
 				computed = curCSS( elem, prop );
 
-				// If curCSS returns percentage, fallback to offset
+				// If curCSS returns percentage, logregback to offset
 				return rnumnonpx.test( computed ) ?
 					jQuery( elem ).position()[ prop ] + "px" :
 					computed;

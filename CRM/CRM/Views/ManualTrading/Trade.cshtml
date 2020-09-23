@@ -368,21 +368,23 @@
         var graph_lir = [];
         var graph_reg = [];
 
+      
+@foreach (var item in Model.Graphs)
+{
+<text>
+graph_time.push("@item.Time");
+graph_rsi.push(parseFloat(@item.rsi.ToString()));
+graph_lir.push(parseFloat(@item.lir.ToString()));
+graph_reg.push(parseFloat(@item.reg.ToString()));
 
-    @foreach(var item in Model.Graphs)
-    {<text>
-    graph_time.push("@item.Time");
-    graph_rsi.push(parseFloat(@item.rsi.ToString()));
-    graph_lir.push(parseFloat(@item.lir.ToString()));
-    graph_reg.push(parseFloat(@item.reg.ToString()));
 
-
-    </text>
-    }
-
+</text>
+}
+ 
+        
 
      @foreach (var item in Model.Units)
-    {
+     {
             <text>
     Time.push("@item.Time");
 
@@ -398,7 +400,7 @@
 
             </text>
 
-    }
+     }
 
     @foreach (var item in Model.CoinPrices)
     {
@@ -491,17 +493,17 @@
             }
         }
     });
+       
+                        var graph_ctx = document.getElementById('graph_chart').getContext('2d');
 
-        var graph_ctx = document.getElementById('graph_chart').getContext('2d');
-
-        var graph_chart = new Chart(graph_ctx, {
+                        var graph_chart = new Chart(graph_ctx, {
         // The type of chart we want to create
         type: 'line',
         // The data for our dataset
         data: {
-            labels: graph_time,
-            datasets: [{
-                label: 'rsi',
+                        labels: graph_time,
+            datasets:[{
+                            label: 'rsi',
                 borderColor: 'rgba(255, 159, 28, 0.8)',
                 backgroundColor: 'rgba(255, 159, 28, 0.5)',
                 fill: false,
@@ -509,7 +511,7 @@
                 data: graph_rsi
             },
             {
-                label: 'lir',
+                            label: 'lir',
                 borderColor: 'rgba(78, 205, 196, 0.8)',
                 backgroundColor: 'rgba(78, 205, 196, 0.5)',
                 fill: false,
@@ -517,7 +519,7 @@
                 data: graph_lir
                 },
                 {
-                    label: 'lris',
+                            label: 'lris',
                     borderColor: 'rgba(46, 96, 182, 0.8)',
                     backgroundColor: 'rgba(46, 96, 182, 0.5)',
                     fill: false,
@@ -526,55 +528,56 @@
                 }]
         },
         options: {
-            responsive: true,
+                        responsive: true,
             tooltips: {
-                mode: 'index',
+                            mode: 'index',
                 intersect: false,
             },
             hover: {
-                mode: 'nearest',
+                            mode: 'nearest',
                 intersect: true
             },
             scales: {
-                x: {
-                    display: true,
+                            x: {
+                                display: true,
                     scaleLabel: {
-                        display: true,
+                                    display: true,
                         labelString: 'Время'
                     }
-                },
+                                },
                 y: {
-                    stacked: true,
+                                stacked: true,
                     display: true,
                     scaleLabel: {
-                        display: true,
+                                    display: true,
                         labelString: 'Значение'
                     }
-                }, yAxes: [{
-                    ticks: {
-                        suggestedMin: 0,
+                                }, yAxes:[{
+                                ticks: {
+                                    suggestedMin: 0,
                         suggestedMax: 1
-                    }
-                }]
+                                }
+                                }]
             }
-        }
-    });
+                        }
+                    });
 
-    var coin_ctx = document.getElementById('coin-cost-timeline').getContext('2d');
+                var coin_ctx = document.getElementById('coin-cost-timeline').getContext('2d');
 
 
-    var coin_chart = new Chart(coin_ctx, {
+                var coin_chart = new Chart(coin_ctx, {
         // The type of chart we want to create
-        type: 'line',
-        // The data for our dataset
-        data: {
-            labels: Time,
-            datasets: [{
+                    type: 'line',
+                    // The data for our dataset
+                    data: {
+
+                        labels: Time,
+                        datasets: [{
                 label: '@Model.Coin',
-                borderColor: 'rgba(255, 159, 28, 0.8)',
-                backgroundColor: 'rgba(255, 159, 28, 0.5)',
-                fill: true,
-                data: Prices
+                            borderColor: 'rgba(255, 159, 28, 0.8)',
+                            backgroundColor: 'rgba(255, 159, 28, 0.5)',
+                            fill: true,
+                            data: Prices
             }]
         },
         options: {
