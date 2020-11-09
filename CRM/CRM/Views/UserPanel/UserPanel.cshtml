@@ -64,13 +64,6 @@
                         <h1>Включение/выключение торговли</h1>
                     </div>
                     <div style="text-align:center">
-
-                        @{ /*
-                         <div class="user_block">
-                             <label>Торговля включена </label>
-                             <input type="checkbox" asp-for="AccountData.enabled" />
-                         </div>
-                       */ }
                         <div class="user_block">
                             <label asp-for="AccountData.pairs[0].coin" style="font-size: 14px;">@Model.AccountData.pairs[0].coin</label>
                             <input type="checkbox" asp-for="@Model.AccountData.pairs[0].enabled" style="margin-right: 10px;" />
@@ -104,7 +97,7 @@
                     </div>
 
                     <div style="text-align:center">
-                        <h1>Средства</h1>
+                        <h1>Средства Debit</h1>
                     </div>
 
                      <table class="table table-font balance_table">
@@ -118,16 +111,52 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.Balances.AccountBalances)
+                                @foreach (var item in Model.BalancesDebit.AccountBalances)
                                 {
+                                    {
+                                        string btnId = "Debit" + item.Currency;
+
                                     <tr>
                                         <td>@item.Currency</td>
                                         <td>@item.Free</td>
                                         <td>@item.Used</td>
                                         <td>@item.Total</td>
-                                        <td><button id="@item.Currency" class="btn btn-secondary">Продать</button></td>
+                                        <td><button id="@btnId" class="btn btn-secondary">Продать</button></td>
                                     </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    
+                    <div style="text-align:center">
+                        <h1>Средства Margin</h1>
+                    </div>
 
+                     <table class="table table-font balance_table">
+                            <thead>
+                                <tr>
+                                    <th>Валюта</th>
+                                    <th>Свободно</th>
+                                    <th>В использовании</th>
+                                    <th>Всего</th>
+                                    <th>Продажа</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.BalancesMargin.AccountBalances)
+                                {
+                                    {
+                                        string btnId = "Margin" + item.Currency;
+
+                                    <tr>
+                                        <td>@item.Currency</td>
+                                        <td>@item.Free</td>
+                                        <td>@item.Used</td>
+                                        <td>@item.Total</td>
+                                        
+                                        <td><button id="@btnId" class="btn btn-secondary">Продать</button></td>
+                                    </tr>
+                                    }
                                 }
                             </tbody>
                         </table>
@@ -156,9 +185,14 @@
 <script type="text/javascript">
 
     window.addEventListener("load", function () {
-        document.getElementById("USDT").disabled = @Model.Balances.AccountBalances[0].buttonDisabled;
-        document.getElementById("BTC").disabled = @Model.Balances.AccountBalances[1].buttonDisabled;
-        document.getElementById("ETH").disabled = @Model.Balances.AccountBalances[2].buttonDisabled;
-        document.getElementById("LTC").disabled = @Model.Balances.AccountBalances[3].buttonDisabled;
+        document.getElementById("DebitUSDT").disabled = @Model.BalancesDebit.AccountBalances[0].buttonDisabled;
+        document.getElementById("DebitBTC").disabled = @Model.BalancesDebit.AccountBalances[1].buttonDisabled;
+        document.getElementById("DebitETH").disabled = @Model.BalancesDebit.AccountBalances[2].buttonDisabled;
+        document.getElementById("DebitLTC").disabled = @Model.BalancesDebit.AccountBalances[3].buttonDisabled;
+
+        document.getElementById("MarginUSDT").disabled = @Model.BalancesMargin.AccountBalances[0].buttonDisabled;
+        document.getElementById("MarginBTC").disabled = @Model.BalancesMargin.AccountBalances[1].buttonDisabled;
+        document.getElementById("MarginETH").disabled = @Model.BalancesMargin.AccountBalances[2].buttonDisabled;
+        document.getElementById("MarginLTC").disabled = @Model.BalancesMargin.AccountBalances[3].buttonDisabled;
     });
 </script>

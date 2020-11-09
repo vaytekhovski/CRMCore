@@ -23,23 +23,23 @@ namespace CRM.Services.Balances
         }
         DatavisioAPIService datavisioAPIService;
 
-        public async Task<BalancesModel> LoadBalancesAsync(string accountId, string token)
+        public async Task<BalancesModel> LoadBalancesAsync(string accountId, string token, string type = "debit")
         {
             BalancesModel balancesModel = new BalancesModel();
 
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "USDT").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "BTC").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "ETH").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "LTC").Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "XRP").Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "USDT", type).Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "BTC", type).Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "ETH", type).Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "LTC", type).Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "XRP", type).Result);
 
             return balancesModel;
         }
 
-        public async Task<BalancesModel> LoadBalancesAsync(string accountId, string token, string Coin)
+        public async Task<BalancesModel> LoadBalancesAsync(string accountId, string token, string Coin, string type = "debit")
         {
             BalancesModel balancesModel = new BalancesModel();
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, Coin).Result);
+            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, Coin, type).Result);
 
             return balancesModel;
         }

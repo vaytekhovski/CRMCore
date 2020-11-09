@@ -115,7 +115,7 @@ namespace Business.Models.DataVisioAPI
 
     }
 
-    public class Graph
+    public class    Graph
     {
         public DateTime Time { get; set; }
         public string time_str { get; set; }

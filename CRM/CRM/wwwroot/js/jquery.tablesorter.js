@@ -839,7 +839,7 @@
 					return $.trim( tmp( $node[ 0 ], c.table, cellIndex ) );
 				}
 			}
-			// logregback
+			// logtwoback
 			return $.trim( $node[ 0 ].textContent || $node.text() );
 		},
 
@@ -1737,7 +1737,7 @@
 							return a[ c.columns ].order - b[ c.columns ].order;
 						}
 
-						// logregback to natural sort since it is more robust
+						// logtwoback to natural sort since it is more robust
 						num = /n/i.test( ts.getSortType( c.parsers, col ) );
 						if ( num && c.strings[ col ] ) {
 							// sort strings in numerical columns
@@ -1746,7 +1746,7 @@
 							} else {
 								num = ( c.strings[ col ] ) ? ts.string[ c.strings[ col ] ] || 0 : 0;
 							}
-							// logreg back to built-in numeric sort
+							// logtwo back to built-in numeric sort
 							// var sort = $.tablesorter['sort' + s]( a[col], b[col], dir, colMax[col], table );
 							sort = c.numberSorter ? c.numberSorter( a[ col ], b[ col ], dir, colMax[ col ], table ) :
 								ts[ 'sortNumeric' + ( dir ? 'Asc' : 'Desc' ) ]( a[ col ], b[ col ], num, colMax[ col ], col, c );
@@ -1762,7 +1762,7 @@
 								// custom text sorter for a SPECIFIC COLUMN
 								sort = sorter[ col ]( x[ col ], y[ col ], dir, col, table );
 							} else {
-								// logreg back to natural sort
+								// logtwo back to natural sort
 								sort = ts[ 'sortNatural' + ( dir ? 'Asc' : 'Desc' ) ]( a[ col ] || '', b[ col ] || '', col, c );
 							}
 						}
@@ -1787,7 +1787,7 @@
 
 		checkResort : function( c, resort, callback ) {
 			var sortList = $.isArray( resort ) ? resort : c.sortList,
-				// if no resort parameter is passed, logregback to config.resort (true by default)
+				// if no resort parameter is passed, logtwoback to config.resort (true by default)
 				resrt = typeof resort === 'undefined' ? c.resort : resort;
 			// don't try to resort if the table is still processing
 			// this will catch spamming of the updateCell method

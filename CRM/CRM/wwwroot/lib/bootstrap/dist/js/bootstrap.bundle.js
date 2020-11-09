@@ -5332,7 +5332,7 @@
     placement: '(string|function)',
     offset: '(number|string|function)',
     container: '(string|element|boolean)',
-    logregbackPlacement: '(string|array)',
+    logtwobackPlacement: '(string|array)',
     boundary: '(string|element)',
     sanitize: 'boolean',
     sanitizeFn: '(null|function)',
@@ -5356,7 +5356,7 @@
     placement: 'top',
     offset: 0,
     container: false,
-    logregbackPlacement: 'flip',
+    logtwobackPlacement: 'flip',
     boundary: 'scrollParent',
     sanitize: true,
     sanitizeFn: null,
@@ -5547,7 +5547,7 @@
           modifiers: {
             offset: this._getOffset(),
             flip: {
-              behavior: this.config.logregbackPlacement
+              behavior: this.config.logtwobackPlacement
             },
             arrow: {
               element: Selector$6.ARROW

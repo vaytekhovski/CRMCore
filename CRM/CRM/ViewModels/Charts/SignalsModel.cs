@@ -9,13 +9,13 @@ namespace CRM.ViewModels.Charts
     {
         public SignalsModel()
         {
-            boostDates = new List<DateTime>();
-            logregDates = new List<DateTime>();
-            boostValues = new List<string>();
-            logregValues = new List<string>();
-            logregEMA = new List<string>();
-            boostEMA = new List<string>();
-            signals = new List<boostlogregSignals>();
+            gradDates = new List<DateTime>();
+            logtwoDates = new List<DateTime>();
+            gradValues = new List<string>();
+            logtwoValues = new List<string>();
+            logtwoEMA = new List<string>();
+            gradEMA = new List<string>();
+            signals = new List<gradlogtwoSignals>();
         }
 
         public string PageName { get; set; }
@@ -24,25 +24,25 @@ namespace CRM.ViewModels.Charts
         public string StartDate { get; set; }
         public string EndDate { get; set; }
 
-        public List<DateTime> boostDates { get; set; }
-        public List<DateTime> logregDates { get; set; }
-        public List<string> boostValues { get; set; }
-        public List<string> logregValues { get; set; }
-        public List<string> logregEMA { get; set; }
-        public List<string> boostEMA { get; set; }
+        public List<DateTime> gradDates { get; set; }
+        public List<DateTime> logtwoDates { get; set; }
+        public List<string> gradValues { get; set; }
+        public List<string> logtwoValues { get; set; }
+        public List<string> logtwoEMA { get; set; }
+        public List<string> gradEMA { get; set; }
         public List<string> BBM { get; set; }
         public List<string> BBL { get; set; }
         public List<string> BBU { get; set; }
 
 
-        public List<boostlogregSignals> signals { get; set; }
+        public List<gradlogtwoSignals> signals { get; set; }
     }
 
-    public class boostlogregSignals
+    public class gradlogtwoSignals
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public decimal boostProba { get; set; }
-        public decimal logregProba { get; set; }
+        public decimal gradProba { get; set; }
+        public decimal logtwoProba { get; set; }
     }
 }

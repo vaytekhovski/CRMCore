@@ -10,62 +10,62 @@
 
         CHART = document.getElementById('Chart');
 
-        var boostDates = [];
-        var logregDates = [];
+        var gradDates = [];
+        var logtwoDates = [];
 
-        var boostValues = [];
-        var logregValues = [];
+        var gradValues = [];
+        var logtwoValues = [];
 
-        var boostEMA = [];
-        var logregEMA = [];
+        var gradEMA = [];
+        var logtwoEMA = [];
 
         var BBL = [];
         var BBM = [];
         var BBU = [];
 
 
-        @foreach (var item in Model.boostDates)
+        @foreach (var item in Model.gradDates)
         {
             <text>
-        boostDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
+        gradDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
             </text>
         }
 
-        @foreach (var item in Model.boostValues)
+        @foreach (var item in Model.gradValues)
         {
             <text>
-        boostValues.push(parseFloat(@item));
+        gradValues.push(parseFloat(@item));
             </text>
 
             }
 
-        @foreach (var item in Model.logregDates)
+        @foreach (var item in Model.logtwoDates)
         {
             <text>
-        logregDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
+        logtwoDates.push("@item.Year"+ "-" + "@item.Month" + "-" + "@item.Day" + " "+ "@item.Hour" + ":" + "@item.Minute");
             </text>
         }
 
-        @foreach (var item in Model.logregValues)
+        @foreach (var item in Model.logtwoValues)
         {
             <text>
-        logregValues.push(parseFloat(@item));
+        logtwoValues.push(parseFloat(@item));
             </text>
 
             } 
 
-        @foreach (var item in Model.logregEMA)
+        @foreach (var item in Model.logtwoEMA)
         {
             <text>
-        logregEMA.push(parseFloat(@item));
+        logtwoEMA.push(parseFloat(@item));
             </text>
 
             } 
 
-        @foreach (var item in Model.boostEMA)
+        @foreach (var item in Model.gradEMA)
         {
             <text>
-        boostEMA.push(parseFloat(@item));
+        gradEMA.push(parseFloat(@item));
             </text>
 
         }
@@ -96,38 +96,38 @@
         var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: boostDates,
+                labels: gradDates,
                 datasets: [{
-                    label: 'boost Proba',
+                    label: 'grad Proba',
                     borderColor: 'rgba(23, 227, 101, 0.8)',
                     backgroundColor: 'rgba(23, 227, 101, 0.5)',
                     fill: false,
                     type: 'scatter',
-                    data: boostValues,
+                    data: gradValues,
                     pointRadius:0
                 }, {
-                    label: 'logreg Proba',
+                    label: 'logtwo Proba',
                     borderColor: 'rgba(219, 22, 22, 0.8)',
                     backgroundColor: 'rgba(219, 22, 22, 0.5)',
                         fill: false,
                         type: 'scatter',
-                    data: logregValues,
+                    data: logtwoValues,
                     pointRadius: 0
                 },{
-                    label: 'boost EMA',
+                    label: 'grad EMA',
                         borderColor: 'rgba(33, 79, 219, 0.8)',
                         backgroundColor: 'rgba(33, 79, 219, 0.5)',
                         fill: false,
                         type: 'scatter',
-                        data: boostEMA,
+                        data: gradEMA,
                     pointRadius: 0
                 },{
-                    label: 'logreg EMA',
+                    label: 'logtwo EMA',
                         borderColor: 'rgba(33, 219, 160, 0.8)',
                         backgroundColor: 'rgba(33, 219, 160, 0.5)',
                         fill: false,
                         type: 'scatter',
-                        data: logregEMA,
+                        data: logtwoEMA,
                     pointRadius: 0
                 },{
                     label: 'BBL',
@@ -185,22 +185,22 @@
     @Html.ValidationSummary()
 
     <div style="height:30%; width:80%;margin: 0 auto;">
-        <canvas id="myChart"  style="display: @(Model.boostValues.Count != 0 ? "block" : "none")"></canvas>
+        <canvas id="myChart"  style="display: @(Model.gradValues.Count != 0 ? "block" : "none")"></canvas>
     </div>
     <div style=" padding-left: 350px; padding-right: 350px;">
         <a href="~/Charts/ExportToCSV/?start=@Model.StartDate&end=@Model.EndDate">Скачать</a>
         <table class=" table table-bordered table-font">
             <tr>
                 <th>Дата</th>
-                <th>boost proba</th>
-                <th>logreg proba</th>
+                <th>grad proba</th>
+                <th>logtwo proba</th>
             </tr>
             @foreach (var item in Model.signals)
             {
                 <tr>
                     <td>@item.Date</td>
-                    <td>@item.boostProba</td>
-                    <td>@item.logregProba</td>
+                    <td>@item.gradProba</td>
+                    <td>@item.logtwoProba</td>
                 </tr>
             }
 

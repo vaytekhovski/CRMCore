@@ -33,12 +33,12 @@ namespace Business.DataVisioAPI
             return authenticationResnose.token;
         }
 
-        public async Task<WalletCurrency> GetBalance(string accountId, string token, string CoinBase)
+        public async Task<WalletCurrency> GetBalance(string accountId, string token, string CoinBase, string type = "debit")
         {
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/balance/debit/{CoinBase}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/balance/{type}/{CoinBase}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -53,12 +53,12 @@ namespace Business.DataVisioAPI
             return walletCurrency;
         }
 
-        public async Task GetBalance(string accountId, string token)
+        public async Task GetBalance(string accountId, string token, string type = "debit")
         {
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/balance/debit"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/balance/{type}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -231,7 +231,7 @@ namespace Business.DataVisioAPI
             return Deal;
         }
 
-        public async Task<List<Graph>> GetGraphs(string token, string CoinBase, DateTime StartDate, DateTime EndDate, string source = "boost")
+        public async Task<List<Graph>> GetGraphs(string token, string CoinBase, DateTime StartDate, DateTime EndDate, string source = "grad")
         {
             var since = ((DateTimeOffset)StartDate).ToUnixTimeSeconds();
             var limit = Convert.ToInt32((EndDate - StartDate).TotalMinutes);

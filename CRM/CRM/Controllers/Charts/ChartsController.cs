@@ -109,54 +109,54 @@ namespace CRM.Controllers.Charts
 
             var token = HttpContext.User.Identity.Name;
 
-            var boostSignals = datavisioAPIService.GetSignals(token, filter.Coin, "boost").Result;
+            var gradSignals = datavisioAPIService.GetSignals(token, filter.Coin, "grad").Result;
 
-            var logregSignals = datavisioAPIService.GetSignals(token, filter.Coin, "logreg").Result;
+            var logtwoSignals = datavisioAPIService.GetSignals(token, filter.Coin, "logtwo").Result;
 
-            var boostEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "boost").Result;
-            var logregEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logreg").Result;
+            var gradEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "grad").Result;
+            var logtwoEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logtwo").Result;
 
-            //var FirstDate = boostSignals.signals.Last().time > logregSignals.signals.Last().time ? boostSignals.signals.Last().time : logregSignals.signals.Last().time;
+            //var FirstDate = gradSignals.signals.Last().time > logtwoSignals.signals.Last().time ? gradSignals.signals.Last().time : logtwoSignals.signals.Last().time;
 
             //model.StartDate = FirstDate.AddHours(3).ToString("yyyy-MM-ddTHH:mm");
 
             
 
-            boostSignals.signals = boostSignals.signals
+            gradSignals.signals = gradSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
                 .ToArray();
 
 
-            logregSignals.signals = logregSignals.signals
+            logtwoSignals.signals = logtwoSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
                 .ToArray();
 
 
-            model.boostDates = boostSignals.signals.Select(x => x.time.AddHours(3)).ToList();
-            model.logregDates = logregSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.gradDates = gradSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.logtwoDates = logtwoSignals.signals.Select(x => x.time.AddHours(3)).ToList();
             int i = 0;
-            foreach (var signal in boostSignals.signals)
+            foreach (var signal in gradSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
-                model.signals.Add(new boostlogregSignals
+                model.signals.Add(new gradlogtwoSignals
                 {
                     Id = i,
                     Date = signal.time,
-                    boostProba = signal.proba
+                    gradProba = signal.proba
                 });
                 i++;
             }
 
-            model.BBL = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
-            model.BBM = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
-            model.BBU = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
+            model.BBL = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
+            model.BBM = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
+            model.BBU = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
 
-            foreach (var signal in logregSignals.signals)
+            foreach (var signal in logtwoSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
@@ -164,25 +164,25 @@ namespace CRM.Controllers.Charts
                 var sign = model.signals.FirstOrDefault(x => x.Date == signal.time);
                 if (sign != null)
                 {
-                    sign.logregProba = signal.proba;
+                    sign.logtwoProba = signal.proba;
                 }
                 else
                 {
-                    model.signals.Add(new boostlogregSignals
+                    model.signals.Add(new gradlogtwoSignals
                     {
                         Id = i,
                         Date = signal.time,
-                        logregProba = signal.proba
+                        logtwoProba = signal.proba
                     });
                     i++;
                 }
             }
 
 
-            model.boostValues = boostSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
-            model.logregValues = logregSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
-            model.boostEMA = boostEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
-            model.logregEMA = logregEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList(); 
+            model.gradValues = gradSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.logtwoValues = logtwoSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.gradEMA = gradEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
+            model.logtwoEMA = logtwoEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList(); 
             model.PageName = "Signals";
             ViewBag.Coins = DropDownFields.GetCoins();
 
@@ -200,17 +200,17 @@ namespace CRM.Controllers.Charts
             };
 
             var token = HttpContext.User.Identity.Name;
-            var boostSignals = datavisioAPIService.GetSignals(token, filter.Coin, "boost").Result;
-            var logregSignals = datavisioAPIService.GetSignals(token, filter.Coin, "logreg").Result;
+            var gradSignals = datavisioAPIService.GetSignals(token, filter.Coin, "grad").Result;
+            var logtwoSignals = datavisioAPIService.GetSignals(token, filter.Coin, "logtwo").Result;
 
 
-            var boostEMA = new List<Graph>();
-            var logregEMA = new List<Graph>();
+            var gradEMA = new List<Graph>();
+            var logtwoEMA = new List<Graph>();
 
 
             try
             {
-                boostEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "boost").Result;
+                gradEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "grad").Result;
 
             }
             catch {
@@ -218,21 +218,21 @@ namespace CRM.Controllers.Charts
 
             try
             {
-                logregEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logreg").Result;
+                logtwoEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logtwo").Result;
             }
             catch {
             }
 
 
 
-            boostSignals.signals = boostSignals.signals
+            gradSignals.signals = gradSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
                 .ToArray();
 
 
-            logregSignals.signals = logregSignals.signals
+            logtwoSignals.signals = logtwoSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
@@ -240,26 +240,26 @@ namespace CRM.Controllers.Charts
 
 
 
-            model.boostDates = boostSignals.signals.Select(x => x.time.AddHours(3)).ToList();
-            model.logregDates = logregSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.gradDates = gradSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.logtwoDates = logtwoSignals.signals.Select(x => x.time.AddHours(3)).ToList();
 
-            foreach (var signal in boostSignals.signals)
+            foreach (var signal in gradSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
-                model.signals.Add(new boostlogregSignals
+                model.signals.Add(new gradlogtwoSignals
                 {
                     Date = signal.time,
-                    boostProba = signal.proba
+                    gradProba = signal.proba
                 });
 
             }
 
-            model.BBL = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
-            model.BBM = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
-            model.BBU = boostSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
+            model.BBL = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
+            model.BBM = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
+            model.BBU = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
 
-            foreach (var signal in logregSignals.signals)
+            foreach (var signal in logtwoSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
@@ -267,24 +267,24 @@ namespace CRM.Controllers.Charts
                 var sign = model.signals.FirstOrDefault(x => x.Date == signal.time);
                 if(sign != null)
                 {
-                    sign.logregProba = signal.proba;
+                    sign.logtwoProba = signal.proba;
                 }
                 else
                 {
-                    model.signals.Add(new boostlogregSignals
+                    model.signals.Add(new gradlogtwoSignals
                     {
                         Date = signal.time,
-                        logregProba = signal.proba
+                        logtwoProba = signal.proba
                     });
                 }
             }
 
             
 
-            model.boostValues = boostSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
-            model.logregValues = logregSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
-            model.boostEMA = boostEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
-            model.logregEMA = logregEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
+            model.gradValues = gradSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.logtwoValues = logtwoSignals.signals.Select(x => x.proba.ToString(SeparateHelper.Separator)).ToList();
+            model.gradEMA = gradEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
+            model.logtwoEMA = logtwoEMA.Select(x => x.ema.ToString(SeparateHelper.Separator)).ToList();
             model.PageName = "Signals";
             ViewBag.Coins = DropDownFields.GetCoins();
 
@@ -301,8 +301,8 @@ namespace CRM.Controllers.Charts
             };
 
             var token = HttpContext.User.Identity.Name;
-            var boostSignals = datavisioAPIService.GetSignals(token, "BTC", "boost").Result;
-            var logregSignals = datavisioAPIService.GetSignals(token, "BTC", "logreg").Result;
+            var gradSignals = datavisioAPIService.GetSignals(token, "BTC", "grad").Result;
+            var logtwoSignals = datavisioAPIService.GetSignals(token, "BTC", "logtwo").Result;
 
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
@@ -310,14 +310,14 @@ namespace CRM.Controllers.Charts
                 EndDate = DateTime.Parse(model.EndDate),
             };
 
-            boostSignals.signals = boostSignals.signals
+            gradSignals.signals = gradSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
                 .ToArray();
 
 
-            logregSignals.signals = logregSignals.signals
+            logtwoSignals.signals = logtwoSignals.signals
                 .Where(x => x.time >= filter.StartDate.AddHours(-3))
                 .Where(x => x.time < filter.EndDate.AddHours(-3))
                 .OrderBy(x => x.time)
@@ -325,21 +325,21 @@ namespace CRM.Controllers.Charts
 
 
 
-            model.boostDates = boostSignals.signals.Select(x => x.time.AddHours(3)).ToList();
-            model.logregDates = logregSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.gradDates = gradSignals.signals.Select(x => x.time.AddHours(3)).ToList();
+            model.logtwoDates = logtwoSignals.signals.Select(x => x.time.AddHours(3)).ToList();
 
-            foreach (var signal in boostSignals.signals)
+            foreach (var signal in gradSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
-                model.signals.Add(new boostlogregSignals
+                model.signals.Add(new gradlogtwoSignals
                 {
                     Date = signal.time,
-                    boostProba = signal.proba
+                    gradProba = signal.proba
                 });
             }
 
-            foreach (var signal in logregSignals.signals)
+            foreach (var signal in logtwoSignals.signals)
             {
                 signal.proba = signal.value == 1 ? signal.proba : 1 - signal.proba;
                 signal.time = signal.time.AddHours(3).AddSeconds(-signal.time.Second).AddMilliseconds(-signal.time.Millisecond);
@@ -347,14 +347,14 @@ namespace CRM.Controllers.Charts
                 var sign = model.signals.FirstOrDefault(x => x.Date == signal.time);
                 if (sign != null)
                 {
-                    sign.logregProba = signal.proba;
+                    sign.logtwoProba = signal.proba;
                 }
                 else
                 {
-                    model.signals.Add(new boostlogregSignals
+                    model.signals.Add(new gradlogtwoSignals
                     {
                         Date = signal.time,
-                        logregProba = signal.proba
+                        logtwoProba = signal.proba
                     });
                 }
             }
@@ -362,18 +362,18 @@ namespace CRM.Controllers.Charts
 
             using (var workbook = new XLWorkbook())
             {
-                var worksheet = workbook.Worksheets.Add("boostlogregSignals" + DateTime.Now.ToJavascriptTicks());
+                var worksheet = workbook.Worksheets.Add("gradlogtwoSignals" + DateTime.Now.ToJavascriptTicks());
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "Date";
-                worksheet.Cell(currentRow, 2).Value = "boost Proba";
-                worksheet.Cell(currentRow, 3).Value = "logreg Proba";
+                worksheet.Cell(currentRow, 2).Value = "grad Proba";
+                worksheet.Cell(currentRow, 3).Value = "logtwo Proba";
                 
                 foreach (var signal in model.signals)
                 {
                     currentRow++;
                     worksheet.Cell(currentRow, 1).Value = signal.Date;
-                    worksheet.Cell(currentRow, 2).Value = signal.boostProba;
-                    worksheet.Cell(currentRow, 3).Value = signal.logregProba;
+                    worksheet.Cell(currentRow, 2).Value = signal.gradProba;
+                    worksheet.Cell(currentRow, 3).Value = signal.logtwoProba;
                 }
 
                 using (var stream = new MemoryStream())
@@ -384,7 +384,7 @@ namespace CRM.Controllers.Charts
                     return File(
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        "boostlogregSignals" + DateTime.Now.ToJavascriptTicks() + ".xlsx");
+                        "gradlogtwoSignals" + DateTime.Now.ToJavascriptTicks() + ".xlsx");
                 }
             }
         }

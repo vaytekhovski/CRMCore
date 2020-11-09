@@ -34,7 +34,8 @@ namespace CRM.Controllers.User
             var token = HttpContext.User.Identity.Name;
             var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            model.Balances = await balancesService.LoadBalancesAsync(accountId, token);
+            model.BalancesDebit = await balancesService.LoadBalancesAsync(accountId, token, "debit");
+            model.BalancesMargin = await balancesService.LoadBalancesAsync(accountId, token, "margin");
             model.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
             model.Accounts = datavisioAPIService.ShowAccounts(token).Result;
             foreach (var pair in model.AccountData.pairs)

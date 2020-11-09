@@ -106,7 +106,7 @@ namespace CRM.Services
             model.CountOfElements = model.Deals.deals.Count();
 
 
-            Signals Signals = datavisioAPI.GetSignals(token, "BTC", "boost").Result;
+            Signals Signals = datavisioAPI.GetSignals(token, "BTC", "grad").Result;
             if (Signals != null)
             {
                 Signal signalBTC = Signals.signals.FirstOrDefault();
@@ -114,7 +114,7 @@ namespace CRM.Services
                 model.ProbaBuyBTC *= 100m;
             }
 
-            Signals = datavisioAPI.GetSignals(token, "ETH", "boost").Result;
+            Signals = datavisioAPI.GetSignals(token, "ETH", "grad").Result;
             if (Signals != null)
             {
                 Signal signalETH = Signals.signals.FirstOrDefault();
@@ -122,7 +122,7 @@ namespace CRM.Services
                 model.ProbaBuyETH *= 100m;
             }
 
-            Signals = datavisioAPI.GetSignals(token, "LTC", "boost").Result;
+            Signals = datavisioAPI.GetSignals(token, "LTC", "grad").Result;
             if (Signals != null)
             {
                 Signal signalLTC = Signals.signals.FirstOrDefault();
@@ -130,7 +130,7 @@ namespace CRM.Services
                 model.ProbaBuyLTC *= 100m;
             }
 
-            Signals = datavisioAPI.GetSignals(token, "XRP", "boost").Result;
+            Signals = datavisioAPI.GetSignals(token, "XRP", "grad").Result;
             if (Signals != null)
             {
                 Signal signalXRP = Signals.signals.FirstOrDefault();

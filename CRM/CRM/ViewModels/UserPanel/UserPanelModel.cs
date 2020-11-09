@@ -15,6 +15,7 @@ namespace CRM.ViewModels
         public ShowAccount AccountData { get; set; }
         public List<ShowAccount> Accounts { get; set; }
 
-        public BalancesModel Balances { get; set; }
+        public BalancesModel BalancesDebit { get; set; }
+        public BalancesModel BalancesMargin { get; set; }
     }
 }
