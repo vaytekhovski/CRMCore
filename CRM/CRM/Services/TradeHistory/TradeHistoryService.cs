@@ -107,7 +107,7 @@ namespace CRM.Services
 
 
             Signals Signals = datavisioAPI.GetSignals(token, "BTC", "grad").Result;
-            if (Signals != null)
+            if (Signals.signals != null && Signals.signals.Count() != 0)
             {
                 Signal signalBTC = Signals.signals.FirstOrDefault();
                 model.ProbaBuyBTC = signalBTC.value == 1 ? signalBTC.proba : 1m - signalBTC.proba;
@@ -115,7 +115,7 @@ namespace CRM.Services
             }
 
             Signals = datavisioAPI.GetSignals(token, "ETH", "grad").Result;
-            if (Signals != null)
+            if (Signals.signals != null && Signals.signals.Count() != 0)
             {
                 Signal signalETH = Signals.signals.FirstOrDefault();
                 model.ProbaBuyETH = signalETH.value == 1 ? signalETH.proba : 1m - signalETH.proba;
@@ -123,7 +123,7 @@ namespace CRM.Services
             }
 
             Signals = datavisioAPI.GetSignals(token, "LTC", "grad").Result;
-            if (Signals != null)
+            if (Signals.signals != null && Signals.signals.Count() != 0)
             {
                 Signal signalLTC = Signals.signals.FirstOrDefault();
                 model.ProbaBuyLTC = signalLTC.value == 1 ? signalLTC.proba : 1m - signalLTC.proba;
@@ -131,7 +131,7 @@ namespace CRM.Services
             }
 
             Signals = datavisioAPI.GetSignals(token, "XRP", "grad").Result;
-            if (Signals != null)
+            if (Signals.signals != null && Signals.signals.Count() != 0)
             {
                 Signal signalXRP = Signals.signals.FirstOrDefault();
                 model.ProbaBuyXRP = signalXRP.value == 1 ? signalXRP.proba : 1m - signalXRP.proba;
