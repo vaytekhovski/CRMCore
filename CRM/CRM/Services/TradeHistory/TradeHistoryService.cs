@@ -72,7 +72,7 @@ namespace CRM.Services
             }
             else
             {
-                Deposit = 1100;
+                Deposit = 11000;
                 Deposit += ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value <= filter.StartDate).Sum(x => x.profit.clean.amount);
                 var profitAfter1605 = ClosedDeals.Where(x => x.opened >= filter.StartDate).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
                 model.DepositProfit += (profitAfter1605 / Deposit) * 100;
