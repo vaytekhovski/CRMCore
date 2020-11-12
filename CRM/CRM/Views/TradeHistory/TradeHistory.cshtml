@@ -56,7 +56,7 @@
         e.preventDefault();
         $('html, body').animate({ scrollTop: 0 }, '300');
     });
-
+        @*
         $(document).ready(function () {
             $(".complicated_statistics").toggle();
 
@@ -64,7 +64,7 @@
                 $(".complicated_statistics").toggle();
             });
         });
-
+        *@
     </script>
 }
 
@@ -154,7 +154,6 @@
                                 $ @String.Format("{0:0.##}", Model.TotalProfitWithoutFee)
                             </td>
                             <td>
-
                             </td>
                         </tr>
                         <tr>
@@ -193,11 +192,11 @@
                     </div>
                 </div>
             </div>
-
-            <div style="padding: 10px 40%;" class="desktop">
-                <button style="width: 100%;" class="btn btn-secondary show_stat">Сложная статистика</button>
-            </div>
-
+            @*
+        <div style="padding: 10px 40%;" class="desktop">
+            <button style="width: 100%;" class="btn btn-secondary show_stat">Сложная статистика</button>
+        </div>
+            *@
             <div>
                 <table class="table table-font Indicators complicated_statistics">
                     <tr>

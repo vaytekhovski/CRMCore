@@ -24,16 +24,18 @@
                 Показать
             </button>
         </div>
-        <div class="filter_element">
-            @foreach (var account in Model.Accounts)
-            {
+        <!--
+    <div class="filter_element">
+        @foreach (var account in Model.Accounts)
+        {
 
-            <a class="btn short_filter_button" style=" line-height:3; color: @(@account.name != @Model.AccountData.name ? "black" : "white"); background-color: @(@account.name != @Model.AccountData.name ? "white" : "#a76be3")" href="../UserPanel/SwitchAccount?&accountId=@account.id&Name=@account.name&returnUrl=../TradeHistory/TradeHistory">
-                @account.name
-            </a>
+        <a class="btn short_filter_button" style=" line-height:3; color: @(@account.name != @Model.AccountData.name ? "black" : "white"); background-color: @(@account.name != @Model.AccountData.name ? "white" : "#a76be3")" href="../UserPanel/SwitchAccount?&accountId=@account.id&Name=@account.name&returnUrl=../TradeHistory/TradeHistory">
+            @account.name
+        </a>
 
-            }
-        </div>
+        }
+    </div>
+        -->
     </div>
 
 </form>
