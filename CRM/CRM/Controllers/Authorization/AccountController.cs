@@ -12,6 +12,7 @@ using Business.DataVisioAPI;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Threading;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AuthApp.Controllers
 {
@@ -48,8 +49,8 @@ namespace AuthApp.Controllers
             if (key != null)
             {
                 var accounts = DatavisioAPIService.ShowAccounts(key).Result;
-                var accountId = accounts.FirstOrDefault(x => x.name == model.Login).id;
-
+                //var accountId = accounts.FirstOrDefault(x => x.name == model.Login).id;
+                var accountId = accounts.FirstOrDefault(x => x.name == "Boss").id;
                 await Authenticate(HttpContext, accountId, key, model.Login);
                 return RedirectToAction("Index", "Home");
             }
