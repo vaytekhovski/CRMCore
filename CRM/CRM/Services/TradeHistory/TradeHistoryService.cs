@@ -52,13 +52,27 @@ namespace CRM.Services
                 deals.profit.dirty.amount *= 10;
                 deals.fee *= 10;
             }
-            var ClosedDeals = model.Deals.deals.Where(x => x.outcome != 0).ToList();
-
             
+
+            var IgnoreIds = DropDownFields.GetIgnoreIds();
+
+            foreach (var item in IgnoreIds)
+            {
+                var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.Value);
+                if (dealToRemove != null)
+                {
+                    var DealList = model.Deals.deals.ToList();
+                    DealList.Remove(dealToRemove);
+                    model.Deals.deals = DealList.ToArray();
+                }
+            }
+
+            var ClosedDeals = model.Deals.deals.Where(x => x.outcome != 0).ToList();
 
             model.DepositProfit = 0;
             decimal Deposit = 0;
 
+            /*
             if (filter.StartDate < new DateTime(2020, 05, 16))
             {
                 Deposit = 200;
@@ -72,26 +86,23 @@ namespace CRM.Services
             }
             else
             {
-                Deposit = 11000;
+                Deposit = 1100;
                 Deposit += ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value <= filter.StartDate).Sum(x => x.profit.clean.amount);
                 var profitAfter1605 = ClosedDeals.Where(x => x.opened >= filter.StartDate).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
                 model.DepositProfit += (profitAfter1605 / Deposit) * 100;
             }
+            */
+
+            Deposit = 10000;
+            var cdToDeposit = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 09, 01)).ToList();
+            Deposit += cdToDeposit.Sum(x => x.profit.clean.amount);
+            var cdToProfit = ClosedDeals.Where(x => x.opened >= filter.StartDate).Where(x => x.closed <= filter.EndDate).ToList();
+            var _profit = cdToProfit.Sum(x => x.profit.clean.amount);
+            model.DepositProfit += (_profit / Deposit) * 100;
 
             model.Deals.deals = model.Deals.deals.Where(x => x.opened >= filter.StartDate).Where(x => x.opened <= filter.EndDate).ToArray();
 
-            var IgnoreIds = DropDownFields.GetIgnoreIds();
-
-            foreach (var item in IgnoreIds)
-            {
-                var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.Value);
-                if (dealToRemove != null) 
-                {
-                    var DealList = model.Deals.deals.ToList();
-                    DealList.Remove(dealToRemove);
-                    model.Deals.deals = DealList.ToArray();
-                }
-            }
+            
 
             //var candles = datavisioAPI.GetCandles(token, ViewModel.Coin).Result.ToList();
             //ViewModel.LastPrice = candles.Last().c;
