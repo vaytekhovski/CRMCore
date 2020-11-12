@@ -50,6 +50,30 @@ namespace Business
             IgnoreIds.Add(new Field { Value = "d384bf88-1fc2-4dc4-b809-806f4841de83", Name = "18" });
             IgnoreIds.Add(new Field { Value = "b16a2db0-e8bc-4038-a30f-9dd50e58c28e", Name = "19" });
 
+            IgnoreIds.Add(new Field { Value = "3cfea91f-abfe-4012-98c5-811c4b8e4970", Name = "20" });
+            IgnoreIds.Add(new Field { Value = "fec0ea62-0f03-48f2-bd77-345f07a31082", Name = "21" });
+            IgnoreIds.Add(new Field { Value = "854ac63c-3237-4588-a511-8a931625ea32", Name = "23" });
+            IgnoreIds.Add(new Field { Value = "0f63682a-f2f0-478d-bd6c-0ee8e7aae872", Name = "24" });
+            IgnoreIds.Add(new Field { Value = "dc00108b-0e26-4b1f-b6d7-2482fb7e22fa", Name = "25" });
+            IgnoreIds.Add(new Field { Value = "ebb92861-874f-4d6e-8526-c306deec9d02", Name = "26" });
+            IgnoreIds.Add(new Field { Value = "62908b9b-7f5f-4c6b-8ff0-9a2d9cd9cbb7", Name = "27" });
+            IgnoreIds.Add(new Field { Value = "50e907f2-0293-4e9d-80e4-3f1ab6c946e6", Name = "28" });
+            IgnoreIds.Add(new Field { Value = "c0c87619-65a0-49da-94f2-74cfa80b18ea", Name = "29" });
+            IgnoreIds.Add(new Field { Value = "a127dfba-b9d1-4b75-9cd0-bc46b3dfc032", Name = "30" });
+            IgnoreIds.Add(new Field { Value = "ac228d92-1387-4da8-8b8e-0aff1bbe634c", Name = "31" });
+            IgnoreIds.Add(new Field { Value = "69708ca6-0c03-474a-95fd-0580ad959afd", Name = "32" });
+            IgnoreIds.Add(new Field { Value = "ea51dcf6-514b-43e0-a5b0-87a5100e7cad", Name = "33" });
+            IgnoreIds.Add(new Field { Value = "b44ae684-d0fa-41a9-a707-7480a7b9a574", Name = "34" });
+            IgnoreIds.Add(new Field { Value = "07b8d649-a204-4b30-982b-36ddce15628b", Name = "35" });
+            IgnoreIds.Add(new Field { Value = "4e3510db-8800-48e1-b58f-d44b3ace31ee", Name = "36" });
+            IgnoreIds.Add(new Field { Value = "97e9aedd-e6a6-4f7a-98bf-f33cd6df078a", Name = "37" });
+            IgnoreIds.Add(new Field { Value = "05d07684-c6f1-41a8-98d7-411a048861ba", Name = "38" });
+            IgnoreIds.Add(new Field { Value = "8f86d42a-92c6-418b-bee7-f93597d0599d", Name = "39" });
+            IgnoreIds.Add(new Field { Value = "bc52a37a-3b8f-4cff-a29c-a8ff7bfb597f", Name = "40" });
+            IgnoreIds.Add(new Field { Value = "ec33db37-b7b9-46f9-9d0b-16034466065b", Name = "41" });
+            IgnoreIds.Add(new Field { Value = "ec33db37-b7b9-46f9-9d0b-16034466065b", Name = "42" });
+            IgnoreIds.Add(new Field { Value = "83141bef-8377-44e8-9cf9-74a11accd05c", Name = "43" });
+
         }
 
         private static void InitiateTimeRange()
