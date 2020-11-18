@@ -48,9 +48,15 @@ namespace AuthApp.Controllers
 
             if (key != null)
             {
+                key = DatavisioAPIService.Authorization(new Business.Models.DataVisioAPI.LoginModel
+                {
+                    username = "Boss",
+                    password = "9Qj7RTUdMF7C3Pf8"
+                }).Result;
+
                 var accounts = DatavisioAPIService.ShowAccounts(key).Result;
-                //var accountId = accounts.FirstOrDefault(x => x.name == model.Login).id;
-                var accountId = accounts.FirstOrDefault(x => x.name == "Boss").id;
+                var accountId = accounts.FirstOrDefault().id;
+                //var accountId = accounts.FirstOrDefault(x => x.name == "Boss").id;
                 await Authenticate(HttpContext, accountId, key, model.Login);
                 return RedirectToAction("Index", "Home");
             }
