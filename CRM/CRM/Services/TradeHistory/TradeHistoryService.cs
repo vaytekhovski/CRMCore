@@ -43,21 +43,28 @@ namespace CRM.Services
             if (filter.Coin != null)
                 model.Deals.deals = model.Deals.deals.Where(x => x.@base == filter.Coin).ToArray();
 
-            // Увеличение 
-            foreach (var deals in model.Deals.deals)
+            // Увеличение
+            var UserName = httpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+            if (UserName == "guest")
             {
-                deals.income *= 10;
-                deals.outcome *= 10;
-                deals.profit.clean.amount *= 10;
-                deals.profit.dirty.amount *= 10;
-                deals.fee *= 10;
+                foreach (var deals in model.Deals.deals)
+                {
+                    deals.income *= 10;
+                    deals.outcome *= 10;
+                    deals.profit.clean.amount *= 10;
+                    deals.profit.dirty.amount *= 10;
+                    deals.fee *= 10;
+                }
             }
-            
 
-            var IgnoreIds = DropDownFields.GetIgnoreIds();
+            var IgnoreIds = DropDownFields.GetIgnoreIds().ToList();
+
+            if (UserName != "guest")
+                IgnoreIds = IgnoreIds.Where(x => Convert.ToInt32(x.Text) < 20).ToList();
 
             foreach (var item in IgnoreIds)
             {
+
                 var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.Value);
                 if (dealToRemove != null)
                 {
@@ -92,8 +99,11 @@ namespace CRM.Services
                 model.DepositProfit += (profitAfter1605 / Deposit) * 100;
             }
             */
+            if (UserName == "guest")
+                Deposit = 10000;
+            else
+                Deposit = 1000;
 
-            Deposit = 10000;
             var cdToDeposit = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 09, 01)).ToList();
             Deposit += cdToDeposit.Sum(x => x.profit.clean.amount);
             var cdToProfit = ClosedDeals.Where(x => x.opened >= filter.StartDate).Where(x => x.closed <= filter.EndDate).ToList();
