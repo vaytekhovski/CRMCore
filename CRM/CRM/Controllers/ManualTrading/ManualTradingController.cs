@@ -154,15 +154,20 @@ namespace CRM.Controllers.ManualTrading
             var candles = datavisioAPIService.GetCandles(token, Model.Deal.coin).Result.ToList();
             
             Model.LastPrice = candles.Last().c;
-            
+
+            var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+
             foreach (var item in Model.Deal.orders)
             {
                 item.created = item.created.AddHours(3);
                 item.closed = item.closed != null ? item.closed.Value.AddHours(3) : new DateTime(1999, 01, 01);
 
-                // Увеличение
-                item.amount *= 10;
-                item.filled *= 10;
+                if (UserName == "guest")
+                {
+                    // Увеличение
+                    item.amount *= 10;
+                    item.filled *= 10;
+                }
             }
             Model.Deal.orders = Model.Deal.orders.OrderByDescending(x => x.created).ToArray();
             
