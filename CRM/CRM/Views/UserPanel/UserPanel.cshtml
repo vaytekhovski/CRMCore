@@ -84,77 +84,74 @@
 
                     </div>
 
-                    <!--
-                        <div style="text-align:center">
-                            <h1>Средства Debit</h1>
-                        </div>
+                    <div style="text-align:center">
+                        <h1>Средства Debit</h1>
+                    </div>
 
-                         <table class="table table-font balance_table">
-                                <thead>
+                    <table class="table table-font balance_table">
+                        <thead>
+                            <tr>
+                                <th>Валюта</th>
+                                <th>Свободно</th>
+                                <th>В использовании</th>
+                                <th>Всего</th>
+                                <th>Продажа</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BalancesDebit.AccountBalances)
+                            {
+                                {
+                                    string btnId = "Debit" + item.Currency;
+
                                     <tr>
-                                        <th>Валюта</th>
-                                        <th>Свободно</th>
-                                        <th>В использовании</th>
-                                        <th>Всего</th>
-                                        <th>Продажа</th>
+                                        <td>@item.Currency</td>
+                                        <td>@item.Free</td>
+                                        <td>@item.Used</td>
+                                        <td>@item.Total</td>
+                                        <td><button id="@btnId" class="btn btn-secondary">Продать</button></td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.BalancesDebit.AccountBalances)
-                                    {
-                                        {
-                                            string btnId = "Debit" + item.Currency;
+                                }
+                            }
+                        </tbody>
+                    </table>
 
-                                        <tr>
-                                            <td>@item.Currency</td>
-                                            <td>@item.Free</td>
-                                            <td>@item.Used</td>
-                                            <td>@item.Total</td>
-                                            <td><button id="@btnId" class="btn btn-secondary">Продать</button></td>
-                                        </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                    <div style="text-align:center">
+                        <h1>Средства Margin</h1>
+                    </div>
 
-                        <div style="text-align:center">
-                            <h1>Средства Margin</h1>
-                        </div>
+                    <table class="table table-font balance_table">
+                        <thead>
+                            <tr>
+                                <th>Валюта</th>
+                                <th>Свободно</th>
+                                <th>В использовании</th>
+                                <th>Всего</th>
+                                <th>Продажа</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BalancesMargin.AccountBalances)
+                            {
+                                {
+                                    string btnId = "Margin" + item.Currency;
 
-                         <table class="table table-font balance_table">
-                                <thead>
                                     <tr>
-                                        <th>Валюта</th>
-                                        <th>Свободно</th>
-                                        <th>В использовании</th>
-                                        <th>Всего</th>
-                                        <th>Продажа</th>
+                                        <td>@item.Currency</td>
+                                        <td>@item.Free</td>
+                                        <td>@item.Used</td>
+                                        <td>@item.Total</td>
+
+                                        <td><button id="@btnId" class="btn btn-secondary">Продать</button></td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.BalancesMargin.AccountBalances)
-                                    {
-                                        {
-                                            string btnId = "Margin" + item.Currency;
-
-                                        <tr>
-                                            <td>@item.Currency</td>
-                                            <td>@item.Free</td>
-                                            <td>@item.Used</td>
-                                            <td>@item.Total</td>
-
-                                            <td><button id="@btnId" class="btn btn-secondary">Продать</button></td>
-                                        </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-
-    -->
+                                }
+                            }
+                        </tbody>
+                    </table>
 
 
                     <div class="user_block" style="text-align:center">
-                       
+
 
                         <div>
                             <button class="btn filter_button btn-primary" type="submit" formaction="/UserPanel/ExitFromAccount" formmethod="get" name="exit_button">Выход из аккаунта</button>
