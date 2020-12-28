@@ -26,6 +26,11 @@ namespace CRM.Controllers
         {
             return View();
         }
+        
+        public IActionResult OldHome()
+        {
+            return View();
+        }
 
 
     }

@@ -61,7 +61,8 @@ namespace AuthApp.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            ModelState.AddModelError(model.Password, "Некорректные логин и(или) пароль");
+            ModelState["Password"].AttemptedValue = "Некорректные логин и(или) пароль";
 
             return View(model);
 

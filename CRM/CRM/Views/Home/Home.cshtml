@@ -1,887 +1,393 @@
-﻿@model CRM.ViewModels.LoginModel
-@{ Layout = null;}
+﻿@{ Layout = null; }
 <!DOCTYPE html>
-<html lang="en">
+<html style="font-size: 16px;">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="MEDICINE CENTER ON THE GO!, NEUROLOGICAL, CARDIOLOGICAL, 24 hrs emergency, A MODERN, FULL-SERVICE PHARMACY, our department, care of heart, we care, global presence, our specialists, get in touch">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Home</title>
+    <link rel="stylesheet" href="~/css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="~/css/NewHome.css" media="screen">
+    <script class="u-script" type="text/javascript" src="~/js/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="~/js/nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 3.2.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i">
+
+
+    <meta property="og:title" content="Home">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#73a3de">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="dZY5MLyVTSoCCabzGSGGzDasnZl5UoNStpbgILJR">
-
-    <title>Datavisio</title>
-
-    <!-- Styles -->
-    <link href="~/css/app.css" rel="stylesheet">
-
-    <link href="~/css/mod.css?1537940317" rel="stylesheet">
-
-    <link rel="stylesheet" href="~/css/glide.core.min.css">
-
-
-    <!-- Scripts -->
-
-
-
-    <script src="~/js/app.js"></script>
-    <script>
-        function autoPlayYouTubeModal() {
-            var trigger = $("body").find('[data-target="#video-modal"]');
-            trigger.click(function () {
-                var theModal = $(this).data("target"),
-                    videoSRC = $(this).attr("data-youtube-link"),
-                    videoSRCauto = videoSRC + "?autoplay=1";
-                $(theModal + ' iframe').attr('src', videoSRCauto);
-                $(theModal).on('hidden.bs.modal', function () {
-                    $(theModal + ' iframe').attr('src', videoSRC);
-                })
-            });
-        }
-
-
-        $(function () {
-
-            autoPlayYouTubeModal();
-
-            function format(v) {
-                return v.toString().length == 1 ? '0' + v : v;
-            }
-
-            var now = new Date();
-
-            var currentDate = Date.now();
-            now.setTime(now.getTime() + 86400000);
-            //var endDateString = now.toISOString();
-            //console.log(endDateString);
-            //var endDateTime = Date.parse(endDateString);
-            //console.log(endDateTime);
-            //var endDate = new Date(endDateTime);
-            var endDate = new Date(2018, 11, 1);
-
-            var $days = $('.days');
-            var $hours = $('.hours');
-            var $mins = $('.minutes');
-            var $secs = $('.seconds');
-
-            setInterval(function () {
-
-                currentDate = Date.now();
-                if (currentDate < endDate) {
-
-                    var time = endDate - currentDate;
-
-                    var seconds = Math.floor(time / 1000 % 60);
-                    var minutes = Math.floor(time / 60000 % 60);
-                    var hours = Math.floor(time / 3600000 % 24);
-                    var days = Math.floor(time / 86400000);
-
-                    $secs.text(format(seconds));
-                    $mins.text(format(minutes));
-                    $hours.text(format(hours));
-                    $days.text(format(days));
-
-                }
-
-            }, 100);
-
-
-
-
-
-
-            // возвращает cookie с именем name, если есть, если нет, то undefined
-            function getCookie(name) {
-                var matches = document.cookie.match(new RegExp(
-                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-                ));
-                return matches ? decodeURIComponent(matches[1]) : undefined;
-            }
-
-            // устанавливает cookie с именем name и значением value
-            // options - объект с свойствами cookie (expires, path, domain, secure)
-            function setCookie(name, value, options) {
-                options = options || {};
-
-                var expires = options.expires;
-
-                if (typeof expires == "number" && expires) {
-                    var d = new Date();
-                    d.setTime(d.getTime() + expires * 1000);
-                    expires = options.expires = d;
-                }
-                if (expires && expires.toUTCString) {
-                    options.expires = expires.toUTCString();
-                }
-
-                value = encodeURIComponent(value);
-
-                var updatedCookie = name + "=" + value;
-
-                for (var propName in options) {
-                    updatedCookie += "; " + propName;
-                    var propValue = options[propName];
-                    if (propValue !== true) {
-                        updatedCookie += "=" + propValue;
-                    }
-                }
-
-                document.cookie = updatedCookie;
-            }
-
-            // удаляет cookie с именем name
-            function deleteCookie(name) {
-                setCookie(name, "", {
-                    expires: -1
-                })
-            }
-
-
-            var cookieAgreed = getCookie('cookieAgreed')
-
-            //console.log(cookieAgreed);
-
-            if (cookieAgreed !== 'true') {
-                $('.cookies-alert').show();
-            } else {
-                setCookie('cookieAgreed', true, { path: '/', expires: 60 * 60 * 24 * 14 });
-            }
-
-            $('.cookie-agree-btn').click(function () {
-                setCookie('cookieAgreed', true, { path: '/', expires: 60 * 60 * 24 * 14 });
-                $('.cookies-alert').hide();
-            })
-
-
-
-
-            //Смена изображения во всплывающей инфографике
-            $('#infographic-modal').on('show.bs.modal', function (event) {
-                var tag = $(event.relatedTarget)
-                var link = tag.data('image-src')
-                var modal = $(this)
-                modal.find('.infographic-modal-image').attr('src', link)
-            })
-
-
-        });</script>
-
-
-
-    <script>
-        $(function () {
-
-            /*** Фиксирование шапки ***/
-
-            var navbar = $('.navbar');
-            var fixedHeight = navbar.height();
-
-            $(window).scroll(function () {
-                if ($(window).scrollTop() > fixedHeight) {
-
-                    navbar.removeClass('navbar-static-top').addClass('navbar-fixed-top');
-                    $('body').css('padding-top', fixedHeight);
-                } else {
-                    navbar.removeClass('navbar-fixed-top').addClass('navbar-static-top');
-                    $('body').css('padding-top', 0);
-                }
-            });
-
-
-            function scrollToAnchor(aid) {
-                var aTag = $(".anchor-point[id='" + aid + "']");
-                $('html,body').animate({ scrollTop: aTag.offset().top }, 'slow');
-            }
-
-            $('.anchor-link').click(function () {
-                var href = $(this).attr('href');
-                var anchorId = href.replace('/#', '');
-                scrollToAnchor(anchorId);
-            })
-
-
-
-
-
-        });</script>
-    <link href="//db.onlinewebfonts.com/c/00d5a78493aed4b11e2584ad7cceee49?family=Gilroy+ExtraBold" rel="stylesheet" type="text/css" />
     <style type="text/css">
-        @@import url(//db.onlinewebfonts.com/c/00d5a78493aed4b11e2584ad7cceee49?family=Gilroy+ExtraBold);
-
-        @@font-face {
-            font-family: "Gilroy ExtraBold";
-            src: url("//db.onlinewebfonts.com/t/00d5a78493aed4b11e2584ad7cceee49.eot");
-            src: url("//db.onlinewebfonts.com/t/00d5a78493aed4b11e2584ad7cceee49.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/00d5a78493aed4b11e2584ad7cceee49.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/00d5a78493aed4b11e2584ad7cceee49.woff") format("woff"), url("//db.onlinewebfonts.com/t/00d5a78493aed4b11e2584ad7cceee49.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/00d5a78493aed4b11e2584ad7cceee49.svg#Gilroy ExtraBold") format("svg");
-        }
-
         h1, h2, h3, h4, h5, h6 {
-            font-family: Gilroy extrabold;
+            font-weight: bold !important;
         }
-        </style>
-
-        </head >
-        <body class="" >
-        <div id="app" >
-        <nav class="navbar navbar-default navbar-static-top" >
-        <div class="top-promo-line" >
-        <div class="container" >
-
-        <a href="#" class="sign-link hidden-xs pull-right" data-toggle="modal" data-target="#sign-in-modal" > Sign in</a >
-
-        </div >
-        </div >
-        <div class="container" >
-        <div class="navbar-header" >
-        <!-- Branding Image -->
-        <a class="navbar-brand" href="../Home/Index" style="padding-top: 25px;">
-        <img class="white-logo" src="~/images/visiologo.png" alt="logo" >
-        <img class="dark-logo" src="~/images/visiologo.png" alt="logo" >
-        </a >
-
-        <div class="navbar-header-bottom-line col-xs-12 no-padding" >
-        <!-- Collapsed Hamburger -->
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false" >
-        <span class="sr-only" > Toggle Navigation</span >
-        <span class="icon-bar" > </span >
-        <span class="icon-bar" > </span >
-        <span class="icon-bar" > </span >
-        </button >
-
-        <div class="navbar-non-collapse visible-xs" >
-        <ul class="nav navbar-nav" >
-        <li > <a href="#" class="sign-link" data-toggle="modal" data-target="#sign-in-modal" > SIGN IN</a > </li >
-        </ul >
-        </div >
-        </div >
-
-        </div >
-
-
-
-        <div class="collapse navbar-collapse" id="app-navbar-collapse" >
-        <!-- Right Side Of Navbar -->
-        <ul class="nav navbar-nav navbar-right" >
-        <!-- Authentication Links -->
-        <li > <a class="anchor-link" href="/#how" > How it works</a > </li >
-        <li > <a class="anchor-link" href="/#why" > Why DataVisio</a > </li >
-        <li > <a class="anchor-link" href="/#faq" > FAQ</a > </li >
-
-        </ul >
-
-        </div >
-
-
-        </div >
-        </nav >
-
-        <section id="title-block" class="clearfix" >
-
-        <div class="container" >
-        <div class="row" >
-        <div class="col-md-12" >
-        <h1 > DataVisio - A Revolution in Cryptocurrency Exchange</h1 >
-
-        <span >
-        DataVisio is an artificial-intelligence-based automated trading system for cryptocurrency exchange with algorithms
-        that secure investments and ensure risk-free trade.
-        </span >
-
-        <ul >
-        <li > <span > It is more efficient than technical analysis in cryptocurrency exchange rate predictions.</span > </li >
-        <li > <span > It offers a more accurate prognosis with its Big Data, neural networks and proprietary algorithms.</span > </li >
-        <li > <span > Agile architecture enables the system to scale and cater to Big Data analysis in various domains.</span > </li >
-        </ul >
-
-
-        </div >
-        </div >
-        </div >
-
-
-        </section >
-
-
-
-        <section id="" class="clearfix" >
-        <div class="container" >
-        <img src="~/images/jg7msX7A.png" style="width:100%" / >
-        </div >
-
-        </section >
-
-
-
-
-
-        <section id="why-datavisio-header-block" class="clearfix hidden-xs" >
-        <span class="anchor-point" id="why" > </span >
-        <div class="container" >
-        <div class="row" >
-
-        <div class="col-md-12" >
-        <h2 > Why DataVisio?</h2 >
-        </div >
-
-
-
-        </div >
-        </div >
-
-        </section >
-
-
-        <section id="why-datavisio-tabs-block" class="clearfix hidden-xs" >
-        <div class="container" >
-        <div class="row" >
-
-        <div class="col-md-12" >
-        <ul id="why-datavisio-tabs" class="nav nav-tabs hidden-xs" >
-        <li role="presentation" class="active" > <a href="#why1" > Echange clients</a > </li >
-        <li role="presentation" > <a href="#why2" > Exchanges</a > </li >
-        </ul >
-
-        <div class="tab-content clearfix hidden-xs" id="myTabContent" >
-        <div class="tab-pane fade active in" role="tabpanel" id="why1" aria-labelledby="home-tab" >
-        <div class="row" >
-        <div class="col-md-4" >
-
-
-        <img class="datavisio-values-image" src="~/images/svg/efficiency.svg" >
-
-        <h3 > Efficiency</h3 >
-
-        <span class="text-op-80" >
-        It's based on a better alternative
-        to technical analysis which only
-        shows a current market situation
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/accuracy.svg" >
-        <h3 > Accuracy</h3 >
-        <span class="text-op-80" >
-        Our system uses AI to provide the
-        most accurate prognosys for
-        crypto currency exchange rates
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/lock.svg" >
-
-        <h3 > Secureness</h3 >
-        <span class="text-op-80" >
-        With more accurate data traders
-        are secured from investments
-        loss
-        </span >
-        </div >
-        </div >
-
-        <div class="row" >
-        <div class="col-md-4" >
-
-
-        <img class="datavisio-values-image" src="~/images/svg/analytics.svg" >
-
-        <h3 > Through Analytics</h3 >
-
-        <span class="text-op-80" >
-        Our system uses Big Data and neural
-        networks enabling trully thorough
-        analysis for accurate predicitons.
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/automations.svg" >
-
-        <h3 > Clever Automation</h3 >
-        <span class="text-op-80" >
-        Our system uses Big Data and neural
-        networks enabling trully thorough
-        analysis for accurate predicitons.
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/enchantment.svg" >
-
-        <h3 > Constant enchantment</h3 >
-        <span class="text-op-80" >
-        Based on scientific method we started
-        with hypothesis and developed a system
-        with a plan for constant improvement.
-        </span >
-        </div >
-        </div >
-
-
-
-
-
-        </div >
-        <div class="tab-pane fade" role="tabpanel" id="why2" aria-labelledby="profile-tab" >
-
-
-        <div class="row" >
-        <div class="col-md-4" >
-
-
-        <img class="datavisio-values-image" src="~/images/svg/efficiency.svg" >
-
-        <h3 > Thorough Analytics</h3 >
-
-        <span class="text-op-80" >
-        Our system uses Big Data and neural networks, enabling truly thorough analysis
-        for accurate predictions.
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/star.svg" >
-
-        <h3 > Trust Management</h3 >
-        <span class="text-op-80" >
-        DataVisio users can position their funds
-        for automatic trading by our system.
-
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/reports.svg" >
-
-        <h3 > Forecasts and Reports</h3 >
-        <span class="text-op-80" >
-        Use DataVisio to get fresh crypto market forecasts and analytical historical data
-        from the biggest crypto exchanges.
-
-        </span >
-        </div >
-        </div >
-
-        <div class="row" >
-        <div class="col-md-4" >
-
-
-        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/algorithm.svg" >
-
-        <h3 > Creation of Algorithms for Trading</h3 >
-
-        <span class="text-op-80" >
-        We can create internal, self-learning trading systems for cryptoexchanges and test them in real circumstances.
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/execution.svg" >
-
-        <h3 > Trade Systems Checking</h3 >
-        <span class="text-op-80" >
-        If your exchange has its own crypto trading robots, we can check their efficiency using our emulator and provide you an efficiency report.
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/why/exchanges/jigsaw.svg" >
-
-        <h3 > Unique Solutions</h3 >
-        <span class="text-op-80" >
-        We can create unique functionalities in your exchange — for example, algorithms that do not allow trading on cross-rates within theexchange.
-        </span >
-        </div >
-        </div >
-
-
-
-
-        </div >
-
-
-        </div >
-        </div >
-
-
-
-        </div >
-        </div >
-
-        </section >
-
-
-
-
-
-        <section id="datavisio-values" class="clearfix hidden-xs" >
-        <div class="container" >
-        <div class="row" >
-
-        <div class="col-md-12 h2-block" >
-        <h2 > DataVisio Values</h2 >
-        </div >
-
-        <div class="col-md-4" >
-
-
-        <img class="datavisio-values-image" src="~/images/svg/solar.svg" >
-
-        <h3 > Scientific Method</h3 >
-
-        <span class="text-op-80" >
-        Our R&D dept. takes the best of science - start with hypotheses, deriver predictions, carry out experiments - to release
-        business solutions.
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/lock.svg" >
-
-        <h3 > Secureness</h3 >
-        <span class="text-op-80" >
-        Key goal of DataVisio is to secure traders
-        from risks of loosing investments
-        via elaborate propriatory algorithms
-        which we keep enhancing.
-        </span >
-        </div >
-
-        <div class="col-md-4" >
-
-        <img class="datavisio-values-image" src="~/images/svg/innovation.svg" >
-
-        <h3 > Transparent innovation</h3 >
-        <span class="text-op-80" >
-        We want to make crypto currency exchange safer for traders constantly improving our technology and system. And we want
-        to share this journey with you.
-        </span >
-        </div >
-        </div >
-        </div >
-
-        </section >
-
-
-
-        <section id="faq-block" class="clearfix" role="tablist" aria-multiselectable="true" >
-        <span class="anchor-point" id="faq" > </span >
-        <div class="container" >
-        <div class="row" >
-
-        <div class="col-md-12" >
-        <h2 > FAQ</h2 >
-        </div >
-
-        <div class="col-md-12 faq-block-all-tabs" >
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" >
-        <div class="panel panel-default" >
-        <div class="panel-heading faq-question-title" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" >
-        <h4 class="panel-title" >
-        <span role="button" >
-        Are You a Trading Robot?
-        </span >
-        </h4 >
-        </div >
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" >
-        <div class="panel-body" >
-        <span class="text-op-80" >
-        DataVisio is a data analysis system which predicts crypto markets; we don’t use classic technical analysis methods for crypto trading, only math.
-        </span >
-        </div >
-        </div >
-        </div >
-        <div class="panel panel-default" >
-        <div class="panel-heading faq-question-title  collapsed" role="tab" id="headingTwo" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" >
-        <h4 class="panel-title" >
-        <span class="" >
-        Can I Trade Using Your System Directly?
-        </span >
-        </h4 >
-        </div >
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" >
-        <div class="panel-body" >
-        <span class="text-op-80" >
-        You can use our system only on our partners’ exchanges; we are working in B2B format.
-        </span >
-        </div >
-        </div >
-        </div >
-
-        </div >
-        </div >
-
-        </div >
-        </div >
-
-        </section >
-        <script src="~/js/glide.min.js" > </script >
-
-        <script >
-        $(function () {
-
-                /*** slider ***/
-                var perView = 1
-
-                if ($(window).width() > 768) {
-                    perView = 3
-                }
-
-                new Glide('.glide', {
-                    type: 'carousel',
-                    perView: perView
-                }).mount();
-
-
-                /*** tabs ***/
-                $('#how-it-work-block-tabs a').click(function (e) {
-                    e.preventDefault()
-                    $(this).tab('show')
-                });
-
-                $('#why-datavisio-tabs a').click(function (e) {
-                    e.preventDefault()
-                    $(this).tab('show')
-                });
-
-                /*** roadmap ***/
-
-                $('.roadmap-scheme-point').click(function () {
-                    $('.roadmap-scheme-point').removeClass('active');
-                    $(this).addClass('active');
-                    var needSlideHeight = $('.roadmap-scheme-point-body', this).height() + 50;
-                    $('.roadmap-scheme-point-body-slide-block').height(0);
-                    $('.roadmap-scheme-point-body-slide-block', this).height(needSlideHeight);
-                });
-
-
-
-            });</script >
-
-        </div >
-
-
-
-
-
-
-
-
-
-
-        <section id="footer" class="clearfix " >
-        <div class="container" >
-        <div class="row" >
-
-        <div class="col-md-12" >
-        <h2 > Contact DataVisio</h2 >
-
-        <span class="text-op-80" > Subscribe to our email list to recieve all news and updates</span >
-
-
-        </div >
-
-        <div class="col-md-6 no-padding" >
-
-        <form class="col-md-12 with-thanks" >
-
-        <div class="col-md-6 no-padding" >
-        <div class="form-group" >
-        <input type="email" class="form-control" name="email" placeholder="E-mail adress" required >
-        </div >
-        </div >
-
-        <div class="col-md-6 no-padding" >
-
-        <button type="submit" class="btn btn-primary btn-block" style=" height: 55px;">
-        <span class="btn-text" > Subscribe</span >
-        </button >
-
-        </div >
-        </form >
-
-
-
-
-        </div >
-        <div class="col-md-6 footer-links-block no-padding" >
-
-
-
-        <div class="col-sm-4 col-xs-12" >
-        <h3 > DataVisio</h3 >
-        <a href="#" > About Us</a >
-        <a href="#" > Privacy policy</a >
-        <a href="#" > User agreement</a >
-        <a href="#" > Contact US</a >
-        </div >
-        <div class="col-sm-4 col-xs-12" >
-        <h3 > Collaboration</h3 >
-        <a href="#" > How to become our partner?</a >
-        <a href="#" > How to connect our system to your exchange?</a >
-        <a href="#" > DataVisio versions</a >
-        <a href="#" > DataVisio open API</a >
-        </div >
-        <div class="col-sm-4 col-xs-12" >
-        <h3 > Information</h3 >
-        <a href="#" > Our blog</a >
-        <a href="#" > Articles</a >
-        <a href="#" > For news companies</a >
-        </div >
-
-        </div >
-
-
-        </div >
-        </div >
-
-        </section >
-        <!-- Modal -->
-        <div class="modal" id="download-whitepaper-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
-        <div class="modal-dialog" role="document" >
-        <div class="modal-content" >
-        <div class="modal-header" >
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-        <span class="btn btn-primary" aria-hidden="true" > &times;</span >
-        </button >
-        </div >
-        <div class="modal-body" >
-        <h3 > Get our whitepaper</h3 >
-        <span class="modal-description-text text-op-80" >
-        To download whitepaper, <br >
-        please enter e-mail
-        </span >
-
-
-        <form class="with-thanks" >
-
-        <div class="form-group" >
-        <input type="email" class="form-control" id="email" name="email" placeholder="E-mail adress" required >
-        </div >
-        <button type="submit" class="btn btn-primary btn-block" >
-        <span class="btn-text" > Buy now</span >
-        </button >
-        </form >
-        </div >
-        </div >
-        </div >
-        </div >
-
-
-
-        <div class="modal" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true" >
-        <div class="modal-dialog" >
-        <div class="modal-content" >
-        <div class="modal-body" >
-        <div >
-        <iframe allowfullscreen="allowfullscreen"
-        mozallowfullscreen="mozallowfullscreen"
-        msallowfullscreen="msallowfullscreen"
-        oallowfullscreen="oallowfullscreen"
-        webkitallowfullscreen="webkitallowfullscreen"
-        src="" > </iframe >
-        </div >
-        </div >
-        </div >
-        </div >
-        </div >
-
-
-        <div class="modal" id="thank-you-modal" tabindex="-1" role="dialog" aria-labelledby="thankYouModal" aria-hidden="true" >
-        <div class="modal-dialog" role="document" >
-        <div class="modal-content" >
-        <div class="modal-header" >
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-        <span class="btn btn-primary" aria-hidden="true" > &times;</span >
-        </button >
-        </div >
-        <div class="modal-body" >
-        <h3 > Thank you!</h3 >
-        <span class="modal-description-text text-op-80" >
-        Your data is recieved, <br >
-        Our manager will contact you soon
-        </span >
-
-        <button type="submit" class="btn btn-primary btn-block" data-dismiss="modal" >
-        <span class="btn-text" > Home</span >
-        </button >
-
-        </div >
-        </div >
-        </div >
-        </div >
-        <!-- Sign In -->
-        <div class="modal" id="sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="signInLabel" >
-        <div class="modal-dialog" role="document" >
-        <div class="modal-content" >
-        <div class="modal-header" >
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-        <span class="btn btn-primary" aria-hidden="true" > &times;</span >
-        </button >
-        </div >
-        <div class="modal-body" >
-        <span class="sign-menu" >
-        <span class="active" >
-        Log in
-        </span >
-        </span >
-        <h3 > Sign in</h3 >
-        <span class="modal-description-text text-op-80" >
-        Security blocks<br >
-        two lines of text
-        </span >
-
-        <form method="post" >
-        <div class="form-group" >
-        <input class="form-control" placeholder="Login" type="text" asp-for="Login" / >
-        </div >
-        <div class="form-group" >
-        <input class="form-control" placeholder="Password" asp-for="Password" / >
-        </div >
-        <button type="submit" class="btn btn-primary btn-block" formmethod="post" formaction="../Account/Login" > Sign in</button >
-        </form >
-        </div >
-        </div >
-        </div >
-        </div >
-
-
-
-        <div class="modal" id="infographic-modal" tabindex="-1" role="dialog" aria-labelledby="infographicModal" aria-hidden="true" >
-        <div class="modal-dialog" >
-        <div class="modal-content" >
-        <div class="modal-header" >
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-        <span class="btn btn-primary" aria-hidden="true" > &times;</span >
-        </button >
-        </div >
-        <div class="modal-body" >
-        <div >
-        <img class="infographic-modal-image img-responsive" src="" >
-        </div >
-        </div >
-        </div >
-        </div >
-        </div >
-
-
-        <div class="cookies-alert" >
-        <div class="container" >
-        This website uses cookies. By continuing to browse the site, you are agreeing to our use of cookies.
-        <span class="btn btn-primary cookie-agree-btn" > Agree</span >
-        </div >
-
-        </div >
-
-        </body >
-        </html >
-
+    </style>
+</head>
+<body class="u-body">
+    <header class="u-clearfix u-header u-sticky u-white u-header" id="sec-64b2">
+        <div class="u-clearfix u-sheet u-sheet-1" style="min-height: 90px;">
+            <a href="#" class="u-image u-logo u-image-1">
+                <img src="~/images/NewHome/visiologo.png" class="u-logo-image u-logo-image-1" data-image-width="256" style="margin: 30px auto 0 0;">
+            </a>
+            <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+                <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px; text-transform: uppercase; font-weight: 700;">
+                    <a class="u-border-2 u-border-active-custom-color-5 u-border-hover-custom-color-5 u-border-no-left u-border-no-right u-border-no-top u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-palette-2-base" href="#">
+                        <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <defs>
+                                <symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;">
+                                    <rect y="1" width="16" height="2"></rect>
+                                    <rect y="7" width="16" height="2"></rect>
+                                    <rect y="13" width="16" height="2"></rect>
+                                </symbol>
+                            </defs>
+                        </svg>
+                    </a>
+                </div>
+                <div class="u-custom-menu u-nav-container">
+                    <ul class="u-custom-font u-nav u-spacing-30 u-text-font u-unstyled u-nav-1">
+                        <li class="u-nav-item">
+                            <a class="u-border-2 u-border-active-custom-color-5 u-border-hover-custom-color-5 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-custom-color-5 u-text-grey-90 u-text-hover-custom-color-5" href="Home.html#top" data-page-id="30035300" style="padding: 5px 0px;">Home</a>
+                        </li>
+                        <li class="u-nav-item">
+                            <a class="u-border-2 u-border-active-custom-color-5 u-border-hover-custom-color-5 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-custom-color-5 u-text-grey-90 u-text-hover-custom-color-5" href="Home.html#datavisio-values" data-page-id="30035300" style="padding: 5px 0px;">Datavisio values</a>
+                        </li>
+                        <li class="u-nav-item">
+                            <a class="u-border-2 u-border-active-custom-color-5 u-border-hover-custom-color-5 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-custom-color-5 u-text-grey-90 u-text-hover-custom-color-5" href="Home.html#why-datavisio" data-page-id="30035300" style="padding: 5px 0px;">Why datavisio?</a>
+                        </li>
+
+                        <li class="u-nav-item">
+                            <a class="u-border-2 u-border-active-custom-color-5 u-border-hover-custom-color-5 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-custom-color-5 u-text-grey-90 u-text-hover-custom-color-5" href="Home.html#how-it-works" data-page-id="30035300" style="padding: 5px 0px;">How it works</a>
+                        </li>
+                        <li class="u-nav-item">
+                            <a class="u-border-2 u-border-active-custom-color-5 u-border-hover-custom-color-5 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-custom-color-5 u-text-grey-90 u-text-hover-custom-color-5" href="Home.html#get-in-touch" data-page-id="30035300" style="padding: 5px 0px;">Get in touch</a>
+                        </li>
+                        <li class="u-nav-item">
+                            <a class="u-border-2 u-border-active-custom-color-5 u-border-hover-custom-color-5 u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-custom-color-5 u-text-grey-90 u-text-hover-custom-color-5" href="../Account/Login" style="padding: 5px 0px;">sign-in</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="u-custom-menu u-nav-container-collapse">
+                    <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                        <div class="u-sidenav-overflow">
+                            <div class="u-menu-close"></div>
+                            <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                                <li class="u-nav-item">
+                                    <a class="u-button-style u-nav-link" href="Home.html#top" data-page-id="30035300" style="padding: 10px 0px;">Home</a>
+                                </li>
+                                <li class="u-nav-item">
+                                    <a class="u-button-style u-nav-link" href="Home.html#datavisio-values" data-page-id="30035300" style="padding: 10px 0px;">Datavisio values</a>
+                                </li>
+                                <li class="u-nav-item">
+                                    <a class="u-button-style u-nav-link" href="Home.html#why-datavisio" data-page-id="30035300" style="padding: 10px 0px;">Why datavisio?</a>
+                                </li>
+
+                                <li class="u-nav-item">
+                                    <a class="u-button-style u-nav-link" href="Home.html#how-it-works" data-page-id="30035300" style="padding: 10px 0px;">How it works</a>
+                                </li>
+                                <li class="u-nav-item">
+                                    <a class="u-button-style u-nav-link" href="Home.html#get-in-touch" data-page-id="30035300" style="padding: 10px 0px;">Get in touch</a>
+                                </li>
+                                <li class="u-nav-item">
+                                    <a class="u-button-style u-nav-link" style="padding: 10px 0px;">sign-in</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <section class="u-clearfix u-image u-section-1" id="top" data-image-width="1920" data-image-height="1080">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-align-right u-container-style u-expanded-width u-group u-group-1">
+                <div class="u-container-layout u-container-layout-1">
+                    <h1 class="u-align-left u-text u-title u-text-1" style=" font-size: 5.9rem !important">DATAVISIO</h1>
+                    <h3 class="u-align-left u-text u-text-2">Only math!</h3>
+                </div>
+            </div>
+            <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+                <div class="u-layout">
+                    <div class="u-layout-row">
+                        <div class="u-align-center u-container-style u-custom-color-3 u-layout-cell u-left-cell u-size-20 u-size-20-md u-layout-cell-1">
+                            <div class="u-container-layout u-valign-middle u-container-layout-2">
+                                <span class="u-icon u-icon-circle u-text-body-alt-color u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 496 496" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-b744"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 496 496" id="svg-b744"><path d="m154.671875 294.382812c3.488281 5.265626 5.328125 11.351563 5.328125 17.617188 0 17.648438-14.351562 32-32 32-6.265625 0-12.351562-1.839844-17.617188-5.328125l-8.832031 13.34375c7.890625 5.222656 17.035157 7.984375 26.449219 7.984375 26.472656 0 48-21.527344 48-48 0-9.414062-2.761719-18.558594-7.984375-26.457031zm0 0"></path><path d="m128 280c6.265625 0 12.359375 1.839844 17.609375 5.320312l8.839844-13.335937c-7.882813-5.222656-17.023438-7.984375-26.449219-7.984375-26.472656 0-48 21.527344-48 48 0 9.414062 2.761719 18.558594 7.984375 26.457031l13.34375-8.832031c-3.488281-5.273438-5.328125-11.359375-5.328125-17.625 0-17.648438 14.351562-32 32-32zm0 0"></path><path d="m288 336v48h32v-16h-16v-32zm0 0"></path><path d="m296 288c-20.246094 0-40.023438 7.054688-55.6875 19.871094l10.144531 12.386718c10.726563-8.785156 23.839844-14.210937 37.542969-15.753906v15.496094h16v-15.527344c33.320312 3.703125 59.824219 30.214844 63.527344 63.527344h-15.527344v16h15.496094c-1.542969 13.710938-6.96875 26.816406-15.753906 37.550781l12.378906 10.136719c12.816406-15.664062 19.878906-35.441406 19.878906-55.6875 0-48.519531-39.480469-88-88-88zm0 0"></path><path d="m304 447.496094v-15.496094h-16v15.527344c-33.320312-3.703125-59.824219-30.214844-63.527344-63.527344h15.527344v-16h-15.496094c1.542969-13.710938 6.96875-26.816406 15.753906-37.550781l-12.378906-10.136719c-12.816406 15.664062-19.878906 35.441406-19.878906 55.6875 0 48.519531 39.480469 88 88 88 20.246094 0 40.023438-7.054688 55.6875-19.871094l-10.144531-12.386718c-10.726563 8.785156-23.832031 14.210937-37.542969 15.753906zm0 0"></path><path d="m448 368h-16v-224h-48v150.6875c-4.886719-5.289062-10.238281-10.121094-16-14.464844v-96.222656h-48v74.414062c-5.207031-1.0625-10.574219-1.652343-16-2.015624v-32.398438h-48v39c-8.046875 2.855469-15.695312 6.542969-22.855469 10.96875-1.609375-4.457031-3.382812-8.832031-5.527343-13.007812l12.648437-17.714844-43.511719-43.527344-17.722656 12.65625c-5.335938-2.726562-10.910156-5.03125-16.671875-6.878906l-3.574219-21.496094h-61.5625l-3.574218 21.496094c-5.761719 1.847656-11.335938 4.152344-16.671876 6.878906l-17.71875-12.65625-43.515624 43.527344 12.648437 17.714844c-2.734375 5.328124-5.039063 10.902343-6.886719 16.671874l-21.503906 3.589844v61.554688l21.496094 3.582031c1.847656 5.769531 4.160156 11.34375 6.886718 16.671875l-12.648437 17.710938 43.511719 43.53125 17.722656-12.65625c5.335938 2.726562 10.910156 5.03125 16.671875 6.878906l3.574219 21.503906h61.5625l3.574218-21.496094c5.761719-1.847656 11.335938-4.152344 16.671876-6.878906l3.199218 2.285156c15.929688 47.625 60.867188 82.089844 113.777344 82.089844 63.472656 0 115.449219-49.558594 119.59375-112h80.40625v-304h-48zm-48-208h16v208h-.40625c-1.242188-18.695312-6.738281-36.214844-15.59375-51.609375zm-64 40h16v69.953125c-5.113281-2.714844-10.480469-4.984375-16-6.945313zm-64 40h16v16.40625c-5.425781.363281-10.792969.953125-16 2.019531zm-96.359375 155.265625c-6.992187 4.007813-14.535156 7.125-22.449219 9.269531l-4.953125 1.34375-3.023437 18.121094h-34.4375l-3.023438-18.121094-4.953125-1.34375c-7.90625-2.144531-15.457031-5.261718-22.449219-9.269531l-4.457031-2.554687-14.917969 10.664062-24.359374-24.351562 10.664062-14.933594-2.554688-4.457032c-4-6.976562-7.125-14.519531-9.269531-22.441406l-1.335937-4.953125-18.121094-3.015625v-34.445312l18.121094-3.015625 1.34375-4.953125c2.160156-7.929688 5.269531-15.480469 9.269531-22.441406l2.554687-4.457032-10.664062-14.933594 24.359375-24.351562 14.917969 10.664062 4.457031-2.554687c6.992187-4.007813 14.535156-7.125 22.449219-9.269531l4.953125-1.34375 3.023437-18.121094h34.4375l3.023438 18.121094 4.953125 1.34375c7.90625 2.144531 15.457031 5.261718 22.449219 9.269531l4.457031 2.554687 14.917969-10.664062 24.359374 24.351562-10.664062 14.933594 2.554688 4.457032c3.453124 6.015624 6.109374 12.535156 8.199218 19.289062-4.679687 3.886719-8.976562 8.199219-13.015625 12.734375-7.289062-36.664063-39.6875-64.390625-78.457031-64.390625-44.113281 0-80 35.886719-80 80s35.886719 80 80 80c17.472656 0 34.28125-5.910156 48.007812-16.214844 0 .070313-.007812.144532-.007812.214844 0 6.199219.617188 12.238281 1.527344 18.183594zm16.160156-78.554687c-6.023437 10.554687-10.535156 22.058593-13.144531 34.289062-12.082031 15.65625-30.871094 25-50.65625 25-35.289062 0-64-28.710938-64-64s28.710938-64 64-64 64 28.710938 64 64c0 1.59375-.089844 3.152344-.199219 4.710938zm104.199219 163.289062c-57.34375 0-104-46.65625-104-104s46.65625-104 104-104 104 46.65625 104 104-46.65625 104-104 104zm168-384h16v272h-16zm0 0"></path><path d="m448 0v16h17.191406l-56.597656 45.28125-24.59375-24.59375-37.71875 37.71875c-3.128906-1.503906-6.585938-2.40625-10.28125-2.40625-13.230469 0-24 10.769531-24 24 0 4.136719 1.152344 7.976562 3 11.375l-41.816406 46.464844c-2.832032-1.175782-5.925782-1.839844-9.183594-1.839844-.152344 0-.289062.039062-.441406.046875l-32.167969-85.789063c5.21875-4.402343 8.609375-10.90625 8.609375-18.257812 0-13.230469-10.769531-24-24-24s-24 10.769531-24 24c0 1.726562.199219 3.40625.550781 5.039062l-65.582031 40.351563c-4.113281-3.320313-9.28125-5.390625-14.96875-5.390625-10.414062 0-19.214844 6.710938-22.527344 16h-42.945312c-3.3125-9.289062-12.113282-16-22.527344-16-13.230469 0-24 10.769531-24 24s10.769531 24 24 24c10.414062 0 19.214844-6.710938 22.527344-16h42.953125c3.3125 9.289062 12.113281 16 22.527343 16 13.230469 0 24-10.769531 24-24 0-1.726562-.199218-3.40625-.550781-5.039062l65.582031-40.351563c4.105469 3.320313 9.273438 5.390625 14.960938 5.390625.152344 0 .289062-.039062.441406-.046875l32.167969 85.78125c-5.21875 4.410156-8.609375 10.914063-8.609375 18.265625 0 13.230469 10.769531 24 24 24s24-10.769531 24-24c0-4.136719-1.144531-7.976562-3-11.375l41.816406-46.464844c2.832032 1.175782 5.925782 1.839844 9.183594 1.839844 13.230469 0 24-10.769531 24-24 0-3.695312-.902344-7.152344-2.40625-10.28125l26.40625-26.40625 23.40625 23.40625 72.59375-58.070312v23.351562h16v-48zm-424 120c-4.414062 0-8-3.59375-8-8s3.585938-8 8-8 8 3.59375 8 8-3.585938 8-8 8zm88 0c-4.414062 0-8-3.59375-8-8s3.585938-8 8-8 8 3.59375 8 8-3.585938 8-8 8zm96-72c0-4.40625 3.585938-8 8-8s8 3.59375 8 8-3.585938 8-8 8-8-3.59375-8-8zm56 136c-4.414062 0-8-3.59375-8-8s3.585938-8 8-8 8 3.59375 8 8-3.585938 8-8 8zm72-80c-4.414062 0-8-3.59375-8-8s3.585938-8 8-8 8 3.59375 8 8-3.585938 8-8 8zm0 0"></path></svg></span>
+                                <h3 class="u-text u-text-body-alt-color u-text-3">efficient&nbsp;</h3>
+                                <p class="u-text u-text-body-alt-color u-text-4">It is more efficient than technical analysis in cryptocurrency exchange rate predictions.</p>
+                            </div>
+                        </div>
+                        <div class="u-align-center u-container-style u-custom-color-2 u-layout-cell u-size-20 u-size-20-md u-layout-cell-2">
+                            <div class="u-container-layout u-valign-middle u-container-layout-3">
+                                <span class="u-icon u-icon-circle u-text-body-alt-color u-icon-2">
+                                    <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 64 64" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-bce1"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 64 64" id="svg-bce1"><g><path d="m9 57c-1.654 0-3 1.346-3 3s1.346 3 3 3 3-1.346 3-3-1.346-3-3-3zm0 4c-.552 0-1-.449-1-1s.448-1 1-1 1 .449 1 1-.448 1-1 1z"></path><path d="m4.051 55.05 1.414 1.414c.944-.944 2.2-1.464 3.535-1.464s2.591.52 3.535 1.464l1.414-1.414c-1.322-1.322-3.079-2.05-4.949-2.05s-3.627.728-4.949 2.05z"></path><path d="m1.222 52.222 1.414 1.414c3.51-3.509 9.219-3.509 12.729 0l1.414-1.414c-4.29-4.289-11.268-4.289-15.557 0z"></path><path d="m59 57h-2v-4h-2v4h-2v-2h-2v2h-2v-6h-2v8h12z"></path><path d="m60 25h-8c-1.654 0-3 1.346-3 3v3h-4.051c-.217-2.833-1.341-5.411-3.088-7.447l9.553-9.553h7.586c2.206 0 4-1.794 4-4 0-1.884-1.31-3.468-3.065-3.89-.432-2.888-2.929-5.11-5.935-5.11s-5.503 2.222-5.935 5.11c-1.755.422-3.065 2.006-3.065 3.89 0 2.077 1.596 3.769 3.624 3.962l-8.177 8.177c-2.036-1.747-4.615-2.871-7.447-3.088v-4.051h3c1.654 0 3-1.346 3-3v-8c0-1.654-1.346-3-3-3h-8c-1.654 0-3 1.346-3 3v8c0 1.654 1.346 3 3 3h3v4.051c-2.833.217-5.411 1.341-7.447 3.088l-4.814-4.815c1.411-1.725 2.261-3.926 2.261-6.324 0-5.514-4.486-10-10-10s-10 4.486-10 10 4.486 10 10 10c2.398 0 4.6-.85 6.324-2.262l4.814 4.815c-1.747 2.036-2.871 4.615-3.088 7.447h-4.05v-3c0-1.654-1.346-3-3-3h-8c-1.654 0-3 1.346-3 3v8c0 1.654 1.346 3 3 3h8c1.654 0 3-1.346 3-3v-3h4.051c.217 2.833 1.341 5.411 3.088 7.447l-6.846 6.846 1.414 1.414 6.846-6.846c2.036 1.747 4.615 2.871 7.447 3.088v4.051h-3c-1.654 0-3 1.346-3 3v8c0 1.654 1.346 3 3 3h8c1.654 0 3-1.346 3-3v-8c0-1.654-1.346-3-3-3h-3v-4.051c2.833-.217 5.411-1.341 7.447-3.088l5.177 5.177c-1.475.187-2.624 1.436-2.624 2.962v10c0 1.654 1.346 3 3 3h14c1.654 0 3-1.346 3-3v-10c0-1.654-1.346-3-3-3h-11.586l-6.553-6.553c1.747-2.036 2.871-4.615 3.088-7.447h4.051v3c0 1.654 1.346 3 3 3h8c1.654 0 3-1.346 3-3v-8c0-1.654-1.346-3-3-3zm-23-16h-10v-2h10zm-9-6h8c.552 0 1 .449 1 1v1h-10v-1c0-.551.448-1 1-1zm-1 9v-1h10v1c0 .551-.448 1-1 1h-8c-.552 0-1-.449-1-1zm-23 15h8c.552 0 1 .449 1 1v1h-10v-1c0-.551.448-1 1-1zm9 4v2h-10v-2zm-1 6h-8c-.552 0-1-.449-1-1v-1h10v1c0 .551-.448 1-1 1zm15 18h10v2h-10zm9 6h-8c-.552 0-1-.449-1-1v-1h10v1c0 .551-.448 1-1 1zm1-9v1h-10v-1c0-.551.448-1 1-1h8c.552 0 1 .449 1 1zm-5-9c-1.075 0-2.22-1.527-3.009-4h6.019c-.79 2.473-1.935 4-3.01 4zm-3.519-6c-.244-1.209-.408-2.553-.46-4h7.958c-.052 1.447-.217 2.791-.46 4zm-7.43-4h4.971c.046 1.419.184 2.763.409 4h-4.216c-.627-1.221-1.035-2.57-1.164-4zm10.949-12c1.075 0 2.22 1.527 3.009 4h-6.019c.79-2.473 1.935-4 3.01-4zm3.519 6c.244 1.209.408 2.553.46 4h-7.958c.052-1.447.217-2.791.46-4zm-9.497 4h-4.971c.13-1.43.537-2.779 1.164-4h4.216c-.225 1.237-.364 2.581-.409 4zm11.956 2h4.971c-.13 1.43-.537 2.779-1.164 4h-4.216c.225-1.237.364-2.581.409-4zm0-2c-.046-1.419-.184-2.763-.409-4h4.216c.626 1.221 1.034 2.57 1.164 4zm9.022-21c0-1.103.897-2 2-2h1v-1c0-2.206 1.794-4 4-4 1.914 0 3.519 1.352 3.909 3.151-1.677.476-2.909 2.021-2.909 3.849h2c0-1.103.897-2 2-2s2 .897 2 2-.897 2-2 2h-10c-1.103 0-2-.897-2-2zm-6.521 15h-3.373c-.368-1.295-.837-2.422-1.391-3.341 1.873.676 3.517 1.834 4.764 3.341zm-12.193-3.341c-.553.919-1.023 2.046-1.391 3.341h-3.373c1.246-1.507 2.89-2.665 4.764-3.341zm-17.286-18.659c4.411 0 8 3.589 8 8 0 1.466-.403 2.837-1.095 4.02-.894-1.539-2.274-2.731-3.906-3.401.615-.704 1-1.613 1-2.618 0-2.206-1.794-4-4-4s-3.999 1.793-3.999 3.999c0 1.006.386 1.915 1 2.618-1.632.671-3.012 1.862-3.906 3.401-.691-1.182-1.094-2.553-1.094-4.019 0-4.411 3.589-8 8-8zm-2 6c0-1.103.897-2 2-2s2 .897 2 2-.897 2-2 2-2-.897-2-2zm-3.542 7.756c.908-2.231 3.102-3.756 5.542-3.756s4.634 1.525 5.542 3.756c-1.439 1.386-3.391 2.244-5.542 2.244s-4.103-.858-5.542-2.244zm18.063 22.244h3.373c.368 1.295.837 2.422 1.391 3.341-1.873-.676-3.517-1.834-4.764-3.341zm12.193 3.341c.553-.919 1.023-2.046 1.391-3.341h3.373c-1.246 1.507-2.89 2.665-4.764 3.341zm25.286 7.659v10c0 .551-.448 1-1 1h-14c-.552 0-1-.449-1-1v-10c0-.551.448-1 1-1h14c.552 0 1 .449 1 1zm-9-23h8c.552 0 1 .449 1 1v1h-10v-1c0-.551.448-1 1-1zm9 4v2h-10v-2zm-1 6h-8c-.552 0-1-.449-1-1v-1h10v1c0 .551-.448 1-1 1z"></path>
+</g></svg>
+                                </span>
+                                <h3 class="u-text u-text-body-alt-color u-text-5">Big Data</h3>
+                                <p class="u-text u-text-body-alt-color u-text-6">It offers a more accurate prognosis with its Big Data, neural networks and proprietary algorithms.</p>
+                            </div>
+                        </div>
+                        <div class="u-align-center u-container-style u-custom-color-1 u-layout-cell u-right-cell u-size-20 u-size-20-md u-layout-cell-3">
+                            <div class="u-container-layout u-valign-middle u-container-layout-4">
+                                <span class="u-icon u-icon-circle u-text-body-alt-color u-icon-3">
+                                    <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 511.999 511.999" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-448a"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 511.999 511.999" x="0px" y="0px" id="svg-448a" style="enable-background:new 0 0 511.999 511.999;"><g><g><path d="M453.034,361.322c-2.808-1.164-6.04-0.521-8.19,1.628l-82.126,82.126c-2.149,2.15-2.792,5.382-1.628,8.19    c1.162,2.809,3.904,4.639,6.943,4.639h82.126c4.151,0,7.515-3.364,7.515-7.515v-82.126    C457.673,365.225,455.842,362.485,453.034,361.322z M386.173,442.876l56.469-56.469v56.469H386.173z"></path>
+</g>
+</g><g><g><path d="M507.361,240.867c-2.808-1.164-6.04-0.521-8.19,1.628l-22.507,22.507V111.971c0-4.151-3.365-7.515-7.515-7.515h-57.741    l20.96-20.96c0.003-0.003,0.006-0.007,0.009-0.01l20.196-20.196c4.327-4.327,6.71-10.083,6.71-16.203s-2.383-11.874-6.71-16.203    L429.219,7.53c-4.327-4.327-10.083-6.71-16.203-6.71s-11.875,2.383-16.203,6.71l-20.206,20.206l-24.416,24.416l-52.303,52.303    H66.62V30.11c0-4.151-3.365-7.515-7.515-7.515C26.515,22.597,0,49.11,0,81.702v319.186c0,0.555,0.064,1.095,0.178,1.615    c1.038,13.829,7.021,26.678,17.02,36.432C27.886,449.359,41.995,455.1,56.927,455.1h229.638l-43.249,43.249    c-2.149,2.15-2.792,5.381-1.629,8.19c1.163,2.808,3.904,4.639,6.943,4.639h255.855c4.15,0,7.515-3.364,7.515-7.515V247.81    C512,244.771,510.168,242.03,507.361,240.867z M407.443,18.159c3.072-3.074,8.077-3.074,11.149,0l23.355,23.355    c3.074,3.073,3.074,8.076,0,11.15l-14.891,14.892L392.55,33.051L407.443,18.159z M381.922,43.679l34.505,34.504l-13.789,13.789    l-34.503-34.504L381.922,43.679z M496.972,332.252h-13.865c-4.151,0-7.515,3.364-7.515,7.515c0,4.151,3.364,7.515,7.515,7.515    h13.865v22.646h-13.865c-4.151,0-7.515,3.364-7.515,7.515s3.364,7.515,7.515,7.515h13.865v22.645h-13.865    c-4.151,0-7.515,3.364-7.515,7.515c0,4.151,3.364,7.515,7.515,7.515h13.865v22.646h-13.865c-4.151,0-7.515,3.365-7.515,7.515    c0,4.151,3.364,7.515,7.515,7.515h13.865v35.842h-230.2l75.908-75.907c2.935-2.936,2.935-7.693,0-10.628    c-0.337-0.337-0.699-0.629-1.078-0.889c-2.926-2.004-6.952-1.709-9.551,0.889l-30.456,30.456H56.928    c-22.792,0-41.14-17.794-41.862-40.545c0.043-1.428,0.154-2.844,0.332-4.244c0.001-0.008,0.002-0.016,0.003-0.024    c0.084-0.665,0.185-1.327,0.3-1.985c0.013-0.075,0.027-0.15,0.04-0.225c0.105-0.587,0.223-1.171,0.352-1.753    c0.036-0.162,0.074-0.324,0.112-0.485c0.114-0.492,0.237-0.981,0.369-1.468c0.072-0.264,0.147-0.525,0.224-0.788    c0.11-0.382,0.224-0.763,0.345-1.14c0.121-0.377,0.25-0.75,0.381-1.123c0.091-0.261,0.181-0.522,0.279-0.781    c0.183-0.492,0.377-0.979,0.577-1.462c0.057-0.139,0.113-0.28,0.172-0.419c0.257-0.6,0.524-1.193,0.806-1.779    c0.012-0.025,0.023-0.05,0.035-0.075c5.878-12.164,17.183-21.233,30.75-24.047c0.038-0.008,0.076-0.017,0.114-0.025    c0.622-0.127,1.25-0.236,1.882-0.337c0.105-0.017,0.21-0.038,0.317-0.054c0.571-0.087,1.148-0.155,1.725-0.22    c0.162-0.018,0.323-0.043,0.486-0.059c0.557-0.056,1.119-0.093,1.681-0.128c0.178-0.011,0.356-0.03,0.534-0.039    c0.736-0.037,1.478-0.056,2.223-0.056c4.15,0,7.515-3.364,7.515-7.515v-54.489c0-4.151-3.365-7.515-7.515-7.515    c-4.15,0-7.515,3.364-7.515,7.515v47.447c-12.69,1.605-24.469,7.265-33.757,16.335c-0.977,0.954-1.903,1.946-2.805,2.954V81.702    c0-21.741,15.826-39.858,36.561-43.436v73.705v152.777v0.001c0,4.15,3.365,7.515,7.515,7.515c4.15,0,7.515-3.365,7.515-7.515    v-0.001V119.486h218.24l-41.544,41.544c-2.935,2.936-2.935,7.693,0,10.628c2.935,2.934,7.693,2.934,10.627,0l54.373-54.373    c0.002-0.002,0.003-0.004,0.005-0.005l49.185-49.185l34.503,34.505l-4.048,4.048c-0.003,0.003-0.007,0.006-0.01,0.009    l-151.528,151.53l-34.504-34.504l29.868-29.868c2.935-2.936,2.935-7.693,0-10.628c-2.935-2.934-7.693-2.934-10.627,0    l-35.183,35.182c-0.188,0.188-0.364,0.387-0.529,0.591c-0.055,0.068-0.104,0.141-0.156,0.212c-0.106,0.141-0.21,0.283-0.307,0.431    c-0.055,0.086-0.105,0.174-0.157,0.263c-0.083,0.14-0.163,0.282-0.236,0.427c-0.048,0.094-0.091,0.189-0.135,0.287    c-0.067,0.147-0.129,0.297-0.186,0.447c-0.02,0.053-0.046,0.103-0.065,0.156l-14.641,41.475l-9.982,28.279    c-0.132,0.376-0.227,0.758-0.298,1.143h-24.992c-4.15,0-7.515,3.364-7.515,7.515c0,4.151,3.365,7.515,7.515,7.515h208.114    c4.151,0,7.515-3.364,7.515-7.515c0-4.151-3.364-7.515-7.515-7.515H193.093l45.83-16.178c0.038-0.014,0.074-0.033,0.112-0.047    c0.178-0.066,0.353-0.14,0.526-0.219c0.069-0.032,0.138-0.062,0.205-0.095c0.18-0.09,0.357-0.189,0.531-0.295    c0.056-0.034,0.114-0.065,0.169-0.1c0.181-0.116,0.357-0.243,0.53-0.377c0.043-0.033,0.088-0.062,0.13-0.096    c0.209-0.168,0.414-0.349,0.608-0.543l154.644-154.643h65.255v160.546L354.137,387.53c-2.935,2.936-2.935,7.693,0,10.628    c0.183,0.183,0.374,0.355,0.571,0.516c1.378,1.123,3.061,1.685,4.743,1.685s3.366-0.562,4.743-1.685    c0.197-0.16,0.388-0.333,0.571-0.516c0.003-0.003,0,0,0.003-0.003L496.972,265.95V332.252z M222.677,265.696l-21.526,7.599    l-14.342-14.342l7.599-21.526L222.677,265.696z"></path>
+</g>
+</g></svg>
+                                </span>
+                                <h3 class="u-text u-text-7">architecture&nbsp;</h3>
+                                <p class="u-text u-text-body-alt-color u-text-8">Agile architecture enables the system to scale and cater to Big Data analysis in various domains.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="u-clearfix u-section-2" id="datavisio-values">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <h2 class="u-align-center u-custom-font u-font-ubuntu u-text u-text-default u-text-1">Datavisio values</h2>
+            <div class="u-clearfix u-expanded-width u-gutter-20 u-layout-wrap u-layout-wrap-1">
+                <div class="u-layout">
+                    <div class="u-layout-row">
+                        <div class="u-size-30">
+                            <div class="u-layout-col">
+                                <div class="u-container-style u-layout-cell u-left-cell u-size-20 u-layout-cell-1">
+                                    <div class="u-container-layout u-valign-middle-md u-valign-middle-sm u-valign-middle-xs">
+                                        <span class="u-icon u-icon-circle u-text-custom-color-5 u-icon-1">
+                                            <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 315.976 315.976" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-45ca"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 315.976 315.976" x="0px" y="0px" id="svg-45ca" style="enable-background:new 0 0 315.976 315.976;"><g><g><g><g><path style="fill:currentColor;" d="M157.985,130.255c-15.24,0-27.641,12.406-27.641,27.647c0,15.246,12.401,27.647,27.641,27.647      c15.246,0,27.647-12.401,27.647-27.647C185.632,142.662,173.231,130.255,157.985,130.255z"></path>
+</g>
+</g><g><path style="fill:currentColor;" d="M315.968,161.323c0.212-9.573-3.905-18.781-12.232-27.369c0-0.005,0-0.022,0-0.022     c0-8.164-6.641-14.805-14.811-14.805c-1.382,0-2.752,0.19-4.079,0.582c-5.107-2.948-10.699-5.689-16.649-8.175     c-3.965-1.653-8.463-3.307-13.658-5.026c11.112-40.244,7.049-69.897-11.313-81.662c-19.243-12.358-51.084-1.463-85.241,29.54     C123.839,23.4,92.031,12.462,72.744,24.846c-11.683,7.484-17.699,22.295-17.47,42.92c-3.655,2.768-5.852,7.082-5.852,11.737     c0,5.88,3.47,11.09,8.697,13.456c0.636,3.111,1.43,6.478,2.41,10.193c-38.073,11.531-60.058,30.122-60.52,51.328     c-0.419,19.059,16.546,36.746,47.76,49.784c3.987,1.675,8.512,3.334,13.745,5.058c-1.474,5.26-2.611,9.937-3.465,14.234     c-6.581,33.184-1.36,57.121,14.702,67.417c19.347,12.358,51.116,1.425,85.241-29.556c24.677,22.398,48.234,34.696,66.596,34.707     c7.027,0,13.299-1.73,18.651-5.156c16.056-10.291,21.272-34.228,14.691-67.412c-0.647-3.258-1.485-6.848-2.54-10.867     C293.494,201.148,315.506,182.547,315.968,161.323z M80.783,278.399c-10.225-6.549-13.26-25.972-8.11-51.949     c0.756-3.802,1.779-8.017,3.117-12.804c14.185,3.786,29.697,6.636,46.216,8.474c8.18,10.519,16.638,20.222,25.188,28.914     C119.656,275.827,93.739,286.688,80.783,278.399z M80.783,37.4c12.918-8.235,38.873,2.578,66.411,27.375     c-8.186,8.316-16.279,17.541-24.09,27.484c-17.155,1.235-33.271,3.584-48.005,7.011c-0.68-2.665-1.305-5.325-1.876-8.05     c3.606-2.763,5.803-7.087,5.803-11.716c0-5.896-3.525-11.15-8.724-13.505C70.307,55.436,72.304,42.833,80.783,37.4z      M80.147,199.386c2.834-8.202,6.211-16.6,10.084-25.069c3.726,6.625,7.647,13.157,11.71,19.494     c2.458,3.845,5.031,7.696,7.772,11.629C99.222,203.83,89.322,201.806,80.147,199.386z M101.947,121.993     c-4.085,6.38-7.995,12.88-11.661,19.396c-4.199-9.284-7.832-18.531-10.862-27.636c9.921-2.284,20.511-4.074,31.639-5.341     C107.908,112.899,104.862,117.446,101.947,121.993z M98.384,157.853c5.031-9.616,10.448-18.955,16.121-27.815     c4.906-7.658,10.389-15.485,16.306-23.306c9.344-0.522,18.754-0.68,28.294-0.462c8.996,0.196,18.036,0.707,26.869,1.539     c5.608,7.468,10.818,14.93,15.496,22.224c5.668,8.855,11.09,18.21,16.116,27.821c-5.086,9.758-10.503,19.14-16.116,27.908     c-4.933,7.696-10.405,15.523-16.301,23.301c-9.339,0.511-18.738,0.664-28.305,0.457c-8.974-0.185-18.003-0.702-26.869-1.534     c-5.619-7.473-10.818-14.947-15.49-22.224C108.898,177.01,103.48,167.627,98.384,157.853z M204.903,207.392     c3.16-4.509,6.222-9.051,9.121-13.581c4.068-6.353,7.995-12.885,11.71-19.504c4.253,9.344,7.93,18.618,10.949,27.707     C226.724,204.319,216.08,206.119,204.903,207.392z M214.024,121.993c-2.486-3.883-5.058-7.734-7.778-11.634     c10.421,1.599,20.288,3.617,29.463,6.032c-2.834,8.186-6.19,16.562-10.024,25.003     C222.03,134.895,218.125,128.401,214.024,121.993z M240.066,102.125c-14.191-3.78-29.676-6.608-46.102-8.441     c-8.18-10.519-16.633-20.222-25.188-28.903c27.538-24.797,53.515-35.61,66.416-27.375     C247.354,45.199,249.122,69.256,240.066,102.125z M159.432,91.355c-2.877-0.06-5.744-0.092-8.583-0.092     c-2.578,0-5.14,0.022-7.68,0.076c4.868-5.7,9.823-11.112,14.827-16.176c5.205,5.281,10.345,10.894,15.349,16.785     C168.439,91.649,163.832,91.459,159.432,91.355z M64.732,117.642c4.215,12.76,9.883,26.287,16.861,40.293     c-6.364,12.804-11.645,25.27-15.713,37.127c-4.71-1.556-8.773-3.062-12.368-4.558c-24.438-10.209-38.868-23.551-38.596-35.702     C15.215,140.796,33.757,127.03,64.732,117.642z M156.549,224.444c5.477,0.114,10.916,0.125,16.263,0.016     c-4.868,5.7-9.828,11.117-14.827,16.192c-5.189-5.26-10.329-10.873-15.354-16.796     C147.602,224.155,152.149,224.346,156.549,224.444z M192.866,223.552c17.16-1.229,33.314-3.59,48.109-7.038     c0.963,3.682,1.73,6.951,2.328,9.943c5.151,25.966,2.127,45.389-8.099,51.943c-12.945,8.289-38.884-2.589-66.422-27.358     C176.957,242.735,185.039,233.516,192.866,223.552z M251.118,198.189c-4.27-12.961-9.888-26.472-16.747-40.265     c6.342-12.722,11.64-25.199,15.752-37.165c4.737,1.572,8.724,3.04,12.33,4.542c4.237,1.779,8.251,3.688,11.982,5.695     c-0.207,0.968-0.31,1.947-0.31,2.932c0,8.159,6.647,14.8,14.8,14.8c2.295,0,4.536-0.538,6.56-1.556     c3.802,4.705,5.673,9.344,5.57,13.832C300.766,175.019,282.181,188.791,251.118,198.189z"></path>
+</g>
+</g>
+</g></svg>
+                                        </span>
+                                        <h2 class="u-text u-text-2">Scientific Method</h2>
+                                        <p class="u-large-text u-text u-text-variant u-text-3">Our R&amp;D dept. takes the best of science - start with hypotheses, deriver predictions, carry out experiments - to release business solutions.</p>
+                                    </div>
+                                </div>
+                                <div class="u-container-style u-layout-cell u-left-cell u-size-20 u-layout-cell-2">
+                                    <div class="u-container-layout u-valign-middle-md u-valign-middle-xs">
+                                        <span class="u-icon u-icon-circle u-text-custom-color-5 u-icon-2"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 480.012 480.012" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-1648"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 480.012 480.012" id="svg-1648"><path d="m450.224 83.608c-55.545-85.176-169.622-109.196-254.798-53.651-36.581 23.856-63.492 59.938-75.926 101.803l15.346 4.528c4.198-14.182 10.269-27.74 18.054-40.315h57.481c-4.034 16.882-6.911 34.021-8.61 51.295l15.924 1.554c1.752-17.817 4.811-35.481 9.152-52.849h61.153v77h16v-77h61.193c6.555 26.183 10.167 53.016 10.769 80h-55.962v16h55.962c-.602 26.984-4.214 53.817-10.769 80h-46.193v16h41.81c-6.05 20.22-13.8 39.892-23.166 58.806-8.646 2.198-17.453 3.704-26.338 4.506l1.439 15.936c101.208-9.258 175.748-98.808 166.49-200.016-2.727-29.811-12.685-58.506-29.011-83.597zm-235.67-3.635h-50.5c18.17-23.13 42.115-41.063 69.423-51.992-7.534 16.859-13.858 34.234-18.923 51.992zm73.446 0h-56.781c6.045-20.216 13.785-39.886 23.139-58.8 11.017-2.794 22.288-4.467 33.642-4.992zm175.788 96h-71.807c-.576-26.958-4.031-53.777-10.307-80h57.419c14.886 24.139 23.384 51.67 24.695 80zm-159.788-96v-63.792c11.355.525 22.628 2.196 33.646 4.99 9.365 18.913 17.114 38.583 23.164 58.802zm54.542-51.982c27.298 10.93 51.234 28.859 69.399 51.982h-50.46c-5.07-17.756-11.399-35.127-18.939-51.982zm24.979 299.412c-7.964 4.874-16.321 9.076-24.983 12.562 7.542-16.858 13.872-34.233 18.943-51.992h50.432c-12.365 15.65-27.392 28.997-44.392 39.43zm55.572-55.43h-57.419c6.276-26.223 9.731-53.042 10.307-80h71.807c-1.311 28.33-9.81 55.86-24.695 80z"></path><path d="m296 191.973h-8.8c-48.613.132-95.258-19.189-129.539-53.657-3.124-3.124-8.189-3.124-11.314 0-34.283 34.47-80.931 53.791-129.547 53.657h-8.8c-4.418 0-8 3.582-8 8v79.5c.022 72.335 39.236 138.98 102.458 174.128l45.657 25.365c2.416 1.342 5.354 1.342 7.77 0l45.657-25.365c63.222-35.149 102.436-101.793 102.458-174.128v-79.5c0-4.419-3.582-8-8-8zm-8 87.5c-.022 66.525-36.086 127.815-94.228 160.142l-41.772 23.206-41.772-23.206c-58.142-32.327-94.206-93.618-94.228-160.142v-71.5h.8c26.161.026 52.069-5.128 76.229-15.163 21.742-8.978 41.711-21.756 58.971-37.737 36.809 34.011 85.084 52.9 135.2 52.9h.8z"></path><path d="m264.816 222.831c-39.246-4.014-76.613-18.819-107.959-42.773-2.867-2.191-6.847-2.191-9.714 0-31.346 23.954-68.713 38.759-107.959 42.773-4.081.418-7.184 3.856-7.184 7.958v48.684c.02 60.715 32.935 116.654 86 146.157l30.117 16.731c2.416 1.342 5.354 1.342 7.77 0l30.113-16.731c53.065-29.503 85.98-85.442 86-146.157v-48.684c0-4.103-3.103-7.54-7.184-7.958zm-8.816 56.642c-.018 54.905-29.782 105.49-77.768 132.171l-26.232 14.572-26.232-14.572c-47.986-26.681-77.75-77.266-77.768-132.171v-41.577c37.562-5.042 73.291-19.304 104-41.513 30.709 22.209 66.438 36.471 104 41.513z"></path><path d="m144 215.973h16v16h-16z"></path><path d="m144 391.973h16v16h-16z"></path><path d="m64 247.973h16v16h-16z"></path><path d="m80 327.973h16v16h-16z"></path><path d="m208 327.973h16v16h-16z"></path><path d="m224 247.973h16v16h-16z"></path></svg></span>
+                                        <h2 class="u-text u-text-4">Secureness</h2>
+                                        <p class="u-large-text u-text u-text-variant u-text-5">Key goal of DataVisio is to secure traders from risks of loosing investments via elaborate propriatory algorithms which we keep enhancing.</p>
+                                    </div>
+                                </div>
+                                <div class="u-container-style u-layout-cell u-left-cell u-size-20 u-layout-cell-3">
+                                    <div class="u-container-layout u-valign-middle-md u-valign-middle-xs">
+                                        <span class="u-icon u-icon-circle u-text-custom-color-5 u-icon-3">
+                                            <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 512.001 512.001" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-66e2"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 512.001 512.001" x="0px" y="0px" id="svg-66e2" style="enable-background:new 0 0 512.001 512.001;"><g><g><path d="M354.675,180.814h-22.714c-1.387-4.402-3.151-8.664-5.28-12.753L342.741,152c2.007-2.007,3.112-4.676,3.112-7.515    c0-2.84-1.105-5.509-3.112-7.516l-18.901-18.902c-4.144-4.141-10.886-4.143-15.031,0.001l-16.061,16.061    c-4.089-2.129-8.352-3.894-12.753-5.28v-22.715c-0.001-5.86-4.769-10.629-10.63-10.629h-26.731    c-5.86,0-10.628,4.768-10.628,10.629v22.715c-4.402,1.387-8.664,3.151-12.754,5.28l-16.062-16.062    c-4.144-4.142-10.886-4.141-15.03,0.001l-18.9,18.9c-2.008,2.007-3.114,4.676-3.114,7.516c0,2.839,1.106,5.508,3.113,7.515    l16.061,16.061c-2.129,4.089-3.894,8.352-5.28,12.753h-22.715c-5.86,0-10.628,4.768-10.628,10.629v26.731    c0,5.86,4.768,10.628,10.628,10.628h22.715c1.387,4.401,3.151,8.665,5.28,12.753l-16.061,16.061    c-4.144,4.144-4.144,10.887,0,15.031l18.901,18.901c4.144,4.145,10.888,4.144,15.031,0l16.061-16.061    c4.089,2.129,8.353,3.894,12.754,5.28v22.715c0,5.86,4.768,10.628,10.628,10.628h26.731c5.86,0,10.629-4.768,10.629-10.628    v-22.715c4.4-1.386,8.664-3.151,12.753-5.28l16.061,16.061c4.145,4.145,10.888,4.144,15.032,0l18.9-18.901    c2.007-2.007,3.112-4.676,3.112-7.515c0-2.839-1.105-5.508-3.112-7.516l-16.061-16.061c2.129-4.089,3.894-8.352,5.28-12.753    h22.715c5.86,0,10.629-4.768,10.629-10.628v-26.731C365.304,185.582,360.535,180.814,354.675,180.814z M350.305,213.801h-24.059    c-3.484,0-6.509,2.399-7.303,5.792c-1.599,6.835-4.283,13.318-7.978,19.267c-1.839,2.96-1.396,6.796,1.067,9.261l17.011,17.011    l-12.718,12.718l-17.011-17.011c-2.464-2.464-6.3-2.908-9.262-1.068c-5.95,3.695-12.433,6.379-19.266,7.979    c-3.393,0.793-5.792,3.818-5.792,7.303v24.06h-17.985v-24.06c0-3.484-2.399-6.509-5.792-7.303    c-6.833-1.598-13.316-4.282-19.267-7.979c-2.959-1.836-6.796-1.396-9.261,1.068l-17.011,17.011l-12.718-12.718l17.011-17.011    c2.464-2.464,2.906-6.3,1.068-9.261c-3.695-5.95-6.379-12.433-7.978-19.267c-0.793-3.393-3.819-5.792-7.303-5.792h-24.059v-17.985    h24.059c3.484,0,6.509-2.399,7.303-5.792c1.599-6.834,4.283-13.317,7.978-19.267c1.838-2.96,1.396-6.796-1.068-9.261    l-17.011-17.011l12.718-12.718l17.011,17.011c2.462,2.464,6.3,2.907,9.261,1.068c5.949-3.695,12.432-6.379,19.267-7.978    c3.393-0.793,5.792-3.818,5.792-7.303v-24.06h17.985v24.06c0,3.484,2.399,6.509,5.792,7.303    c6.834,1.599,13.316,4.283,19.267,7.978c2.958,1.837,6.796,1.394,9.261-1.068l17.011-17.011l12.718,12.718l-17.011,17.011    c-2.464,2.464-2.906,6.3-1.067,9.261c3.694,5.948,6.378,12.431,7.978,19.267c0.794,3.393,3.818,5.792,7.303,5.792h24.059V213.801z    "></path>
+</g>
+</g><g><g><path d="M256,164.628c-22.156,0-40.18,18.025-40.18,40.18s18.025,40.18,40.18,40.18s40.18-18.025,40.18-40.18    C296.18,182.653,278.156,164.628,256,164.628z M256,229.988c-13.884,0-25.18-11.296-25.18-25.18s11.296-25.18,25.18-25.18    c13.884,0,25.18,11.296,25.18,25.18S269.884,229.988,256,229.988z"></path>
+</g>
+</g><g><g><path d="M83.574,197.308H58.692c-4.142,0-7.5,3.358-7.5,7.5s3.358,7.5,7.5,7.5h24.882c4.142,0,7.5-3.358,7.5-7.5    S87.716,197.308,83.574,197.308z"></path>
+</g>
+</g><g><g><path d="M453.309,197.308h-24.882c-4.143,0-7.5,3.358-7.5,7.5s3.357,7.5,7.5,7.5h24.882c4.143,0,7.5-3.358,7.5-7.5    S457.451,197.308,453.309,197.308z"></path>
+</g>
+</g><g><g><path d="M139.379,321.429c-2.928-2.929-7.677-2.929-10.607,0l-17.594,17.594c-2.929,2.929-2.929,7.678,0,10.607    c2.929,2.929,7.678,2.929,10.607,0l17.594-17.594C142.308,329.107,142.308,324.358,139.379,321.429z"></path>
+</g>
+</g><g><g><path d="M400.822,59.988c-2.93-2.929-7.678-2.929-10.608,0L372.62,77.582c-2.929,2.929-2.929,7.678,0,10.607    c2.93,2.929,7.678,2.928,10.608,0l17.594-17.594C403.751,67.665,403.751,62.916,400.822,59.988z"></path>
+</g>
+</g><g><g><path d="M256.001,0c-4.143,0-7.5,3.358-7.5,7.5v24.882c0,4.142,3.357,7.5,7.5,7.5s7.5-3.358,7.5-7.5V7.5    C263.501,3.358,260.144,0,256.001,0z"></path>
+</g>
+</g><g><g><path d="M400.822,339.023l-17.594-17.594c-2.93-2.929-7.678-2.929-10.608,0c-2.929,2.929-2.929,7.679,0,10.607l17.594,17.594    c2.93,2.929,7.678,2.929,10.608,0C403.751,346.701,403.751,341.952,400.822,339.023z"></path>
+</g>
+</g><g><g><path d="M139.379,77.582l-17.594-17.594c-2.929-2.929-7.678-2.929-10.607,0c-2.929,2.929-2.929,7.678,0,10.607l17.594,17.594    c2.929,2.929,7.678,2.929,10.607,0C142.308,85.259,142.308,80.51,139.379,77.582z"></path>
+</g>
+</g><g><g><path d="M405.629,186.435c-8.071-68.875-62.668-123.477-131.22-131.833c-4.105-0.505-7.852,2.426-8.354,6.537    c-0.501,4.112,2.426,7.852,6.538,8.354c62.257,7.588,110.837,56.395,118.136,118.688c0.447,3.817,3.688,6.627,7.439,6.627    c0.292,0,0.586-0.017,0.883-0.051C403.167,194.276,406.111,190.55,405.629,186.435z"></path>
+</g>
+</g><g><g><path d="M398.963,214.868c-4.116-0.524-7.863,2.389-8.383,6.499c-5.113,40.388-27.909,76.025-62.543,97.77    c-14.931,9.375-23.844,25.419-23.844,42.917v30.867h-96.383v-31.55c0-16.944-8.855-32.952-23.108-41.775    c-40.306-24.95-64.37-68.107-64.371-115.446c0-68.352,51.198-126.238,119.091-134.648c4.111-0.509,7.03-4.255,6.521-8.366    c-0.509-4.11-4.253-7.037-8.366-6.521c-75.015,9.293-132.25,73.803-132.249,149.535c0,26.133,6.797,51.881,19.658,74.461    c12.467,21.89,30.386,40.472,51.818,53.739c9.871,6.11,16.002,17.23,16.002,29.02v32.643c-7.626,2.65-13.125,9.892-13.125,18.409    v10.692c0,4.527,1.564,8.688,4.161,12.001c-2.598,3.313-4.161,7.473-4.161,12.001v10.691c0,10.753,8.749,19.501,19.501,19.501    h23.58v16.955c0,9.781,7.957,17.738,17.737,17.738h30.997c9.781,0,17.737-7.957,17.737-17.738v-16.955h23.58    c10.753,0,19.501-8.749,19.501-19.501v-10.691c0-4.527-1.564-8.688-4.162-12.001c2.598-3.313,4.162-7.473,4.162-12.001v-10.692    c0-8.518-5.498-15.759-13.125-18.409v-31.96c0-12.305,6.287-23.599,16.82-30.212c38.454-24.144,63.768-63.724,69.447-108.59    C405.981,219.141,403.072,215.388,398.963,214.868z M274.235,494.262c0,1.483-1.253,2.737-2.736,2.737h-30.997    c-1.483,0-2.736-1.253-2.736-2.737v-16.955h36.469V494.262z M317.317,457.806c0,2.439-2.061,4.5-4.5,4.5    c-13.24,0-101.138,0-113.632,0c-2.439,0-4.5-2.061-4.5-4.5v-10.691c0-2.439,2.061-4.5,4.5-4.5h113.632c2.439,0,4.5,2.061,4.5,4.5    V457.806z M317.317,423.113c0,2.439-2.061,4.5-4.5,4.5H199.185c-2.439,0-4.5-2.061-4.5-4.5v-10.692c0-2.439,2.061-4.5,4.5-4.5    h113.632c2.439,0,4.5,2.061,4.5,4.5V423.113z"></path>
+</g>
+</g></svg>
+                                        </span>
+                                        <h2 class="u-text u-text-6">Transparent innovation</h2>
+                                        <p class="u-large-text u-text u-text-variant u-text-7">We want to make crypto currency exchange safer for traders constantly improving our technology and system. And we want to share this journey with you.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="u-size-30">
+                            <div class="u-layout-row">
+                                <div class="u-container-style u-expand-resize u-image u-layout-cell u-right-cell u-size-60 u-image-1">
+                                    <div class="u-container-layout"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="u-clearfix u-custom-color-5 u-section-3" id="why-datavisio" style="background-color: rgb(164,178,217)">
+        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+            <div class="u-align-center u-container-style u-group u-group-1">
+                <div class="u-container-layout u-valign-middle u-container-layout-1">
+                    <h2 class="u-text u-text-1">Why datavisio?</h2>
+                    <p class="u-text u-text-2">DataVisio is an artificial-intelligence-based automated trading system for cryptocurrency exchange with algorithms that secure investments and ensure risk-free trade.</p>
+                </div>
+            </div>
+            <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+                <div class="u-layout">
+                    <div class="u-layout-row">
+                        <div class="u-align-center-md u-align-center-sm u-align-center-xl u-align-center-xs u-container-style u-layout-cell u-left-cell u-size-10 u-size-30-md u-layout-cell-1">
+                            <div class="u-container-layout u-valign-middle-md u-valign-middle-sm u-valign-middle-xl u-valign-middle-xs u-container-layout-2">
+                                <span class="u-icon u-icon-circle u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="1 0 511.99943 511" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-37da"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="1 0 511.99943 511" id="svg-37da"><path d="m28.289062 201.003906c1.8125.738282 3.730469 1.105469 5.648438 1.105469 1.984375 0 3.96875-.394531 5.832031-1.183594l44.867188-18.933593c7.628906-3.222657 11.207031-12.019532 7.984375-19.652344-3.21875-7.632813-12.019532-11.207032-19.652344-7.988282l-10.972656 4.632813c34.050781-77.515625 111.097656-128.484375 196.824218-128.484375 98.015626 0 183.609376 66.277344 208.148438 161.171875 1.75 6.761719 7.835938 11.25 14.511719 11.25 1.242187 0 2.507812-.15625 3.765625-.480469 8.019531-2.074218 12.839844-10.257812 10.765625-18.277344-27.960938-108.140624-125.5-183.664062-237.191407-183.664062-98.238281 0-186.464843 58.742188-224.933593 147.910156l-5.0625-12c-3.222657-7.628906-12.019531-11.207031-19.652344-7.988281-7.632813 3.222656-11.207031 12.023437-7.988281 19.652344l18.933594 44.867187c1.546874 3.664063 4.484374 6.566406 8.171874 8.0625zm0 0"></path><path d="m510.816406 361.875-18.933594-44.863281c-1.546874-3.667969-4.488281-6.566407-8.171874-8.066407-3.6875-1.496093-7.816407-1.46875-11.480469.078126l-44.867188 18.9375c-7.628906 3.21875-11.207031 12.019531-7.984375 19.652343 3.21875 7.632813 12.019532 11.207031 19.652344 7.984375l12.558594-5.300781c-33.199219 79.59375-111.324219 132.195313-198.40625 132.195313-98.019532 0-183.613282-66.277344-208.152344-161.171876-2.074219-8.023437-10.257812-12.835937-18.277344-10.769531-8.019531 2.074219-12.839844 10.257813-10.765625 18.277344 27.960938 108.140625 125.5 183.664063 237.195313 183.664063 98.789062 0 187.457031-59.40625 225.574218-149.421876l4.417969 10.46875c2.417969 5.730469 7.976563 9.171876 13.828125 9.171876 1.941406 0 3.921875-.378907 5.824219-1.183594 7.632813-3.222656 11.207031-12.019532 7.988281-19.652344zm0 0"></path><path d="m225.921875 421.605469c1.660156.601562 3.378906.886719 5.078125.886719 4.386719 0 8.65625-1.925782 11.5625-5.441407l125.65625-151.996093c3.703125-4.480469 4.484375-10.691407 2.011719-15.949219-2.476563-5.253907-7.761719-8.609375-13.570313-8.609375h-54.660156v-135.996094c0-6.328125-3.96875-11.972656-9.921875-14.117188-5.949219-2.140624-12.605469-.316406-16.640625 4.558594l-125.65625 151.996094c-3.703125 4.476562-4.484375 10.691406-2.011719 15.945312 2.476563 5.257813 7.765625 8.613282 13.574219 8.613282h54.660156v135.996094c-.003906 6.328124 3.964844 11.972656 9.917969 14.113281zm-32.71875-180.109375 78.796875-95.3125v109.3125c0 8.285156 6.714844 15 15 15h37.792969l-78.792969 95.3125v-109.3125c0-8.285156-6.71875-15-15-15zm0 0"></path></svg></span>
+                                <h3 class="u-text u-text-3">Efficiency</h3>
+                            </div>
+                        </div>
+                        <div class="u-align-center-md u-align-center-sm u-align-center-xs u-container-style u-layout-cell u-size-10 u-size-30-md u-layout-cell-2">
+                            <div class="u-container-layout u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-container-layout-3">
+                                <span class="u-icon u-icon-circle u-icon-2">
+                                    <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 512 512" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-8115"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 512 512" x="0px" y="0px" id="svg-8115" style="enable-background:new 0 0 512 512;"><g><g><path d="M437.019,74.981C388.668,26.629,324.38,0,255.999,0S123.332,26.629,74.981,74.981S0,187.619,0,255.999    c0,68.38,26.629,132.667,74.981,181.02C123.332,485.371,187.62,512,255.999,512s132.667-26.629,181.02-74.981S512,324.38,512,256    S485.371,123.332,437.019,74.981z M240.141,32.286v93.958c-59.427,7.22-106.677,54.47-113.897,113.898H32.286    C40.082,129.085,129.085,40.083,240.141,32.286z M158.273,240.141c6.777-41.912,39.956-75.09,81.868-81.868v81.868H158.273z     M240.141,271.858v81.869c-41.912-6.777-75.091-39.956-81.868-81.869H240.141z M240.141,479.714    c-111.056-7.796-200.059-96.798-207.855-207.855h93.958c7.22,59.427,54.47,106.679,113.898,113.897V479.714z M271.858,32.286    c111.057,7.797,200.06,96.799,207.856,207.855h-93.958c-7.22-59.427-54.47-106.677-113.899-113.897V32.286z M271.858,240.141    v-81.868c41.913,6.777,75.091,39.956,81.869,81.868H271.858z M353.727,271.858c-6.777,41.912-39.956,75.091-81.869,81.869v-81.869    H353.727z M271.858,479.715v-93.958c59.427-7.22,106.679-54.471,113.899-113.897h93.958    C471.918,382.915,382.915,471.917,271.858,479.715z"></path>
+</g>
+</g></svg>
+                                </span>
+                                <h3 class="u-align-center-lg u-align-center-xl u-text u-text-4">Accuracy</h3>
+                            </div>
+                        </div>
+                        <div class="u-align-center u-container-style u-layout-cell u-size-10 u-size-30-md u-layout-cell-3">
+                            <div class="u-container-layout u-valign-middle u-container-layout-4">
+                                <span class="u-icon u-icon-circle u-icon-3">
+                                    <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 512 512" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-f569"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 512 512" id="svg-f569"><g><path d="m459.669 82.906-196-81.377c-4.91-2.038-10.429-2.039-15.338 0l-196 81.377c-7.465 3.1-12.331 10.388-12.331 18.471v98.925c0 136.213 82.329 258.74 208.442 310.215 4.844 1.977 10.271 1.977 15.116 0 126.111-51.474 208.442-174.001 208.442-310.215v-98.925c0-8.083-4.865-15.371-12.331-18.471zm-27.669 117.396c0 115.795-68 222.392-176 269.974-105.114-46.311-176-151.041-176-269.974v-85.573l176-73.074 176 73.074zm-198.106 67.414 85.964-85.963c7.81-7.81 20.473-7.811 28.284 0s7.81 20.474-.001 28.284l-100.105 100.105c-7.812 7.812-20.475 7.809-28.284 0l-55.894-55.894c-7.811-7.811-7.811-20.474 0-28.284s20.474-7.811 28.284 0z"></path>
+</g></svg>
+                                </span>
+                                <h3 class="u-text u-text-5">
+                                    Secureness<br>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="u-align-center u-container-style u-layout-cell u-size-10 u-size-30-md u-layout-cell-4">
+                            <div class="u-container-layout u-valign-middle u-container-layout-5">
+                                <span class="u-icon u-icon-circle u-icon-4">
+                                    <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 480.182 480.182" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-d81b"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 480.182 480.182" x="0px" y="0px" id="svg-d81b" style="enable-background:new 0 0 480.182 480.182;"><g><g><path d="M200.182,32.106c-92.784,0-168,75.216-168,168s75.216,168,168,168s168-75.216,168-168    C368.081,107.364,292.924,32.207,200.182,32.106z M200.182,48.106c49.416,0.039,95.723,24.123,124.128,64.56l-20,20    c-4.867-2.945-10.439-4.521-16.128-4.56c-17.673,0-32,14.327-32,32c0.028,5.695,1.595,11.276,4.536,16.152l-52.384,52.384    c-9.919-6.048-22.385-6.048-32.304,0l-36.384-36.384c2.941-4.876,4.508-10.457,4.536-16.152    c0.022-17.638-14.258-31.954-31.896-31.976c-14.587-0.018-27.332,9.849-30.968,23.976h-29.68    C66.785,98.159,128.614,48.211,200.182,48.106z M304.182,160.106c0,8.837-7.163,16-16,16s-16-7.163-16-16s7.163-16,16-16    S304.182,151.269,304.182,160.106z M208.182,256.106c0,8.837-7.163,16-16,16s-16-7.163-16-16c0-8.837,7.163-16,16-16    S208.182,247.269,208.182,256.106z M128.182,176.106c0,8.837-7.163,16-16,16s-16-7.163-16-16s7.163-16,16-16    S128.182,167.269,128.182,176.106z M274.036,333.012c-22.592,12.544-48.012,19.116-73.854,19.093    c-83.89,0.057-151.943-67.902-152-151.792c-0.004-5.414,0.282-10.825,0.856-16.208h32.28c3.637,14.085,16.317,23.945,30.864,24    c5.695-0.028,11.276-1.595,16.152-4.536l36.384,36.384c-2.941,4.876-4.508,10.457-4.536,16.152c0,17.673,14.327,32,32,32    s32-14.327,32-32c-0.028-5.695-1.595-11.276-4.536-16.152l52.384-52.384c4.876,2.941,10.457,4.508,16.152,4.536    c17.673,0,32-14.327,32-32c-0.028-5.695-1.595-11.276-4.536-16.152l17.44-17.432C373.801,199.849,347.363,292.298,274.036,333.012    z"></path>
+</g>
+</g><g><g><path d="M400.182,80.106c14.547-0.055,27.227-9.914,30.864-24h49.136v-16h-49.136c-3.637-14.086-16.317-23.945-30.864-24    c-17.673,0-32,14.327-32,32c0.028,5.695,1.595,11.276,4.536,16.152l-14.056,14.056C291.407-9.307,165.855-25.817,78.234,41.438    S-25.897,234.246,41.358,321.867c63.484,82.707,179.855,102.77,267.368,46.095l24.144,24.144l11.312,11.312l64.4,64.4    c16.379,16.379,42.933,16.379,59.312,0c16.379-16.379,16.379-42.933,0-59.312l-64.4-64.4l-11.312-11.312l-24.144-24.144    c42.859-66.016,42.859-151.071,0-217.088l16-16C388.911,78.504,394.49,80.074,400.182,80.106z M400.182,32.106    c8.837,0,16,7.163,16,16s-7.163,16-16,16s-16-7.163-16-16S391.346,32.106,400.182,32.106z M456.582,419.818    c10.246,10.016,10.433,26.442,0.417,36.688c-10.016,10.246-26.442,10.433-36.688,0.417c-0.141-0.137-0.279-0.276-0.417-0.417    l-64.4-64.4l36.688-36.688L456.582,419.818z M380.87,344.106l-36.688,36.688l-22.144-22.144c1.128-0.864,2.184-1.816,3.296-2.704    s2.4-1.952,3.592-2.952c1.752-1.472,3.48-2.96,5.176-4.488c0.872-0.8,1.704-1.6,2.56-2.4c3.28-3.072,6.456-6.248,9.528-9.528    c0.8-0.856,1.6-1.688,2.4-2.56c1.528-1.696,3.016-3.424,4.488-5.176c1.003-1.184,1.987-2.381,2.952-3.592    c0.88-1.104,1.832-2.16,2.696-3.288L380.87,344.106z M349.846,306.946c-2.52,3.52-5.12,6.968-7.864,10.288    c-0.8,0.968-1.656,1.904-2.48,2.856c-2.448,2.848-4.976,5.611-7.584,8.288c-1.136,1.173-2.291,2.328-3.464,3.464    c-2.667,2.608-5.429,5.136-8.288,7.584c-0.952,0.8-1.888,1.672-2.856,2.48c-3.32,2.744-6.768,5.344-10.288,7.864    c-82.816,59.165-197.915,39.992-257.08-42.824S9.95,109.031,92.766,49.866S290.681,9.873,349.846,92.69    C395.627,156.772,395.627,242.864,349.846,306.946z"></path>
+</g>
+</g></svg>
+                                </span>
+                                <h3 class="u-text u-text-6">Through Analytics</h3>
+                            </div>
+                        </div>
+                        <div class="u-align-center u-container-style u-layout-cell u-size-10 u-size-30-md u-layout-cell-5">
+                            <div class="u-container-layout u-valign-middle u-container-layout-6">
+                                <span class="u-icon u-icon-circle u-icon-5"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 64 64" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-6386"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 64 64" id="svg-6386"><path d="m36.787 44.422c-.163.998-.422 1.962-.771 2.884l3.131 2.837c-.439.924-.939 1.812-1.516 2.646l-4.02-1.296c-.634.775-1.344 1.484-2.119 2.118l1.296 4.02c-.834.577-1.722 1.076-2.646 1.516l-2.837-3.131c-.922.349-1.885.608-2.884.771l-.893 4.136c-.505.04-1.012.077-1.528.077s-1.023-.037-1.529-.077l-.893-4.136c-.998-.163-1.962-.422-2.884-.771l-2.837 3.131c-.924-.439-1.812-.939-2.646-1.516l1.296-4.02c-.775-.634-1.484-1.344-2.118-2.118l-4.02 1.296c-.577-.834-1.076-1.722-1.516-2.646l3.131-2.837c-.349-.922-.608-1.885-.771-2.884l-4.136-.893c-.04-.506-.077-1.013-.077-1.529s.037-1.023.077-1.529l4.136-.893c.163-.998.422-1.962.771-2.884l-3.131-2.837c.439-.924.939-1.812 1.516-2.646l4.02 1.296c.634-.775 1.344-1.484 2.119-2.118l-1.296-4.02c.834-.577 1.722-1.076 2.646-1.516l2.837 3.131c.922-.349 1.885-.608 2.884-.771l.893-4.136c.505-.04 1.012-.077 1.528-.077s1.023.037 1.529.077l.893 4.136c.998.163 1.962.422 2.884.771l2.837-3.131c.924.439 1.812.939 2.646 1.516l-1.296 4.02c.775.634 1.484 1.344 2.118 2.119l4.02-1.296c.577.834 1.076 1.722 1.516 2.646l-3.131 2.837c.349.922.608 1.885.771 2.884l4.136.893c.04.505.077 1.012.077 1.528s-.037 1.023-.077 1.529zm-14.787-12.422c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10z"></path><path d="m50.659 16.305c-.156.517-.36 1.013-.611 1.48l1.579 3.026c-.533.674-1.141 1.282-1.815 1.815l-3.026-1.579c-.467.252-.963.456-1.48.611l-1.024 3.26c-.422.05-.848.082-1.282.082s-.86-.032-1.281-.081l-1.024-3.26c-.517-.155-1.013-.36-1.48-.611l-3.026 1.579c-.674-.533-1.282-1.141-1.815-1.815l1.579-3.026c-.252-.467-.456-.963-.611-1.48l-3.26-1.024c-.05-.422-.082-.848-.082-1.282s.032-.86.081-1.281l3.26-1.024c.155-.517.36-1.013.611-1.48l-1.579-3.026c.533-.674 1.141-1.282 1.815-1.815l3.026 1.579c.467-.252.963-.456 1.48-.611l1.024-3.26c.422-.05.848-.082 1.282-.082s.86.032 1.281.081l1.024 3.26c.517.155 1.013.36 1.48.611l3.026-1.579c.674.533 1.282 1.141 1.815 1.815l-1.579 3.026c.252.467.456.963.611 1.48l3.26 1.024c.05.422.082.848.082 1.282s-.032.86-.081 1.281zm-7.659-6.305c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4z"></path><path d="m58.739 38.871c-.154.555-.371 1.081-.649 1.572l.995 2.094c-.452.577-.971 1.096-1.548 1.548l-2.094-.995c-.49.278-1.017.495-1.572.649l-.778 2.188c-.359.044-.722.073-1.093.073s-.734-.029-1.093-.073l-.778-2.188c-.555-.154-1.081-.371-1.572-.649l-2.094.995c-.577-.452-1.096-.971-1.548-1.548l.995-2.094c-.278-.49-.495-1.017-.649-1.571l-2.188-.778c-.044-.36-.073-.723-.073-1.094s.029-.734.073-1.093l2.188-.778c.154-.555.371-1.081.649-1.571l-.995-2.094c.452-.577.971-1.096 1.548-1.548l2.094.995c.49-.278 1.017-.495 1.572-.649l.778-2.188c.359-.045.722-.074 1.093-.074s.734.029 1.093.073l.778 2.188c.555.154 1.081.371 1.572.649l2.094-.995c.577.452 1.096.971 1.548 1.548l-.995 2.094c.278.49.495 1.017.649 1.572l2.188.778c.044.359.073.722.073 1.093s-.029.734-.073 1.093zm-6.739-4.871c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"></path><path d="m61.196 5.02-5.981-1.196-1.196 5.98 1.961.393.539-2.692c.969 2.016 1.481 4.238 1.481 6.495 0 3.448-1.138 6.69-3.29 9.375l1.561 1.251c2.405-3.001 3.729-6.774 3.729-10.626 0-2.619-.605-5.201-1.756-7.531l2.56.512z"></path><path d="m23.707 13.293-1.414 1.414 1.359 1.359c-.55-.035-1.101-.066-1.652-.066-7.736 0-15.018 3.411-19.978 9.359l1.536 1.281c4.579-5.491 11.3-8.64 18.442-8.64.509 0 1.017.029 1.525.061l-1.232 1.232 1.414 1.414 3.707-3.707z"></path></svg></span>
+                                <h3 class="u-text u-text-7">Clever Automation</h3>
+                            </div>
+                        </div>
+                        <div class="u-align-center u-container-style u-layout-cell u-right-cell u-size-10 u-size-30-md u-layout-cell-6">
+                            <div class="u-container-layout u-valign-middle u-container-layout-7">
+                                <span class="u-icon u-icon-circle u-icon-6"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 512 512.00093" style="undefined"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-fb89"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 512 512.00093" id="svg-fb89"><path d="m509.972656 392.300781c-4.015625-20.195312-14.039062-38.429687-28.988281-52.730469-18.636719-17.824218-43.421875-27.40625-68.617187-27.582031 1.015624-3.84375 1.550781-7.84375 1.550781-11.921875 0-12.402344-4.828125-24.058594-13.597657-32.828125-4.472656-4.472656-9.640624-7.835937-15.15625-10.097656 10.601563-17.816406 8.246094-41.257813-7.066406-56.570313-8.5625-8.558593-19.660156-13.066406-30.894531-13.53125-.472656-11.683593-5.238281-22.601562-13.554687-30.914062-8.3125-8.316406-19.230469-13.082031-30.914063-13.550781-.464844-11.238281-4.96875-22.335938-13.53125-30.898438-18.097656-18.097656-47.550781-18.097656-65.652344.003907l-20.609375 20.609374-6.269531-6.269531c9.160156-34.246093-.503906-71.28125-25.882813-96.660156-28.828124-28.828125-71.765624-37.285156-109.386718-21.539063-4.613282 1.929688-7.960938 6.027344-8.925782 10.933594-.964843 4.90625.574219 9.96875 4.109376 13.503906l49.390624 49.390626c1.273438 1.273437 1.464844 2.757812 1.464844 3.535156 0 .769531-.191406 2.257812-1.464844 3.535156l-17.3125 17.3125c-1.949218 1.949219-5.121093 1.949219-7.070312 0l-49.390625-49.394531c-3.535156-3.53125-8.597656-5.078125-13.503906-4.105469-4.902344.964844-9.003907 4.3125-10.933594 8.921875-7.71875 18.445313-9.730469 38.585937-5.824219 58.25 4.011719 20.195313 14.039063 38.425781 28.988282 52.726563 16.554687 15.835937 37.960937 25.15625 60.195312 27.167968l-15.886719 15.875c-20.65625 20.636719-32.035156 48.082032-32.042969 77.28125 0 7.546875.765626 14.972656 2.246094 22.195313l-40.738281 40.738281c-5.859375 5.855469-5.859375 15.351562 0 21.210938 2.925781 2.925781 6.761719 4.390624 10.601563 4.390624 3.835937 0 7.675781-1.464843 10.605468-4.390624l31.011719-31.011719c4.878906 8.75 11 16.882812 18.285156 24.164062l66.703125 66.703125c7.308594 7.308594 15.40625 13.363282 24.015625 18.167969l-31.40625 31.40625c-5.859375 5.855469-5.859375 15.351563 0 21.207031 2.925781 2.929688 6.761719 4.394532 10.601563 4.394532 3.835937 0 7.675781-1.464844 10.605468-4.394532l41.117188-41.121094c7.363281 1.527344 14.847656 2.296876 22.339844 2.296876 27.980468-.003907 55.96875-10.65625 77.269531-31.957032l15.828125-15.824218c2.089844 22.890624 12 44.867187 28.84375 61.710937 19.195312 19.199219 44.648438 29.359375 70.621094 29.359375 13.03125 0 26.195312-2.558594 38.765625-7.816406 4.609375-1.929688 7.957031-6.03125 8.925781-10.9375.964844-4.902344-.574219-9.964844-4.109375-13.5l-49.390625-49.390625c-1.273438-1.273438-1.464844-2.761719-1.464844-3.535157 0-.773437.191406-2.261718 1.464844-3.535156l17.3125-17.3125c1.949219-1.953125 5.121094-1.949218 7.070312 0l49.390626 49.386719c3.53125 3.535156 8.59375 5.078125 13.503906 4.109375 4.902344-.964844 9.003906-4.3125 10.933594-8.921875 7.714843-18.445313 9.730468-38.585937 5.824218-58.246094zm-175.308594-36.171875c-6.40625 6.40625-16.828124 6.410156-23.238281 0-3.101562-3.101562-4.8125-7.230468-4.8125-11.617187 0-4.390625 1.710938-8.515625 4.8125-11.621094l44.453125-44.449219c3.105469-3.101562 7.226563-4.808594 11.613282-4.808594 4.390624 0 8.515624 1.710938 11.621093 4.816407 3.101563 3.101562 4.8125 7.226562 4.8125 11.617187s-1.710937 8.515625-4.8125 11.617188zm22.226563-111.113281-22.222656 22.21875v.003906l-44.445313 44.445313c-6.410156 6.40625-16.835937 6.40625-23.242187 0s-6.40625-16.832032 0-23.238282l14.8125-14.8125s.003906 0 .003906-.003906l7.40625-7.40625c.003906-.003906.003906-.007812.007813-.007812l44.4375-44.4375c3.207031-3.207032 7.414062-4.808594 11.621093-4.808594s8.417969 1.605469 11.621094 4.804688c6.40625 6.410156 6.40625 16.835937 0 23.242187zm-39.636719-56.066406c0 4.390625-1.707031 8.515625-4.8125 11.621093l-33.839844 33.84375-23.242187-23.242187 33.84375-33.839844s0-.003906.003906-.003906c3.101563-3.101563 7.226563-4.808594 11.613281-4.808594 4.390626 0 8.519532 1.710938 11.621094 4.8125 3.105469 3.105469 4.8125 7.230469 4.8125 11.617188zm-72.496094-56.0625c6.40625-6.40625 16.832032-6.40625 23.238282 0s6.40625 16.832031 0 23.238281l-33.84375 33.839844-23.238282-23.238282zm-119.914062 32.703125c-25.171875 9.433594-53.898438 3.613281-73.183594-14.832032-15.066406-14.414062-22.632812-34.042968-21.65625-53.902343l30.382813 30.382812c13.644531 13.640625 35.839843 13.640625 49.484375 0l17.3125-17.3125c6.609375-6.609375 10.25-15.398437 10.25-24.742187 0-9.347656-3.640625-18.132813-10.25-24.742188l-30.351563-30.351562c19.328125-.917969 38.5 6.226562 52.75 20.476562 19.417969 19.417969 25.695313 48.582032 15.992188 74.304688-2.078125 5.511718-.738281 11.730468 3.429687 15.894531l6.710938 6.710937c-17.171875-2.492187-35.273438 2.847657-48.460938 16.023438l-1.9375 1.9375c-.160156.054688-.316406.09375-.472656.152344zm150.402344 249.957031c-30.914063 30.914063-81.214844 30.914063-112.128906 0l-66.707032-66.707031c-14.980468-14.980469-23.226562-34.894532-23.222656-56.082032.003906-21.183593 8.261719-41.097656 23.246094-56.070312l52.019531-51.972656c8.496094-8.488282 21.308594-10.097656 31.445313-4.828125.777343.566406 1.597656 1.046875 2.449218 1.441406 1.464844.976563 2.859375 2.105469 4.148438 3.398437l36.945312 36.941407c.035156.039062.066406.078125.101563.113281.035156.035156.074219.066406.113281.101562l33.542969 33.542969c-14.660157 11.492188-35.988281 10.492188-49.484375-3.003906l-14.105469-14.105469c-5.855469-5.855468-15.351563-5.855468-21.207031 0-2.929688 2.929688-4.390625 6.765625-4.390625 10.605469 0 3.835937 1.460937 7.675781 4.390625 10.601563l6.699218 6.699218c9.039063 9.039063 14.015626 21.058594 14.015626 33.84375 0 12.78125-4.976563 24.800782-14.015626 33.839844l-17.351562 17.351562c-5.855469 5.855469-5.855469 15.351563 0 21.207032 5.855469 5.855468 15.351562 5.855468 21.207031 0l17.351563-17.351563c14.703125-14.703125 22.800781-34.253906 22.800781-55.046875 0-2.585937-.125-5.15625-.371094-7.699218 3.292969.5625 6.617188.863281 9.949219.9375-2.046875 14.027343 2.3125 28.816406 13.082031 39.585937 8.5625 8.5625 19.660157 13.066406 30.898438 13.53125.46875 11.683594 5.234375 22.601563 13.550781 30.917969 4.089844 4.089844 8.761719 7.246094 13.75 9.488281zm206.660156-.402344-30.378906-30.382812c-13.644532-13.640625-35.84375-13.640625-49.484375 0l-17.3125 17.316406c-6.609375 6.605469-10.25 15.394531-10.25 24.742187 0 9.34375 3.640625 18.132813 10.25 24.742188l30.347656 30.347656c-19.320313.914063-38.496094-6.222656-52.746094-20.476562-19.417969-19.417969-25.695312-48.585938-15.992187-74.308594.046875-.128906.082031-.253906.128906-.382812l9.402344-9.40625c.003906 0 .003906 0 .003906-.003907l30.785156-30.785156c.136719-.046875.277344-.085937.414063-.136719 25.171875-9.433594 53.894531-3.609375 73.175781 14.832032 15.070312 14.414062 22.636719 34.046874 21.65625 53.902343zm0 0"></path></svg></span>
+                                <h3 class="u-text u-text-8">Constant enchantment</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="u-clearfix u-section-4" id="sec-9e2c">
+        <div class="u-clearfix u-sheet u-sheet-1" style="min-height:50px !important">
+            <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+                <div class="u-layout">
+                    <div class="u-layout-row">
+                        <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
+                            <div class="u-container-layout u-container-layout-1">
+                                <ul class="u-custom-font u-font-ubuntu u-text u-text-2">
+                                    <li style="">It's based on a better alternative to technical analysis which only shows a current market situation</li>
+                                    <li style="">Our system uses AI to provide the most accurate prognosys for crypto currency exchange rates</li>
+                                    <li style="">
+                                        Our system uses Big Data and neural networks enabling trully thorough analysis for accurate predicitons<br>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
+                            <div class="u-container-layout u-valign-top u-container-layout-2">
+                                <ul class="u-text u-text-3">
+                                    <li>
+                                        With more accurate data traders are secured from investments loss<br>
+                                    </li>
+                                    <li>Based on scientific method we started with hypothesis and developed a system with a plan for constant improvement</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="u-clearfix u-hidden-xs u-custom-color-5 u-section-5" id="how-it-works" style=" background-color: rgb(125,146,208);">
+        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+            <div class="u-align-center u-container-style u-group u-group-1" style=" width: 700px; min-height: 163px; margin: 30px auto;">
+                <div class="u-container-layout u-valign-middle u-container-layout-1">
+                    <h2 class="u-text">how it works</h2>
+                    <p class="u-text u-text-2">Datavisio downloads exchange info every 15 minutes 24/7 and process it through neural networks to predict the best behavior for trading.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="u-clearfix u-hidden-xs u-section-6">
+        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+            <img class="u-expand-resize u-expanded-width u-image u-image-1" src="~/images/NewHome/datavisiohowitworks.png" data-image-width="1744" data-image-height="980">
+        </div>
+    </section>
+    <section class="u-clearfix u-custom-color-5 u-section-7" id="get-in-touch" style="background-color: rgb(164,178,217)">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-align-center u-container-style u-group u-group-1">
+                <div class="u-container-layout u-valign-middle u-container-layout-1">
+                    <h2 class="u-text u-text-1">get in touch</h2>
+                    <p class="u-text u-text-2">If you need more information, please write us directly</p>
+                </div>
+            </div>
+            <div class="u-form u-form-1">
+                <form action="#" method="POST" class="u-block-13ea-8 u-clearfix u-form-spacing-20 u-form-vertical u-inner-form" source="custom">
+                    <!-- hidden inputs for siteId and pageId -->
+                    <div class="u-form-group u-form-name">
+                        <label for="name-b93e" class="u-form-control-hidden u-label">Name</label>
+                        <input type="text" placeholder="Enter your Name" id="name-b93e" name="name" class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                    </div><!-- always visible -->
+                    <div class="u-form-email u-form-group">
+                        <label for="email-b93e" class="u-form-control-hidden u-label">Email</label>
+                        <input type="email" placeholder="Enter a valid email address" id="email-b93e" name="email" class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required="">
+                    </div>
+                    <div class="u-form-group u-form-message">
+                        <label for="message-b93e" class="u-form-control-hidden u-label">Message</label>
+                        <textarea placeholder="Enter your message" rows="4" cols="50" id="message-b93e" name="message" class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white" required=""></textarea>
+                    </div>
+                    <div class="u-align-center u-form-group u-form-submit u-form-group-4">
+                        <a href="#" class="u-btn u-btn-submit u-button-style u-palette-5-light-2 u-btn-1">Submit</a>
+                        <input type="submit" value="submit" class="u-form-control-hidden">
+                    </div>
+                    <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+                    <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+                    <input type="hidden" value="" name="recaptchaResponse">
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="u-clearfix u-footer u-grey-80" id="sec-d28a">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-align-center u-container-style u-group u-group-1">
+                <div class="u-container-layout u-valign-middle">
+                    <p class="u-small-text u-text u-text-1" style="font-size: 1.2rem !important">Datavisio is developed and maintained by <a href="https://a-n-s-technologies.com/">ANS Technologies LLC</a>.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <style class="u-overlap-style">
+        .u-overlap:not(.u-sticky-scroll) .u-header {
+        }
+    </style>
+
+
+
+</body>
+</html>
