@@ -14,6 +14,7 @@ using Business.Models.DataVisioAPI;
 using System.Text;
 using ClosedXML.Excel;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace CRM.Controllers.Charts
 {
@@ -58,7 +59,7 @@ namespace CRM.Controllers.Charts
         }
 
         [HttpPost]
-        public ActionResult ProfitChart(ProfitViewModel ViewModel)
+        public async Task<ActionResult> ProfitChart(ProfitViewModel ViewModel)
         {
             TradeHistoryFilter filter = new TradeHistoryFilter
             {
@@ -70,7 +71,7 @@ namespace CRM.Controllers.Charts
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            var model = _tradeHistoryService.Load(filter, HttpContext);
+            var model = await _tradeHistoryService.LoadAsync(filter, HttpContext);
 
             ViewModel.Dates = model.Deals.deals.Select(x => x.closed.ToJavascriptTicks()).ToList();
             ViewModel.Values = model.Deals.deals.Select(x => x.profit.clean.amount.ToString(SeparateHelper.Separator)).ToList();

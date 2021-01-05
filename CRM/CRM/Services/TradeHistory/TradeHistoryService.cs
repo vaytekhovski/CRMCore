@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using AuthApp.Controllers;
 using Business;
 using Business.DataVisioAPI;
@@ -31,14 +32,14 @@ namespace CRM.Services
             return null;
         }
 
-        public TradeHistoryModel Load(TradeHistoryFilter filter, HttpContext httpContext)
+        public async Task<TradeHistoryModel> LoadAsync(TradeHistoryFilter filter, HttpContext httpContext)
         {
             var model = new TradeHistoryModel();
 
             var token = httpContext.User.Identity.Name;
             var accountId = httpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            model.Deals = datavisioAPI.GetListDeals(accountId, token).Result;
+            model.Deals = await datavisioAPI.GetListDeals(accountId, token);
 
             if (filter.Coin != null)
                 model.Deals.deals = model.Deals.deals.Where(x => x.@base == filter.Coin).ToArray();
@@ -64,7 +65,6 @@ namespace CRM.Services
 
             foreach (var item in IgnoreIds)
             {
-
                 var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.Value);
                 if (dealToRemove != null)
                 {
@@ -128,37 +128,37 @@ namespace CRM.Services
             model.CountOfElements = model.Deals.deals.Count();
 
 
-            Signals Signals = datavisioAPI.GetSignals(token, "BTC", "grad").Result;
-            if (Signals.signals != null && Signals.signals.Count() != 0)
-            {
-                Signal signalBTC = Signals.signals.FirstOrDefault();
-                model.ProbaBuyBTC = signalBTC.value == 1 ? signalBTC.proba : 1m - signalBTC.proba;
-                model.ProbaBuyBTC *= 100m;
-            }
+            //Signals Signals = datavisioAPI.GetSignals(token, "BTC", "grad").Result;
+            //if (Signals.signals != null && Signals.signals.Count() != 0)
+            //{
+            //    Signal signalBTC = Signals.signals.FirstOrDefault();
+            //    model.ProbaBuyBTC = signalBTC.value == 1 ? signalBTC.proba : 1m - signalBTC.proba;
+            //    model.ProbaBuyBTC *= 100m;
+            //}
 
-            Signals = datavisioAPI.GetSignals(token, "ETH", "grad").Result;
-            if (Signals.signals != null && Signals.signals.Count() != 0)
-            {
-                Signal signalETH = Signals.signals.FirstOrDefault();
-                model.ProbaBuyETH = signalETH.value == 1 ? signalETH.proba : 1m - signalETH.proba;
-                model.ProbaBuyETH *= 100m;
-            }
+            //Signals = datavisioAPI.GetSignals(token, "ETH", "grad").Result;
+            //if (Signals.signals != null && Signals.signals.Count() != 0)
+            //{
+            //    Signal signalETH = Signals.signals.FirstOrDefault();
+            //    model.ProbaBuyETH = signalETH.value == 1 ? signalETH.proba : 1m - signalETH.proba;
+            //    model.ProbaBuyETH *= 100m;
+            //}
 
-            Signals = datavisioAPI.GetSignals(token, "LTC", "grad").Result;
-            if (Signals.signals != null && Signals.signals.Count() != 0)
-            {
-                Signal signalLTC = Signals.signals.FirstOrDefault();
-                model.ProbaBuyLTC = signalLTC.value == 1 ? signalLTC.proba : 1m - signalLTC.proba;
-                model.ProbaBuyLTC *= 100m;
-            }
+            //Signals = datavisioAPI.GetSignals(token, "LTC", "grad").Result;
+            //if (Signals.signals != null && Signals.signals.Count() != 0)
+            //{
+            //    Signal signalLTC = Signals.signals.FirstOrDefault();
+            //    model.ProbaBuyLTC = signalLTC.value == 1 ? signalLTC.proba : 1m - signalLTC.proba;
+            //    model.ProbaBuyLTC *= 100m;
+            //}
 
-            Signals = datavisioAPI.GetSignals(token, "XRP", "grad").Result;
-            if (Signals.signals != null && Signals.signals.Count() != 0)
-            {
-                Signal signalXRP = Signals.signals.FirstOrDefault();
-                model.ProbaBuyXRP = signalXRP.value == 1 ? signalXRP.proba : 1m - signalXRP.proba;
-                model.ProbaBuyXRP *= 100m;
-            }
+            //Signals = datavisioAPI.GetSignals(token, "XRP", "grad").Result;
+            //if (Signals.signals != null && Signals.signals.Count() != 0)
+            //{
+            //    Signal signalXRP = Signals.signals.FirstOrDefault();
+            //    model.ProbaBuyXRP = signalXRP.value == 1 ? signalXRP.proba : 1m - signalXRP.proba;
+            //    model.ProbaBuyXRP *= 100m;
+            //}
 
 
             return model;

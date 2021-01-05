@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using AuthApp.Controllers;
 using Business;
 using Business.DataVisioAPI;
@@ -58,7 +59,7 @@ namespace CRM.Controllers
         }
         
         [HttpGet]
-        public ActionResult TradeHistory()
+        public async Task<ActionResult> TradeHistory()
         {
             var viewModel = new TradeHistoryFilterModel
             {
@@ -77,17 +78,17 @@ namespace CRM.Controllers
                 CurrentPage = Convert.ToInt32(viewModel.CurrentPage.ToString())
             };
 
-            TradeHistoryModel Model = _tradeHistoryService.Load(filter, HttpContext);
+            TradeHistoryModel Model = await _tradeHistoryService.LoadAsync(filter, HttpContext);
             
             viewModel = MoveDataFromModelToViewModel(Model, viewModel);
 
-            viewModel.Deals.deals = viewModel.Deals.deals.Skip((filter.CurrentPage - 1) * 100).Take(100).ToArray();
+            //viewModel.Deals.deals = viewModel.Deals.deals.Skip((filter.CurrentPage - 1) * 100).Take(100).ToArray();
 
 
-            var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
+            //var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
 
-            viewModel.CurrentPage = filter.CurrentPage;
-            viewModel.CountOfPages = pagination.CountOfPages;
+            //viewModel.CurrentPage = filter.CurrentPage;
+            //viewModel.CountOfPages = pagination.CountOfPages;
             viewModel.Action = "TradeHistory/TradeHistory";
             viewModel.TypeOfDate = "datetime-local";
 
@@ -107,7 +108,7 @@ namespace CRM.Controllers
         }
 
         [HttpPost]
-        public ActionResult TradeHistory(TradeHistoryFilterModel viewModel, string PageButton = "1")
+        public async Task<ActionResult> TradeHistory(TradeHistoryFilterModel viewModel, string PageButton = "1")
         {
             // TODO: [COMPLETE] использовать такой паттерн везде
             //var model = service.Load(parameter1, parameter2, ...); 
@@ -123,7 +124,7 @@ namespace CRM.Controllers
                 CurrentPage = Convert.ToInt32(PageButton)
             };
 
-            TradeHistoryModel Model = _tradeHistoryService.Load(filter, HttpContext);
+            TradeHistoryModel Model = await _tradeHistoryService.LoadAsync(filter, HttpContext);
             
 
             var last = Model.Deals.deals.FirstOrDefault();

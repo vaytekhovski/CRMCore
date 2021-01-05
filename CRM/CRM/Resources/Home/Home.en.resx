@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="1DescInTripleDiv" xml:space="preserve">
+    <value>It is more efficient than technical analysis in cryptocurrency exchange rate predictions.</value>
+  </data>
+  <data name="1TitleInTripleDiv" xml:space="preserve">
+    <value>EFFICIENT</value>
+  </data>
+  <data name="2DescInTripleDiv" xml:space="preserve">
+    <value>It offers a more accurate prognosis with its Big Data, neural networks and proprietary algorithms.</value>
+  </data>
+  <data name="2TitleInTripleDiv" xml:space="preserve">
+    <value>BIG DATA</value>
+  </data>
+  <data name="3DescInTripleDiv" xml:space="preserve">
+    <value>Agile architecture enables the system to scale and cater to Big Data analysis in various domains.</value>
+  </data>
+  <data name="3TitleInTripleDiv" xml:space="preserve">
+    <value>ARCHITECTURE</value>
+  </data>
+  <data name="DatavisioValues" xml:space="preserve">
+    <value>DATAVISIO VALUES</value>
+  </data>
+  <data name="DatavisioValues1Desc" xml:space="preserve">
+    <value>Our R&amp;D dept. takes the best of science - start with hypotheses, deriver predictions, carry out experiments - to release business solutions.</value>
+  </data>
+  <data name="DatavisioValues1Title" xml:space="preserve">
+    <value>SCIENTIFIC METHOD</value>
+  </data>
+  <data name="DatavisioValues2Desc" xml:space="preserve">
+    <value>Key goal of DataVisio is to secure traders from risks of loosing investments via elaborate propriatory algorithms which we keep enhancing.</value>
+  </data>
+  <data name="DatavisioValues2Title" xml:space="preserve">
+    <value>SECURENESS</value>
+  </data>
+  <data name="DatavisioValues3Desc" xml:space="preserve">
+    <value>We want to make crypto currency exchange safer for traders constantly improving our technology and system.</value>
+  </data>
+  <data name="DatavisioValues3Title" xml:space="preserve">
+    <value>TRANSPARENT INNOVATION</value>
+  </data>
+  <data name="GetInTouch" xml:space="preserve">
+    <value>Get in touch</value>
+  </data>
+  <data name="GetInTouchDesc" xml:space="preserve">
+    <value>If you need more information, please write us directly</value>
+  </data>
+  <data name="HowItWorks" xml:space="preserve">
+    <value>HOW IT WORKS</value>
+  </data>
+  <data name="HowItWorksDesc" xml:space="preserve">
+    <value>Datavisio downloads exchange info every 15 minutes 24/7 and process it through neural networks to predict the best behavior for trading.</value>
+  </data>
+  <data name="onlyMath" xml:space="preserve">
+    <value>Only math!</value>
+  </data>
+  <data name="WhyDatavisio" xml:space="preserve">
+    <value>WHY DATAVISIO?</value>
+  </data>
+  <data name="WhyDatavisio1el" xml:space="preserve">
+    <value>EFFICIENCY</value>
+  </data>
+  <data name="WhyDatavisio1elDesc" xml:space="preserve">
+    <value>It's based on a better alternative to technical analysis which only shows a current market situation</value>
+  </data>
+  <data name="WhyDatavisio2el" xml:space="preserve">
+    <value>ACCURACY</value>
+  </data>
+  <data name="WhyDatavisio2elDesc" xml:space="preserve">
+    <value>Our system uses Big Data and neural networks enabling trully thorough analysis for accurate predicitons</value>
+  </data>
+  <data name="WhyDatavisio3el" xml:space="preserve">
+    <value>SECURENESS</value>
+  </data>
+  <data name="WhyDatavisio3elDesc" xml:space="preserve">
+    <value>With more accurate data traders are secured from investments loss</value>
+  </data>
+  <data name="WhyDatavisio4el" xml:space="preserve">
+    <value>THROUGH ANALYTICS</value>
+  </data>
+  <data name="WhyDatavisio4elDesc" xml:space="preserve">
+    <value>Based on scientific method we started with hypothesis and developed a system with a plan for constant improvement</value>
+  </data>
+  <data name="WhyDatavisio5el" xml:space="preserve">
+    <value>CLEVER AUTOMATION</value>
+  </data>
+  <data name="WhyDatavisio6el" xml:space="preserve">
+    <value>CONSTANT ENCHANTMENT</value>
+  </data>
+  <data name="WhyDatavisioDesc" xml:space="preserve">
+    <value>DataVisio is an artificial-intelligence-based automated trading system with algorithms that secure investments and ensure risk-free trade.</value>
+  </data>
+</root>

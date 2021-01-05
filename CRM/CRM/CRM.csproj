@@ -22,6 +22,16 @@
 
   <ItemGroup>
     <None Include="wwwroot\favicon.ico" />
+    <None Include="wwwroot\public\demo\chartist-plugin-tooltip.js" />
+    <None Include="wwwroot\public\demo\chartist.js" />
+    <None Include="wwwroot\public\demo\gd.chartist-area.js" />
+    <None Include="wwwroot\public\demo\gd.chartist-bar.js" />
+    <None Include="wwwroot\public\demo\gd.chartist-donut.js" />
+    <None Include="wwwroot\public\demo\gd.chartist-pie.js" />
+    <None Include="wwwroot\public\demo\resizeSensor.js" />
+    <None Include="wwwroot\public\graindashboard\css\gd-icons.svg" />
+    <None Include="wwwroot\public\graindashboard\js\graindashboard.js" />
+    <None Include="wwwroot\public\graindashboard\js\graindashboard.vendor.js" />
   </ItemGroup>
 
   <ItemGroup>
