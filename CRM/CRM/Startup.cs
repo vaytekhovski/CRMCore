@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Globalization;
 
 namespace CRM
 {
@@ -33,24 +35,28 @@ namespace CRM
                 });
             services.AddHttpClient();
             services.AddRazorPages();
-            services.AddMvc(options => options.EnableEndpointRouting = false).AddViewLocalization();
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .AddDataAnnotationsLocalization()
+                .AddViewLocalization();
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("ru"),
+                    new CultureInfo("en")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var supportedCultures = new[]
-              {
-                new CultureInfo("en"),
-                new CultureInfo("ru"),
-                new CultureInfo("de")
-            };
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("ru"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
 
+            app.UseRequestLocalization();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -38,9 +38,13 @@
     <PackageReference Include="Chart.js" Version="2.9.3" />
     <PackageReference Include="ClosedXML" Version="0.95.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Localization.AspNetCore.TagHelpers" Version="0.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Views\" />
   </ItemGroup>
 </Project>

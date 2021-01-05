@@ -118,93 +118,120 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="1DescInTripleDiv" xml:space="preserve">
-    <value>It is more efficient than technical analysis in cryptocurrency exchange rate predictions.</value>
+    <value>Более эффективно, чем технический анализ в биржевой торговле.</value>
   </data>
   <data name="1TitleInTripleDiv" xml:space="preserve">
-    <value>EFFICIENT</value>
+    <value>ЭФФЕКТИВНОСТЬ</value>
   </data>
   <data name="2DescInTripleDiv" xml:space="preserve">
-    <value>It offers a more accurate prognosis with its Big Data, neural networks and proprietary algorithms.</value>
+    <value>Мы предлагаем точные прогнозы на основе больших данных, нейронных сетей и запатентованных алгоритмов.</value>
   </data>
   <data name="2TitleInTripleDiv" xml:space="preserve">
     <value>BIG DATA</value>
   </data>
   <data name="3DescInTripleDiv" xml:space="preserve">
-    <value>Agile architecture enables the system to scale and cater to Big Data analysis in various domains.</value>
+    <value>Гибкая архитектура позволяет системе масштабироваться и проводить анализ больших данных в различных областях.</value>
   </data>
   <data name="3TitleInTripleDiv" xml:space="preserve">
-    <value>ARCHITECTURE</value>
+    <value>АРХИТЕКТУРА</value>
   </data>
   <data name="DatavisioValues" xml:space="preserve">
-    <value>DATAVISIO VALUES</value>
+    <value>ПРЕИМУЩЕСТВА DATAVISIO</value>
   </data>
   <data name="DatavisioValues1Desc" xml:space="preserve">
-    <value>Our R&amp;D dept. takes the best of science - start with hypotheses, deriver predictions, carry out experiments - to release business solutions.</value>
+    <value>Наш отдел исследований и разработок использует научные методы для разработки гипотез, подходов и конечных бизнес-решений.</value>
   </data>
   <data name="DatavisioValues1Title" xml:space="preserve">
-    <value>SCIENTIFIC METHOD</value>
+    <value>НАУЧНЫЙ ПОДХОД</value>
   </data>
   <data name="DatavisioValues2Desc" xml:space="preserve">
-    <value>Key goal of DataVisio is to secure traders from risks of loosing investments via elaborate propriatory algorithms which we keep enhancing.</value>
+    <value>Основная цель DataVisio - обезопасить трейдеров от рисков потери инвестиций. Мы это делаем с помощью собственных алгоритмов, которые постоянно совершенствуем.</value>
   </data>
   <data name="DatavisioValues2Title" xml:space="preserve">
-    <value>SECURENESS</value>
+    <value>БЕЗОПАСНОСТЬ</value>
   </data>
   <data name="DatavisioValues3Desc" xml:space="preserve">
-    <value>We want to make crypto currency exchange safer for traders constantly improving our technology and system.</value>
+    <value>Мы хотим сделать торговлю криптовалютой более безопасной для трейдеров, постоянно совершенствуя наши технологии и систему.</value>
   </data>
   <data name="DatavisioValues3Title" xml:space="preserve">
-    <value>TRANSPARENT INNOVATION</value>
+    <value>ИННОВАЦИИ</value>
   </data>
   <data name="GetInTouch" xml:space="preserve">
-    <value>Get in touch</value>
+    <value>Связаться с нами</value>
   </data>
   <data name="GetInTouchDesc" xml:space="preserve">
-    <value>If you need more information, please write us directly</value>
+    <value>Чтобы получить больше информации</value>
   </data>
   <data name="HowItWorks" xml:space="preserve">
-    <value>HOW IT WORKS</value>
+    <value>КАК ЭТО РАБОТАЕТ</value>
   </data>
   <data name="HowItWorksDesc" xml:space="preserve">
-    <value>Datavisio downloads exchange info every 15 minutes 24/7 and process it through neural networks to predict the best behavior for trading.</value>
+    <value>DataVisio загружает биржевую информацию каждые 15 минут 24/7 и обрабатывает ее через нейронные сети, чтобы предсказать оптимальное поведение актива для успешной торговли.</value>
   </data>
   <data name="onlyMath" xml:space="preserve">
-    <value>Only math!</value>
+    <value>Только математика!</value>
   </data>
   <data name="WhyDatavisio" xml:space="preserve">
-    <value>WHY DATAVISIO?</value>
+    <value>ПОЧЕМУ DATAVISIO?</value>
   </data>
   <data name="WhyDatavisio1el" xml:space="preserve">
-    <value>EFFICIENCY</value>
+    <value>ЭФФЕКТИВНОСТЬ</value>
   </data>
   <data name="WhyDatavisio1elDesc" xml:space="preserve">
-    <value>It's based on a better alternative to technical analysis which only shows a current market situation</value>
+    <value>Подход основан на альтернативе техническому анализу, который показывает только текущую рыночную ситуацию.</value>
   </data>
   <data name="WhyDatavisio2el" xml:space="preserve">
-    <value>ACCURACY</value>
+    <value>ТОЧНОСТЬ</value>
   </data>
   <data name="WhyDatavisio2elDesc" xml:space="preserve">
-    <value>Our system uses Big Data and neural networks enabling trully thorough analysis for accurate predicitons</value>
+    <value>Наша система использует большие данные и нейронные сети, что позволяет проводить действительно тщательный анализ для точных прогнозов.</value>
   </data>
   <data name="WhyDatavisio3el" xml:space="preserve">
-    <value>SECURENESS</value>
+    <value>БЕЗОПАСНОСТЬ</value>
   </data>
   <data name="WhyDatavisio3elDesc" xml:space="preserve">
-    <value>With more accurate data traders are secured from investments loss</value>
+    <value>С более точными данными трейдеры защищены от потери инвестиций.</value>
   </data>
   <data name="WhyDatavisio4el" xml:space="preserve">
-    <value>THROUGH ANALYTICS</value>
+    <value>АНАЛИТИКА</value>
   </data>
   <data name="WhyDatavisio4elDesc" xml:space="preserve">
-    <value>Based on scientific method we started with hypothesis and developed a system with a plan for constant improvement</value>
+    <value>Основываясь на научном методе, мы начали с гипотезы и разработали систему, которую постоянно улучшаем.</value>
   </data>
   <data name="WhyDatavisio5el" xml:space="preserve">
-    <value>CLEVER AUTOMATION</value>
+    <value>АВТОМАТИЗАЦИЯ</value>
   </data>
   <data name="WhyDatavisio6el" xml:space="preserve">
-    <value>CONSTANT ENCHANTMENT</value>
+    <value>ПОСТОЯННОЕ РАЗВИТИЕ</value>
   </data>
   <data name="WhyDatavisioDesc" xml:space="preserve">
-    <value>DataVisio is an artificial-intelligence-based automated trading system with algorithms that secure investments and ensure risk-free trade.</value>
+    <value>DataVisio - это автоматизированная торговая система на основе искусственного интеллекта с алгоритмами, которые защищают инвестиции и гарантируют безрисковую торговлю.</value>
+  </data>
+    <data name="Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+    <data name="NamePlaceholder" xml:space="preserve">
+    <value>Введите Ваше имя</value>
+  </data>
+    <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+     <data name="EmailPlaceholder" xml:space="preserve">
+    <value>Введите Ваш Email адрес</value>
+  </data>
+    <data name="Message" xml:space="preserve">
+    <value>Сообщение</value>
+  </data>
+     <data name="MessagePlaceholder" xml:space="preserve">
+    <value>Введите ваше сообщение</value>
+  </data>
+    <data name="Submit" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+     <data name="Home" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+    <data name="SignIn" xml:space="preserve">
+    <value>Войти</value>
   </data>
 </root>
