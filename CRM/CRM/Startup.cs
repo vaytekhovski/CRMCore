@@ -29,7 +29,7 @@ namespace CRM
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
-                    options.LoginPath = new PathString("/Home/Home");
+                    options.LoginPath = new PathString("/Account/Login");
                     options.AccessDeniedPath = new PathString("/Home/Home");
                     options.ExpireTimeSpan = TimeSpan.FromHours(12);
                 });
