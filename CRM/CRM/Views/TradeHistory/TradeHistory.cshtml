@@ -85,7 +85,7 @@
 
     <div class="container table_block">
         <div>
-            <div style="height:220px" class="desktop">
+            @*<div style="height:220px" class="desktop">
                 <div class="statistics-block-desktop">
                     <table class="table table-font Indicators">
                         <tr>
@@ -191,13 +191,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             @*
         <div style="padding: 10px 40%;" class="desktop">
             <button style="width: 100%;" class="btn btn-secondary show_stat">Сложная статистика</button>
         </div>
             *@
-            <div>
+            @*<div>
                 <table class="table table-font Indicators complicated_statistics">
                     <tr>
                         <th>Общая приб. (TP):</th>
@@ -270,9 +270,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
-        <table class="sortable table table-bordered table-font" style=" display: @(Model.TotalProfit == 0 ? "none" : "table");">
+        <table class="sortable table table-bordered table-font">
             <thead>
                 <tr>
                     <th>Номер торговой сессии</th>

@@ -80,7 +80,7 @@
                                     </a>
                                 </li>
                                 <li class="unfold-item unfold-item-has-divider">
-                                    <a class="unfold-link d-flex align-items-center text-nowrap" href="#">
+                                    <a class="unfold-link d-flex align-items-center text-nowrap" href="../UserPanel/ExitFromAccount">
                                         <span class="unfold-item-icon mr-3">
                                             <i class="gd-power-off"></i>
                                         </span>
@@ -176,58 +176,63 @@
                     <div class="h3 mb-0">История торгов</div>
                 </div>
 
+                <div>
+                    <form class="" action="../Dashboard/Index" method="post">
+                        <div class="form-row">
+                            <div class="form-group col-2">
+                                <label for="currency">Валюта</label>
+                                @Html.DropDownListFor(m => m.Coin, (IEnumerable<SelectListItem>)ViewBag.Coins, "Все валюты", new { @class = "form-control", name = "coin", id = "coin_selector" })
+                            </div>
 
+                            <div class="form-group col-2">
+                                <label for="startDate">Дата от</label>
+                                <input type="datetime-local" class="form-control" asp-for="@Model.StartDate" value=@Model.StartDate min="@ViewBag.FilterStartDate">
+                            </div>
+                            <div class="form-group col-2">
+                                <label for="endDate">Дата по</label>
+                                <input type="datetime-local" class="form-control" asp-for="@Model.EndDate" value=@Model.EndDate min="@ViewBag.FilterEndDate" >
+                            </div>
+                            <div class="form-group col-2">
+                                <button type="submit" class="form-control btn btn-primary" name="button" style="position: absolute; bottom: 0px;">Посмотреть</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
                 <div class="row">
                     <div class="col-12">
                         <!-- Card -->
                         <div class="card mb-3 mb-md-4">
-                            <div class="card-header border-bottom p-0">
-                                <ul id="wallets" class="nav nav-v2 nav-primary nav-justified d-block d-xl-flex w-100" role="tablist">
-                                    <li class="nav-item border-bottom border-xl-bottom-0">
-                                        <a class="nav-link d-flex align-items-center py-2 px-3 p-xl-4 active" href="#all" role="tab" aria-selected="true"
-                                           data-toggle="tab">
-                                            <span>Все валюты</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item border-bottom border-xl-bottom-0">
-                                        <a class="nav-link d-flex align-items-center py-2 px-3 p-xl-4" href="#bitcoin" role="tab" aria-selected="false"
-                                           data-toggle="tab">
-                                            <span>Bitcoin</span>
-                                            <small class="text-muted ml-auto">$21,012.96</small>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item border-bottom border-xl-bottom-0 border-xl-left">
-                                        <a class="nav-link d-flex align-items-center py-2 px-3 p-xl-4" href="#etherium" role="tab" aria-selected="false"
-                                           data-toggle="tab">
-                                            <span>Etherium</span>
-                                            <small class="text-muted ml-auto">$738.00</small>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            
                             <div id="walletsContent" class="card-body tab-content">
                                 <div class="tab-pane fade show active" id="all" role="tabpanel">
                                     <div class="row text-center">
-                                        <div class="col-6 col-md-4 mb-3 mb-md-0">
+                                        <div class="col-3 col-md-3 mb-3 mb-md-0">
                                             <div class="h3 mb-0">
-                                                <span class="text-success">+</span>$212<sup class="h5">.96</sup>
+                                                <span class="text-success">+</span>$@Model.ProfitOrdersSumm<sup class="h5">.@Model.ProfitOrdersSummAfterDecimal</sup>
                                             </div>
                                             <small class="text-muted">Прибыль</small>
                                         </div>
 
-                                        <div class="col-6 col-md-4 mb-3 mb-md-0 border-left">
+                                        <div class="col-3 col-md-3 mb-3 mb-md-0 border-left">
                                             <div class="h3 mb-0">
-                                                <span class="text-danger">-</span>$159<sup class="h5">.83</sup>
+                                                <span class="text-danger">-</span>$@Model.LossOrdersSumm<sup class="h5">.@Model.LossOrdersSummAfterDecimal</sup>
                                             </div>
                                             <small class="text-muted">Убытки</small>
                                         </div>
 
-                                        <div class="col-12 col-md-4 border-left">
+                                        <div class="col-3 col-md-3 mb-3 mb-md-0 border-left">
                                             <div class="h3 mb-0">
-                                                <span class="text-success">+</span>9.32<sup class="h5">%</sup>
+                                                <span class="@(Model.TotalProfit[0] == '+' ? "text-success" : "text-danger")">@Model.TotalProfit[0]</span>$@Model.TotalProfit.Substring(1)<sup class="h5">.@Model.TotalProfitAfterDecimal</sup>
                                             </div>
-                                            <small class="text-muted">Приыбль</small>
+                                            <small class="text-muted">Результат</small>
+                                        </div>
+
+                                        <div class="col-12 col-md-3 border-left">
+                                            <div class="h3 mb-0">
+                                                <span class="@(Model.DepositProfit[0] == '+' ? "text-success" : "text-danger")">@Model.DepositProfit[0]</span>@Model.DepositProfit.Substring(1)<sup class="h5">%</sup>
+                                            </div>
+                                            <small class="text-muted">Проценты</small>
                                         </div>
                                     </div>
 
@@ -295,184 +300,6 @@
                                          data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle'
                                          data-point-dimensions='{"width":8,"height":8}'></div>
                                 </div>
-                                <div class="tab-pane fade" id="bitcoin" role="tabpanel">
-                                    <div class="row text-center">
-                                        <div class="col-6 col-md-4 mb-3 mb-md-0">
-                                            <div class="h3 mb-0">
-                                                <span class="text-success">+</span>$212<sup class="h5">.96</sup>
-                                            </div>
-                                            <small class="text-muted">Прибыль</small>
-                                        </div>
-
-                                        <div class="col-6 col-md-4 mb-3 mb-md-0 border-left">
-                                            <div class="h3 mb-0">
-                                                <span class="text-danger">-</span>$159<sup class="h5">.83</sup>
-                                            </div>
-                                            <small class="text-muted">Убытки</small>
-                                        </div>
-
-                                        <div class="col-12 col-md-4 border-left">
-                                            <div class="h3 mb-0">
-                                                <span class="text-success">+</span>9.32<sup class="h5">%</sup>
-                                            </div>
-                                            <small class="text-muted">Приыбль</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1"
-                                         data-series='[
-                         [
-                           {"meta":"8/12/2020 9:00 PM","value":"54"},
-                           {"meta":"8/15/2020 9:00 PM","value":"32"},
-                           {"meta":"8/19/2020 9:00 PM","value":"-17"},
-                           {"meta":"8/21/2020 9:00 PM","value":"-2"},
-                           {"meta":"8/25/2020 9:00 PM","value":"14"},
-                           {"meta":"9/06/2020 9:00 PM","value":"21"},
-                           {"meta":"9/07/2020 9:00 PM","value":"8"},
-                           {"meta":"9/08/2020 9:00 PM","value":"5"},
-                           {"meta":"9/19/2020 9:00 PM","value":"-23"},
-                           {"meta":"10/01/2020 9:00 PM","value":"9"},
-                           {"meta":"10/05/2020 9:00 PM","value":"12"},
-                           {"meta":"10/12/2020 9:00 PM","value":"70"},
-                           {"meta":"10/13/2020 9:00 PM","value":"-17"},
-                           {"meta":"10/24/2020 9:00 PM","value":"51"},
-                           {"meta":"11/02/2020 9:00 PM","value":"62"},
-                           {"meta":"11/05/2020 9:00 PM","value":"41"},
-                           {"meta":"11/08/2020 9:00 PM","value":"-23"},
-                           {"meta":"11/11/2020 9:00 PM","value":"-5"},
-                           {"meta":"11/14/2020 9:00 PM","value":"45"},
-                           {"meta":"11/20/2020 9:00 PM","value":"23"},
-                           {"meta":"11/21/2020 9:00 PM","value":"78"},
-                           {"meta":"12/01/2020 9:00 PM","value":"-1"},
-                           {"meta":"12/03/2020 9:00 PM","value":"-6"},
-                           {"meta":"12/08/2020 9:00 PM","value":"9"},
-                           {"meta":"12/10/2020 9:00 PM","value":"-7"},
-                           {"meta":"12/14/2020 9:00 PM","value":"45"},
-                           {"meta":"12/20/2020 9:00 PM","value":"64"},
-                           {"meta":"12/24/2020 9:00 PM","value":"88"},
-                           {"meta":"12/27/2020 9:00 PM","value":"-2"},
-                           {"meta":"12/30/2020 9:00 PM","value":"13"}
-                         ]
-                       ]'
-                                         data-labels='["Август 12","Август 15","Август 19","Август 21","Август 25","Сентябрь 06","Сентябрь 07","Сентябрь 08","Сентябрь 19","Октябрь 01","Октябрь 05","Октябрь 12","Октябрь 13","Октябрь 24","Ноябрь 02","Ноябрь 05","Ноябрь 08","Ноябрь 11","Ноябрь 14","Ноябрь 20","Ноябрь 21","Декабрь 01","Декабрь 03","Декабрь 08","Декабрь 10","Декабрь 14","Декабрь 20","Декабрь 24","Декабрь 27","Декабрь 30"]'
-                                         data-labels-qty="12"
-                                         data-labels-start-from="1"
-                                         data-prefix="$"
-                                         data-height="250"
-                                         data-mobile-height="75"
-                                         data-high="100"
-                                         data-low="-20"
-                                         data-offset-x="30"
-                                         data-offset-y="60"
-                                         data-is-line-smooth='[true]'
-                                         data-line-width='["1px"]'
-                                         data-line-colors='["#4C6DCE"]'
-                                         data-fill-opacity="1"
-                                         data-fill-colors='["#e1e4eb"]'
-                                         data-text-size-x="14px"
-                                         data-text-color-x="#4C6DCE"
-                                         data-text-offset-top-x="10"
-                                         data-text-align-axis-x="center"
-                                         data-text-size-y="14px"
-                                         data-text-color-y="#868e96"
-                                         data-is-show-tooltips="true"
-                                         data-is-tooltip-divided="true"
-                                         data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white"
-                                         data-tooltip-currency="USD "
-                                         data-is-show-points="true"
-                                         data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle'
-                                         data-point-dimensions='{"width":8,"height":8}'></div>
-                                </div>
-                                <div class="tab-pane fade" id="etherium" role="tabpanel">
-                                    <div class="row text-center">
-                                        <div class="col-6 col-md-4 mb-3 mb-md-0">
-                                            <div class="h3 mb-0">
-                                                <span class="text-success">+</span>$212<sup class="h5">.96</sup>
-                                            </div>
-                                            <small class="text-muted">Прибыль</small>
-                                        </div>
-
-                                        <div class="col-6 col-md-4 mb-3 mb-md-0 border-left">
-                                            <div class="h3 mb-0">
-                                                <span class="text-danger">-</span>$159<sup class="h5">.83</sup>
-                                            </div>
-                                            <small class="text-muted">Убытки</small>
-                                        </div>
-
-                                        <div class="col-12 col-md-4 border-left">
-                                            <div class="h3 mb-0">
-                                                <span class="text-success">+</span>9.32<sup class="h5">%</sup>
-                                            </div>
-                                            <small class="text-muted">Приыбль</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1"
-                                         data-series='[
-                         [
-                           {"meta":"8/12/2020 9:00 PM","value":"54"},
-                           {"meta":"8/15/2020 9:00 PM","value":"32"},
-                           {"meta":"8/19/2020 9:00 PM","value":"-17"},
-                           {"meta":"8/21/2020 9:00 PM","value":"-2"},
-                           {"meta":"8/25/2020 9:00 PM","value":"14"},
-                           {"meta":"9/06/2020 9:00 PM","value":"21"},
-                           {"meta":"9/07/2020 9:00 PM","value":"8"},
-                           {"meta":"9/08/2020 9:00 PM","value":"5"},
-                           {"meta":"9/19/2020 9:00 PM","value":"-23"},
-                           {"meta":"10/01/2020 9:00 PM","value":"9"},
-                           {"meta":"10/05/2020 9:00 PM","value":"12"},
-                           {"meta":"10/12/2020 9:00 PM","value":"70"},
-                           {"meta":"10/13/2020 9:00 PM","value":"-17"},
-                           {"meta":"10/24/2020 9:00 PM","value":"51"},
-                           {"meta":"11/02/2020 9:00 PM","value":"62"},
-                           {"meta":"11/05/2020 9:00 PM","value":"41"},
-                           {"meta":"11/08/2020 9:00 PM","value":"-23"},
-                           {"meta":"11/11/2020 9:00 PM","value":"-5"},
-                           {"meta":"11/14/2020 9:00 PM","value":"45"},
-                           {"meta":"11/20/2020 9:00 PM","value":"23"},
-                           {"meta":"11/21/2020 9:00 PM","value":"78"},
-                           {"meta":"12/01/2020 9:00 PM","value":"-1"},
-                           {"meta":"12/03/2020 9:00 PM","value":"-6"},
-                           {"meta":"12/08/2020 9:00 PM","value":"9"},
-                           {"meta":"12/10/2020 9:00 PM","value":"-7"},
-                           {"meta":"12/14/2020 9:00 PM","value":"45"},
-                           {"meta":"12/20/2020 9:00 PM","value":"64"},
-                           {"meta":"12/24/2020 9:00 PM","value":"88"},
-                           {"meta":"12/27/2020 9:00 PM","value":"-2"},
-                           {"meta":"12/30/2020 9:00 PM","value":"13"}
-                         ]
-                       ]'
-                                         data-labels='["Август 12","Август 15","Август 19","Август 21","Август 25","Сентябрь 06","Сентябрь 07","Сентябрь 08","Сентябрь 19","Октябрь 01","Октябрь 05","Октябрь 12","Октябрь 13","Октябрь 24","Ноябрь 02","Ноябрь 05","Ноябрь 08","Ноябрь 11","Ноябрь 14","Ноябрь 20","Ноябрь 21","Декабрь 01","Декабрь 03","Декабрь 08","Декабрь 10","Декабрь 14","Декабрь 20","Декабрь 24","Декабрь 27","Декабрь 30"]'
-                                         data-labels-qty="12"
-                                         data-labels-start-from="1"
-                                         data-prefix="$"
-                                         data-height="250"
-                                         data-mobile-height="75"
-                                         data-high="100"
-                                         data-low="-20"
-                                         data-offset-x="30"
-                                         data-offset-y="60"
-                                         data-is-line-smooth='[true]'
-                                         data-line-width='["1px"]'
-                                         data-line-colors='["#4C6DCE"]'
-                                         data-fill-opacity="1"
-                                         data-fill-colors='["#e1e4eb"]'
-                                         data-text-size-x="14px"
-                                         data-text-color-x="#4C6DCE"
-                                         data-text-offset-top-x="10"
-                                         data-text-align-axis-x="center"
-                                         data-text-size-y="14px"
-                                         data-text-color-y="#868e96"
-                                         data-is-show-tooltips="true"
-                                         data-is-tooltip-divided="true"
-                                         data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white"
-                                         data-tooltip-currency="USD "
-                                         data-is-show-points="true"
-                                         data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle'
-                                         data-point-dimensions='{"width":8,"height":8}'></div>
-                                </div>
-
-
                             </div>
                         </div>
                         <!-- End Card -->
@@ -541,7 +368,7 @@
                                                 </tr>
                                             }
 
-                                            
+
 
                                         </tbody>
                                     </table>

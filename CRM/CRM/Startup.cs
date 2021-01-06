@@ -74,7 +74,7 @@ namespace CRM
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute("default", "{controller=Dashboard}/{action=Index}/{id?}");
             });
 
         }

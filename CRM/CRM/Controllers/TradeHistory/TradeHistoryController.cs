@@ -63,19 +63,16 @@ namespace CRM.Controllers
         {
             var viewModel = new TradeHistoryFilterModel
             {
-                Id = "TradeHistory",
                 Coin = null,
                 StartDate = DatesHelper.MinDateTimeStr,
-                EndDate = DatesHelper.CurrentDateTimeStr,
-                CurrentPage = 1
+                EndDate = DatesHelper.CurrentDateTimeStr
             };
 
             var filter = new TradeHistoryFilter
             {
                 Coin = viewModel.Coin,
                 StartDate = DateTime.Parse(viewModel.StartDate),
-                EndDate = DateTime.Parse(viewModel.EndDate),
-                CurrentPage = Convert.ToInt32(viewModel.CurrentPage.ToString())
+                EndDate = DateTime.Parse(viewModel.EndDate)
             };
 
             TradeHistoryModel Model = await _tradeHistoryService.LoadAsync(filter, HttpContext);
@@ -89,15 +86,13 @@ namespace CRM.Controllers
 
             //viewModel.CurrentPage = filter.CurrentPage;
             //viewModel.CountOfPages = pagination.CountOfPages;
-            viewModel.Action = "TradeHistory/TradeHistory";
-            viewModel.TypeOfDate = "datetime-local";
 
 
             var token = HttpContext.User.Identity.Name;
             var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            viewModel.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
-            viewModel.Accounts = datavisioAPIService.ShowAccounts(token).Result;
+            //viewModel.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
+            //viewModel.Accounts = datavisioAPIService.ShowAccounts(token).Result;
 
             ViewBag.Coins = DropDownFields.GetCoins().Where(x=> HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "LTC" : true);
             var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
@@ -135,18 +130,14 @@ namespace CRM.Controllers
 
 
             var pagination = _paginationService.GetPaginationModel(filter.CurrentPage, Model.CountOfElements);
-            viewModel.CurrentPage = filter.CurrentPage;
-            viewModel.CountOfPages = pagination.CountOfPages;
-            viewModel.Action = "TradeHistory/TradeHistory";
-            viewModel.TypeOfDate = "datetime-local";
 
 
 
             var token = HttpContext.User.Identity.Name;
             var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            viewModel.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
-            viewModel.Accounts = datavisioAPIService.ShowAccounts(token).Result;
+            //viewModel.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
+            //viewModel.Accounts = datavisioAPIService.ShowAccounts(token).Result;
 
             ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "LTC" : true); ;
             var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
@@ -168,105 +159,105 @@ namespace CRM.Controllers
                 item.fee = Math.Abs(item.profit.dirty.amount - item.profit.clean.amount);
             }
 
-            viewModel.TotalProfit = Model.TotalProfit;
-            viewModel.TotalProfitWithoutFee = Model.TotalProfitWithoutFee;
+            //viewModel.TotalProfit = Model.TotalProfit;
+            //viewModel.TotalProfitWithoutFee = Model.TotalProfitWithoutFee;
 
-            viewModel.LossOrdersCount = Model.LossOrdersCount;
-            viewModel.LossOrdersSumm = Model.LossOrdersSumm;
+            //viewModel.LossOrdersCount = Model.LossOrdersCount;
+            //viewModel.LossOrdersSumm = Model.LossOrdersSumm;
 
-            viewModel.ProfitOrdersCount = Model.ProfitOrdersCount;
-            viewModel.ProfitOrdersSumm = Model.ProfitOrdersSumm;
+            //viewModel.ProfitOrdersCount = Model.ProfitOrdersCount;
+            //viewModel.ProfitOrdersSumm = Model.ProfitOrdersSumm;
 
-            viewModel.ProfitOrdersCountWithoutFee = Model.ProfitOrdersCountWithoutFee;
-            viewModel.LossOrdersCountWithoutFee = Model.LossOrdersCountWithoutFee;
+            //viewModel.ProfitOrdersCountWithoutFee = Model.ProfitOrdersCountWithoutFee;
+            //viewModel.LossOrdersCountWithoutFee = Model.LossOrdersCountWithoutFee;
 
-            viewModel.ProfitOrdersSummWithoutFee = Model.ProfitOrdersSummWithoutFee;
-            viewModel.LossOrdersSummWithoutFee = Model.LossOrdersSummWithoutFee;
+            //viewModel.ProfitOrdersSummWithoutFee = Model.ProfitOrdersSummWithoutFee;
+            //viewModel.LossOrdersSummWithoutFee = Model.LossOrdersSummWithoutFee;
 
-            viewModel.TotalEnterTax = Model.TotalEnterTax;
+            //viewModel.TotalEnterTax = Model.TotalEnterTax;
 
-            viewModel.DepositProfit = Model.DepositProfit;
+            //viewModel.DepositProfit = Model.DepositProfit;
 
-            if (ClosedDeals.Count() > 0 && (decimal)Model.LossOrdersCount != 0)
-            {
-                viewModel.RPL = (decimal)Model.ProfitOrdersCount / (decimal)Model.LossOrdersCount;
-                viewModel.AP = Model.ProfitOrdersCount > 0 ? Model.ProfitOrdersSumm / Model.ProfitOrdersCount : 0;
-                viewModel.AL = Model.LossOrdersSumm / Model.LossOrdersCount;
-                viewModel.AR = Model.TotalProfit / (Model.ProfitOrdersCount + Model.LossOrdersCount);
-                viewModel.RAPAL = viewModel.AP / Math.Abs(viewModel.AL);
+            //if (ClosedDeals.Count() > 0 && (decimal)Model.LossOrdersCount != 0)
+            //{
+            //    viewModel.RPL = (decimal)Model.ProfitOrdersCount / (decimal)Model.LossOrdersCount;
+            //    viewModel.AP = Model.ProfitOrdersCount > 0 ? Model.ProfitOrdersSumm / Model.ProfitOrdersCount : 0;
+            //    viewModel.AL = Model.LossOrdersSumm / Model.LossOrdersCount;
+            //    viewModel.AR = Model.TotalProfit / (Model.ProfitOrdersCount + Model.LossOrdersCount);
+            //    viewModel.RAPAL = viewModel.AP / Math.Abs(viewModel.AL);
 
-                var TroughValue = ClosedDeals.Min(x => x.income);
-                var PeakValue = ClosedDeals.Max(x => x.income);
-                viewModel.MIDD = TroughValue - PeakValue / PeakValue;
-                viewModel.Dmin = viewModel.MIDD + 100;
+            //    var TroughValue = ClosedDeals.Min(x => x.income);
+            //    var PeakValue = ClosedDeals.Max(x => x.income);
+            //    viewModel.MIDD = TroughValue - PeakValue / PeakValue;
+            //    viewModel.Dmin = viewModel.MIDD + 100;
 
-                viewModel.R = Model.TotalProfit / viewModel.Dmin;
-                viewModel.RF = Model.TotalProfit / viewModel.MIDD;
-                viewModel.PF = Model.ProfitOrdersSumm / Math.Abs(Model.LossOrdersSumm);
-                viewModel.APF = (Model.ProfitOrdersSumm - ClosedDeals.Max(x => x.profit.clean.amount) / Math.Abs(Model.LossOrdersSumm));
-                viewModel.CompoundInterest = 0;
-                viewModel.CompoundInterestWithoutFee = 0;
+            //    viewModel.R = Model.TotalProfit / viewModel.Dmin;
+            //    viewModel.RF = Model.TotalProfit / viewModel.MIDD;
+            //    viewModel.PF = Model.ProfitOrdersSumm / Math.Abs(Model.LossOrdersSumm);
+            //    viewModel.APF = (Model.ProfitOrdersSumm - ClosedDeals.Max(x => x.profit.clean.amount) / Math.Abs(Model.LossOrdersSumm));
+            //    viewModel.CompoundInterest = 0;
+            //    viewModel.CompoundInterestWithoutFee = 0;
 
-                var MidPercentProfit = ClosedDeals.Sum(x => x.profit.clean.percent) / ClosedDeals.Count();
+            //    var MidPercentProfit = ClosedDeals.Sum(x => x.profit.clean.percent) / ClosedDeals.Count();
 
-                double StandardDeviation = 0;
-                decimal _CompoundInterest = 1;
-                decimal _CompoundInterestWithoutFee = 1;
+            //    double StandardDeviation = 0;
+            //    decimal _CompoundInterest = 1;
+            //    decimal _CompoundInterestWithoutFee = 1;
 
-                foreach (var coin in ClosedDeals.Select(x=>x.@base).Distinct())
-                {
-                    foreach (var percentProfit in ClosedDeals.Where(x => x.@base == coin).Where(x => x.profit.clean.percent != 0).OrderBy(x => x.opened).Select(x => x.profit.clean.percent).ToList())
-                    {
-                        StandardDeviation += Math.Pow((double)percentProfit - (double)MidPercentProfit, 2);
-                        if (StandardDeviation == 0)
-                            StandardDeviation = 1;
-                        _CompoundInterest *= 1 + (percentProfit / 100);
-                    }
-                    viewModel.CompoundInterest += (_CompoundInterest - 1) * 100;
-                    _CompoundInterest = 1;
+            //    foreach (var coin in ClosedDeals.Select(x=>x.@base).Distinct())
+            //    {
+            //        foreach (var percentProfit in ClosedDeals.Where(x => x.@base == coin).Where(x => x.profit.clean.percent != 0).OrderBy(x => x.opened).Select(x => x.profit.clean.percent).ToList())
+            //        {
+            //            StandardDeviation += Math.Pow((double)percentProfit - (double)MidPercentProfit, 2);
+            //            if (StandardDeviation == 0)
+            //                StandardDeviation = 1;
+            //            _CompoundInterest *= 1 + (percentProfit / 100);
+            //        }
+            //        viewModel.CompoundInterest += (_CompoundInterest - 1) * 100;
+            //        _CompoundInterest = 1;
 
-                    foreach (var percentProfitWithoutFee in ClosedDeals.Where(x => x.@base == coin).Where(x => x.profit.dirty.percent != 0).Where(x => x.@base == coin).OrderBy(x => x.opened).Select(x => x.profit.dirty.percent).ToList())
-                    {
-                        _CompoundInterestWithoutFee *= 1 + (percentProfitWithoutFee / 100);
-                    }
+            //        foreach (var percentProfitWithoutFee in ClosedDeals.Where(x => x.@base == coin).Where(x => x.profit.dirty.percent != 0).Where(x => x.@base == coin).OrderBy(x => x.opened).Select(x => x.profit.dirty.percent).ToList())
+            //        {
+            //            _CompoundInterestWithoutFee *= 1 + (percentProfitWithoutFee / 100);
+            //        }
 
-                    viewModel.CompoundInterestWithoutFee += (_CompoundInterestWithoutFee - 1) * 100; ;
-                    _CompoundInterestWithoutFee = 1;
-                }
+            //        viewModel.CompoundInterestWithoutFee += (_CompoundInterestWithoutFee - 1) * 100; ;
+            //        _CompoundInterestWithoutFee = 1;
+            //    }
 
-                StandardDeviation /= ClosedDeals.Count();
-                StandardDeviation = Math.Sqrt(StandardDeviation);
+            //    StandardDeviation /= ClosedDeals.Count();
+            //    StandardDeviation = Math.Sqrt(StandardDeviation);
 
-                viewModel.SharpeRatio = (MidPercentProfit - 0.05m) / (decimal)StandardDeviation;
-                try
-                {
-                    viewModel.ProfitAverage = ClosedDeals.Where(x => x.profit.clean.amount > 0).Select(x => x.profit.clean.percent).Average();
-                    viewModel.LossAverage = ClosedDeals.Where(x => x.profit.clean.amount <= 0).Select(x => x.profit.clean.percent).Average();
-                }
-                catch
-                {
-                    viewModel.ProfitAverage = 0;
-                    viewModel.LossAverage = 0;
-                }
+            //    viewModel.SharpeRatio = (MidPercentProfit - 0.05m) / (decimal)StandardDeviation;
+            //    try
+            //    {
+            //        viewModel.ProfitAverage = ClosedDeals.Where(x => x.profit.clean.amount > 0).Select(x => x.profit.clean.percent).Average();
+            //        viewModel.LossAverage = ClosedDeals.Where(x => x.profit.clean.amount <= 0).Select(x => x.profit.clean.percent).Average();
+            //    }
+            //    catch
+            //    {
+            //        viewModel.ProfitAverage = 0;
+            //        viewModel.LossAverage = 0;
+            //    }
 
                 
-            }
+            //}
 
-            SeparateHelper.Separator.NumberDecimalSeparator = ".";
+            //SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            viewModel.ProbaBuyBTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyBTC), 2).ToString(SeparateHelper.Separator);
-            viewModel.ProbaBuyLTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyLTC), 2).ToString(SeparateHelper.Separator);
-            viewModel.ProbaBuyETHstr = Math.Round(Convert.ToDouble(Model.ProbaBuyETH), 2).ToString(SeparateHelper.Separator);
-            viewModel.ProbaBuyXRPstr = Math.Round(Convert.ToDouble(Model.ProbaBuyXRP), 2).ToString(SeparateHelper.Separator);
+            //viewModel.ProbaBuyBTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyBTC), 2).ToString(SeparateHelper.Separator);
+            //viewModel.ProbaBuyLTCstr = Math.Round(Convert.ToDouble(Model.ProbaBuyLTC), 2).ToString(SeparateHelper.Separator);
+            //viewModel.ProbaBuyETHstr = Math.Round(Convert.ToDouble(Model.ProbaBuyETH), 2).ToString(SeparateHelper.Separator);
+            //viewModel.ProbaBuyXRPstr = Math.Round(Convert.ToDouble(Model.ProbaBuyXRP), 2).ToString(SeparateHelper.Separator);
 
 
-            viewModel.ProbaBuyBTC = Model.ProbaBuyBTC;
-            viewModel.ProbaBuyLTC = Model.ProbaBuyLTC;
-            viewModel.ProbaBuyETH = Model.ProbaBuyETH;
-            viewModel.ProbaBuyXRP = Model.ProbaBuyXRP;
+            //viewModel.ProbaBuyBTC = Model.ProbaBuyBTC;
+            //viewModel.ProbaBuyLTC = Model.ProbaBuyLTC;
+            //viewModel.ProbaBuyETH = Model.ProbaBuyETH;
+            //viewModel.ProbaBuyXRP = Model.ProbaBuyXRP;
 
-            viewModel.CompoundInterest /= 2;
-            viewModel.CompoundInterestWithoutFee /= 2;
+            //viewModel.CompoundInterest /= 2;
+            //viewModel.CompoundInterestWithoutFee /= 2;
 
             var OpendedDeals = Model.Deals.deals.Where(x => x.outcome == 0).ToList();
             if (OpendedDeals != null)
