@@ -58,7 +58,7 @@ namespace AuthApp.Controllers
                 var accountId = accounts.FirstOrDefault().id;
                 //var accountId = accounts.FirstOrDefault(x => x.name == "Boss").id;
                 await Authenticate(HttpContext, accountId, key, model.Login);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
             ModelState.AddModelError(model.Password, "Некорректные логин и(или) пароль");
