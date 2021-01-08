@@ -235,50 +235,51 @@
                                             <small class="text-muted">Проценты</small>
                                         </div>
                                     </div>
-
+                                   
                                     <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1"
                                          data-series='[
-                           [
-                             {"meta":"8/12/2020 9:00 PM","value":"54"},
-                             {"meta":"8/15/2020 9:00 PM","value":"32"},
-                             {"meta":"8/19/2020 9:00 PM","value":"-17"},
-                             {"meta":"8/21/2020 9:00 PM","value":"-2"},
-                             {"meta":"8/25/2020 9:00 PM","value":"14"},
-                             {"meta":"9/06/2020 9:00 PM","value":"21"},
-                             {"meta":"9/07/2020 9:00 PM","value":"8"},
-                             {"meta":"9/08/2020 9:00 PM","value":"5"},
-                             {"meta":"9/19/2020 9:00 PM","value":"-23"},
-                             {"meta":"10/01/2020 9:00 PM","value":"9"},
-                             {"meta":"10/05/2020 9:00 PM","value":"12"},
-                             {"meta":"10/12/2020 9:00 PM","value":"70"},
-                             {"meta":"10/13/2020 9:00 PM","value":"-17"},
-                             {"meta":"10/24/2020 9:00 PM","value":"51"},
-                             {"meta":"11/02/2020 9:00 PM","value":"62"},
-                             {"meta":"11/05/2020 9:00 PM","value":"41"},
-                             {"meta":"11/08/2020 9:00 PM","value":"-23"},
-                             {"meta":"11/11/2020 9:00 PM","value":"-5"},
-                             {"meta":"11/14/2020 9:00 PM","value":"45"},
-                             {"meta":"11/20/2020 9:00 PM","value":"23"},
-                             {"meta":"11/21/2020 9:00 PM","value":"78"},
-                             {"meta":"12/01/2020 9:00 PM","value":"-1"},
-                             {"meta":"12/03/2020 9:00 PM","value":"-6"},
-                             {"meta":"12/08/2020 9:00 PM","value":"9"},
-                             {"meta":"12/10/2020 9:00 PM","value":"-7"},
-                             {"meta":"12/14/2020 9:00 PM","value":"45"},
-                             {"meta":"12/20/2020 9:00 PM","value":"64"},
-                             {"meta":"12/24/2020 9:00 PM","value":"88"},
-                             {"meta":"12/27/2020 9:00 PM","value":"-2"},
-                             {"meta":"12/30/2020 9:00 PM","value":"13"}
-                           ]
-                         ]'
-                                         data-labels='["Август 12","Август 15","Август 19","Август 21","Август 25","Сентябрь 06","Сентябрь 07","Сентябрь 08","Сентябрь 19","Октябрь 01","Октябрь 05","Октябрь 12","Октябрь 13","Октябрь 24","Ноябрь 02","Ноябрь 05","Ноябрь 08","Ноябрь 11","Ноябрь 14","Ноябрь 20","Ноябрь 21","Декабрь 01","Декабрь 03","Декабрь 08","Декабрь 10","Декабрь 14","Декабрь 20","Декабрь 24","Декабрь 27","Декабрь 30"]'
+                                         [@ViewBag.ChartData]
+                                                       @*[
+                                                         {"meta":"8/12/2020 9:00 PM","value":"54"},
+                                                         {"meta":"8/15/2020 9:00 PM","value":"32"},
+                                                         {"meta":"8/19/2020 9:00 PM","value":"-17"},
+                                                         {"meta":"8/21/2020 9:00 PM","value":"-2"},
+                                                         {"meta":"8/25/2020 9:00 PM","value":"14"},
+                                                         {"meta":"9/06/2020 9:00 PM","value":"21"},
+                                                         {"meta":"9/07/2020 9:00 PM","value":"8"},
+                                                         {"meta":"9/08/2020 9:00 PM","value":"5"},
+                                                         {"meta":"9/19/2020 9:00 PM","value":"-23"},
+                                                         {"meta":"10/01/2020 9:00 PM","value":"9"},
+                                                         {"meta":"10/05/2020 9:00 PM","value":"12"},
+                                                         {"meta":"10/12/2020 9:00 PM","value":"70"},
+                                                         {"meta":"10/13/2020 9:00 PM","value":"-17"},
+                                                         {"meta":"10/24/2020 9:00 PM","value":"51"},
+                                                         {"meta":"11/02/2020 9:00 PM","value":"62"},
+                                                         {"meta":"11/05/2020 9:00 PM","value":"41"},
+                                                         {"meta":"11/08/2020 9:00 PM","value":"-23"},
+                                                         {"meta":"11/11/2020 9:00 PM","value":"-5"},
+                                                         {"meta":"11/14/2020 9:00 PM","value":"45"},
+                                                         {"meta":"11/20/2020 9:00 PM","value":"23"},
+                                                         {"meta":"11/21/2020 9:00 PM","value":"78"},
+                                                         {"meta":"12/01/2020 9:00 PM","value":"-1"},
+                                                         {"meta":"12/03/2020 9:00 PM","value":"-6"},
+                                                         {"meta":"12/08/2020 9:00 PM","value":"9"},
+                                                         {"meta":"12/10/2020 9:00 PM","value":"-7"},
+                                                         {"meta":"12/14/2020 9:00 PM","value":"45"},
+                                                         {"meta":"12/20/2020 9:00 PM","value":"64"},
+                                                         {"meta":"12/24/2020 9:00 PM","value":"88"},
+                                                         {"meta":"12/27/2020 9:00 PM","value":"-2"},
+                                                         {"meta":"12/30/2020 9:00 PM","value":"13"}
+                                                       ]*@
+                                                     ]'
+                                         data-labels='[@ViewBag.ChartDataLables]'
                                          data-labels-qty="12"
                                          data-labels-start-from="1"
                                          data-prefix="$"
                                          data-height="250"
                                          data-mobile-height="75"
-                                         data-high="100"
-                                         data-low="-20"
+                                         data-high="@ViewBag.ChartHigh"
+                                         data-low="@ViewBag.ChartLow"
                                          data-offset-x="30"
                                          data-offset-y="60"
                                          data-is-line-smooth='[true]'
@@ -404,16 +405,16 @@
     </main>
 
 
-    <script src="public/graindashboard/js/graindashboard.js"></script>
-    <script src="public/graindashboard/js/graindashboard.vendor.js"></script>
+    <script src="~/public/graindashboard/js/graindashboard.js"></script>
+    <script src="~/public/graindashboard/js/graindashboard.vendor.js"></script>
 
     <!-- DEMO CHARTS -->
-    <script src="public/demo/resizeSensor.js"></script>
-    <script src="public/demo/chartist.js"></script>
-    <script src="public/demo/chartist-plugin-tooltip.js"></script>
-    <script src="public/demo/gd.chartist-area.js"></script>
-    <script src="public/demo/gd.chartist-bar.js"></script>
-    <script src="public/demo/gd.chartist-donut.js"></script>
+    <script src="~/public/demo/resizeSensor.js"></script>
+    <script src="~/public/demo/chartist.js"></script>
+    <script src="~/public/demo/chartist-plugin-tooltip.js"></script>
+    <script src="~/public/demo/gd.chartist-area.js"></script>
+    <script src="~/public/demo/gd.chartist-bar.js"></script>
+    <script src="~/public/demo/gd.chartist-donut.js"></script>
     <script>
     $.GDCore.components.GDChartistArea.init('.js-area-chart');
         $.GDCore.components.GDChartistBar.init('.js-bar-chart');
