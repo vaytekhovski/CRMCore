@@ -1,4 +1,6 @@
-﻿using CRM.Services;
+﻿using Business.DataVisioAPI;
+using CRM.Services;
+using CRM.Services.Balances;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +28,9 @@ namespace CRM
         {
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddSingleton(typeof(TradeHistoryService));
+            services.AddSingleton(typeof(DatavisioAPIService));
+            services.AddSingleton(typeof(BalancesService));
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {

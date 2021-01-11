@@ -14,7 +14,7 @@
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     // получаем список поддерживаемых культур
     var cultureItems = LocOptions.Value.SupportedUICultures
-.Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
+.Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName.Substring(0,c.NativeName.Length-5).ToUpper()})
 .ToList();
 }
 

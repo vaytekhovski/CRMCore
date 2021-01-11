@@ -5,9 +5,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Business;
+using Business.DataVisioAPI;
 using Business.Models.DataVisioAPI;
 using CRM.Helpers;
 using CRM.Services;
+using CRM.Services.Balances;
 using CRM.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +20,16 @@ namespace CRM.Controllers
     public class DashboardController : Controller
     {
         private readonly TradeHistoryService tradeHistoryService;
+        private readonly DatavisioAPIService datavisioAPIService;
+        private readonly BalancesService balancesService;
 
-        public DashboardController(TradeHistoryService tradeHistoryService)
+
+
+        public DashboardController(TradeHistoryService tradeHistoryService, DatavisioAPIService datavisioAPIService, BalancesService balancesService)
         {
             this.tradeHistoryService = tradeHistoryService;
+            this.datavisioAPIService = datavisioAPIService;
+            this.balancesService = balancesService;
         }
 
         [HttpGet]
@@ -43,6 +51,43 @@ namespace CRM.Controllers
             return View(await LoadTradeHistory(viewModel));
         }
 
+        public async Task<IActionResult> TradeSettings(UserPanelModel model)
+        {
+            var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
+            model.BalancesDebit = await balancesService.LoadBalancesAsync(accountId, token, "debit");
+            model.BalancesMargin = await balancesService.LoadBalancesAsync(accountId, token, "margin");
+            model.AccountData = await datavisioAPIService.ShowAccount(accountId, token);
+            model.Accounts = await datavisioAPIService.ShowAccounts(token);
+            foreach (var pair in model.AccountData.pairs)
+            {
+                pair.coin = pair.@base;
+            }
+
+
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task EnableDisableTradePair(string pair)
+        {
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
+            var token = HttpContext.User.Identity.Name;
+            ShowAccount AccountData = await datavisioAPIService.ShowAccount(accountId, token);
+
+            if(AccountData.pairs.First(x=>x.@base == pair).enabled == true)
+            {
+                await datavisioAPIService.DisablePair(accountId, token, pair);
+            }
+            else
+            {
+                await datavisioAPIService.EnablePair(accountId, token, pair);
+            }
+
+        }
 
         public async Task<TradeHistoryFilterModel> LoadTradeHistory(TradeHistoryFilterModel viewModel)
         {

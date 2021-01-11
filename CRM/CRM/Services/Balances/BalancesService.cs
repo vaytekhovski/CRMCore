@@ -27,11 +27,11 @@ namespace CRM.Services.Balances
         {
             BalancesModel balancesModel = new BalancesModel();
 
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "USDT", type).Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "BTC", type).Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "ETH", type).Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "LTC", type).Result);
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, "XRP", type).Result);
+            balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "USDT", type));
+            balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "BTC", type));
+            balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "ETH", type));
+            balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "LTC", type));
+            balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "XRP", type));
 
             return balancesModel;
         }
@@ -39,7 +39,7 @@ namespace CRM.Services.Balances
         public async Task<BalancesModel> LoadBalancesAsync(string accountId, string token, string Coin, string type = "debit")
         {
             BalancesModel balancesModel = new BalancesModel();
-            balancesModel.InsterBalance(datavisioAPIService.GetBalance(accountId, token, Coin, type).Result);
+            balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, Coin, type));
 
             return balancesModel;
         }
