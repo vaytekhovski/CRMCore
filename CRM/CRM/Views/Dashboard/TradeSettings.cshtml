@@ -44,9 +44,9 @@
 
 
                 <div class="row">
-                    <div class="col-12">
-                        <!-- Card -->
-                        <div class="card mb-3 mb-md-4">
+
+                    <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                        <div class="card">
                             <div class="card-header">
                                 <h5 class="font-weight-semi-bold mb-0">Включение валюты</h5>
                             </div>
@@ -60,31 +60,31 @@
                                     </div>
                                     <div class="form-check position-relative pl-0 mb-2 mr-2">
                                         <input type="checkbox" class="form-check-input invisible" id="DashCheckBox" @(Model.AccountData.pairs[1].enabled == true ? "checked" : "")>
-                                        <label for="DashCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label"onclick="SendCoin('@Model.AccountData.pairs[1].coin')">
+                                        <label for="DashCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[1].coin')">
                                             <span>@Model.AccountData.pairs[1].coin</span>
                                         </label>
                                     </div>
                                     <div class="form-check position-relative pl-0 mb-2 mr-2">
                                         <input type="checkbox" class="form-check-input invisible" id="EOSCheckBox" @(Model.AccountData.pairs[2].enabled == true ? "checked" : "")>
-                                        <label for="EOSCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label"onclick="SendCoin('@Model.AccountData.pairs[2].coin')">
+                                        <label for="EOSCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[2].coin')">
                                             <span>@Model.AccountData.pairs[2].coin</span>
                                         </label>
                                     </div>
                                     <div class="form-check position-relative pl-0 mb-2 mr-2">
                                         <input type="checkbox" class="form-check-input invisible" id="EtheriumCheckBox" @(Model.AccountData.pairs[3].enabled == true ? "checked" : "")>
-                                        <label for="EtheriumCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label"onclick="SendCoin('@Model.AccountData.pairs[3].coin')">
+                                        <label for="EtheriumCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[3].coin')">
                                             <span>@Model.AccountData.pairs[3].coin</span>
                                         </label>
                                     </div>
                                     <div class="form-check position-relative pl-0 mb-2 mr-2">
                                         <input type="checkbox" class="form-check-input invisible" id="LitecoinCheckBox" @(Model.AccountData.pairs[4].enabled == true ? "checked" : "")>
-                                        <label for="LitecoinCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label"onclick="SendCoin('@Model.AccountData.pairs[4].coin')">
+                                        <label for="LitecoinCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[4].coin')">
                                             <span>@Model.AccountData.pairs[4].coin</span>
                                         </label>
                                     </div>
                                     <div class="form-check position-relative pl-0 mb-2 mr-2">
                                         <input type="checkbox" class="form-check-input invisible" id="TronCheckBox" @(Model.AccountData.pairs[5].enabled == true ? "checked" : "")>
-                                        <label for="TronCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label"onclick="SendCoin('@Model.AccountData.pairs[5].coin')">
+                                        <label for="TronCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[5].coin')">
                                             <span>@Model.AccountData.pairs[5].coin</span>
                                         </label>
                                     </div>
@@ -93,13 +93,13 @@
 
                             <script type="text/javascript">
 
-                                function SendCoin (coin) {
+                                function SendCoin(coin) {
                                     $.ajax({
                                         type: "POST",
                                         url: "/Dashboard/EnableDisableTradePair",
-                                        data: { pair: coin},
+                                        data: { pair: coin },
                                         success: function (response) {
-                                            
+
                                         },
                                         failure: function (response) {
                                         },
@@ -108,87 +108,82 @@
                                     });
                                 }
                             </script>
-
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                        
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
+                        
+                    </div>
+                    <div class="col-md-6 col-xl-6 mb-3 mb-md-4">
+                        <div class="card">
                             <div class="card-header">
-                                <h5 class="font-weight-semi-bold mb-0">Баланс</h5>
+                                <h5 class="font-weight-semi-bold mb-0">Депозитный счет</h5>
                             </div>
-                            <div class="row">
-
-
-                                <div class="col-md-6">
-
-
-                                    <div class="card-header text-center">
-                                        <h6 class="font-weight-semi-bold mb-0">Депозитный счет</h6>
-                                    </div>
-                                    <div class="card-body pt-0">
-                                        <table class="table text-center">
-                                            <thead>
+                            <div class="card-body pt-0">
+                                <table class="table text-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="font-weight-semi-bold border-top-0 py-2">Валюта</th>
+                                            <th class="font-weight-semi-bold border-top-0 py-2">Свободно</th>
+                                            <th class="font-weight-semi-bold border-top-0 py-2">В использовании</th>
+                                            <th class="font-weight-semi-bold border-top-0 py-2">Всего</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.BalancesDebit.AccountBalances)
+                                        {
+                                            {
                                                 <tr>
-                                                    <th class="font-weight-semi-bold border-top-0 py-2">Валюта</th>
-                                                    <th class="font-weight-semi-bold border-top-0 py-2">Свободно</th>
-                                                    <th class="font-weight-semi-bold border-top-0 py-2">В использовании</th>
-                                                    <th class="font-weight-semi-bold border-top-0 py-2">Всего</th>
+                                                    <td>@item.Currency</td>
+                                                    <td>@item.Free</td>
+                                                    <td>@item.Used</td>
+                                                    <td>@item.Total</td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in Model.BalancesDebit.AccountBalances)
-                                                {
-                                                    {
-                                                        <tr>
-                                                            <td>@item.Currency</td>
-                                                            <td>@item.Free</td>
-                                                            <td>@item.Used</td>
-                                                            <td>@item.Total</td>
-                                                        </tr>
-                                                    }
-                                                }
+                                            }
+                                        }
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-
-                                    <div class="card-header text-center">
-                                        <h6 class="font-weight-semi-bold mb-0">Маржинальный счет</h6>
-                                    </div>
-                                    <div class="card-body pt-0">
-                                        <table class="table text-center">
-                                            <thead>
-                                                <tr>
-                                                    <th class="font-weight-semi-bold border-top-0 py-2">Валюта</th>
-                                                    <th class="font-weight-semi-bold border-top-0 py-2">Свободно</th>
-                                                    <th class="font-weight-semi-bold border-top-0 py-2">В использовании</th>
-                                                    <th class="font-weight-semi-bold border-top-0 py-2">Всего</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in Model.BalancesMargin.AccountBalances)
-                                                {
-                                                    {
-                                                        <tr>
-                                                            <td>@item.Currency</td>
-                                                            <td>@item.Free</td>
-                                                            <td>@item.Used</td>
-                                                            <td>@item.Total</td>
-                                                        </tr>
-                                                    }
-                                                }
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <!-- End Card -->
                     </div>
+                    <div class="col-md-6 col-xl-6 mb-3 mb-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="font-weight-semi-bold mb-0">Маржинальный счет</h5>
+                            </div>
+                            <div class="card-body pt-0">
+                                <table class="table text-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="font-weight-semi-bold border-top-0 py-2">Валюта</th>
+                                            <th class="font-weight-semi-bold border-top-0 py-2">Свободно</th>
+                                            <th class="font-weight-semi-bold border-top-0 py-2">В использовании</th>
+                                            <th class="font-weight-semi-bold border-top-0 py-2">Всего</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.BalancesMargin.AccountBalances)
+                                        {
+                                            {
+                                                <tr>
+                                                    <td>@item.Currency</td>
+                                                    <td>@item.Free</td>
+                                                    <td>@item.Used</td>
+                                                    <td>@item.Total</td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
-
-
-
 
 
 

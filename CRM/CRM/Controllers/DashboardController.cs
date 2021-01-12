@@ -11,6 +11,7 @@ using CRM.Helpers;
 using CRM.Services;
 using CRM.Services.Balances;
 using CRM.ViewModels;
+using CRM.ViewModels.Dashboard;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -68,6 +69,118 @@ namespace CRM.Controllers
 
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Statistic()
+        {
+            var viewModel = new DashboardStatisticViewModel
+            {
+                Coin = null,
+                StartDate = DatesHelper.MinDateTimeStr,
+                EndDate = DatesHelper.CurrentDateTimeStr
+            };
+
+            var filter = new TradeHistoryFilter
+            {
+                Coin = viewModel.Coin,
+                StartDate = DateTime.Parse(viewModel.StartDate),
+                EndDate = DateTime.Parse(viewModel.EndDate)
+            };
+
+            var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
+            ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";
+            ViewBag.FilterEndDate = UserName == "guest" ? "2020-09-01T23:59" : "2019-01-01T23:59";
+
+            return View(CalculateStatistic(await tradeHistoryService.LoadAsync(filter, HttpContext), viewModel));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Statistic(DashboardStatisticViewModel viewModel)
+        {
+            var filter = new TradeHistoryFilter
+            {
+                Coin = viewModel.Coin,
+                StartDate = DateTime.Parse(viewModel.StartDate),
+                EndDate = DateTime.Parse(viewModel.EndDate)
+            };
+
+            var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
+            ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";
+            ViewBag.FilterEndDate = UserName == "guest" ? "2020-09-01T23:59" : "2019-01-01T23:59";
+
+            return View(CalculateStatistic(await tradeHistoryService.LoadAsync(filter, HttpContext), viewModel));
+        }
+
+        public DashboardStatisticViewModel CalculateStatistic(TradeHistoryModel Model, DashboardStatisticViewModel viewModel)
+        {
+            var ClosedDeals = Model.Deals.deals.Where(x => x.outcome != 0).ToList();
+
+            viewModel.TotalProfit = Model.TotalProfit;
+
+            viewModel.LossOrdersCount = Model.LossOrdersCount;
+            viewModel.LossOrdersSumm = Model.LossOrdersSumm;
+
+            viewModel.ProfitOrdersCount = Model.ProfitOrdersCount;
+            viewModel.ProfitOrdersSumm = Model.ProfitOrdersSumm;
+            viewModel.DepositProfit = Model.DepositProfit.ToString();
+
+            if (ClosedDeals.Count() > 0 && (decimal)Model.LossOrdersCount != 0)
+            {
+                viewModel.RPL = (decimal)Model.ProfitOrdersCount / (decimal)Model.LossOrdersCount;
+                viewModel.AP = Model.ProfitOrdersCount > 0 ? Model.ProfitOrdersSumm / Model.ProfitOrdersCount : 0;
+                viewModel.AL = Model.LossOrdersSumm / Model.LossOrdersCount;
+                viewModel.AR = Model.TotalProfit / (Model.ProfitOrdersCount + Model.LossOrdersCount);
+                viewModel.RAPAL = viewModel.AP / Math.Abs(viewModel.AL);
+
+                var TroughValue = ClosedDeals.Min(x => x.income);
+                var PeakValue = ClosedDeals.Max(x => x.income);
+                viewModel.MIDD = TroughValue - PeakValue / PeakValue;
+                viewModel.Dmin = viewModel.MIDD + 100;
+
+                viewModel.R = Model.TotalProfit / viewModel.Dmin;
+                viewModel.RF = Model.TotalProfit / viewModel.MIDD;
+                viewModel.PF = Model.ProfitOrdersSumm / Math.Abs(Model.LossOrdersSumm);
+                viewModel.APF = (Model.ProfitOrdersSumm - ClosedDeals.Max(x => x.profit.clean.amount) / Math.Abs(Model.LossOrdersSumm));
+
+                var MidPercentProfit = ClosedDeals.Sum(x => x.profit.clean.percent) / ClosedDeals.Count();
+
+                double StandardDeviation = 0;
+                decimal _CompoundInterest = 1;
+                decimal _CompoundInterestWithoutFee = 1;
+
+                foreach (var coin in ClosedDeals.Select(x => x.@base).Distinct())
+                {
+                    foreach (var percentProfit in ClosedDeals.Where(x => x.@base == coin).Where(x => x.profit.clean.percent != 0).OrderBy(x => x.opened).Select(x => x.profit.clean.percent).ToList())
+                    {
+                        StandardDeviation += Math.Pow((double)percentProfit - (double)MidPercentProfit, 2);
+                        if (StandardDeviation == 0)
+                            StandardDeviation = 1;
+                        _CompoundInterest *= 1 + (percentProfit / 100);
+                    }
+                    //viewModel.CompoundInterest += (_CompoundInterest - 1) * 100;
+                    _CompoundInterest = 1;
+
+                    foreach (var percentProfitWithoutFee in ClosedDeals.Where(x => x.@base == coin).Where(x => x.profit.dirty.percent != 0).Where(x => x.@base == coin).OrderBy(x => x.opened).Select(x => x.profit.dirty.percent).ToList())
+                    {
+                        _CompoundInterestWithoutFee *= 1 + (percentProfitWithoutFee / 100);
+                    }
+
+                    //viewModel.CompoundInterestWithoutFee += (_CompoundInterestWithoutFee - 1) * 100; ;
+                    _CompoundInterestWithoutFee = 1;
+                }
+
+                StandardDeviation /= ClosedDeals.Count();
+                StandardDeviation = Math.Sqrt(StandardDeviation);
+
+                viewModel.SharpeRatio = (MidPercentProfit - 0.05m) / (decimal)StandardDeviation;
+
+
+            }
+
+            return viewModel;
         }
 
         [HttpPost]

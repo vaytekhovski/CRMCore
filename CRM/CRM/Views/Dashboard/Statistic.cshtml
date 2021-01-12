@@ -1,0 +1,362 @@
+﻿@{ Layout = null; }
+
+@model CRM.ViewModels.Dashboard.DashboardStatisticViewModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Title -->
+    <title>Datavisio</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/public/img/favicon.ico">
+
+
+    <!-- DEMO CHARTS -->
+    <link rel="stylesheet" href="~/public/demo/chartist.css">
+    <link rel="stylesheet" href="~/public/demo/chartist-plugin-tooltip.css">
+
+    <!-- Template -->
+    <link rel="stylesheet" href="~/public/graindashboard/css/graindashboard.css">
+
+</head>
+
+<body class="has-sidebar has-fixed-sidebar-and-header">
+    <!-- Header -->
+    @Html.Partial("_Header")
+    <!-- End Header -->
+
+    <main class="main">
+        <!-- Sidebar Nav -->
+        @Html.Partial("_SideBar")
+
+        <!-- End Sidebar Nav -->
+
+        <div class="content">
+            <div class="py-4 px-3 px-md-4">
+
+                <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                    <div class="h3 mb-0">Статистика</div>
+                </div>
+
+                <div>
+                    <form class="" action="../Dashboard/Statistic" method="post">
+                        <div class="form-row">
+                            <div class="form-group col-2">
+                                <label for="currency">Валюта</label>
+                                @Html.DropDownListFor(m => m.Coin, (IEnumerable<SelectListItem>)ViewBag.Coins, "Все валюты", new { @class = "form-control", name = "coin", id = "coin_selector" })
+                            </div>
+
+                            <div class="form-group col-2">
+                                <label for="startDate">Дата от</label>
+                                <input type="datetime-local" class="form-control" asp-for="@Model.StartDate" value=@Model.StartDate min="@ViewBag.FilterStartDate">
+                            </div>
+                            <div class="form-group col-2">
+                                <label for="endDate">Дата по</label>
+                                <input type="datetime-local" class="form-control" asp-for="@Model.EndDate" value=@Model.EndDate min="@ViewBag.FilterEndDate">
+                            </div>
+                            <div class="form-group col-2">
+                                <button type="submit" class="form-control btn btn-primary" name="button" style="position: absolute; bottom: 0px;">Посмотреть</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-success rounded-circle mr-3">
+                                <i class="gd-wallet icon-text d-inline-block text-success"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">$@String.Format("{0:0.##}", Model.ProfitOrdersSumm)</h4>
+                                <h6 class="mb-0">Общая прибыль (TP)</h6>
+                            </div>
+                            <i class="gd-arrow-up icon-text d-flex text-success ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-danger rounded-circle mr-3">
+                                <i class="gd-wallet icon-text d-inline-block text-danger"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">$@String.Format("{0:0.##}", Model.LossOrdersSumm)</h4>
+                                <h6 class="mb-0">Общий убыток (TL)</h6>
+                            </div>
+                            <i class="gd-arrow-down icon-text d-flex text-danger ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary rounded-circle mr-3">
+                                <i class="gd-wallet icon-text d-inline-block text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">$@String.Format("{0:0.##}", Model.TotalProfit)</h4>
+                                <h6 class="mb-0">Итоговый результат (TR)</h6>
+                            </div>
+                            <i class="@(Model.TotalProfit > 0 ? "gd-arrow-up" : "gd-arrow-down") icon-text d-flex @(Model.TotalProfit > 0 ? "text-success" : "text-danger") ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-success rounded-circle mr-3">
+                                <i class="gd-stats-up icon-text d-inline-block text-success"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.AP)</h4>
+                                <h6 class="mb-0">Средняя прибыльная (AP)</h6>
+                            </div>
+                            <i class="gd-arrow-up icon-text d-flex text-success ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-danger rounded-circle mr-3">
+                                <i class="gd-stats-up icon-text d-inline-block text-danger"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.AL)</h4>
+                                <h6 class="mb-0">Средняя убыточная (AL)</h6>
+                            </div>
+                            <i class="gd-arrow-down icon-text d-flex text-danger ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary rounded-circle mr-3">
+                                <i class="gd-stats-up icon-text d-inline-block text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.RPL)</h4>
+                                <h6 class="mb-0">Отношение (P/L)</h6>
+                            </div>
+                            <i class="@(Model.RPL > 0 ? "gd-arrow-up" : "gd-arrow-down") icon-text d-flex @(Model.RPL > 0 ? "text-success" : "text-danger") ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-success rounded-circle mr-3">
+                                <i class="gd-bar-chart icon-text d-inline-block text-success"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@Model.ProfitOrdersCount шт.</h4>
+                                <h6 class="mb-0">Количество прибыльных (NP)</h6>
+                            </div>
+                            <i class="gd-arrow-up icon-text d-flex text-success ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-danger rounded-circle mr-3">
+                                <i class="gd-bar-chart icon-text d-inline-block text-danger"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@Model.LossOrdersCount шт.</h4>
+                                <h6 class="mb-0">Количество убыточных (NL)</h6>
+                            </div>
+                            <i class="gd-arrow-down icon-text d-flex text-danger ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary rounded-circle mr-3">
+                                <i class="gd-bar-chart icon-text d-inline-block text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@{var N = Model.ProfitOrdersCount + Model.LossOrdersCount;} @N шт.</h4>
+                                <h6 class="mb-0">Итоговое количество (N)</h6>
+                            </div>
+                            <i class="gd-arrow-up icon-text d-flex text-success ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary-darker rounded-circle mr-3">
+                                <i class="gd-vector icon-text d-inline-block text-primary-darker"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.R)</h4>
+                                <h6 class="mb-0">Отдача (R)</h6>
+                            </div>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary-darker rounded-circle mr-3">
+                                <i class="gd-vector icon-text d-inline-block text-primary-darker"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.RF)</h4>
+                                <h6 class="mb-0">Фактор восстановления (RF)</h6>
+                            </div>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary-darker rounded-circle mr-3">
+                                <i class="gd-vector icon-text d-inline-block text-primary-darker"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.PF)</h4>
+                                <h6 class="mb-0">Профит-фактор (PF)</h6>
+                            </div>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary-darker rounded-circle mr-3">
+                                <i class="gd-unlink icon-text d-inline-block text-primary-darker"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.AR)</h4>
+                                <h6 class="mb-0">Средний результат (AR)</h6>
+                            </div>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary-darker rounded-circle mr-3">
+                                <i class="gd-unlink icon-text d-inline-block text-primary-darker"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.RAPAL)</h4>
+                                <h6 class="mb-0">Средняя прибыльная / средняя убыточная (AP/AL)</h6>
+                            </div>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary-darker rounded-circle mr-3">
+                                <i class="gd-unlink icon-text d-inline-block text-primary-darker"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.MIDD)</h4>
+                                <h6 class="mb-0">Максимальный нарастающий убыток (MIDD)</h6>
+                            </div>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary-darker rounded-circle mr-3">
+                                <i class="gd-target icon-text d-inline-block text-primary-darker"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.Dmin)</h4>
+                                <h6 class="mb-0">Минимальный депозит (Dmin)</h6>
+                            </div>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary-darker rounded-circle mr-3">
+                                <i class="gd-target icon-text d-inline-block text-primary-darker"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.APF)</h4>
+                                <h6 class="mb-0">Достоверный профит-фактор (PF)</h6>
+                            </div>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary-darker rounded-circle mr-3">
+                                <i class="gd-target icon-text d-inline-block text-primary-darker"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">@String.Format("{0:0.##}", Model.SharpeRatio)</h4>
+                                <h6 class="mb-0">Коэффициент Шарпа</h6>
+                            </div>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <!-- Footer -->
+            <footer class="small p-3 px-md-4 mt-auto">
+                <div class="row justify-content-between">
+                    <div class="col-lg text-center text-lg-left mb-3 mb-lg-0">
+                        <ul class="list-dot list-inline mb-0">
+                            <li class="list-dot-item list-dot-item-not list-inline-item mr-lg-2"><a class="link-dark" href="#">FAQ</a></li>
+                            <li class="list-dot-item list-inline-item mr-lg-2"><a class="link-dark" href="#">Support</a></li>
+                            <li class="list-dot-item list-inline-item mr-lg-2"><a class="link-dark" href="#">Contact us</a></li>
+                        </ul>
+                    </div>
+
+
+
+                    <div class="col-lg text-center text-lg-right">
+                        &copy; 2020 ANSTECHNOLOGIES. All Rights Reserved.
+                    </div>
+                </div>
+            </footer>
+            <!-- End Footer -->
+        </div>
+    </main>
+
+
+    <script src="~/public/graindashboard/js/graindashboard.js"></script>
+    <script src="~/public/graindashboard/js/graindashboard.vendor.js"></script>
+
+    <!-- DEMO CHARTS -->
+    <script src="~/public/demo/resizeSensor.js"></script>
+    <script src="~/public/demo/chartist.js"></script>
+    <script src="~/public/demo/chartist-plugin-tooltip.js"></script>
+    <script src="~/public/demo/gd.chartist-area.js"></script>
+    <script src="~/public/demo/gd.chartist-bar.js"></script>
+    <script src="~/public/demo/gd.chartist-donut.js"></script>
+    <script>
+        $.GDCore.components.GDChartistArea.init('.js-area-chart');
+        $.GDCore.components.GDChartistBar.init('.js-bar-chart');
+        $.GDCore.components.GDChartistDonut.init('.js-donut-chart');
+    </script>
+</body>
+
+</html>
