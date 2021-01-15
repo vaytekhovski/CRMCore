@@ -69,6 +69,83 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-12">
+                        <!-- Card -->
+                        <div class="card mb-3 mb-md-4">
+
+                            <div id="walletsContent" class="card-body tab-content">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel">
+                                    <div class="row text-center">
+                                        <div class="col-3 col-md-3 mb-3 mb-md-0">
+                                            <div class="h3 mb-0">
+                                                <span class="text-success">+</span>$@Model.ProfitOrdersSumm<sup class="h5">.@Model.ProfitOrdersSummAfterDecimal</sup>
+                                            </div>
+                                            <small class="text-muted">Прибыль</small>
+                                        </div>
+
+                                        <div class="col-3 col-md-3 mb-3 mb-md-0 border-left">
+                                            <div class="h3 mb-0">
+                                                <span class="text-danger">-</span>$@Model.LossOrdersSumm<sup class="h5">.@Model.LossOrdersSummAfterDecimal</sup>
+                                            </div>
+                                            <small class="text-muted">Убытки</small>
+                                        </div>
+
+                                        <div class="col-3 col-md-3 mb-3 mb-md-0 border-left">
+                                            <div class="h3 mb-0">
+                                                <span class="@(Model.TotalProfit[0] == '+' ? "text-success" : "text-danger")">@Model.TotalProfit[0]</span>$@Model.TotalProfit.Substring(1)<sup class="h5">.@Model.TotalProfitAfterDecimal</sup>
+                                            </div>
+                                            <small class="text-muted">Результат</small>
+                                        </div>
+
+                                        <div class="col-12 col-md-3 border-left">
+                                            <div class="h3 mb-0">
+                                                <span class="@(Model.DepositProfit[0] == '+' ? "text-success" : "text-danger")">@Model.DepositProfit[0]</span>@Model.DepositProfit.Substring(1)<sup class="h5">%</sup>
+                                            </div>
+                                            <small class="text-muted">Проценты</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1"
+                                         data-series='[
+                                         [@ViewBag.ChartData]
+                                                       
+                                                     ]'
+                                         data-labels='[@ViewBag.ChartDataLables]'
+                                         data-labels-qty="12"
+                                         data-labels-start-from="1"
+                                         data-prefix="$"
+                                         data-height="250"
+                                         data-mobile-height="75"
+                                         data-high="@ViewBag.ChartHigh"
+                                         data-low="@ViewBag.ChartLow"
+                                         data-offset-x="30"
+                                         data-offset-y="60"
+                                         data-is-line-smooth='[true]'
+                                         data-line-width='["1px"]'
+                                         data-line-colors='["#4C6DCE"]'
+                                         data-fill-opacity="1"
+                                         data-fill-colors='["#e1e4eb"]'
+                                         data-text-size-x="14px"
+                                         data-text-color-x="#4C6DCE"
+                                         data-text-offset-top-x="10"
+                                         data-text-align-axis-x="center"
+                                         data-text-size-y="14px"
+                                         data-text-color-y="#868e96"
+                                         data-is-show-tooltips="true"
+                                         data-is-tooltip-divided="true"
+                                         data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white"
+                                         data-tooltip-currency="USD "
+                                         data-is-show-points="true"
+                                         data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle'
+                                         data-point-dimensions='{"width":8,"height":8}'></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
                         <!-- Widget -->
                         <div class="card flex-row align-items-center p-3 p-md-4">
@@ -107,7 +184,7 @@
                                 <h4 class="lh-1 mb-1">$@String.Format("{0:0.##}", Model.TotalProfit)</h4>
                                 <h6 class="mb-0">Итоговый результат (TR)</h6>
                             </div>
-                            <i class="@(Model.TotalProfit > 0 ? "gd-arrow-up" : "gd-arrow-down") icon-text d-flex @(Model.TotalProfit > 0 ? "text-success" : "text-danger") ml-auto"></i>
+                            <i class="@(Model.TotalProfit[0] == '+' ? "gd-arrow-up" : "gd-arrow-down") icon-text d-flex @(Model.TotalProfit[0] == '+' ? "text-success" : "text-danger") ml-auto"></i>
                         </div>
                         <!-- End Widget -->
                     </div>

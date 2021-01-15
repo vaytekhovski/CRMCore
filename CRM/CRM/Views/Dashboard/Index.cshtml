@@ -64,187 +64,126 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        <!-- Card -->
-                        <div class="card mb-3 mb-md-4">
-
-                            <div id="walletsContent" class="card-body tab-content">
-                                <div class="tab-pane fade show active" id="all" role="tabpanel">
-                                    <div class="row text-center">
-                                        <div class="col-3 col-md-3 mb-3 mb-md-0">
-                                            <div class="h3 mb-0">
-                                                <span class="text-success">+</span>$@Model.ProfitOrdersSumm<sup class="h5">.@Model.ProfitOrdersSummAfterDecimal</sup>
-                                            </div>
-                                            <small class="text-muted">Прибыль</small>
-                                        </div>
-
-                                        <div class="col-3 col-md-3 mb-3 mb-md-0 border-left">
-                                            <div class="h3 mb-0">
-                                                <span class="text-danger">-</span>$@Model.LossOrdersSumm<sup class="h5">.@Model.LossOrdersSummAfterDecimal</sup>
-                                            </div>
-                                            <small class="text-muted">Убытки</small>
-                                        </div>
-
-                                        <div class="col-3 col-md-3 mb-3 mb-md-0 border-left">
-                                            <div class="h3 mb-0">
-                                                <span class="@(Model.TotalProfit[0] == '+' ? "text-success" : "text-danger")">@Model.TotalProfit[0]</span>$@Model.TotalProfit.Substring(1)<sup class="h5">.@Model.TotalProfitAfterDecimal</sup>
-                                            </div>
-                                            <small class="text-muted">Результат</small>
-                                        </div>
-
-                                        <div class="col-12 col-md-3 border-left">
-                                            <div class="h3 mb-0">
-                                                <span class="@(Model.DepositProfit[0] == '+' ? "text-success" : "text-danger")">@Model.DepositProfit[0]</span>@Model.DepositProfit.Substring(1)<sup class="h5">%</sup>
-                                            </div>
-                                            <small class="text-muted">Проценты</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1"
-                                         data-series='[
-                                         [@ViewBag.ChartData]
-                                                       @*[
-                                                         {"meta":"8/12/2020 9:00 PM","value":"54"},
-                                                         {"meta":"8/15/2020 9:00 PM","value":"32"},
-                                                         {"meta":"8/19/2020 9:00 PM","value":"-17"},
-                                                         {"meta":"8/21/2020 9:00 PM","value":"-2"},
-                                                         {"meta":"8/25/2020 9:00 PM","value":"14"},
-                                                         {"meta":"9/06/2020 9:00 PM","value":"21"},
-                                                         {"meta":"9/07/2020 9:00 PM","value":"8"},
-                                                         {"meta":"9/08/2020 9:00 PM","value":"5"},
-                                                         {"meta":"9/19/2020 9:00 PM","value":"-23"},
-                                                         {"meta":"10/01/2020 9:00 PM","value":"9"},
-                                                         {"meta":"10/05/2020 9:00 PM","value":"12"},
-                                                         {"meta":"10/12/2020 9:00 PM","value":"70"},
-                                                         {"meta":"10/13/2020 9:00 PM","value":"-17"},
-                                                         {"meta":"10/24/2020 9:00 PM","value":"51"},
-                                                         {"meta":"11/02/2020 9:00 PM","value":"62"},
-                                                         {"meta":"11/05/2020 9:00 PM","value":"41"},
-                                                         {"meta":"11/08/2020 9:00 PM","value":"-23"},
-                                                         {"meta":"11/11/2020 9:00 PM","value":"-5"},
-                                                         {"meta":"11/14/2020 9:00 PM","value":"45"},
-                                                         {"meta":"11/20/2020 9:00 PM","value":"23"},
-                                                         {"meta":"11/21/2020 9:00 PM","value":"78"},
-                                                         {"meta":"12/01/2020 9:00 PM","value":"-1"},
-                                                         {"meta":"12/03/2020 9:00 PM","value":"-6"},
-                                                         {"meta":"12/08/2020 9:00 PM","value":"9"},
-                                                         {"meta":"12/10/2020 9:00 PM","value":"-7"},
-                                                         {"meta":"12/14/2020 9:00 PM","value":"45"},
-                                                         {"meta":"12/20/2020 9:00 PM","value":"64"},
-                                                         {"meta":"12/24/2020 9:00 PM","value":"88"},
-                                                         {"meta":"12/27/2020 9:00 PM","value":"-2"},
-                                                         {"meta":"12/30/2020 9:00 PM","value":"13"}
-                                                       ]*@
-                                                     ]'
-                                         data-labels='[@ViewBag.ChartDataLables]'
-                                         data-labels-qty="12"
-                                         data-labels-start-from="1"
-                                         data-prefix="$"
-                                         data-height="250"
-                                         data-mobile-height="75"
-                                         data-high="@ViewBag.ChartHigh"
-                                         data-low="@ViewBag.ChartLow"
-                                         data-offset-x="30"
-                                         data-offset-y="60"
-                                         data-is-line-smooth='[true]'
-                                         data-line-width='["1px"]'
-                                         data-line-colors='["#4C6DCE"]'
-                                         data-fill-opacity="1"
-                                         data-fill-colors='["#e1e4eb"]'
-                                         data-text-size-x="14px"
-                                         data-text-color-x="#4C6DCE"
-                                         data-text-offset-top-x="10"
-                                         data-text-align-axis-x="center"
-                                         data-text-size-y="14px"
-                                         data-text-color-y="#868e96"
-                                         data-is-show-tooltips="true"
-                                         data-is-tooltip-divided="true"
-                                         data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white"
-                                         data-tooltip-currency="USD "
-                                         data-is-show-points="true"
-                                         data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle'
-                                         data-point-dimensions='{"width":8,"height":8}'></div>
-                                </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-success rounded-circle mr-3">
+                                <i class="gd-wallet icon-text d-inline-block text-success"></i>
                             </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">$@String.Format("{0:0.##}", Model.ProfitOrdersSumm)</h4>
+                                <h6 class="mb-0">Общая прибыль</h6>
+                            </div>
+                            <i class="gd-arrow-up icon-text d-flex text-success ml-auto"></i>
                         </div>
-                        <!-- End Card -->
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-danger rounded-circle mr-3">
+                                <i class="gd-wallet icon-text d-inline-block text-danger"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">$@String.Format("{0:0.##}", Model.LossOrdersSumm)</h4>
+                                <h6 class="mb-0">Общий убыток</h6>
+                            </div>
+                            <i class="gd-arrow-down icon-text d-flex text-danger ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
+                    </div>
+                    <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
+                        <!-- Widget -->
+                        <div class="card flex-row align-items-center p-3 p-md-4">
+                            <div class="icon icon-lg bg-soft-primary rounded-circle mr-3">
+                                <i class="gd-wallet icon-text d-inline-block text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="lh-1 mb-1">$@String.Format("{0:0.##}", Model.TotalProfit)</h4>
+                                <h6 class="mb-0">Итоговый результат</h6>
+                            </div>
+                            <i class="@(Model.TotalProfit[0] == '+' ? "gd-arrow-up" : "gd-arrow-down") icon-text d-flex @(Model.TotalProfit[0] == '+' ? "text-success" : "text-danger") ml-auto"></i>
+                        </div>
+                        <!-- End Widget -->
                     </div>
                 </div>
 
 
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card mb-3 mb-md-4">
-                            <div class="card-header">
-                                <h5 class="font-weight-semi-bold mb-0">Последние сделки</h5>
-                            </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-3 mb-md-4">
+                                <div class="card-header">
+                                    <h5 class="font-weight-semi-bold mb-0">Последние сделки</h5>
+                                </div>
 
-                            <div class="card-body pt-0">
-                                <div class="table-responsive-xl">
-                                    <table class="table text-nowrap mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th class="font-weight-semi-bold border-top-0 py-2">#</th>
-                                                <th class="font-weight-semi-bold border-top-0 py-2">Время</th>
-                                                <th class="font-weight-semi-bold border-top-0 py-2">Валюта</th>
-                                                <th class="font-weight-semi-bold border-top-0 py-2">Покупка</th>
-                                                <th class="font-weight-semi-bold border-top-0 py-2">Продажа</th>
-                                                <th class="font-weight-semi-bold border-top-0 py-2">Прибыль</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive-xl">
+                                        <table class="table text-nowrap mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="font-weight-semi-bold border-top-0 py-2">#</th>
+                                                    <th class="font-weight-semi-bold border-top-0 py-2">Время покупки</th>
+                                                    <th class="font-weight-semi-bold border-top-0 py-2">Время продажи</th>
+                                                    <th class="font-weight-semi-bold border-top-0 py-2">Валюта</th>
+                                                    <th class="font-weight-semi-bold border-top-0 py-2">Курс покупки</th>
+                                                    <th class="font-weight-semi-bold border-top-0 py-2">Курс продажи</th>
+                                                    <th class="font-weight-semi-bold border-top-0 py-2">Сумма покупки</th>
+                                                    <th class="font-weight-semi-bold border-top-0 py-2">Сумма продажи</th>
+                                                    <th class="font-weight-semi-bold border-top-0 py-2">Прибыль</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                            @foreach (var item in Model.Deals.deals)
-                                            {
-                                                string itemProfitStr = "";
-                                                string outcome = "";
-                                                string closed = "";
-
-                                                if (item.profit.clean.percent != -100)
+                                                @foreach (var item in Model.Deals.deals)
                                                 {
-                                                    itemProfitStr = item.profit.clean.amount > 0 ? "+" : "";
-                                                    itemProfitStr += String.Format("{0:0.##}", item.profit.clean.amount);
-                                                    itemProfitStr += "$";
-                                                    itemProfitStr += " | ";
-                                                    itemProfitStr += item.profit.clean.amount > 0 ? "+" : "";
-                                                    itemProfitStr += String.Format("{0:0.##}", item.profit.clean.percent);
-                                                    itemProfitStr += "%";
+                                                    string itemProfitStr = "";
+                                                    string outcome = "";
+                                                    string closed = "";
 
-                                                    outcome = "$" + item.outcome.Value.ToString("#.##");
+                                                    if (item.profit.clean.percent != -100)
+                                                    {
+                                                        itemProfitStr = item.profit.clean.amount > 0 ? "+" : "";
+                                                        itemProfitStr += String.Format("{0:0.##}", item.profit.clean.amount);
+                                                        itemProfitStr += "$";
+                                                        itemProfitStr += " | ";
+                                                        itemProfitStr += item.profit.clean.amount > 0 ? "+" : "";
+                                                        itemProfitStr += String.Format("{0:0.##}", item.profit.clean.percent);
+                                                        itemProfitStr += "%";
 
-                                                    closed = item.closed.Value.ToString("dd.MM.yy HH:mm");
+                                                        outcome = "$" + item.outcome.Value.ToString("#.##");
 
+
+                                                    }
+
+
+                                                    <tr>
+                                                        <td><a href="~/ManualTrading/GetDeal?DealId=@item.id">@item.id</a></td>
+                                                        <td><div>@item.opened.ToString("dd.MM.yy HH:mm")</div></td>
+                                                        <td><div>@(item.closed.Value.ToString("dd.MM.yy HH:mm") != "01.01.99 00:00" ? item.closed.Value.ToString("dd.MM.yy HH:mm") : null)</div></td>
+                                                        <td>@item.coin</td>
+                                                        <td>@item.orders.Last().price.ToString("#.##")</td>
+                                                        <td>@(item.orders.Count() > 1 ? item.orders.First().price.ToString("#.##") : null)</td>
+                                                        <td>$@item.income.Value.ToString("#.##")</td>
+                                                        <td>@outcome</td>
+                                                        <td>
+                                                            <span class="badge badge-pill @(item.profit.clean.amount > 0 ? "badge-success" : "badge-danger")" style="width: 110px;">@itemProfitStr</span>
+                                                        </td>
+                                                    </tr>
                                                 }
 
 
-                                                <tr>
-                                                    <td class="py-3"><a href="~/ManualTrading/GetDeal?DealId=@item.id">@item.id</a></td>
-                                                    <td class="py-3">
-                                                        <div>@item.opened.ToString("dd.MM.yy HH:mm")</div>
-                                                        <div class="text-muted">@closed</div>
-                                                    </td>
-                                                    <td class="py-3">@item.coin</td>
-                                                    <td class="py-3">$@item.income.Value.ToString("#.##")</td>
-                                                    <td class="py-3">@outcome</td>
-                                                    <td class="py-3">
-                                                        <span class="badge badge-pill @(item.profit.clean.amount > 0 ? "badge-success" : "badge-danger")" style="width: 110px;">@itemProfitStr</span>
-                                                    </td>
-                                                </tr>
-                                            }
 
-
-
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
-
-
-            </div>
 
             <!-- Footer -->
             <footer class="small p-3 px-md-4 mt-auto">

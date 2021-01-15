@@ -88,12 +88,8 @@ namespace CRM.Controllers
                 EndDate = DateTime.Parse(viewModel.EndDate)
             };
 
-            var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
-            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
-            ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";
-            ViewBag.FilterEndDate = UserName == "guest" ? "2020-09-01T23:59" : "2019-01-01T23:59";
+            return CalculateStatistic(await tradeHistoryService.LoadAsync(filter, HttpContext), viewModel);
 
-            return View(CalculateStatistic(await tradeHistoryService.LoadAsync(filter, HttpContext), viewModel));
         }
 
         [HttpPost]
@@ -106,25 +102,22 @@ namespace CRM.Controllers
                 EndDate = DateTime.Parse(viewModel.EndDate)
             };
 
-            var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
-            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
-            ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";
-            ViewBag.FilterEndDate = UserName == "guest" ? "2020-09-01T23:59" : "2019-01-01T23:59";
+            return CalculateStatistic(await tradeHistoryService.LoadAsync(filter, HttpContext), viewModel);
 
-            return View(CalculateStatistic(await tradeHistoryService.LoadAsync(filter, HttpContext), viewModel));
         }
 
-        public DashboardStatisticViewModel CalculateStatistic(TradeHistoryModel Model, DashboardStatisticViewModel viewModel)
+
+        public IActionResult CalculateStatistic(TradeHistoryModel Model, DashboardStatisticViewModel viewModel)
         {
             var ClosedDeals = Model.Deals.deals.Where(x => x.outcome != 0).ToList();
 
-            viewModel.TotalProfit = Model.TotalProfit;
+            viewModel.TotalProfit = Model.TotalProfit.ToString();
 
             viewModel.LossOrdersCount = Model.LossOrdersCount;
-            viewModel.LossOrdersSumm = Model.LossOrdersSumm;
+            viewModel.LossOrdersSumm = Model.LossOrdersSumm.ToString();
 
             viewModel.ProfitOrdersCount = Model.ProfitOrdersCount;
-            viewModel.ProfitOrdersSumm = Model.ProfitOrdersSumm;
+            viewModel.ProfitOrdersSumm = Model.ProfitOrdersSumm.ToString();
             viewModel.DepositProfit = Model.DepositProfit.ToString();
 
             if (ClosedDeals.Count() > 0 && (decimal)Model.LossOrdersCount != 0)
@@ -180,7 +173,47 @@ namespace CRM.Controllers
 
             }
 
-            return viewModel;
+            viewModel.TotalProfit = Math.Truncate(Model.TotalProfit).ToString();
+            if (Model.TotalProfit > 0)
+                viewModel.TotalProfit = "+" + viewModel.TotalProfit;
+            viewModel.LossOrdersSumm = Math.Abs(Math.Truncate(Model.LossOrdersSumm)).ToString();
+            viewModel.ProfitOrdersSumm = Math.Truncate(Model.ProfitOrdersSumm).ToString();
+            viewModel.DepositProfit = Model.DepositProfit.ToString("#.##");
+            if (Model.DepositProfit > 0)
+                viewModel.DepositProfit = "+" + viewModel.DepositProfit;
+
+            /*
+             * value = 3.16
+             * valueWhole = truncate(value) == 3
+             * valueDecimal = valueWhole - value == 0.16
+             * valueDecimal = valueDecimal.Substring(2) == 16
+             */
+
+            viewModel.TotalProfitAfterDecimal = (Model.TotalProfit - Math.Truncate(Model.TotalProfit)).ToString().Substring(3, 2);
+            viewModel.LossOrdersSummAfterDecimal = (Model.LossOrdersSumm - Math.Truncate(Model.LossOrdersSumm)).ToString().Substring(3, 2);
+            viewModel.ProfitOrdersSummAfterDecimal = (Model.ProfitOrdersSumm - Math.Truncate(Model.ProfitOrdersSumm)).ToString().Substring(3, 2);
+
+            var THviewModel = new TradeHistoryFilterModel();
+            THviewModel = Converter(Model, THviewModel);
+            string ChartData = "";
+            string ChartDataLables = "";
+
+            foreach (var item in THviewModel.Deals.deals.OrderBy(x => x.closed))
+            {
+                ChartData += "{\"meta\":\"" + Convert.ToDateTime(item.closed).ToString("g", CultureInfo.CreateSpecificCulture("en-US")) + "\",\"value\":\"" + item.profit.clean.amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "\"},\n";
+                ChartDataLables += "\"" + Convert.ToDateTime(item.closed).ToString("M") + "\",";
+            }
+            ViewBag.ChartData = ChartData.Remove(ChartData.Length - 3, 2) + "}";
+            ViewBag.ChartDataLables = ChartDataLables.Remove(ChartDataLables.Length - 1, 1);
+            ViewBag.ChartHigh = THviewModel.Deals.deals.OrderByDescending(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
+            ViewBag.ChartLow = THviewModel.Deals.deals.OrderBy(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
+
+            var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
+            ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";
+            ViewBag.FilterEndDate = UserName == "guest" ? "2020-09-01T23:59" : "2019-01-01T23:59";
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -214,18 +247,7 @@ namespace CRM.Controllers
             TradeHistoryModel Model = await tradeHistoryService.LoadAsync(filter, HttpContext);
             viewModel = Converter(Model, viewModel);
 
-            string ChartData = "";
-            string ChartDataLables = "";
-
-            foreach (var item in viewModel.Deals.deals.OrderBy(x=>x.closed))
-            {
-                ChartData += "{\"meta\":\"" + Convert.ToDateTime(item.closed).ToString("g", CultureInfo.CreateSpecificCulture("en-US")) + "\",\"value\":\"" + item.profit.clean.amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "\"},\n";
-                ChartDataLables += "\"" + Convert.ToDateTime(item.closed).ToString("M") + "\",";
-            }
-            ViewBag.ChartData = ChartData.Remove(ChartData.Length - 3,2) + "}";
-            ViewBag.ChartDataLables = ChartDataLables.Remove(ChartDataLables.Length - 1, 1);
-            ViewBag.ChartHigh = viewModel.Deals.deals.OrderByDescending(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
-            ViewBag.ChartLow = viewModel.Deals.deals.OrderBy(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
+            
 
             var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
             ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
@@ -236,7 +258,7 @@ namespace CRM.Controllers
         }
         public TradeHistoryFilterModel Converter(TradeHistoryModel Model, TradeHistoryFilterModel viewModel)
         {
-            var ClosedDeals = Model.Deals.deals.Where(x => x.outcome != 0).ToList();
+            var ClosedDeals = Model.Deals.deals.ToList();
             foreach (var item in Model.Deals.deals)
             {
                 item.coin = item.@base;
@@ -245,25 +267,10 @@ namespace CRM.Controllers
                 item.fee = Math.Abs(item.profit.dirty.amount - item.profit.clean.amount);
             }
 
-            viewModel.TotalProfit = Math.Truncate(Model.TotalProfit).ToString();
-            if (Model.TotalProfit > 0)
-                viewModel.TotalProfit = "+" + viewModel.TotalProfit;
-            viewModel.LossOrdersSumm = Math.Abs(Math.Truncate(Model.LossOrdersSumm)).ToString();
-            viewModel.ProfitOrdersSumm = Math.Truncate(Model.ProfitOrdersSumm).ToString();
-            viewModel.DepositProfit = Model.DepositProfit.ToString("#.##");
-            if (Model.DepositProfit > 0)
-                viewModel.DepositProfit = "+" + viewModel.DepositProfit;
-
-            /*
-             * value = 3.16
-             * valueWhole = truncate(value) == 3
-             * valueDecimal = valueWhole - value == 0.16
-             * valueDecimal = valueDecimal.Substring(2) == 16
-             */
-
-            viewModel.TotalProfitAfterDecimal = (Model.TotalProfit - Math.Truncate(Model.TotalProfit)).ToString().Substring(3, 2);
-            viewModel.LossOrdersSummAfterDecimal = (Model.LossOrdersSumm - Math.Truncate(Model.LossOrdersSumm)).ToString().Substring(3, 2);
-            viewModel.ProfitOrdersSummAfterDecimal = (Model.ProfitOrdersSumm - Math.Truncate(Model.ProfitOrdersSumm)).ToString().Substring(3, 2);
+            viewModel.TotalProfit = Model.TotalProfit.ToString("#.##");
+            viewModel.ProfitOrdersSumm = Model.ProfitOrdersSumm.ToString("#.##");
+            viewModel.LossOrdersSumm = Model.LossOrdersSumm.ToString("#.##");
+            
 
             viewModel.Deals = new ListDeals();
             viewModel.Deals.page = Model.Deals.page;

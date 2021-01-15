@@ -10,11 +10,16 @@ namespace CRM.ViewModels.Dashboard
         public string Coin { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
-        public decimal TotalProfit { get; set; }
+        public string TotalProfit { get; set; }
+        public string TotalProfitAfterDecimal { get; set; }
+
         public int LossOrdersCount { get; set; }
         public int ProfitOrdersCount { get; set; }
-        public decimal LossOrdersSumm { get; set; }
-        public decimal ProfitOrdersSumm { get; set; }
+        public string LossOrdersSumm { get; set; }
+        public string LossOrdersSummAfterDecimal { get; set; }
+        public string ProfitOrdersSumm { get; set; }
+        public string ProfitOrdersSummAfterDecimal { get; set; }
+
         public decimal RPL { get; set; }
         public decimal AP { get; set; }
         public decimal AL { get; set; }

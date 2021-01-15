@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -46,6 +47,22 @@ namespace CRM.Services
             if (filter.Coin != null)
                 model.Deals.deals = model.Deals.deals.Where(x => x.@base == filter.Coin).ToArray();
 
+            model.Deals.deals = model.Deals.deals.Where(x => x.opened >= filter.StartDate).Where(x => x.opened <= filter.EndDate).ToArray();
+
+
+            var IgnoreIds = DropDownFields.GetIgnoreIds().ToList();
+
+            foreach (var item in IgnoreIds)
+            {
+                var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.Value);
+                if (dealToRemove != null)
+                {
+                    var DealList = model.Deals.deals.ToList();
+                    DealList.Remove(dealToRemove);
+                    model.Deals.deals = DealList.ToArray();
+                }
+            }
+
             // Увеличение
             var UserName = httpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
             if (UserName == "guest")
@@ -60,47 +77,14 @@ namespace CRM.Services
                 }
             }
 
-            var IgnoreIds = DropDownFields.GetIgnoreIds().ToList();
-
             if (UserName != "guest")
                 IgnoreIds = IgnoreIds.Where(x => Convert.ToInt32(x.Text) < 20).ToList();
-
-            foreach (var item in IgnoreIds)
-            {
-                var dealToRemove = model.Deals.deals.FirstOrDefault(x => x.id == item.Value);
-                if (dealToRemove != null)
-                {
-                    var DealList = model.Deals.deals.ToList();
-                    DealList.Remove(dealToRemove);
-                    model.Deals.deals = DealList.ToArray();
-                }
-            }
 
             var ClosedDeals = model.Deals.deals.Where(x => x.outcome != 0).ToList();
 
             model.DepositProfit = 0;
             decimal Deposit = 0;
 
-            /*
-            if (filter.StartDate < new DateTime(2020, 05, 16))
-            {
-                Deposit = 200;
-                Deposit += ClosedDeals.Where(x => x.closed.Value > new DateTime(2020, 04, 01)).Where(x => x.closed.Value < filter.StartDate).Sum(x => x.profit.clean.amount);
-                var profitBefore1605 = ClosedDeals.Where(x => x.opened > filter.StartDate).Where(x => x.closed.Value < new DateTime(2020, 05, 16)).Sum(x => x.profit.clean.amount);
-                model.DepositProfit = (profitBefore1605 / Deposit) * 100;
-
-                Deposit = 1100;
-                var profitAfter1605 = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
-                model.DepositProfit += (profitAfter1605 / Deposit) * 100;
-            }
-            else
-            {
-                Deposit = 1100;
-                Deposit += ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 05, 16)).Where(x => x.closed.Value <= filter.StartDate).Sum(x => x.profit.clean.amount);
-                var profitAfter1605 = ClosedDeals.Where(x => x.opened >= filter.StartDate).Where(x => x.closed.Value < filter.EndDate).Sum(x => x.profit.clean.amount);
-                model.DepositProfit += (profitAfter1605 / Deposit) * 100;
-            }
-            */
             if (UserName == "guest")
                 Deposit = 10000;
             else
@@ -112,55 +96,27 @@ namespace CRM.Services
             var _profit = cdToProfit.Sum(x => x.profit.clean.amount);
             model.DepositProfit += (_profit / Deposit) * 100;
 
-            model.Deals.deals = model.Deals.deals.Where(x => x.opened >= filter.StartDate).Where(x => x.opened <= filter.EndDate).ToArray();
 
             
-
-            //var candles = datavisioAPI.GetCandles(token, ViewModel.Coin).Result.ToList();
-            //ViewModel.LastPrice = candles.Last().c;
-
 
             UpdateTotalProfit(model);
             UpdateCountOfLossAndProfitOrders(model);
             UpdateSummOfLossAndProfitOrders(model);
 
 
-            model.Deals.deals = model.Deals.deals.OrderByDescending(x => x.opened).ToArray();
+
+            List<Deal> Deals = new List<Deal>();
+            foreach (var deal in model.Deals.deals)
+            {
+                Deals.Add(await datavisioAPI.GetDeal(accountId, token, deal.id));
+            }
+
+            model.Deals.deals = Deals.OrderByDescending(x => x.opened).ToArray();
+
+
 
             model.CountOfElements = model.Deals.deals.Count();
 
-
-            //Signals Signals = datavisioAPI.GetSignals(token, "BTC", "grad").Result;
-            //if (Signals.signals != null && Signals.signals.Count() != 0)
-            //{
-            //    Signal signalBTC = Signals.signals.FirstOrDefault();
-            //    model.ProbaBuyBTC = signalBTC.value == 1 ? signalBTC.proba : 1m - signalBTC.proba;
-            //    model.ProbaBuyBTC *= 100m;
-            //}
-
-            //Signals = datavisioAPI.GetSignals(token, "ETH", "grad").Result;
-            //if (Signals.signals != null && Signals.signals.Count() != 0)
-            //{
-            //    Signal signalETH = Signals.signals.FirstOrDefault();
-            //    model.ProbaBuyETH = signalETH.value == 1 ? signalETH.proba : 1m - signalETH.proba;
-            //    model.ProbaBuyETH *= 100m;
-            //}
-
-            //Signals = datavisioAPI.GetSignals(token, "LTC", "grad").Result;
-            //if (Signals.signals != null && Signals.signals.Count() != 0)
-            //{
-            //    Signal signalLTC = Signals.signals.FirstOrDefault();
-            //    model.ProbaBuyLTC = signalLTC.value == 1 ? signalLTC.proba : 1m - signalLTC.proba;
-            //    model.ProbaBuyLTC *= 100m;
-            //}
-
-            //Signals = datavisioAPI.GetSignals(token, "XRP", "grad").Result;
-            //if (Signals.signals != null && Signals.signals.Count() != 0)
-            //{
-            //    Signal signalXRP = Signals.signals.FirstOrDefault();
-            //    model.ProbaBuyXRP = signalXRP.value == 1 ? signalXRP.proba : 1m - signalXRP.proba;
-            //    model.ProbaBuyXRP *= 100m;
-            //}
 
 
             return model;
