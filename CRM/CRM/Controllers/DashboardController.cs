@@ -12,6 +12,7 @@ using CRM.Services;
 using CRM.Services.Balances;
 using CRM.ViewModels;
 using CRM.ViewModels.Dashboard;
+using CRM.ViewModels.ManualTrading;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -104,6 +105,45 @@ namespace CRM.Controllers
 
             return CalculateStatistic(await tradeHistoryService.LoadAsync(filter, HttpContext), viewModel);
 
+        }
+
+        public async Task<IActionResult> Deal(string DealId)
+        {
+            var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
+
+            var response = await datavisioAPIService.GetDeal(accountId, token, DealId);
+            response.coin = response.@base;
+
+            GetDealModel Model = new GetDealModel()
+            {
+                Deal = response,
+                balancesModel = await balancesService.LoadBalancesAsync(accountId, token)
+            };
+
+
+            var _candles = await datavisioAPIService.GetCandles(token, Model.Deal.coin);
+            var candles = _candles.ToList();
+
+            Model.LastPrice = candles.Last().c;
+
+            var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
+
+            foreach (var item in Model.Deal.orders)
+            {
+                item.created = item.created.AddHours(3);
+                item.closed = item.closed != null ? item.closed.Value.AddHours(3) : new DateTime(1999, 01, 01);
+
+                if (UserName == "guest")
+                {
+                    // Увеличение
+                    item.amount *= 10;
+                    item.filled *= 10;
+                }
+            }
+            Model.Deal.orders = Model.Deal.orders.OrderByDescending(x => x.created).ToArray();
+
+            return View(Model);
         }
 
 

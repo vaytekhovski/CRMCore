@@ -1,0 +1,179 @@
+﻿@{ Layout = null; }
+
+@model CRM.ViewModels.ManualTrading.GetDealModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Title -->
+    <title>Datavisio</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/public/img/favicon.ico">
+
+
+    <!-- DEMO CHARTS -->
+    <link rel="stylesheet" href="~/public/demo/chartist.css">
+    <link rel="stylesheet" href="~/public/demo/chartist-plugin-tooltip.css">
+
+    <!-- Template -->
+    <link rel="stylesheet" href="~/public/graindashboard/css/graindashboard.css">
+
+</head>
+
+<body class="has-sidebar has-fixed-sidebar-and-header">
+    <!-- Header -->
+    @Html.Partial("_Header")
+    <!-- End Header -->
+
+    <main class="main">
+        <!-- Sidebar Nav -->
+        @Html.Partial("_SideBar")
+
+        <!-- End Sidebar Nav -->
+
+        <div class="content">
+            <div class="py-4 px-3 px-md-4">
+
+                <div class="mb-3 mb-md-4 d-flex justify-content-between">
+                    <div class="h3 mb-0">Deal @Model.Deal.id</div>
+                </div>
+
+                
+
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Card -->
+                        <div class="card mb-3 mb-md-6">
+
+                            <div class="box">
+                                <!-- TradingView Widget BEGIN -->
+                                <div class="tradingview-widget-container" style="height:400px">
+                                    <div id="tradingview_f77b3"  style="height:400px"></div>
+                                    <div class="tradingview-widget-copyright"><a href=$"https://ru.tradingview.com/symbols/BINANCE-{@Model.Deal.coin}USDT/" rel="noopener" target="_blank"><span class="blue-text">График @Model.Deal.coin USDT</span></a> предоставлен TradingView</div>
+                                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                                    <script type="text/javascript">
+                    new TradingView.widget(
+                        {
+                            "autosize": true,
+                            "height": 400,
+                        "symbol": "BINANCE:"+"@Model.Deal.coin"+"USDT",
+                        "interval": "1",
+                        "timezone": "Etc/UTC",
+                        "theme": "light",
+                        "style": "1",
+                        "locale": "ru",
+                        "toolbar_bg": "#f1f3f6",
+                        "enable_publishing": false,
+                        "withdateranges": true,
+                        "hide_side_toolbar": false,
+                        "allow_symbol_change": true,
+                        "container_id": "tradingview_f77b3"
+                    }
+                );</script>
+                                </div>
+                                <!-- TradingView Widget END -->
+
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card mb-3 mb-md-4">
+                            <div class="card-header">
+                                <h5 class="font-weight-semi-bold mb-0">Последние сделки</h5>
+                            </div>
+
+                            <div class="card-body pt-0">
+                                <div class="table-responsive-xl">
+                                    <table class="table text-nowrap mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="font-weight-semi-bold border-top-0 py-2">#</th>
+                                                <th class="font-weight-semi-bold border-top-0 py-2">Тип</th>
+                                                <th class="font-weight-semi-bold border-top-0 py-2">Создан</th>
+                                                <th class="font-weight-semi-bold border-top-0 py-2">Закрыт</th>
+                                                <th class="font-weight-semi-bold border-top-0 py-2">Ордер</th>
+                                                <th class="font-weight-semi-bold border-top-0 py-2">Статус</th>
+                                                <th class="font-weight-semi-bold border-top-0 py-2">Цена</th>
+                                                <th class="font-weight-semi-bold border-top-0 py-2">Количество</th>
+                                                <th class="font-weight-semi-bold border-top-0 py-2">Заполнено</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Deal.orders)
+                                            {
+                                                <tr class="trigger_popup_fricc">
+                                                    <td>@item.id</td>
+                                                    <td>@item.type</td>
+                                                    <td>@item.created.ToString("dd.MM.yy HH:mm")</td>
+                                                    <td>@item.closed.Value.ToString("dd.MM.yy HH:mm")</td>
+                                                    <td>@item.side</td>
+                                                    <td>@item.status</td>
+                                                    <td>@item.price.ToString("#.#####") $</td>
+                                                    <td>@item.amount @Model.Deal.coin</td>
+                                                    <td>@item.filled @Model.Deal.coin</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <!-- Footer -->
+            <footer class="small p-3 px-md-4 mt-auto">
+                <div class="row justify-content-between">
+                    <div class="col-lg text-center text-lg-left mb-3 mb-lg-0">
+                        <ul class="list-dot list-inline mb-0">
+                            <li class="list-dot-item list-dot-item-not list-inline-item mr-lg-2"><a class="link-dark" href="#">FAQ</a></li>
+                            <li class="list-dot-item list-inline-item mr-lg-2"><a class="link-dark" href="#">Support</a></li>
+                            <li class="list-dot-item list-inline-item mr-lg-2"><a class="link-dark" href="#">Contact us</a></li>
+                        </ul>
+                    </div>
+
+
+
+                    <div class="col-lg text-center text-lg-right">
+                        &copy; 2020 ANSTECHNOLOGIES. All Rights Reserved.
+                    </div>
+                </div>
+            </footer>
+            <!-- End Footer -->
+        </div>
+    </main>
+
+
+    <script src="~/public/graindashboard/js/graindashboard.js"></script>
+    <script src="~/public/graindashboard/js/graindashboard.vendor.js"></script>
+
+    <!-- DEMO CHARTS -->
+    <script src="~/public/demo/resizeSensor.js"></script>
+    <script src="~/public/demo/chartist.js"></script>
+    <script src="~/public/demo/chartist-plugin-tooltip.js"></script>
+    <script src="~/public/demo/gd.chartist-area.js"></script>
+    <script src="~/public/demo/gd.chartist-bar.js"></script>
+    <script src="~/public/demo/gd.chartist-donut.js"></script>
+    <script>
+        $.GDCore.components.GDChartistArea.init('.js-area-chart');
+        $.GDCore.components.GDChartistBar.init('.js-bar-chart');
+        $.GDCore.components.GDChartistDonut.init('.js-donut-chart');
+    </script>
+</body>
+
+</html>

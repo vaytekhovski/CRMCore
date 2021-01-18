@@ -158,7 +158,7 @@
 
 
                                                     <tr>
-                                                        <td><a href="~/ManualTrading/GetDeal?DealId=@item.id">@item.id</a></td>
+                                                        <td><a href="~/Dashboard/Deal?DealId=@item.id">@item.id</a></td>
                                                         <td><div>@item.opened.ToString("dd.MM.yy HH:mm")</div></td>
                                                         <td><div>@(item.closed.Value.ToString("dd.MM.yy HH:mm") != "01.01.99 00:00" ? item.closed.Value.ToString("dd.MM.yy HH:mm") : null)</div></td>
                                                         <td>@item.coin</td>
