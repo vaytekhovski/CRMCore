@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Linq;
 
 namespace CRM.Controllers
 {
@@ -17,6 +18,8 @@ namespace CRM.Controllers
 
         public ActionResult Home()
         {
+            var browserLang = Request.Headers["Accept-Language"].ToString().Split(";").FirstOrDefault()?.Split(",").FirstOrDefault();
+            SetLanguage(browserLang, "Home/Home");
             return View();
         }
 
@@ -25,15 +28,6 @@ namespace CRM.Controllers
             return View();
         }
 
-        public IActionResult NewHome()
-        {
-            return View();
-        }
-        
-        public IActionResult OldHome()
-        {
-            return View();
-        }
 
         [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)

@@ -34,8 +34,8 @@ namespace CRM
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
-                    options.LoginPath = new PathString("/Account/Login");
-                    options.AccessDeniedPath = new PathString("/Home/Home");
+                    options.LoginPath = new PathString("/Home/Home");
+                    options.AccessDeniedPath = new PathString("/Account/Login");
                     options.ExpireTimeSpan = TimeSpan.FromHours(12);
                 });
             services.AddHttpClient();
@@ -71,7 +71,7 @@ namespace CRM
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            app.UseRequestLocalization();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
