@@ -116,11 +116,11 @@ namespace Business.DataVisioAPI
             return JsonConvert.DeserializeObject<string>(response);
         }
 
-        public async Task<string> LeaveDeal(string accountId, string token, string DealId)
+        public async Task<string> LeaveDeal(string accountId, string token, string DealId, decimal amount = 0)
         {
             TradeDealRequest tradeDealRequest = new TradeDealRequest
             {
-                amount = 0
+                amount = (double)amount
             };
 
             var jsonInString = JsonConvert.SerializeObject(tradeDealRequest);

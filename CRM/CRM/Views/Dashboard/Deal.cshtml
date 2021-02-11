@@ -91,6 +91,7 @@
                         <div class="card mb-3 mb-md-4">
                             <div class="card-header">
                                 <h5 class="font-weight-semi-bold mb-0">Последние сделки</h5>
+                                <a href="~/ManualTrading/Sell?DealId=@Model.Deal.id&amount=@Model.Deal.orders[0].filled&base=@Model.Deal.coin" class="form-control btn btn-primary" style=" width: 150px; margin: -40px auto auto 200px;">Закрыть ордер</a>
                             </div>
 
                             <div class="card-body pt-0">
