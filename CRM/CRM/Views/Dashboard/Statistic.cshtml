@@ -165,7 +165,7 @@
                     </div>
                 </div>
 
-                    <script>
+                <script>
 
                     let Proba = [];
                     let TradeSignals = [];
@@ -175,22 +175,59 @@
                     let ProbaPerm = [];
 
                     let Dates = [];
-                    @{
+
+                    @*@{
+                        int count = 0;
+                        if (Model.signals != null)
+                            count = Model.signals.Length;
+
+                        decimal[] proba = new decimal[count];
+                        decimal[] TradeSignals = new decimal[count];
+                        decimal[] MA = new decimal[count];
+                        decimal[] BBL = new decimal[count];
+                        decimal[] BBU = new decimal[count];
+                        decimal[] ProbaPerm = new decimal[count];
+                        DateTime[] Dates = new DateTime[count];
+                        if (Model.signals != null)
+
+                            for (int i = 0; i < Model.signals.Length; i++)
+                            {
+                                proba[i] = Model.signals[i].proba;
+                                TradeSignals[i] = Model.signals[i].value;
+                                MA[i] = Model.signals[i].indicators.ma_proba;
+                                BBL[i] = Model.signals[i].indicators.bbl_proba;
+                                BBU[i] = Model.signals[i].indicators.bbu_proba;
+                                ProbaPerm[i] = Model.signals[i].indicators.ybs;
+                                Dates[i] = Model.signals[i].time;
+
+                            }
+                    }
+
+
+                    Proba = @proba;
+                    TradeSignals = @TradeSignals;
+                    MA = @MA;
+                    BBL = @BBL;
+                    BBU = @BBU;
+                    ProbaPerm = @ProbaPerm;
+                    Dates = @Dates;*@
+
+                     @{
                         if(Model.signals != null)
                         foreach(var signal in Model.signals)
                         {
-
                             <text>
-                            Proba.push(@signal.proba);
-                            TradeSignals.push(@signal.value);
-                            MA.push(@signal.indicators.ma_proba)
-                            BBL.push(@signal.indicators.bbl_proba);
-                            BBU.push(@signal.indicators.bbu_proba);
-                            ProbaPerm.push(@signal.indicators.ybs);
+                            Proba.push(parseFloat("@signal.proba"));
+                    TradeSignals.push(parseFloat("@signal.value"));
+                    MA.push(parseFloat("@signal.indicators.ma_proba"))
+                            BBL.push(parseFloat("@signal.indicators.bbl_proba"));
+                    BBU.push(parseFloat("@signal.indicators.bbu_proba"));
+                    ProbaPerm.push(parseFloat("@signal.indicators.ybs"));
                             Dates.push("@signal.time");
                             </text>
                         }
                     }
+
 
 
                     var ctx = document.getElementById('SignalsChart').getContext('2d');
@@ -244,7 +281,7 @@
                         },
                         options: {}
                     });
-                    </script>
+                </script>
 
                 <div class="row">
                     <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">
