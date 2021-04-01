@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business.Models.DataVisioAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,5 +35,7 @@ namespace CRM.ViewModels.Dashboard
         public decimal SharpeRatio { get; set; }
         public string DepositProfit { get; set; }
         public string DepositProfitAfterDecimal { get; set; }
+
+        public Signal[] signals { get; set; }
     }
 }

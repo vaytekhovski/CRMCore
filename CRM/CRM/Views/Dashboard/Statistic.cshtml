@@ -18,6 +18,8 @@
     <link rel="shortcut icon" href="~/public/img/favicon.ico">
 
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
     <!-- DEMO CHARTS -->
     <link rel="stylesheet" href="~/public/demo/chartist.css">
     <link rel="stylesheet" href="~/public/demo/chartist-plugin-tooltip.css">
@@ -67,7 +69,8 @@
                         </div>
                     </form>
                 </div>
-
+                @if (Model.DepositProfit != "")
+                {
                 <div class="row">
                     <div class="col-12">
                         <!-- Card -->
@@ -108,7 +111,7 @@
                                     <div class="js-area-chart chart chart--axis-x--nowrap chart--points-invisible position-relative mh-15_6 safari-overflow-hidden pt-4 pt-md-5 pb-1"
                                          data-series='[
                                          [@ViewBag.ChartData]
-                                                       
+
                                                      ]'
                                          data-labels='[@ViewBag.ChartDataLables]'
                                          data-labels-qty="12"
@@ -144,6 +147,104 @@
                         <!-- End Card -->
                     </div>
                 </div>
+                }
+                <div class="row" style="display: @(Model.signals != null ? "block" : "none")">
+                    <div class="col-12">
+                        <!-- Card -->
+                        <div class="card mb-3 mb-md-4">
+
+                            <div id="walletsContent" class="card-body tab-content">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel">
+                                   <canvas id="SignalsChart">
+
+                                   </canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                    </div>
+                </div>
+
+                    <script>
+
+                    let Proba = [];
+                    let TradeSignals = [];
+                    let MA = [];
+                    let BBL = [];
+                    let BBU = [];
+                    let ProbaPerm = [];
+
+                    let Dates = [];
+                    @{
+                        if(Model.signals != null)
+                        foreach(var signal in Model.signals)
+                        {
+
+                            <text>
+                            Proba.push(@signal.proba);
+                            TradeSignals.push(@signal.value);
+                            MA.push(@signal.indicators.ma_proba)
+                            BBL.push(@signal.indicators.bbl_proba);
+                            BBU.push(@signal.indicators.bbu_proba);
+                            ProbaPerm.push(@signal.indicators.ybs);
+                            Dates.push("@signal.time");
+                            </text>
+                        }
+                    }
+
+
+                    var ctx = document.getElementById('SignalsChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            datasets: [{
+                                type:'line',
+                                label: 'proba_up',
+                                data: Proba,
+                                borderColor: 'rgba(255, 43, 43,0.5)',
+                                fill: false,
+                                pointRadius:0,
+                            }, {
+                                type: 'bar',
+                                    label: 'trade_signal',
+                                    borderColor: 'rgba(247, 241, 42,0.5)',
+                                    backgroundColor: 'rgba(247, 241, 42,0.1)',
+                                    data: TradeSignals,
+                                    pointRadius: 0,
+                            }, {
+                                type: 'line',
+                                    label: 'ma_proba',
+                                    borderColor: 'rgba(86, 247, 37,0.5)',
+                                    data: MA,
+                                    fill: false,
+                                    pointRadius: 0,
+                            }, {
+                                type: 'line',
+                                    label: 'ma_proba_bbl ',
+                                    borderColor: 'rgba(34, 115, 245,0.5)',
+                                    data: BBL,
+                                    fill: false,
+                                    pointRadius: 0,
+                            }, {
+                                type: 'line',
+                                    label: 'ma_proba_bbu ',
+                                    borderColor: 'rgba(203, 34, 245,0.5)',
+                                    data: BBU,
+                                    fill: false,
+                                    pointRadius: 0,
+                            }, {
+                                type: 'bar',
+                                    label: 'proba_permission',
+                                    borderColor: 'rgba(250, 170, 32,0.5)',
+                                    backgroundColor: 'rgba(250, 170, 32,0.1)',
+                                    data: ProbaPerm,
+                                    pointRadius: 0,
+                            }],
+                            labels: Dates
+                        },
+                        options: {}
+                    });
+                    </script>
 
                 <div class="row">
                     <div class="col-md-6 col-xl-4 mb-3 mb-xl-4">

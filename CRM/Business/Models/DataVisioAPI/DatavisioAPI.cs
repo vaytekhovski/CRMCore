@@ -93,15 +93,15 @@ namespace Business.Models.DataVisioAPI
 
     public class Indicator
     {
-
         public decimal macd { get; set; }
         public decimal sig { get; set; }
         public decimal hist { get; set; }
         public decimal rsi { get; set; }
         public decimal obv { get; set; }
-        public decimal bbl { get; set; }
-        public decimal bbm { get; set; }
-        public decimal bbu { get; set; }
+        public decimal ybs { get; set; }
+        public decimal bbl_proba { get; set; }
+        public decimal ma_proba { get; set; }
+        public decimal bbu_proba { get; set; }
     }
 
     public class Candles

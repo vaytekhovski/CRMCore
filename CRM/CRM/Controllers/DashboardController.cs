@@ -90,6 +90,18 @@ namespace CRM.Controllers
                 EndDate = DateTime.Parse(viewModel.EndDate)
             };
 
+            if (filter.Coin != null)
+            {
+                var token = HttpContext.User.Identity.Name;
+
+                viewModel.signals = datavisioAPIService
+                    .GetSignals(token, filter.Coin, "grad_" + filter.Coin.ToLower())
+                    .Result.signals
+                    .Where(x => x.time > filter.StartDate && x.time < filter.EndDate)
+                    .OrderBy(x => x.time)
+                    .ToArray();
+            }
+
             return CalculateStatistic(await tradeHistoryService.LoadAsync(filter, HttpContext), viewModel);
 
         }
@@ -103,6 +115,18 @@ namespace CRM.Controllers
                 StartDate = DateTime.Parse(viewModel.StartDate),
                 EndDate = DateTime.Parse(viewModel.EndDate)
             };
+
+            if (filter.Coin != null)
+            {
+                var token = HttpContext.User.Identity.Name;
+
+                viewModel.signals = datavisioAPIService
+                    .GetSignals(token, filter.Coin, "grad_" + filter.Coin.ToLower())
+                    .Result.signals
+                    .Where(x => x.time > filter.StartDate && x.time < filter.EndDate)
+                    .OrderBy(x => x.time)
+                    .ToArray();
+            }
 
             return CalculateStatistic(await tradeHistoryService.LoadAsync(filter, HttpContext), viewModel);
 
@@ -229,10 +253,14 @@ namespace CRM.Controllers
              * valueDecimal = valueWhole - value == 0.16
              * valueDecimal = valueDecimal.Substring(2) == 16
              */
+            if (Model.TotalProfit > 0)
+                viewModel.TotalProfitAfterDecimal = (Model.TotalProfit - Math.Truncate(Model.TotalProfit)).ToString().Substring(3, 2);
 
-            viewModel.TotalProfitAfterDecimal = (Model.TotalProfit - Math.Truncate(Model.TotalProfit)).ToString().Substring(3, 2);
-            viewModel.LossOrdersSummAfterDecimal = (Model.LossOrdersSumm - Math.Truncate(Model.LossOrdersSumm)).ToString().Substring(3, 2);
-            viewModel.ProfitOrdersSummAfterDecimal = (Model.ProfitOrdersSumm - Math.Truncate(Model.ProfitOrdersSumm)).ToString().Substring(3, 2);
+            if (Model.LossOrdersSumm > 0)
+                viewModel.LossOrdersSummAfterDecimal = (Model.LossOrdersSumm - Math.Truncate(Model.LossOrdersSumm)).ToString().Substring(3, 2);
+
+            if (Model.ProfitOrdersSumm > 0)
+                viewModel.ProfitOrdersSummAfterDecimal = (Model.ProfitOrdersSumm - Math.Truncate(Model.ProfitOrdersSumm)).ToString().Substring(3, 2);
 
             var THviewModel = new TradeHistoryFilterModel();
             THviewModel = Converter(Model, THviewModel);
@@ -244,11 +272,12 @@ namespace CRM.Controllers
                 ChartData += "{\"meta\":\"" + Convert.ToDateTime(item.closed).ToString("g", CultureInfo.CreateSpecificCulture("en-US")) + "\",\"value\":\"" + item.profit.clean.amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "\"},\n";
                 ChartDataLables += "\"" + Convert.ToDateTime(item.closed).ToString("M") + "\",";
             }
-            ViewBag.ChartData = ChartData.Remove(ChartData.Length - 3, 2) + "}";
-            ViewBag.ChartDataLables = ChartDataLables.Remove(ChartDataLables.Length - 1, 1);
-            ViewBag.ChartHigh = THviewModel.Deals.deals.OrderByDescending(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
-            ViewBag.ChartLow = THviewModel.Deals.deals.OrderBy(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
-
+            if (ChartData.Length != 0) { 
+                ViewBag.ChartData = ChartData.Remove(ChartData.Length - 3, 2) + "}";
+                ViewBag.ChartDataLables = ChartDataLables.Remove(ChartDataLables.Length - 1, 1);
+                ViewBag.ChartHigh = THviewModel.Deals.deals.OrderByDescending(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
+                ViewBag.ChartLow = THviewModel.Deals.deals.OrderBy(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
+            }
             var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
             ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
             ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";

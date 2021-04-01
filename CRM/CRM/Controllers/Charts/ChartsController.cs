@@ -153,9 +153,9 @@ namespace CRM.Controllers.Charts
                 i++;
             }
 
-            model.BBL = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
-            model.BBM = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
-            model.BBU = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
+            model.BBL = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbl_proba.ToString(SeparateHelper.Separator)).ToList();
+            model.BBM = gradSignals.signals.Select(x => x.indicators).Select(x => x.ma_proba.ToString(SeparateHelper.Separator)).ToList();
+            model.BBU = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbu_proba.ToString(SeparateHelper.Separator)).ToList();
 
             foreach (var signal in logtwoSignals.signals)
             {
@@ -256,9 +256,9 @@ namespace CRM.Controllers.Charts
 
             }
 
-            model.BBL = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbl.ToString(SeparateHelper.Separator)).ToList();
-            model.BBM = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbm.ToString(SeparateHelper.Separator)).ToList();
-            model.BBU = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbu.ToString(SeparateHelper.Separator)).ToList();
+            model.BBL = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbl_proba.ToString(SeparateHelper.Separator)).ToList();
+            model.BBM = gradSignals.signals.Select(x => x.indicators).Select(x => x.ma_proba.ToString(SeparateHelper.Separator)).ToList();
+            model.BBU = gradSignals.signals.Select(x => x.indicators).Select(x => x.bbu_proba.ToString(SeparateHelper.Separator)).ToList();
 
             foreach (var signal in logtwoSignals.signals)
             {
