@@ -217,12 +217,12 @@
                         foreach(var signal in Model.signals)
                         {
                             <text>
-                            Proba.push(parseFloat("@signal.proba"));
-                    TradeSignals.push(parseFloat("@signal.value"));
-                    MA.push(parseFloat("@signal.indicators.ma_proba"))
-                            BBL.push(parseFloat("@signal.indicators.bbl_proba"));
-                    BBU.push(parseFloat("@signal.indicators.bbu_proba"));
-                    ProbaPerm.push(parseFloat("@signal.indicators.ybs"));
+                            Proba.push(parseFloat("@signal.proba".replace(',','.')));
+                    TradeSignals.push(parseFloat("@signal.value".replace(',', '.')));
+                    MA.push(parseFloat("@signal.indicators.ma_proba".replace(',', '.')))
+                    BBL.push(parseFloat("@signal.indicators.bbl_proba".replace(',', '.')));
+                    BBU.push(parseFloat("@signal.indicators.bbu_proba".replace(',', '.')));
+                    ProbaPerm.push(parseFloat("@signal.indicators.ybs".replace(',', '.')));
                             Dates.push("@signal.time");
                             </text>
                         }
