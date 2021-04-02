@@ -176,48 +176,13 @@
 
                     let Dates = [];
 
-                    @*@{
-                        int count = 0;
-                        if (Model.signals != null)
-                            count = Model.signals.Length;
-
-                        decimal[] proba = new decimal[count];
-                        decimal[] TradeSignals = new decimal[count];
-                        decimal[] MA = new decimal[count];
-                        decimal[] BBL = new decimal[count];
-                        decimal[] BBU = new decimal[count];
-                        decimal[] ProbaPerm = new decimal[count];
-                        DateTime[] Dates = new DateTime[count];
-                        if (Model.signals != null)
-
-                            for (int i = 0; i < Model.signals.Length; i++)
-                            {
-                                proba[i] = Model.signals[i].proba;
-                                TradeSignals[i] = Model.signals[i].value;
-                                MA[i] = Model.signals[i].indicators.ma_proba;
-                                BBL[i] = Model.signals[i].indicators.bbl_proba;
-                                BBU[i] = Model.signals[i].indicators.bbu_proba;
-                                ProbaPerm[i] = Model.signals[i].indicators.ybs;
-                                Dates[i] = Model.signals[i].time;
-
-                            }
-                    }
-
-
-                    Proba = @proba;
-                    TradeSignals = @TradeSignals;
-                    MA = @MA;
-                    BBL = @BBL;
-                    BBU = @BBU;
-                    ProbaPerm = @ProbaPerm;
-                    Dates = @Dates;*@
 
                      @{
                         if(Model.signals != null)
                         foreach(var signal in Model.signals)
                         {
                             <text>
-                            Proba.push(parseFloat("@signal.proba".replace(',','.')));
+                            Proba.push(parseFloat("@signal.indicators.xgb".replace(',','.')));
                     TradeSignals.push(parseFloat("@signal.value".replace(',', '.')));
                     MA.push(parseFloat("@signal.indicators.ma_proba".replace(',', '.')))
                     BBL.push(parseFloat("@signal.indicators.bbl_proba".replace(',', '.')));

@@ -99,6 +99,7 @@ namespace Business.Models.DataVisioAPI
         public decimal rsi { get; set; }
         public decimal obv { get; set; }
         public decimal ybs { get; set; }
+        public decimal xgb { get; set; }
         public decimal bbl_proba { get; set; }
         public decimal ma_proba { get; set; }
         public decimal bbu_proba { get; set; }
