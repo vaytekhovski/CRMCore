@@ -267,7 +267,7 @@ namespace CRM.Controllers
             string ChartData = "";
             string ChartDataLables = "";
 
-            foreach (var item in THviewModel.Deals.deals.OrderBy(x => x.closed))
+            foreach (var item in THviewModel.Deals.deals.Where(x=>x.closed > new DateTime(2019, 01, 01)).OrderBy(x => x.closed))
             {
                 ChartData += "{\"meta\":\"" + Convert.ToDateTime(item.closed).ToString("g", CultureInfo.CreateSpecificCulture("en-US")) + "\",\"value\":\"" + item.profit.clean.amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "\"},\n";
                 ChartDataLables += "\"" + Convert.ToDateTime(item.closed).ToString("M") + "\",";
