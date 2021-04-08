@@ -267,16 +267,23 @@ namespace CRM.Controllers
             string ChartData = "";
             string ChartDataLables = "";
 
-            foreach (var item in THviewModel.Deals.deals.Where(x=>x.closed > new DateTime(2019, 01, 01)).OrderBy(x => x.closed))
+            var DealsToChart = THviewModel.Deals.deals
+                .Where(x => x.closed > new DateTime(2019, 01, 01))
+                .OrderBy(x => x.closed)
+                .ToList();
+
+            foreach (var item in DealsToChart)
             {
-                ChartData += "{\"meta\":\"" + Convert.ToDateTime(item.closed).ToString("g", CultureInfo.CreateSpecificCulture("en-US")) + "\",\"value\":\"" + item.profit.clean.amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "\"},\n";
+                ChartData += "{\"meta\":\"" + Convert.ToDateTime(item.closed)
+                    .ToString("g", CultureInfo.CreateSpecificCulture("en-US")) + "\",\"value\":\"" + item.profit.clean.amount
+                    .ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "\"},\n";
                 ChartDataLables += "\"" + Convert.ToDateTime(item.closed).ToString("M") + "\",";
             }
             if (ChartData.Length != 0) { 
                 ViewBag.ChartData = ChartData.Remove(ChartData.Length - 3, 2) + "}";
                 ViewBag.ChartDataLables = ChartDataLables.Remove(ChartDataLables.Length - 1, 1);
-                ViewBag.ChartHigh = THviewModel.Deals.deals.OrderByDescending(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
-                ViewBag.ChartLow = THviewModel.Deals.deals.OrderBy(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
+                ViewBag.ChartHigh = DealsToChart.OrderByDescending(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
+                ViewBag.ChartLow = DealsToChart.OrderBy(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
             }
             var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
             ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
