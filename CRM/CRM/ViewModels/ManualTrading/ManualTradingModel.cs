@@ -18,6 +18,7 @@ namespace CRM.ViewModels.ManualTrading
 
         public string Account { get; set; }
         public string Coin { get; set; }
+        public string Quote { get; set; }
         public Unit Unit { get; set; }
         public List<Unit> Units { get; set; }
         public List<decimal> CoinPrices { get; set; }

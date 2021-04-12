@@ -19,6 +19,7 @@ namespace CRM.ViewModels
         //public int LastVisiblePage { get; set; }
         //public int CurrentPage { get; set; }
         public string Coin { get; set; }
+        public string Quote { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         //public string TypeOfDate { get; set; }

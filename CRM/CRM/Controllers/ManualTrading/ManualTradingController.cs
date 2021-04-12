@@ -126,13 +126,13 @@ namespace CRM.Controllers.ManualTrading
             return RedirectToAction("Trade", "ManualTrading", new { ViewModel = ViewModel});
         }
 
-        public IActionResult Sell(string DealId, decimal amount, string @base)
+        public IActionResult Sell(string DealId, decimal amount, string @base, string quoute = "usdt")
         {
             var token = HttpContext.User.Identity.Name;
             var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
             var response = datavisioAPIService.LeaveDeal(accountId, token, DealId, amount).Result;
-            var disableResponse = datavisioAPIService.DisablePair(accountId, token, @base);
+            var disableResponse = datavisioAPIService.DisablePair(accountId, token, @base, quoute);
             return RedirectToAction("Index", "Dashboard");
         }
 
@@ -151,7 +151,7 @@ namespace CRM.Controllers.ManualTrading
             };
 
             
-            var candles = datavisioAPIService.GetCandles(token, Model.Deal.coin).Result.ToList();
+            var candles = datavisioAPIService.GetCandles(token, Model.Deal.coin, Model.Deal.quote).Result.ToList();
             
             Model.LastPrice = candles.Last().c;
 

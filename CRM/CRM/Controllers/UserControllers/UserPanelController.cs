@@ -61,11 +61,11 @@ namespace CRM.Controllers.User
                 {
                     if (pair.enabled)
                     {
-                        await datavisioAPIService.EnablePair(accountId, token, pair.coin);
+                        await datavisioAPIService.EnablePair(accountId, token, pair.coin, pair.quote);
                     }
                     else
                     {
-                        await datavisioAPIService.DisablePair(accountId, token, pair.coin);
+                        await datavisioAPIService.DisablePair(accountId, token, pair.coin, pair.quote);
                     }
                 }
             }

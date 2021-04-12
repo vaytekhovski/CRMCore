@@ -143,12 +143,12 @@ namespace Business.DataVisioAPI
 
 
 
-        public async Task<Signals> GetSignals(string token, string CoinBase, string source)
+        public async Task<Signals> GetSignals(string token, string CoinBase, string Quote, string source)
         {
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/signals/binance/{CoinBase}/usdt?limit=5000&source={source}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/signals/binance/{CoinBase}/{Quote}?limit=5000&source={source}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -161,13 +161,13 @@ namespace Business.DataVisioAPI
         }
 
 
-        public async Task<Candles[]> GetCandles(string token, string CoinBase)
+        public async Task<Candles[]> GetCandles(string token, string CoinBase, string Quote)
         {
             var Since = (long)(DateTime.UtcNow.AddHours(-3).Subtract(new DateTime(1970, 1, 1))).TotalSeconds * 1000;
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/exchanges/binance/candles/{CoinBase}/usdt?frame=1&since={Since}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/exchanges/binance/candles/{CoinBase}/{Quote}?frame=1&since={Since}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -231,14 +231,14 @@ namespace Business.DataVisioAPI
             return Deal;
         }
 
-        public async Task<List<Graph>> GetGraphs(string token, string CoinBase, DateTime StartDate, DateTime EndDate, string source = "grad")
+        public async Task<List<Graph>> GetGraphs(string token, string CoinBase, string Quote, DateTime StartDate, DateTime EndDate, string source = "grad")
         {
             var since = ((DateTimeOffset)StartDate).ToUnixTimeSeconds();
             var limit = Convert.ToInt32((EndDate - StartDate).TotalMinutes);
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"http://46.101.131.228/api/graph/binance/{CoinBase}/usdt?since={since}&limit={limit}&source={source}"),
+                RequestUri = new Uri($"http://46.101.131.228/api/graph/binance/{CoinBase}/{Quote}?since={since}&limit={limit}&source={source}"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -288,13 +288,12 @@ namespace Business.DataVisioAPI
             return show;
         }
 
-        public async Task EnablePair(string accountId, string token, string @base)
+        public async Task EnablePair(string accountId, string token, string CoinBase, string Quote)
         {
-            string quote = "usdt";
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/pairs/{@base}/{quote}/enable"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/pairs/{CoinBase}/{Quote}/enable"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }
@@ -304,13 +303,12 @@ namespace Business.DataVisioAPI
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
         }
 
-        public async Task DisablePair(string accountId, string token, string @base)
+        public async Task DisablePair(string accountId, string token, string CoinBase, string Quote)
         {
-            string quote = "usdt";
             var Request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/pairs/{@base}/{quote}/disable"),
+                RequestUri = new Uri($"http://46.101.131.228/api/accounts/{accountId}/pairs/{CoinBase}/{Quote}/disable"),
                 Headers =
                 {
                      { "Authorization", "Bearer " + token }

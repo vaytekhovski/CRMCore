@@ -9,6 +9,7 @@ namespace Business
     {
         public string Account { get; set; }
         public string Coin { get; set; }
+        public string Quote { get; set; }
         public int CurrentPage { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

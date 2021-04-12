@@ -52,52 +52,27 @@
                             </div>
                             <div class="card-body pt-0">
                                 <div class="d-flex flex-wrap mb-3 mb-md-4">
-                                    <div class="form-check position-relative pl-0 mb-2 mr-2">
-                                        <input type="checkbox" class="form-check-input invisible" id="BitcoinCheckBox" @(Model.AccountData.pairs[0].enabled == true ? "checked" : "")>
-                                        <label for="BitcoinCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[0].coin')">
-                                            <span>@Model.AccountData.pairs[0].coin</span>
+
+                                    @foreach (var pair in Model.AccountData.pairs)
+                                    {
+                                        <div class="form-check position-relative pl-0 mb-2 mr-2">
+                                            <input type="checkbox" class="form-check-input invisible" id="CheckBox{@pair.coin}{@pair.quote}" @(pair.enabled == true ? "checked" : "")>
+                                            <label for="CheckBox{@pair.coin}{@pair.quote}" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@pair.coin','@pair.quote')">
+                                            <span>@pair.coin / @pair.quote</span>
                                         </label>
+                                        </div>
+                                    }
+                                        
                                     </div>
-                                    <div class="form-check position-relative pl-0 mb-2 mr-2">
-                                        <input type="checkbox" class="form-check-input invisible" id="DashCheckBox" @(Model.AccountData.pairs[1].enabled == true ? "checked" : "")>
-                                        <label for="DashCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[1].coin')">
-                                            <span>@Model.AccountData.pairs[1].coin</span>
-                                        </label>
-                                    </div>
-                                    <div class="form-check position-relative pl-0 mb-2 mr-2">
-                                        <input type="checkbox" class="form-check-input invisible" id="EOSCheckBox" @(Model.AccountData.pairs[2].enabled == true ? "checked" : "")>
-                                        <label for="EOSCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[2].coin')">
-                                            <span>@Model.AccountData.pairs[2].coin</span>
-                                        </label>
-                                    </div>
-                                    <div class="form-check position-relative pl-0 mb-2 mr-2">
-                                        <input type="checkbox" class="form-check-input invisible" id="EtheriumCheckBox" @(Model.AccountData.pairs[3].enabled == true ? "checked" : "")>
-                                        <label for="EtheriumCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[3].coin')">
-                                            <span>@Model.AccountData.pairs[3].coin</span>
-                                        </label>
-                                    </div>
-                                    <div class="form-check position-relative pl-0 mb-2 mr-2">
-                                        <input type="checkbox" class="form-check-input invisible" id="LitecoinCheckBox" @(Model.AccountData.pairs[4].enabled == true ? "checked" : "")>
-                                        <label for="LitecoinCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[4].coin')">
-                                            <span>@Model.AccountData.pairs[4].coin</span>
-                                        </label>
-                                    </div>
-                                    <div class="form-check position-relative pl-0 mb-2 mr-2">
-                                        <input type="checkbox" class="form-check-input invisible" id="TronCheckBox" @(Model.AccountData.pairs[5].enabled == true ? "checked" : "")>
-                                        <label for="TronCheckBox" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@Model.AccountData.pairs[5].coin')">
-                                            <span>@Model.AccountData.pairs[5].coin</span>
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
 
                             <script type="text/javascript">
 
-                                function SendCoin(coin) {
+                                function SendCoin(coin, quote) {
                                     $.ajax({
                                         type: "POST",
                                         url: "/Dashboard/EnableDisableTradePair",
-                                        data: { pair: coin },
+                                        data: {coin: coin, quote: quote},
                                         success: function (response) {
 
                                         },

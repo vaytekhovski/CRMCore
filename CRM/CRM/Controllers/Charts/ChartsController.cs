@@ -110,12 +110,12 @@ namespace CRM.Controllers.Charts
 
             var token = HttpContext.User.Identity.Name;
 
-            var gradSignals = datavisioAPIService.GetSignals(token, filter.Coin, "grad").Result;
+            var gradSignals = datavisioAPIService.GetSignals(token, filter.Coin, filter.Quote, "grad").Result;
 
-            var logtwoSignals = datavisioAPIService.GetSignals(token, filter.Coin, "logtwo").Result;
+            var logtwoSignals = datavisioAPIService.GetSignals(token, filter.Coin, filter.Quote, "logtwo").Result;
 
-            var gradEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "grad").Result;
-            var logtwoEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logtwo").Result;
+            var gradEMA = datavisioAPIService.GetGraphs(token, filter.Coin, filter.Quote, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "grad").Result;
+            var logtwoEMA = datavisioAPIService.GetGraphs(token, filter.Coin, filter.Quote, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logtwo").Result;
 
             //var FirstDate = gradSignals.signals.Last().time > logtwoSignals.signals.Last().time ? gradSignals.signals.Last().time : logtwoSignals.signals.Last().time;
 
@@ -201,8 +201,8 @@ namespace CRM.Controllers.Charts
             };
 
             var token = HttpContext.User.Identity.Name;
-            var gradSignals = datavisioAPIService.GetSignals(token, filter.Coin, "grad").Result;
-            var logtwoSignals = datavisioAPIService.GetSignals(token, filter.Coin, "logtwo").Result;
+            var gradSignals = datavisioAPIService.GetSignals(token, filter.Coin, filter.Quote, "grad").Result;
+            var logtwoSignals = datavisioAPIService.GetSignals(token, filter.Coin, filter.Quote, "logtwo").Result;
 
 
             var gradEMA = new List<Graph>();
@@ -211,7 +211,7 @@ namespace CRM.Controllers.Charts
 
             try
             {
-                gradEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "grad").Result;
+                gradEMA = datavisioAPIService.GetGraphs(token, filter.Coin, filter.Quote, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "grad").Result;
 
             }
             catch {
@@ -219,7 +219,7 @@ namespace CRM.Controllers.Charts
 
             try
             {
-                logtwoEMA = datavisioAPIService.GetGraphs(token, filter.Coin, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logtwo").Result;
+                logtwoEMA = datavisioAPIService.GetGraphs(token, filter.Coin, filter.Quote, DateTime.Parse(model.StartDate).AddHours(-3), DateTime.Parse(model.EndDate).AddHours(-3), "logtwo").Result;
             }
             catch {
             }
@@ -302,8 +302,8 @@ namespace CRM.Controllers.Charts
             };
 
             var token = HttpContext.User.Identity.Name;
-            var gradSignals = datavisioAPIService.GetSignals(token, "BTC", "grad").Result;
-            var logtwoSignals = datavisioAPIService.GetSignals(token, "BTC", "logtwo").Result;
+            var gradSignals = datavisioAPIService.GetSignals(token, "BTC", "USDT", "grad").Result;
+            var logtwoSignals = datavisioAPIService.GetSignals(token, "BTC", "USDT", "logtwo").Result;
 
             TradeHistoryFilter filter = new TradeHistoryFilter
             {

@@ -45,7 +45,11 @@ namespace CRM.Services
             model.Deals.deals = model.Deals.deals.Where(x => x.@base == "BTC" || x.@base == "ETH").ToArray();
 
             if (filter.Coin != null)
-                model.Deals.deals = model.Deals.deals.Where(x => x.@base == filter.Coin).ToArray();
+                model.Deals.deals = model.Deals.deals
+                    .Where(x => x.@base == filter.Coin)
+                    .Where(x => x.quote == filter.Quote)
+                    .ToArray();
+
 
             model.Deals.deals = model.Deals.deals.Where(x => x.opened >= filter.StartDate).Where(x => x.opened <= filter.EndDate).ToArray();
 

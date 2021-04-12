@@ -33,7 +33,7 @@ namespace CRM.Services
 
             SeparateHelper.Separator.NumberDecimalSeparator = ".";
 
-            Signals signals = datavisioAPI.GetSignals(token, ViewModel.Coin, "grad").Result;
+            Signals signals = datavisioAPI.GetSignals(token, ViewModel.Coin, ViewModel.Quote, "grad").Result;
 
             ViewModel.Deals = datavisioAPI.GetListDeals(accountId, token).Result;
 
@@ -177,7 +177,7 @@ namespace CRM.Services
             }
 
 
-           var candles = datavisioAPI.GetCandles(token, ViewModel.Coin).Result.ToList();
+           var candles = datavisioAPI.GetCandles(token, ViewModel.Coin, ViewModel.Quote).Result.ToList();
            ViewModel.LastPrice = candles.Last().c;
 
             foreach (var item in candles)
@@ -190,7 +190,7 @@ namespace CRM.Services
             ViewModel.balancesModel = await balancesService.LoadBalancesAsync(accountId, token);
 
             
-            ViewModel.Graphs = datavisioAPI.GetGraphs(token, ViewModel.Coin, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;
+            ViewModel.Graphs = datavisioAPI.GetGraphs(token, ViewModel.Coin, ViewModel.Quote, ViewModel.StartDate.AddHours(-3), ViewModel.EndDate.AddHours(-3)).Result;
 
             foreach (var item in ViewModel.Graphs)
             {

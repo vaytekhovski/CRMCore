@@ -44,8 +44,8 @@ namespace CRM.Controllers
                 StartDate = DatesHelper.MinDateTimeStr,
                 EndDate = DatesHelper.CurrentDateTimeStr
             };
-
-            return View(await LoadTradeHistory(viewModel));
+            var TH = await LoadTradeHistory(viewModel);
+            return View(TH);
         }
 
         [HttpPost]
@@ -85,7 +85,8 @@ namespace CRM.Controllers
 
             var filter = new TradeHistoryFilter
             {
-                Coin = viewModel.Coin,
+                Coin = viewModel.Coin != null ? viewModel.Coin.Split("&")[0] : null,
+                Quote = viewModel.Coin != null ? viewModel.Coin.Split("&")[1] : null,
                 StartDate = DateTime.Parse(viewModel.StartDate),
                 EndDate = DateTime.Parse(viewModel.EndDate)
             };
@@ -95,7 +96,7 @@ namespace CRM.Controllers
                 var token = HttpContext.User.Identity.Name;
 
                 viewModel.signals = datavisioAPIService
-                    .GetSignals(token, filter.Coin, "grad_" + filter.Coin.ToLower())
+                    .GetSignals(token, filter.Coin, filter.Quote, "grad_" + filter.Coin.ToLower())
                     .Result.signals
                     .Where(x => x.time > filter.StartDate && x.time < filter.EndDate)
                     .OrderBy(x => x.time)
@@ -111,7 +112,8 @@ namespace CRM.Controllers
         {
             var filter = new TradeHistoryFilter
             {
-                Coin = viewModel.Coin,
+                Coin = viewModel.Coin != null ? viewModel.Coin.Split("&")[0] : null,
+                Quote = viewModel.Coin != null ? viewModel.Coin.Split("&")[1] : null,
                 StartDate = DateTime.Parse(viewModel.StartDate),
                 EndDate = DateTime.Parse(viewModel.EndDate)
             };
@@ -121,7 +123,7 @@ namespace CRM.Controllers
                 var token = HttpContext.User.Identity.Name;
 
                 viewModel.signals = datavisioAPIService
-                    .GetSignals(token, filter.Coin, "grad_" + filter.Coin.ToLower())
+                    .GetSignals(token, filter.Coin, "USDT", "grad_" + filter.Coin.ToLower())
                     .Result.signals
                     .Where(x => x.time > filter.StartDate && x.time < filter.EndDate)
                     .OrderBy(x => x.time)
@@ -147,7 +149,7 @@ namespace CRM.Controllers
             };
 
 
-            var _candles = await datavisioAPIService.GetCandles(token, Model.Deal.coin);
+            var _candles = await datavisioAPIService.GetCandles(token, Model.Deal.coin, Model.Deal.quote);
             var candles = _candles.ToList();
 
             Model.LastPrice = candles.Last().c;
@@ -286,7 +288,7 @@ namespace CRM.Controllers
                 ViewBag.ChartLow = DealsToChart.OrderBy(x => x.profit.clean.amount).Select(x => x.profit.clean.amount).First();
             }
             var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
-            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
+            ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";
             ViewBag.FilterEndDate = UserName == "guest" ? "2020-09-01T23:59" : "2019-01-01T23:59";
 
@@ -294,20 +296,20 @@ namespace CRM.Controllers
         }
 
         [HttpPost]
-        public async Task EnableDisableTradePair(string pair)
+        public async Task EnableDisableTradePair(TradeHistoryFilterModel filter)
         {
             var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
             var token = HttpContext.User.Identity.Name;
             ShowAccount AccountData = await datavisioAPIService.ShowAccount(accountId, token);
 
-            if(AccountData.pairs.First(x=>x.@base == pair).enabled == true)
+            if(AccountData.pairs.First(x=>x.@base == filter.Coin).enabled == true)
             {
-                await datavisioAPIService.DisablePair(accountId, token, pair);
+                await datavisioAPIService.DisablePair(accountId, token, filter.Coin, filter.Quote);
             }
             else
             {
-                await datavisioAPIService.EnablePair(accountId, token, pair);
+                await datavisioAPIService.EnablePair(accountId, token, filter.Coin, filter.Quote);
             }
 
         }
@@ -316,7 +318,8 @@ namespace CRM.Controllers
         {
             var filter = new TradeHistoryFilter
             {
-                Coin = viewModel.Coin,
+                Coin = viewModel.Coin != null ? viewModel.Coin.Split("&")[0] : null,
+                Quote = viewModel.Coin != null ? viewModel.Coin.Split("&")[1] : null,
                 StartDate = DateTime.Parse(viewModel.StartDate),
                 EndDate = DateTime.Parse(viewModel.EndDate)
             };
@@ -327,7 +330,7 @@ namespace CRM.Controllers
             
 
             var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
-            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "ETH" : true);
+            ViewBag.Coins = DropDownFields.GetCoins();
             ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";
             ViewBag.FilterEndDate = UserName == "guest" ? "2020-09-01T23:59" : "2019-01-01T23:59";
 

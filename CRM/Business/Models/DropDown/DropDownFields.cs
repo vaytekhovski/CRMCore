@@ -97,13 +97,13 @@ namespace Business
 
         private static void InitiateCoins()
         {
-            Coins.Add(new Field { Value = "BTC", Name = "Bitcoin" });
-            Coins.Add(new Field { Value = "ETH", Name = "Etherium" });
-            Coins.Add(new Field { Value = "LTC", Name = "Litecoin" });
-            Coins.Add(new Field { Value = "XRP", Name = "Ripple" });
-            Coins.Add(new Field { Value = "ADA", Name = "Cordano" });
-            Coins.Add(new Field { Value = "BCH", Name = "BitcoinCash" });
-            Coins.Add(new Field { Value = "EOS", Name = "EOS" });
+            Coins.Add(new Field { Value = "BTC&USDT", Name = "Bitcoin/USDT" });
+            Coins.Add(new Field { Value = "BTC&USDC", Name = "Bitcoin/USDC" });
+            Coins.Add(new Field { Value = "BTC&BUSD", Name = "Bitcoin/BUSD" });
+
+            Coins.Add(new Field { Value = "ETH&USDT", Name = "Etherium/USDT" });
+            Coins.Add(new Field { Value = "ETH&USDC", Name = "Etherium/USDC" });
+            Coins.Add(new Field { Value = "ETH&BUSD", Name = "Etherium/BUSD" });
         }
 
         private static void InitiateOrderType()

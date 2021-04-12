@@ -94,7 +94,7 @@ namespace CRM.Controllers
             //viewModel.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
             //viewModel.Accounts = datavisioAPIService.ShowAccounts(token).Result;
 
-            ViewBag.Coins = DropDownFields.GetCoins().Where(x=> HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "LTC" : true);
+            ViewBag.Coins = DropDownFields.GetCoins();
             var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
 
             ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";
@@ -139,7 +139,7 @@ namespace CRM.Controllers
             //viewModel.AccountData = datavisioAPIService.ShowAccount(accountId, token).Result;
             //viewModel.Accounts = datavisioAPIService.ShowAccounts(token).Result;
 
-            ViewBag.Coins = DropDownFields.GetCoins().Where(x => HttpContext.User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value == "Boss" ? x.Value == "BTC" || x.Value == "LTC" : true); ;
+            ViewBag.Coins = DropDownFields.GetCoins();
             var UserName = HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Value;
 
             ViewBag.FilterStartDate = UserName == "guest" ? "2020-09-01T00:00" : "2019-01-01T00:00";
