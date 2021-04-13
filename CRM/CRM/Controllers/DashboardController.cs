@@ -59,7 +59,7 @@ namespace CRM.Controllers
             var token = HttpContext.User.Identity.Name;
             var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            model.BalancesDebit = await balancesService.LoadBalancesAsync(accountId, token, "debit");
+            //model.BalancesDebit = await balancesService.LoadBalancesAsync(accountId, token, "debit");
             model.BalancesMargin = await balancesService.LoadBalancesAsync(accountId, token, "margin");
             model.AccountData = await datavisioAPIService.ShowAccount(accountId, token);
             model.Accounts = await datavisioAPIService.ShowAccounts(token);

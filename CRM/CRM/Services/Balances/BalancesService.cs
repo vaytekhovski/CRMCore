@@ -28,6 +28,9 @@ namespace CRM.Services.Balances
             BalancesModel balancesModel = new BalancesModel();
 
             balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "USDT", type));
+            balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "USDC", type));
+            balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "BUSD", type));
+
             balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "BTC", type));
             balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "ETH", type));
             balancesModel.InsterBalance(await datavisioAPIService.GetBalance(accountId, token, "LTC", type));

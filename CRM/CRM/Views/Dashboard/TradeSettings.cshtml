@@ -13,6 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
+    <style>
+        .btn {
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #4a4e69 !important;
+        }
+    </style>
 
     <!-- DEMO CHARTS -->
     <link rel="stylesheet" href="~/public/demo/chartist.css">
@@ -45,8 +53,8 @@
 
                 <div class="row">
 
-                    <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
-                        <div class="card">
+                    <div class="col-xl-12 mb-3 mb-md-4">
+                        <div class="card" style="background-color:inherit">
                             <div class="card-header">
                                 <h5 class="font-weight-semi-bold mb-0">Включение валюты</h5>
                             </div>
@@ -85,46 +93,7 @@
                             </script>
                         </div>
                     </div>
-                    <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
-                        
-                    </div>
-                    <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
-                        
-                    </div>
-                    <div class="col-md-6 col-xl-6 mb-3 mb-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="font-weight-semi-bold mb-0">Депозитный счет</h5>
-                            </div>
-                            <div class="card-body pt-0">
-                                <table class="table text-center">
-                                    <thead>
-                                        <tr>
-                                            <th class="font-weight-semi-bold border-top-0 py-2">Валюта</th>
-                                            <th class="font-weight-semi-bold border-top-0 py-2">Свободно</th>
-                                            <th class="font-weight-semi-bold border-top-0 py-2">В использовании</th>
-                                            <th class="font-weight-semi-bold border-top-0 py-2">Всего</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model.BalancesDebit.AccountBalances)
-                                        {
-                                            {
-                                                <tr>
-                                                    <td>@item.Currency</td>
-                                                    <td>@item.Free</td>
-                                                    <td>@item.Used</td>
-                                                    <td>@item.Total</td>
-                                                </tr>
-                                            }
-                                        }
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xl-6 mb-3 mb-md-4">
+                    <div class="col-xl-12 mb-3 mb-md-4">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="font-weight-semi-bold mb-0">Маржинальный счет</h5>
