@@ -209,7 +209,7 @@ namespace CRM.Services
             if (model.Deals.deals.FirstOrDefault(x => x.id == "aca0e690-ce4d-4dbe-9f68-f552aa87dce4") != null)
             {
                 model.Deals.deals.FirstOrDefault(x => x.id == "aca0e690-ce4d-4dbe-9f68-f552aa87dce4").closed = new DateTime(2021, 04, 16, 8, 30, 0);
-                model.Deals.deals.FirstOrDefault(x => x.id == "6aca0e690-ce4d-4dbe-9f68-f552aa87dce4").outcome = 976.61m;
+                model.Deals.deals.FirstOrDefault(x => x.id == "aca0e690-ce4d-4dbe-9f68-f552aa87dce4").outcome = 976.61m;
                 model.Deals.deals.FirstOrDefault(x => x.id == "aca0e690-ce4d-4dbe-9f68-f552aa87dce4").orders.FirstOrDefault().price = 61512.65m;
             }
 
