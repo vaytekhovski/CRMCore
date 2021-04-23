@@ -93,7 +93,7 @@ namespace CRM.Services
             if (UserName == "guest")
                 Deposit = 10000;
             else
-                Deposit = 1000;
+                Deposit = 10000;
 
             var cdToDeposit = ClosedDeals.Where(x => x.closed.Value >= new DateTime(2020, 09, 01)).ToList();
             Deposit += cdToDeposit.Sum(x => x.profit.clean.amount);
@@ -246,6 +246,20 @@ namespace CRM.Services
                 model.Deals.deals.FirstOrDefault(x => x.id == "f11011c9-2d5e-4ab1-b70f-2e65c6da9add").closed = new DateTime(2021, 04, 21, 14, 0, 0);
                 model.Deals.deals.FirstOrDefault(x => x.id == "f11011c9-2d5e-4ab1-b70f-2e65c6da9add").outcome = 3223.50m;
                 model.Deals.deals.FirstOrDefault(x => x.id == "f11011c9-2d5e-4ab1-b70f-2e65c6da9add").orders.FirstOrDefault().price = 2388.69m;
+            }
+
+            if (model.Deals.deals.FirstOrDefault(x => x.id == "edb1bd9c-88aa-4190-93fa-dd8add707e6c") != null)
+            {
+                model.Deals.deals.FirstOrDefault(x => x.id == "edb1bd9c-88aa-4190-93fa-dd8add707e6c").closed = new DateTime(2021, 04, 23, 1, 01, 0);
+                model.Deals.deals.FirstOrDefault(x => x.id == "edb1bd9c-88aa-4190-93fa-dd8add707e6c").outcome = 950.04m;
+                model.Deals.deals.FirstOrDefault(x => x.id == "edb1bd9c-88aa-4190-93fa-dd8add707e6c").orders.FirstOrDefault().price = 2358.27m;
+            }
+
+            if (model.Deals.deals.FirstOrDefault(x => x.id == "f0881983-7e7d-4960-ada5-2573e39e2f3c") != null)
+            {
+                model.Deals.deals.FirstOrDefault(x => x.id == "f0881983-7e7d-4960-ada5-2573e39e2f3c").closed = new DateTime(2021, 04, 21, 1, 01, 0);
+                model.Deals.deals.FirstOrDefault(x => x.id == "f0881983-7e7d-4960-ada5-2573e39e2f3c").outcome = 2847.95m;
+                model.Deals.deals.FirstOrDefault(x => x.id == "f0881983-7e7d-4960-ada5-2573e39e2f3c").orders.FirstOrDefault().price = 2358.96m;
             }
         }
 
