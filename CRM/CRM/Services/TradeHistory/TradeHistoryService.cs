@@ -268,6 +268,27 @@ namespace CRM.Services
                 model.Deals.deals.FirstOrDefault(x => x.id == "12eef14c-4c32-4293-abbe-9b46d74a3e4f").outcome = 3017.58m;
                 model.Deals.deals.FirstOrDefault(x => x.id == "12eef14c-4c32-4293-abbe-9b46d74a3e4f").orders.FirstOrDefault().price = 50024.18m;
             }
+            
+            if (model.Deals.deals.FirstOrDefault(x => x.id == "2107b4fc-5918-4ae0-ad79-aee15372e3c8") != null)
+            {
+                model.Deals.deals.FirstOrDefault(x => x.id == "2107b4fc-5918-4ae0-ad79-aee15372e3c8").closed = new DateTime(2021, 04, 24, 13, 15, 0);
+                model.Deals.deals.FirstOrDefault(x => x.id == "2107b4fc-5918-4ae0-ad79-aee15372e3c8").outcome = 949.54m;
+                model.Deals.deals.FirstOrDefault(x => x.id == "2107b4fc-5918-4ae0-ad79-aee15372e3c8").orders.FirstOrDefault().price = 2224.11m;
+            }
+            
+            if (model.Deals.deals.FirstOrDefault(x => x.id == "e621d4e5-d631-41d5-a3df-f3b682a6ab24") != null)
+            {
+                model.Deals.deals.FirstOrDefault(x => x.id == "e621d4e5-d631-41d5-a3df-f3b682a6ab24").closed = new DateTime(2021, 04, 24, 13, 15, 0);
+                model.Deals.deals.FirstOrDefault(x => x.id == "e621d4e5-d631-41d5-a3df-f3b682a6ab24").outcome = 2846.58m;
+                model.Deals.deals.FirstOrDefault(x => x.id == "e621d4e5-d631-41d5-a3df-f3b682a6ab24").orders.FirstOrDefault().price = 2220.26m;
+            }
+            
+            if (model.Deals.deals.FirstOrDefault(x => x.id == "77997e61-0726-4460-8fa5-ce0c60c14f0c") != null)
+            {
+                model.Deals.deals.FirstOrDefault(x => x.id == "77997e61-0726-4460-8fa5-ce0c60c14f0c").closed = new DateTime(2021, 04, 25, 19, 15, 0);
+                model.Deals.deals.FirstOrDefault(x => x.id == "77997e61-0726-4460-8fa5-ce0c60c14f0c").outcome = 2933.93m;
+                model.Deals.deals.FirstOrDefault(x => x.id == "77997e61-0726-4460-8fa5-ce0c60c14f0c").orders.FirstOrDefault().price = 49812.13m;
+            }
         }
 
 
