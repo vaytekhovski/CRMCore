@@ -472,6 +472,13 @@ namespace CRM.Services
                 model.Deals.deals.FirstOrDefault(x => x.id == "2a980608-d8ce-42a1-b882-8cd86fdbca38").outcome = 1001.80m;
                 model.Deals.deals.FirstOrDefault(x => x.id == "2a980608-d8ce-42a1-b882-8cd86fdbca38").orders.FirstOrDefault().price = 3433.18m;
             }
+
+            if (model.Deals.deals.FirstOrDefault(x => x.id == "36ca0730-2436-471a-8331-330eee807681") != null)
+            {
+                model.Deals.deals.FirstOrDefault(x => x.id == "36ca0730-2436-471a-8331-330eee807681").closed = new DateTime(2021, 05, 07, 6, 30, 0);
+                model.Deals.deals.FirstOrDefault(x => x.id == "36ca0730-2436-471a-8331-330eee807681").outcome = 2982.13m;
+                model.Deals.deals.FirstOrDefault(x => x.id == "36ca0730-2436-471a-8331-330eee807681").orders.FirstOrDefault().price = 55950.25m;
+            }
         }
 
 
