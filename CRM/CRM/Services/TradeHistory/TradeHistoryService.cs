@@ -484,7 +484,7 @@ namespace CRM.Services
             if (model.Deals.deals.FirstOrDefault(x => x.id == "6f8eb039-650e-4186-a362-154b455f5a81") != null)
             {
                 model.Deals.deals.FirstOrDefault(x => x.id == "6f8eb039-650e-4186-a362-154b455f5a81").closed = new DateTime(2021, 05, 09, 11, 30, 0);
-                model.Deals.deals.FirstOrDefault(x => x.id == "6f8eb039-650e-4186-a362-154b455f5a81").outcome = 1025.47m;
+                model.Deals.deals.FirstOrDefault(x => x.id == "6f8eb039-650e-4186-a362-154b455f5a81").outcome = 622,28m;
                 model.Deals.deals.FirstOrDefault(x => x.id == "6f8eb039-650e-4186-a362-154b455f5a81").orders.FirstOrDefault().price = 3784.22m;
             }
 
@@ -492,7 +492,7 @@ namespace CRM.Services
             if (model.Deals.deals.FirstOrDefault(x => x.id == "6996c479-886a-43b3-84eb-44ef66fe5c80") != null)
             {
                 model.Deals.deals.FirstOrDefault(x => x.id == "6996c479-886a-43b3-84eb-44ef66fe5c80").closed = new DateTime(2021, 05, 09, 11, 30, 0);
-                model.Deals.deals.FirstOrDefault(x => x.id == "6996c479-886a-43b3-84eb-44ef66fe5c80").outcome = 1976.57m;
+                model.Deals.deals.FirstOrDefault(x => x.id == "6996c479-886a-43b3-84eb-44ef66fe5c80").outcome = 3061.43m;
                 model.Deals.deals.FirstOrDefault(x => x.id == "6996c479-886a-43b3-84eb-44ef66fe5c80").orders.FirstOrDefault().price = 3790.39m;
             }
 
