@@ -133,6 +133,10 @@ namespace Business
             IgnoreIds.Add(new Field { Value = "fd5edcf7-e4a3-48a9-bf92-4043c8b6bd37", Name = "1" });
             IgnoreIds.Add(new Field { Value = "7d8852d8-f445-4e44-918d-5de9d5d06585", Name = "1" });
             IgnoreIds.Add(new Field { Value = "7d8ce747-dde9-4086-aa62-7b632b2eb61d", Name = "1" });
+            
+            IgnoreIds.Add(new Field { Value = "3c068543-928e-43dc-b65f-b3a22d606ff0", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "62814632-c09f-439f-a4af-15755fca6bf3", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "c7860b15-8fc6-40ad-96bf-a5920f12fb5a", Name = "1" });
 
 
 
