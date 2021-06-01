@@ -144,6 +144,11 @@ namespace Business
             IgnoreIds.Add(new Field { Value = "a7d07834-927a-49d4-a3e0-af486bfda58f", Name = "1" });
             IgnoreIds.Add(new Field { Value = "c7d66425-1b3d-4bfd-9358-ee133a4c3270", Name = "1" });
             IgnoreIds.Add(new Field { Value = "a13a8f2f-cd39-49a9-921d-3c2d773fdd83", Name = "1" });
+            
+            IgnoreIds.Add(new Field { Value = "543a04c8-68e8-4550-b2df-b4d9d10d8d63", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "7dd95fa7-e195-42fb-afd5-5c1dfe37a37b", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "e1d2a675-18b5-44ec-a933-fbd694cca2b9", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "543a04c8-68e8-4550-b2df-b4d9d10d8d63", Name = "1" });
 
 
         }
