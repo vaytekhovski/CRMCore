@@ -296,22 +296,23 @@ namespace CRM.Controllers
         }
 
         [HttpPost]
-        public async Task EnableDisableTradePair(TradeHistoryFilterModel filter)
+        public async Task<string> EnableDisableTradePair(TradeHistoryFilterModel filter)
         {
             var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
             var token = HttpContext.User.Identity.Name;
             ShowAccount AccountData = await datavisioAPIService.ShowAccount(accountId, token);
 
+            var response = "";
             if(AccountData.pairs.First(x=>x.@base == filter.Coin).enabled == true)
             {
-                await datavisioAPIService.DisablePair(accountId, token, filter.Coin, filter.Quote);
+                response = await datavisioAPIService.DisablePair(accountId, token, filter.Coin, filter.Quote);
             }
             else
             {
-                await datavisioAPIService.EnablePair(accountId, token, filter.Coin, filter.Quote);
+                response = await datavisioAPIService.EnablePair(accountId, token, filter.Coin, filter.Quote);
             }
-
+            return response;
         }
 
         public async Task<TradeHistoryFilterModel> LoadTradeHistory(TradeHistoryFilterModel viewModel)

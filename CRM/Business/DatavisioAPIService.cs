@@ -288,7 +288,7 @@ namespace Business.DataVisioAPI
             return show;
         }
 
-        public async Task EnablePair(string accountId, string token, string CoinBase, string Quote)
+        public async Task<string> EnablePair(string accountId, string token, string CoinBase, string Quote)
         {
             var Request = new HttpRequestMessage
             {
@@ -301,9 +301,10 @@ namespace Business.DataVisioAPI
                 Content = new StringContent(string.Empty)
             };
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            return response;
         }
 
-        public async Task DisablePair(string accountId, string token, string CoinBase, string Quote)
+        public async Task<string> DisablePair(string accountId, string token, string CoinBase, string Quote)
         {
             var Request = new HttpRequestMessage
             {
@@ -316,6 +317,7 @@ namespace Business.DataVisioAPI
                 Content = new StringContent(string.Empty)
             };
             var response = await Client.SendAsync(Request).Result.Content.ReadAsStringAsync();
+            return response;
         }
 
         public async Task<bool> isKeyAvailable(string token)
