@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     <div class="col-xl-12 mb-3 mb-md-4">
-                        <div class="card">
+                        <div class="card" style="background-color:initial !important;>
                             <div class="card-header">
                                 <h5 class="font-weight-semi-bold mb-0">Маржинальный счет</h5>
                             </div>
@@ -112,7 +112,7 @@
                                         @foreach (var item in Model.BalancesMargin.AccountBalances)
                                         {
                                             {
-                                                <tr>
+                                                <tr style="2px solid #dcdcdc">
                                                     <td>@item.Currency</td>
                                                     <td>@item.Free</td>
                                                     <td>@item.Used</td>
