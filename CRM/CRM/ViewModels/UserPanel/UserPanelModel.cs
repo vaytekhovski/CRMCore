@@ -17,5 +17,6 @@ namespace CRM.ViewModels
 
         public BalancesModel BalancesDebit { get; set; }
         public BalancesModel BalancesMargin { get; set; }
+        public decimal TotalUSDBalace { get; set; }
     }
 }

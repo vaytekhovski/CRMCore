@@ -66,12 +66,12 @@
                                         <div class="form-check position-relative pl-0 mb-2 mr-2">
                                             <input type="checkbox" class="form-check-input invisible" id="CheckBox{@pair.coin}{@pair.quote}" @(pair.enabled == true ? "checked" : "")>
                                             <label for="CheckBox{@pair.coin}{@pair.quote}" class="checkbox-text position-relative btn btn-outline-primary form-check-label" onclick="SendCoin('@pair.coin','@pair.quote')">
-                                            <span>@pair.coin / @pair.quote</span>
-                                        </label>
+                                                <span>@pair.coin / @pair.quote</span>
+                                            </label>
                                         </div>
                                     }
-                                        
-                                    </div>
+
+                                </div>
                             </div>
 
                             <script type="text/javascript">
@@ -80,7 +80,7 @@
                                     $.ajax({
                                         type: "POST",
                                         url: "/Dashboard/EnableDisableTradePair",
-                                        data: {coin: coin, quote: quote},
+                                        data: { coin: coin, quote: quote },
                                         success: function (response) {
 
                                         },
@@ -93,66 +93,34 @@
                             </script>
                         </div>
                     </div>
-                    <div class="col-xl-12 mb-3 mb-md-4">
-                        <div class="card" style="background-color:initial !important;>
-                            <div class="card-header">
-                                <h5 class="font-weight-semi-bold mb-0">Маржинальный счет</h5>
-                            </div>
-                            <div class="card-body pt-0">
-                                <table class="table text-center">
-                                    <thead>
-                                        <tr>
-                                            <th class="font-weight-semi-bold border-top-0 py-2">Валюта</th>
-                                            <th class="font-weight-semi-bold border-top-0 py-2">Свободно</th>
-                                            <th class="font-weight-semi-bold border-top-0 py-2">В использовании</th>
-                                            <th class="font-weight-semi-bold border-top-0 py-2">Всего</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model.BalancesMargin.AccountBalances)
-                                        {
-                                            {
-                                                <tr style="border-bottom:2px solid #dcdcdc">
-                                                    <td>@item.Currency</td>
-                                                    <td>@item.Free</td>
-                                                    <td>@item.Used</td>
-                                                    <td>@item.Total</td>
-                                                </tr>
-                                            }
-                                        }
+                    
 
-                                    </tbody>
-                                </table>
+                </div>
+
+
+
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="small p-3 px-md-4 mt-auto">
+                        <div class="row justify-content-between">
+                            <div class="col-lg text-center text-lg-left mb-3 mb-lg-0">
+                                <ul class="list-dot list-inline mb-0">
+                                    <li class="list-dot-item list-dot-item-not list-inline-item mr-lg-2"><a class="link-dark" href="#">FAQ</a></li>
+                                    <li class="list-dot-item list-inline-item mr-lg-2"><a class="link-dark" href="#">Support</a></li>
+                                    <li class="list-dot-item list-inline-item mr-lg-2"><a class="link-dark" href="#">Contact us</a></li>
+                                </ul>
+                            </div>
+
+
+
+                            <div class="col-lg text-center text-lg-right">
+                                &copy; 2020 ANSTECHNOLOGIES. All Rights Reserved.
                             </div>
                         </div>
-                    </div>
-                    
+                    </footer>
+                    <!-- End Footer -->
                 </div>
-
-
-
-            </div>
-
-            <!-- Footer -->
-            <footer class="small p-3 px-md-4 mt-auto">
-                <div class="row justify-content-between">
-                    <div class="col-lg text-center text-lg-left mb-3 mb-lg-0">
-                        <ul class="list-dot list-inline mb-0">
-                            <li class="list-dot-item list-dot-item-not list-inline-item mr-lg-2"><a class="link-dark" href="#">FAQ</a></li>
-                            <li class="list-dot-item list-inline-item mr-lg-2"><a class="link-dark" href="#">Support</a></li>
-                            <li class="list-dot-item list-inline-item mr-lg-2"><a class="link-dark" href="#">Contact us</a></li>
-                        </ul>
-                    </div>
-
-
-
-                    <div class="col-lg text-center text-lg-right">
-                        &copy; 2020 ANSTECHNOLOGIES. All Rights Reserved.
-                    </div>
-                </div>
-            </footer>
-            <!-- End Footer -->
-        </div>
     </main>
 
 

@@ -59,17 +59,33 @@ namespace CRM.Controllers
             var token = HttpContext.User.Identity.Name;
             var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
-            //model.BalancesDebit = await balancesService.LoadBalancesAsync(accountId, token, "debit");
-            model.BalancesMargin = await balancesService.LoadBalancesAsync(accountId, token, "margin");
             model.AccountData = await datavisioAPIService.ShowAccount(accountId, token);
             model.Accounts = await datavisioAPIService.ShowAccounts(token);
             foreach (var pair in model.AccountData.pairs)
             {
                 pair.coin = pair.@base;
             }
+            return View(model);
+        }
 
+        public async Task<IActionResult> Balance(UserPanelModel model)
+        {
+            var token = HttpContext.User.Identity.Name;
+            var accountId = HttpContext.User.Claims.Where(x => x.Type == "accountId").Select(x => x.Value).SingleOrDefault();
 
+            //model.BalancesDebit = await balancesService.LoadBalancesAsync(accountId, token, "debit");
+            model.BalancesMargin = await balancesService.LoadBalancesAsync(accountId, token, "margin");
 
+            var btcLastPrice = datavisioAPIService.GetCandles(token, "BTC", "USDT").Result.Last().c;
+            var ethLastPrice = datavisioAPIService.GetCandles(token, "ETH", "USDT").Result.Last().c;
+            var ltcLastPrice = datavisioAPIService.GetCandles(token, "LTC", "USDT").Result.Last().c;
+            var xrpLastPrice = datavisioAPIService.GetCandles(token, "XRP", "USDT").Result.Last().c;
+
+            model.TotalUSDBalace += model.BalancesMargin.AccountBalances[0].Total + model.BalancesMargin.AccountBalances[1].Total + model.BalancesMargin.AccountBalances[2].Total;
+            model.TotalUSDBalace += model.BalancesMargin.AccountBalances[3].Total * btcLastPrice;
+            model.TotalUSDBalace += model.BalancesMargin.AccountBalances[4].Total * ethLastPrice;
+            model.TotalUSDBalace += model.BalancesMargin.AccountBalances[5].Total * ltcLastPrice;
+            model.TotalUSDBalace += model.BalancesMargin.AccountBalances[6].Total * xrpLastPrice;
             return View(model);
         }
 
