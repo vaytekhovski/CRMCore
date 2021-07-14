@@ -30,6 +30,15 @@ namespace Business
 
         private static void InitiateIgnoreIds()
         {
+            IgnoreIds.Add(new Field { Value = "f2512323-7c7b-4508-9ac3-c741ac00d50e", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "bd064bfe-8eeb-4a23-8010-0dc990b3d8ec", Name = "2" });
+            IgnoreIds.Add(new Field { Value = "45aec6a4-240d-461a-9d5d-6baed137d3cd", Name = "3" });
+            IgnoreIds.Add(new Field { Value = "817278ad-b33d-48da-9579-6da81a8a15d2", Name = "4" });
+            IgnoreIds.Add(new Field { Value = "785ac756-7353-4911-bbcc-285157025dd6", Name = "5" });
+            IgnoreIds.Add(new Field { Value = "11bf8309-1b28-4f89-9402-c38db6d2d32e", Name = "6" });
+            IgnoreIds.Add(new Field { Value = "43423e93-bcf4-4997-b986-acce9c00801a", Name = "6" });
+
+            
             IgnoreIds.Add(new Field { Value = "d3ad08f1-a2bd-4f32-89f4-81e2ae5ed5cb", Name = "1" });
             IgnoreIds.Add(new Field { Value = "f3a7f223-c8b0-4ea1-b403-57a9084c1543", Name = "2" });
             IgnoreIds.Add(new Field { Value = "e8999f1f-bbd0-46d0-bdb3-a5c0bbe1d391", Name = "3" });
