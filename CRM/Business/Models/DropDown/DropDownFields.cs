@@ -30,7 +30,8 @@ namespace Business
 
         private static void InitiateIgnoreIds()
         {
-            
+            IgnoreIds.Add(new Field { Value = "37e5f141-511d-42e3-b637-3d16c364468e", Name = "1" });
+
             IgnoreIds.Add(new Field { Value = "d81817da-d346-434a-a68e-d7b6bc5601b4", Name = "1" });
             IgnoreIds.Add(new Field { Value = "53cd04df-8933-42bf-a07b-1eda3596edb2", Name = "2" });
             
