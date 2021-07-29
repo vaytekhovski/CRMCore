@@ -224,9 +224,27 @@ namespace Business
             
             
             IgnoreIds.Add(new Field { Value = "1a141db3-2bc9-4a29-85bb-df572ef5aae6", Name = "1" });
-            IgnoreIds.Add(new Field { Value = "1a141db3-2bc9-4a29-85bb-df572ef5aae6", Name = "1" });
-            
-            
+            IgnoreIds.Add(new Field { Value = "e196d0df-5448-4609-8cf5-99d282d876ec", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "a87263b0-270f-458f-b2f9-ff2245472dd7", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "1cd5e12d-87be-4479-bad8-c1b23219f8fc", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "7e525512-2604-4599-b14f-5a8c6d7bbda0", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "39d8b65e-d818-4124-affc-287c71c993fb", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "ebbc7940-c72c-45d6-99d7-1e10de00ed85", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "6615c1d4-ea77-43c4-981c-424357432f86", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "e1a1efcc-8d10-4df7-a8a5-8ab852c057aa", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "276503f1-3f7d-43ec-ab6f-7898cb602395", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "26f27b2c-f2ea-429b-9cfb-5b3e6197d7df", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "6ac8ef94-203c-4397-bdaa-01c5cd870c31", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "c2ca3509-acee-4d7e-871e-3b47383645f4", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "c1c7b1b3-986b-45f9-a4ab-2c3ae9868143", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "e81ae8f0-94cc-4157-9453-a9fb281e5f16", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "fa6c1f42-3bc7-4504-8194-02adaeea3d94", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "ac32d29d-cf93-4fd8-b4ad-27ca4b07da44", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "dd0aa3b6-1caa-4776-81aa-79734d5684f0", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "76911ffe-8044-4fb5-8aa9-3a8898370469", Name = "1" });
+
+
+
 
 
         }
