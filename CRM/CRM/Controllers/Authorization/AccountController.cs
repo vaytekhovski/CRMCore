@@ -48,11 +48,11 @@ namespace AuthApp.Controllers
 
             if (key != null)
             {
-                key = DatavisioAPIService.Authorization(new Business.Models.DataVisioAPI.LoginModel
-                {
-                    username = "Boss",
-                    password = "9Qj7RTUdMF7C3Pf8"
-                }).Result;
+                //key = DatavisioAPIService.Authorization(new Business.Models.DataVisioAPI.LoginModel
+                //{
+                //    username = "Boss",
+                //    password = "9Qj7RTUdMF7C3Pf8"
+                //}).Result;
 
                 var accounts = DatavisioAPIService.ShowAccounts(key).Result;
                 var accountId = accounts.FirstOrDefault().id;
