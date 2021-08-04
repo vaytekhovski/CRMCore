@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -343,6 +344,7 @@ namespace CRM.Controllers
 
             TradeHistoryModel Model = await tradeHistoryService.LoadAsync(filter, HttpContext);
             viewModel = Converter(Model, viewModel);
+            viewModel.Deals.deals = viewModel.Deals.deals.Where(x => x.orders.Length != 0).ToArray();
 
             
 
