@@ -242,9 +242,26 @@ namespace Business
             IgnoreIds.Add(new Field { Value = "ac32d29d-cf93-4fd8-b4ad-27ca4b07da44", Name = "1" });
             IgnoreIds.Add(new Field { Value = "dd0aa3b6-1caa-4776-81aa-79734d5684f0", Name = "1" });
             IgnoreIds.Add(new Field { Value = "76911ffe-8044-4fb5-8aa9-3a8898370469", Name = "1" });
+           
+            IgnoreIds.Add(new Field { Value = "17b331e7-0c27-4b23-9a2b-b5b2f44624bb", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "cbe12f0e-507b-4ec2-a6a9-88da4f478a36", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "b89809ef-e0fd-4abd-be24-17571d4ef487", Name = "1" });
 
-
-
+            IgnoreIds.Add(new Field { Value = "6b2894cc-6b6e-4213-95fc-495aab9c2454", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "b742e715-18fa-4dc5-8ef2-d8c3c6c6d457", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "cb7f7c54-39fa-4e30-bda4-3519398ca0cc", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "1ad065d0-2232-44e5-a24f-344039f7a71d", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "a8156b21-0fce-4043-82fd-637022ebe4a2", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "177cede4-8479-4622-87fb-4acaef5f9977", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "4455c99d-e3db-4a5c-a1ab-2babd325fe2a", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "2959b929-9b64-474b-b77c-0a46ffbba6e3", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "d757195f-590a-4e59-94fb-2016242fa9ff", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "13777c5f-b46c-4def-83d6-13822f018362", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "69bc46a9-9db9-402b-8393-3dd73da59851", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "d94597cb-99ae-48d6-b660-f098188c9e3a", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "e8eaf667-4628-4fe6-a51a-941f35df4959", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "4d975837-f752-4fbe-9ca0-52d30ad11a22", Name = "1" });
+           
 
 
         }
