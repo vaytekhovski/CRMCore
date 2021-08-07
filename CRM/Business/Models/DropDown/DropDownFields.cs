@@ -261,6 +261,18 @@ namespace Business
             IgnoreIds.Add(new Field { Value = "d94597cb-99ae-48d6-b660-f098188c9e3a", Name = "1" });
             IgnoreIds.Add(new Field { Value = "e8eaf667-4628-4fe6-a51a-941f35df4959", Name = "1" });
             IgnoreIds.Add(new Field { Value = "4d975837-f752-4fbe-9ca0-52d30ad11a22", Name = "1" });
+            
+            
+            IgnoreIds.Add(new Field { Value = "16d86c8a-a3a8-4558-a791-3b537d364d4c", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "b20821a1-5c27-47bf-b217-f597644cb1f5", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "a75b9a30-1f11-4d92-89a0-a3c86b421dea", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "3a64c95a-2b53-4b58-bd16-adbace5f7215", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "5e433ba2-9d4d-41dd-814e-ce27c62d56a2", Name = "1" });
+            
+            IgnoreIds.Add(new Field { Value = "72e42800-7112-4c34-ac8f-d70cd5873e82", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "09fc52b6-725a-4e71-a199-5055941b1353", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "19349923-554e-47f4-8a23-fdef40625bd1", Name = "1" });
+            IgnoreIds.Add(new Field { Value = "99e41a7d-bdbb-45ad-b8cd-6bb547b645cb", Name = "1" });
            
 
 
